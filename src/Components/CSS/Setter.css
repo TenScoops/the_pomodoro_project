@@ -1,0 +1,140 @@
+.setter{
+    width:500px;
+    height:500px;
+    background-color: #1e212d;
+    border-radius: 7%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    animation: fadeInAnimation 0.75s;
+    -webkit-animation: fadeInAnimation 0.75s;
+    -moz-animation: fadeInAnimation 0.75s;
+    -o-animation: fadeInAnimation 0.75s;
+    -ms-animation: fadeInAnimation 0.75s;
+    box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    font-family: 'Kalam', cursive;
+    /* font-style: italic; */
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+.header{
+  font-size: 35px;
+  font-family: 'Kalam', cursive;
+  margin:10px;
+  font-style:oblique;
+}
+.setter p{
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.values{
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+/*Sliders*/
+.slider{
+    height:27px;
+    border:2px solid white;
+    border-radius: 20px;
+    width:325px;
+}
+
+.thumb{
+    background-color: rgb(255, 255, 255);
+    cursor:pointer;
+    width:27px;
+    height:27px;
+    border-radius: 40px;
+
+}
+
+/*buttons*/
+.backbutton{
+    border-color: rgba(255, 255, 255, 0.5);
+    background-color: rgb(30, 33, 45, 0.5);
+    width:65px;
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 0%;
+    display: inline-flex;
+   
+    margin-right: 30px;
+    margin-left: 20px;
+    align-items: center;
+}
+
+.nextbutton{
+    border-color: rgba(255, 255, 255, 0.5);
+    background-color: rgb(30, 33, 45, 0.5);
+    width:65px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 0%;
+    display: inline-flex;
+    
+    align-items: center;
+}
+.clockbutton{
+  border-color: rgba(255, 255, 255, 0.5);
+  background-color: rgb(30, 33, 45, 0.5);
+  width:65px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  border-radius: 0%;
+  display: inline-flex;
+  
+  align-items: center;
+}
+
+.nextbackbuttons{
+    display: inline-flex;
+    margin-top: 40px;
+    margin-bottom: 0;
+}
+
+.backbutton:hover{
+    background-color: rgb(25, 24, 33);
+    /* border-color: transparent; */
+}
+.nextbutton:hover{
+  background-color: rgb(25, 24, 33);
+    /* border-color: transparent; */
+}
+.clockbutton:hover{
+  background-color: rgb(25, 24, 33);
+    /* border-color: transparent; */
+}
+
+/*animations*/
+ @-webkit-keyframes slide-in-bottom {
+    0% {
+      -webkit-transform: translateY(1000px);
+              transform: translateY(1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-bottom {
+    0% {
+      -webkit-transform: translateY(1000px);
+              transform: translateY(1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  

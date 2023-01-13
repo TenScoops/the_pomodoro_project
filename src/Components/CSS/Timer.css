@@ -1,0 +1,88 @@
+.timer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* align-items: center;
+    display: inline-flex;
+    background-image: url("C:\Users\payre\Desktop\1000_F_554384102_1jPV9fB0IlCfHjwGGRLvK82cPqjx1yZc.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 100% 100%; */
+    animation: fadeInAnimation 3s;
+    -webkit-animation: fadeInAnimation 3s;
+    -moz-animation: fadeInAnimation 3s;
+    -o-animation: fadeInAnimation 3s;
+    -ms-animation: fadeInAnimation 3s;
+    /* height:100vh;
+    width:100vw; */
+    font-family: 'Source Code Pro', monospace;
+    /* font-family: 'Roboto', sans-serif; */
+    /* height:900px; */
+  }
+  .blockdiv{
+    background-color: rgb(0, 0, 0);
+    margin-top: 10px;
+    font-size: 20px;
+  }
+  .time{
+    display: inline-flex;
+    font-size: 230px;
+    margin: 0;
+  }
+
+ .timer p{
+    margin:0px;
+  }
+  .timerbuttons{
+    margin-bottom: 20px;
+    margin-top: 30px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    
+  }
+  .timer button:hover{
+    border-color: rgba(255, 255, 255, 0.651);
+  }
+ .semicolon{
+    animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+ }
+
+.play{
+  width:150px;
+  margin-right: 50px;
+  margin-left: 30px;
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+}
+.pause{
+  width:150px;
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.skip{
+  width:160px;
+  padding-right: 20px;
+  padding-left: 20px;
+  /* height: 135px; */
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+ @keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+  @-webkit-keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
