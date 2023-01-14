@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import Modal from "react-modal";
 import { useState } from 'react';
-import './Data.css';
+import './Datadisplay.css';
 import SetterContext from '../SetterContext';
 // import './images/5996460.jpg';
 
 const Data = () => {
   const [modalOpen, setModalOpen] = useState(true);
-  // const [shouldOpen, setShouldOpen] = useState(true)
   const dataInfo = useContext(SetterContext);
 
   const customStyles = {
@@ -27,14 +26,10 @@ const Data = () => {
       transform: 'translate(-50%, -50%)',
       backgroundColor: '#181a24',
       height:'800px',
-      width: '800px',
+      width: '1200px',
       borderRadius:'50px',
-      // borderColor:'transparent'
-      // backgroundRepeat: 'no-repeat',
-      // backgroundAttachment:'fixed',
-      // backgroundImage: `url(${'/5996460.jpg'})` ,
-      //  backgroundImage: "url(/images/background3.jpg)" 
       padding:'0'
+      
     }
   };
 
@@ -43,23 +38,24 @@ const Data = () => {
     dataInfo.setData(false)
   }
   return (
-   
+    
       <Modal 
           isOpen={modalOpen}
           onRequestClose={() => closeModal()}
           style={customStyles} 
         >
            <div style={{height:'100%', width:'100%'}} className='modals' >
-
-           
-          {/* <img style={{width:'500px', height:'500px'}}src="C:\Users\payre\Desktop\the_pomodoro_project\src\Images\pexels-fwstudio-129731.jpg" alt='images'/> */}
-
-          {/* <p style={{width:'100px'}}className='lorem'>
-            <p> Session Completion score:</p>
-            <p> Sessions completed:</p>
-            <p> Sessions not completed:</p>
-            <p> Performance Score:</p>
-          </p>  */}
+            {/* <p style={{width:'800px'}}className='lorem'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit maiores voluptatibus nostrum doloremque, nemo libero vero? Deleniti perspiciatis quibusdam necessitatibus reiciendis iste eum cum dolore harum, possimus accusamus commodi dicta.
+              Non quisquam ipsa labore dicta consequuntur est molestiae? Soluta voluptatum, mollitia sapiente, optio animi quibusdam culpa corrupti nihil nostrum cumque recusandae fugiat in veritatis facere rem temporibus, natus quidem doloribus.
+              Alias, repellat! Ex, error, suscipit ea numquam veritatis culpa dolorem dicta non sint eum asperiores quibusdam eligendi doloribus delectus dolor. At tempore quis labore numquam, accusamus esse natus sunt corrupti.
+              Iste quas id laboriosam non quibusdam laborum ducimus? Animi nostrum sed repudiandae optio recusandae suscipit corrupti vero delectus, ratione architecto unde eos harum iusto, accusantium corporis nihil odio laborum nobis.
+              Facilis non dolore necessitatibus architecto modi. Natus nemo placeat ea accusamus possimus commodi similique sunt numquam saepe magnam. Enim distinctio nihil quo eligendi vel asperiores laborum dolor corrupti obcaecati neque.
+              Tenetur quia sit necessitatibus quae vero iste quasi error rem repellendus debitis quos vitae natus perspiciatis provident recusandae, at sunt accusantium dolor possimus sequi eaque! Sed itaque repellat possimus explicabo.
+              Officia nemo saepe ipsum architecto corrupti ducimus alias sapiente ex sequi voluptatum necessitatibus, earum odit at ipsam consequuntur labore a accusamus reprehenderit facilis. Cumque excepturi quas culpa sit modi sunt.
+              Reiciendis, blanditiis. Accusantium quae blanditiis, amet ipsum rem expedita ipsa magnam, iusto minus error esse? Ex, autem doloremque dolorem corporis veritatis aliquid nihil, enim doloribus sit perferendis odit. Et, praesentium?
+              Perferendis iure molestias blanditiis magni. Eaque iure ullam culpa odit, quidem labore eos ipsa tempora vitae esse eum, sit laboriosam repellendus. Exercitationem, accusantium eius? Commodi, aliquid natus. Expedita, quasi harum.
+              Dignissimos ipsum eligendi quod veritatis nostrum quisquam perferendis maxime provident. Architecto cupiditate nulla natus in ipsum repudiandae corrupti ad iusto quibusdam dolore, facere perferendis quia debitis, eius reiciendis nam nisi.</p>
+     */}
           </div>
         </Modal>
         

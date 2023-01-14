@@ -1,0 +1,13 @@
+.modals{
+   background-image: url("/public/Images/spaceman.jpeg");
+   background-size: 1200px 800px;
+   background-attachment: fixed;
+   background-repeat: no-repeat;
+   
+   animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+}
+

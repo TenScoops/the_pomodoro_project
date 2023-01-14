@@ -4,12 +4,16 @@ import Sidebar from './Sidebar';
 import SetterContext from '../SetterContext';
 import Synopsis from './Synopsis';
 import Datadisplay from './Datadisplay';
+import Login from './Login';
+import Theme from './Theme';
 
 const Navbar = () => {
   const [sideBar,setSideBar] = useState(true);
   const [hideButton, setHideButton] = useState(false);
   const [synopsis, setSynopsis] = useState(false);
   const [data, setData] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [openThemePage,setOpenThemePage] = useState(false)
   return (
     <div className='nav'>
       <div className='barsdiv'>
@@ -28,14 +32,18 @@ const Navbar = () => {
           synopsis,
           setSynopsis,
           data,
-          setData
+          setData,
+          loginOpen,
+          setLoginOpen,
+          openThemePage,
+          setOpenThemePage
         }}>
           
            { sideBar ? <Sidebar/>:null}
            { data ? <Datadisplay/>:null}
            { synopsis ? <Synopsis/>: null}
-           {}
-           {}
+           { openThemePage ? <Theme/>: null}
+           { loginOpen ? <Login/>: null}
         </SetterContext.Provider>
        
 

@@ -10,7 +10,8 @@ const Setter = () => {
   const setterInfo = useContext(SetterContext);
 
   const goForward = () =>{
-    setterInfo.setShowParagraph(false)
+    // setterInfo.setShowParagraph(false)
+    setterInfo.setShowSetterPage(false)
     setterInfo.setShowTimerPage(true);
     setterInfo.setShowButtons(true);
     setterInfo.setShowData(false);
@@ -18,12 +19,13 @@ const Setter = () => {
   const goBack = () =>{
     setterInfo.setShowSetterPage(false);
     setterInfo.setShowTimerPage(false);
+    setterInfo.setShowParagraph(true);
     
   }
   const breaks = setterInfo.numOfBreaks === 1? "break":"breaks";
   return (
     <div className='setter'>
-        <h1 className='header'>My Session </h1>
+        <h1 className='header'>Create a session </h1>
           
         <p>{setterInfo.workMinutes} hour session</p>
         <ReactSlider 

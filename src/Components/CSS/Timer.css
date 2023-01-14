@@ -3,21 +3,15 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* align-items: center;
-    display: inline-flex;
-    background-image: url("C:\Users\payre\Desktop\1000_F_554384102_1jPV9fB0IlCfHjwGGRLvK82cPqjx1yZc.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: 100% 100%; */
-    animation: fadeInAnimation 3s;
-    -webkit-animation: fadeInAnimation 3s;
-    -moz-animation: fadeInAnimation 3s;
-    -o-animation: fadeInAnimation 3s;
-    -ms-animation: fadeInAnimation 3s;
-    /* height:100vh;
-    width:100vw; */
-    font-family: 'Source Code Pro', monospace;
+  
+    animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -webkit-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -moz-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -o-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+
+    font-family: 'Kalam', cursive;
+    /* font-family: 'Source Code Pro', monospace; */
     /* font-family: 'Roboto', sans-serif; */
     /* height:900px; */
   }
@@ -30,8 +24,12 @@
     display: inline-flex;
     font-size: 230px;
     margin: 0;
+    font-family: 'Source Code Pro', monospace;
+    /* margin-bottom: 30px; 
+    margin-top:30px; */
+   /* ********* */
   }
-
+  
  .timer p{
     margin:0px;
   }
@@ -55,26 +53,34 @@
   width:150px;
   margin-right: 50px;
   margin-left: 30px;
+  border-radius: 15px;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 }
 .pause{
   width:150px;
+  margin-right: 50px;
+  border-radius: 15px;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
 .skip{
-  width:160px;
-  padding-right: 20px;
-  padding-left: 20px;
-  /* height: 135px; */
+  width:150px;
+  border-radius: 15px;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 }
+
+.cancel{
+  font-family: 'Kalam', cursive;
+}
+
+
+/* animation */
 
  @keyframes blink-animation {
     to {
@@ -86,3 +92,8 @@
       visibility: hidden;
     }
   }
+
+  
+
+
+

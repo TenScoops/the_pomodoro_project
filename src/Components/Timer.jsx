@@ -6,6 +6,7 @@ import './CSS/Timer.css';
 import SetterContext from './SetterContext';
 import Rating from './Rating';
 import Skip from './Buttons/Skip';
+import Areyousure from './Areyousure';
 
 const Timer = () => {
     const setterInfo = useContext(SetterContext);
@@ -24,6 +25,14 @@ const Timer = () => {
 
     //  let block = 0;
      
+    // const cancelSession = () =>{
+    //     setterInfo.setShowParagraph(true)
+    //     setterInfo.setShowTimerPage(false);
+    //     setterInfo.setShowButtons(false);
+    //     setterInfo.setShowData(true);
+    //     setterInfo.setShowSetterPage(false);
+    //   }
+
     function tick(){
         timeLeftRef.current--;
         setTimeLeft(timeLeftRef.current);
@@ -67,7 +76,7 @@ const Timer = () => {
 
        
         tick();
-    }, 1);
+    }, 1000);
 
         return ()=>clearInterval(interval);
 
@@ -81,22 +90,33 @@ const Timer = () => {
        return number < 10 ? "0"+number :number;
     }
 
+    // function areYouSure(){
+    //     return <div>
+    //         <Areyousure/>
+    //     </div>
+    // }
+
     const showTheButtons =()=>{
         if(setterInfo.showButtons === true){
-            return <div style={{display:'flex', justifyCotent:'center', alignItems:'center'}}>
-                
-                <Play className="play" onClick={() => { setIsPaused(false); isPausedRef.current = false; }}/>
-                <Pause className="pause" onClick={() => { setIsPaused(true); isPausedRef.current = true; }}/>
-                
-                <div style={{marginLeft:'30px'}} >
-                    {mode==='break'?<Skip onClick={()=>{timeLeftRef.current = 0; setMode('work')}}/>:null}
+            return <div style={{display:'flex', justifyCotent:'center', alignItems:'center', flexDirection:'column'}}>
+                <div style={{marginBottom:'60px'}}>
+                    <Play title="Play" className="play" onClick={() => { setIsPaused(false); isPausedRef.current = false; }}/>
+                    <Pause title="Pause" className="pause" onClick={() => { setIsPaused(true); isPausedRef.current = true; }}/>
+                    {mode==='break'?<Skip title="Skip Break" onClick={()=>{timeLeftRef.current = 0; setMode('work')}}/>:null}
+                    
                 </div>
+
+                <div>
+                    <button className ='cancel' onClick={() =>{setterInfo.setCancelTheSession(true)}}
+                    style={{width:'150px', marginLeft:'20px',  borderRadius:'15px', fontSize:'15px'}}>Cancel Session</button>
+                </div>
+                    
             </div>
         }
     }
 
-    const [blockNum, setBlockNum] = useState(1);
-    const blockNumRef = useRef(blockNum);
+    // const [blockNum, setBlockNum] = useState(1);
+    const blockNumRef = useRef(setterInfo.blockNum);
 
     const[block, setBlock] = useState(0);
     const blockRef = useRef(block);
@@ -111,15 +131,30 @@ const Timer = () => {
             function pause(){
                 setIsPaused(true);
                 isPausedRef.current = true;
+                // if(setterInfo.showParagraph === true){
+                //     setterInfo.blockNum = 0;
+                //     setterInfo.setBlockNum(setterInfo.blockNum);
+                // }
             }
 
             if(mode === 'break' && setterInfo.hasUserRated===false){
+                
                 return pause();
             }else if(mode === 'work' && setterInfo.hasUserRated===true){
                 setterInfo.setHasUserRated(false);
                 blockRef.current = blockRef.current + 1;
                 blockNumRef.current = blockNumRef.current + blockRef.current;
+
+                setterInfo.blockNum = setterInfo.blockNum+ blockRef.current;
+                setterInfo.setBlockNum(setterInfo.blockNum);
+
                 blockRef.current = 0;
+            }
+
+            if(setterInfo.blockNum === numOfblocks && mode === 'break' ){//when session is complete
+                setterInfo.setSessionComplete(true);
+                setterInfo.blockNum = 0;
+                setterInfo.setBlockNum(setterInfo.blockNum);
             }
                 // else if(mode === 'break' && setterInfo.hasUserRated === true){
                 //     setIsPaused(false);
@@ -137,6 +172,7 @@ const Timer = () => {
         }
     }
 
+    
     return (
         
         <div className='timer'>
@@ -146,15 +182,15 @@ const Timer = () => {
             {setterInfo.showData?<div className='blockdiv'><p>Your session </p></div>:null}
             {setterInfo.showData?<div className='blockdiv'><p>will have {totalWorkTime} minutes of work time</p></div>:null}
             {setterInfo.showData?<div className='blockdiv'><p>and {totalBreakTime} minutes of break time</p></div>:null}
-            {setterInfo.showData?<div className='blockdiv'><p>Session Will be completed in {numOfblocks} block(s)</p></div>:null}
+            {setterInfo.showData?<div className='blockdiv'><p style={{color:'black', backgroundColor:'white'}}>Session will be completed in {numOfblocks} block(s)</p></div>:null}
 
-            <div style={{borderRadius:'10px'}} className='blockdiv'><p>You are currently: {mode === 'work'?"working...":"on break..."}</p></div>
+            {setterInfo.showData?null:<div style={{borderRadius:'10px',marginTop:'60px'}} className='blockdiv'><p>You are currently: {mode === 'work'?"working..":"on break."}</p></div>}
             {mode==="work"?<div style={{borderRadius:'10px'}} className='blockdiv'><p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
 
             <div className='time'>
-                <p>{totalWorkTime <= totalBreakTime?"00" :addZero(minutes)}</p>
+                <p className='minutes'>{totalWorkTime <= totalBreakTime?"00" :addZero(minutes)}</p>
                 <p className='semicolon'>:</p>
-                <p>{totalWorkTime <= totalBreakTime?"00" :addZero(seconds)}</p>
+                <p className='seconds'>{totalWorkTime <= totalBreakTime?"00" :addZero(seconds)}</p>
             </div>
             
             <div className='timerbuttons'>
@@ -169,10 +205,20 @@ const Timer = () => {
             </div>:null}
 
             {showRating()}
+            {setterInfo.cancelTheSession? <Areyousure/>:null}
+
+            {setterInfo.sessionComplete?setterInfo.setShowTimerPage(false):null}
             {/* {mode === 'break'? <Rating/>:null} */}
             {/* {isWorkTimeUp} */}
             {/* {showThisRating? <Rating/> : null} */}
             {/* {isBlockOver && isPaused === true?<Rating/>:null} */}
+
+        {/* <SetterContext.Provider value ={{
+          setBlockNum,
+          blockNum
+        }}>
+         
+        </SetterContext.Provider> */}
 
         </div>
     )

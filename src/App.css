@@ -19,68 +19,48 @@ body{
 }
 
 .App{
-  background-image: url("/public/setup.jpg");
+  background-image: url("/public/Images/setup.jpeg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
   background-size: 100% 100%;
   height: 100vh;
   width: 100vw;
-  animation: fadeInAnimation 3s;
-  -webkit-animation: fadeInAnimation 3s;
-  -moz-animation: fadeInAnimation 3s;
-  -o-animation: fadeInAnimation 3s;
-  -ms-animation: fadeInAnimation 3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* flex-direction: row; */
-
-}
-
-.theApp{
-  display: flex;
-  /* flex-direction: column; */
-  align-items: center;
-  justify-content: center;
-  height:950px;
-  
-   /* max-width: 960px; */
-  /* margin: auto; */
-  /* padding:250px 0; */
-}
-
-/* .navbardiv{
-  height:50px;
-  
-  display: inline-block;
-} */
-
-.content{
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-  /* height: 800px;
-  width: 800px; */
-  
-}
-/* .p{
-  display: flex;
-} */
-.paragraph{
-  /* font-family: 'Indie Flower', cursive; */
-  display: flex;
-  /* align-items: center;
-  justify-content: center; */
-  /* animation-delay: 10.1s, 10.1s; */
-  width: 900px;
-  font-size: 25px;
-  /* font-weight: 600; */
   animation: fadeInAnimation 1.5s;
   -webkit-animation: fadeInAnimation 1.5s;
   -moz-animation: fadeInAnimation 1.5s;
   -o-animation: fadeInAnimation 1.5s;
   -ms-animation: fadeInAnimation 1.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.theApp{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:950px;
+  
+
+}
+
+
+
+
+.paragraph{
+
+  display: flex;
+  
+  width: 900px;
+  font-size: 25px;
+
+  animation: fadeInAnimation 0.61s;
+  -webkit-animation: fadeInAnimation 0.61s;
+  -moz-animation: fadeInAnimation 0.61s;
+  -o-animation: fadeInAnimation 0.61s;
+  -ms-animation: fadeInAnimation 0.61s;
   line-height: 50px;
   
   
@@ -104,9 +84,12 @@ button{
   background-color: #1e212d75;
   width:200px;
   font-size: 20px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+  font-family: 'Kalam', cursive;
   height:60px;
-  border-radius: 0%;
+  border-radius: 15px;
+  margin-right: 0px;
+  border-width: 3px;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
@@ -153,6 +136,27 @@ button:hover{
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
+
+/* animation */
+
+@keyframes anvil {
+  0% {
+    transform: scale(1) translateY(0px);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+  }
+  1% {
+    transform: scale(0.96) translateY(10px);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+  }
+  100% {
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+    box-shadow: 0 0 500px rgba(241, 241, 241, 0);
+  }
+}
+
 
 
 

@@ -9,32 +9,20 @@
     font-style: italic;
 }
 
-/* .rating{
-    width: 1200px;
-    height:200px;
-    background-color: transparent;
-
-    -webkit-transition: -webkit-transform 0.5s;
-	transition: transform 0.5s;
-  
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    position:fixed;
-    bottom:0;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 30px;
-} */
-
+.scores{
+    animation: anvil 0.25s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -webkit-animation: anvil 0.25s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -moz-animation: anvil 0.25s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -o-animation: anvil 0.25s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.25s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+}
 
 
 .ratingdiv{
     display:flex;
     align-items: center;
     justify-content: center;
-    animation-delay: 20s;
+    /* animation-delay: 20s; */
     animation: fadeInAnimation 1.5s;
     -webkit-animation: fadeInAnimation 1.5s;
     -moz-animation: fadeInAnimation 1.5s;
@@ -110,61 +98,5 @@
     background-color: rgb(170, 0, 0);
 }
 
-/* #score10color{
-    background-color: green;
-}
-#score9color{
-    background-color: rgb(0, 228, 4);
-}
-#score8color{
-    background-color: rgb(184, 255, 18);
-}
-#score7color{
-    background-color: yellow;
-}
-#score6color{
-    background-color: rgb(255, 191, 0);
-}
-#score5color{
-    background-color: rgb(255, 136, 0);
-}
-#score4color{
-    background-color: orangered;
-}
-#score3color{
-    background-color: rgb(255, 34, 0);
-}
-#score2color{
-    background-color: rgb(205, 0, 0);
-}
-#score1color{
-    background-color: rgb(170, 0, 0);
-} */
-/*Animations*/
+  /* animation */
 
-@keyframes fadeInAnimation {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  
-  @-moz-keyframes fadeInAnimation {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  
-  @-webkit-keyframes fadeInAnimation {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  
-  @-o-keyframes fadeInAnimation {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  
-  @-ms-keyframes fadeInAnimation {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  
-  

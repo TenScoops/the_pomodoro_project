@@ -5,6 +5,7 @@ import Contents from './Components/Contents';
 import { useState } from 'react';
 import SetterContext from './Components/SetterContext';
 import Timer from './Components/Timer';
+import Finished from './Components/Finished';
 // import setup from './Images/setup.jpeg';
 // import './Images';
 // import setup from'./Images/setup.jpeg';
@@ -25,15 +26,19 @@ function App() {
   const [modalOpen, setModalOpen] = useState(true);
   const [clicked, setClicked] = useState(false);
   const[hasUserRated, setHasUserRated] = useState(false);
-  const[sessionComplete, setSessionComplete] = useState(true);
+  const[cancelTheSession, setCancelTheSession] = useState(false);
+  const [blockNum, setBlockNum] = useState(1);
+  const[sessionComplete, setSessionComplete] = useState(false);
+  
 
-  let shows =()=>{
-    if(showParagraph === true){
-     return showSetterPage ? <Setter/> :  <Contents/>
-    }else{
-      return null;
-    }
-  }
+  // let shows =()=>{
+  //   if(showParagraph === true){
+  //    return showSetterPage ? <Setter/> :  <Contents/>
+  //   }else{
+  //     return null;
+  //   }
+  // }
+  
   return (
     <div className="App">
 
@@ -65,13 +70,27 @@ function App() {
           clicked,
           setClicked,
           hasUserRated,
-          setHasUserRated
+          setHasUserRated,
+          cancelTheSession, 
+          setCancelTheSession,
+          blockNum,
+          setBlockNum,
+          sessionComplete, 
+          setSessionComplete
           
         }}>
-          {shows()}
+          {/* {shows()} */}
+          {showParagraph? <Contents/>:null}
+          {showSetterPage? <Setter/>: null}
           {showTimerPage ? <Timer/> : null}
+          
+          {/* {sessionComplete?setShowTimerPage(false):null} */}
+          {sessionComplete?<Finished/>:null}
+          
+          
+            
         </SetterContext.Provider>
-        {/* <Synopsis/> */}
+      
       </div>
      
     </div>

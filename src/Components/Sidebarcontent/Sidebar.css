@@ -2,7 +2,7 @@
     width: 350px;
     height: 100%;
     /* background-color: #1e212d; */
-    background-color: #1e212de2;
+    background-color: #1e212dab;
     /* backdrop-filter: blur(20px); */
     margin:0;
     position: fixed;
@@ -30,9 +30,11 @@
 .text{
     width:280px;
     border-radius: 15px;
+    
 }
 .text svg{
     margin-left: 15px;
+    /* margin-bottom: 40px; */
 }
 .h1-text{
     margin-right: 30px;
@@ -93,8 +95,8 @@
 
 @-webkit-keyframes slide-right {
     0% {
-      -webkit-transform: translateX(-500px);
-              transform: translateX(-500px);
+      -webkit-transform: translateX(-100px);
+              transform: translateX(-100px);
     }
     100% {
       -webkit-transform: translateX(0px);
@@ -103,8 +105,8 @@
   }
   @keyframes slide-right {
     0% {
-      -webkit-transform: translateX(-500px);
-              transform: translateX(-500px);
+      -webkit-transform: translateX(-100px);
+              transform: translateX(-100px);
     }
     100% {
       -webkit-transform: translateX(0px);
