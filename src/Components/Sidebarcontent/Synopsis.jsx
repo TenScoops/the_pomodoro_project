@@ -44,7 +44,7 @@ const Synopsis = () => {
   return (
     
       <Modal
-      
+              closeTimeoutMS={120}
               isOpen={modalOpen}
               onRequestClose={() => closeModal()}
               style={customStyles} 

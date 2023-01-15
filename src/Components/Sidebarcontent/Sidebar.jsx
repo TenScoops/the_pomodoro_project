@@ -25,6 +25,7 @@ const Sidebar = () => {
   }
   return (
     <Modal className='sidebar' 
+    closeTimeoutMS={120}
     style={customStyles}
     isOpen={modalOpen}
     onRequestClose={()=>modalClose()}

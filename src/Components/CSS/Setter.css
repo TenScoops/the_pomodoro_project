@@ -7,27 +7,23 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-
-    /* animation: fadeInAnimation 0.75s;
-    -webkit-animation: fadeInAnimation 0.75s;
-    -moz-animation: fadeInAnimation 0.75s;
-    -o-animation: fadeInAnimation 0.75s;
-    -ms-animation: fadeInAnimation 0.75s; */
-    animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    
-    box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
     /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
     font-family: 'Kalam', cursive;
     /* font-style: italic; */
     font-size: 19px;
     font-weight: 600;
     letter-spacing: 0.5px;
+    box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  }
+
+  .divsetter{
+    animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
   }
 
 .header{

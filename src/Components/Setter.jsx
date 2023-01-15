@@ -24,6 +24,7 @@ const Setter = () => {
   }
   const breaks = setterInfo.numOfBreaks === 1? "break":"breaks";
   return (
+    <div className='divsetter'>
     <div className='setter'>
         <h1 className='header'>Create a session </h1>
           
@@ -63,6 +64,7 @@ const Setter = () => {
           <Clock  title ="Show clock" onClick={() =>{setterInfo.showTimerPage === false?setterInfo.setShowTimerPage(true):setterInfo.setShowTimerPage(false)}}/>
           <Nextbutton title ="Start"onClick={() => {goForward()}}/>
         </div>
+    </div>
     </div>
   )
 } 

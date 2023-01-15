@@ -12,10 +12,6 @@ const Theme = () => {
   const customStyles = {
     overlay: {
       backgroundColor: '#08080b97',
-     //#1e212d82
-     //#1e212da3
-     //#08080b97
-    //  backdrop:'static'
     },
     content: {
       top: '50%',
@@ -40,6 +36,7 @@ const Theme = () => {
   return (
     
       <Modal 
+          closeTimeoutMS={120}
           isOpen={modalOpen}
           onRequestClose={() => closeModal()}
           style={customStyles} 
