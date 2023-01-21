@@ -188,9 +188,9 @@ const Timer = () => {
             {mode==="work"?<div style={{borderRadius:'10px'}} className='blockdiv'><p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
 
             <div className='time'>
-                <p className='minutes'>{totalWorkTime <= totalBreakTime?"00" :addZero(minutes)}</p>
+                <p className='minutes'>{totalWorkTime < totalBreakTime?"00" :addZero(minutes)}</p>
                 <p className='semicolon'>:</p>
-                <p className='seconds'>{totalWorkTime <= totalBreakTime?"00" :addZero(seconds)}</p>
+                <p className='seconds'>{totalWorkTime < totalBreakTime?"00" :addZero(seconds)}</p>
             </div>
             
             <div className='timerbuttons'>
@@ -198,9 +198,9 @@ const Timer = () => {
                
             </div> 
 
-            {totalWorkTime <= totalBreakTime? 
+            {totalWorkTime < totalBreakTime? 
             <div className='blockdiv'>
-                <p>Your work time cannot be less than or equal to your break time.</p>
+                <p>Your work time cannot be less than your break time.</p>
                 <p>For the sake of productivity.</p>
             </div>:null}
 

@@ -6,11 +6,11 @@ import { useState } from 'react';
 import SetterContext from './Components/SetterContext';
 import Timer from './Components/Timer';
 import Finished from './Components/Finished';
-// import setup from './Images/setup.jpeg';
-// import './Images';
-// import setup from'./Images/setup.jpeg';
-
-
+import Sidebar from './Components/Sidebarcontent/Sidebar';
+import Datadisplay from './Components/Sidebarcontent/Datadisplay';
+import Synopsis from './Components/Sidebarcontent/Synopsis';
+import Theme from './Components/Sidebarcontent/Theme';
+import Login from './Components/Sidebarcontent/Login';
 
 function App() {
 
@@ -24,12 +24,18 @@ function App() {
   const[showData, setShowData] = useState(true);
   const[isWorkGreater,setIsWorkGreater] = useState(false);
   const [modalOpen, setModalOpen] = useState(true);
-  const [clicked, setClicked] = useState(false);
+  // const [clicked, setClicked] = useState(false);
   const[hasUserRated, setHasUserRated] = useState(false);
   const[cancelTheSession, setCancelTheSession] = useState(false);
   const [blockNum, setBlockNum] = useState(1);
   const[sessionComplete, setSessionComplete] = useState(false);
-  
+
+  const [sideBar,setSideBar] = useState(true);
+  const [hideButton, setHideButton] = useState(false);
+  const [synopsis, setSynopsis] = useState(false);
+  const [data, setData] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [openThemePage,setOpenThemePage] = useState(false)
 
   // let shows =()=>{
   //   if(showParagraph === true){
@@ -41,10 +47,6 @@ function App() {
   
   return (
     <div className="App">
-
-      <Navbar/>
-      {/* <Data/>
-      <Synopsis/> */}
       
       <div className='theApp'>
       
@@ -67,8 +69,8 @@ function App() {
           setIsWorkGreater,
           modalOpen,
           setModalOpen,
-          clicked,
-          setClicked,
+          // clicked,
+          // setClicked,
           hasUserRated,
           setHasUserRated,
           cancelTheSession, 
@@ -76,17 +78,34 @@ function App() {
           blockNum,
           setBlockNum,
           sessionComplete, 
-          setSessionComplete
+          setSessionComplete,
+          sideBar,
+          setSideBar,
+          hideButton, 
+          setHideButton,
+          synopsis, 
+          setSynopsis,
+          data, setData,
+          loginOpen, 
+          setLoginOpen,
+          openThemePage,
+          setOpenThemePage
+          
           
         }}>
-          {/* {shows()} */}
+          <Navbar/>
           {showParagraph? <Contents/>:null}
           {showSetterPage? <Setter/>: null}
           {showTimerPage ? <Timer/> : null}
           
-          {/* {sessionComplete?setShowTimerPage(false):null} */}
           {sessionComplete?<Finished/>:null}
           
+          { sideBar ? <Sidebar/>:null}
+          { data ? <Datadisplay/>:null}
+          { synopsis ? <Synopsis/>: null}
+          { openThemePage ? <Theme/>: null}
+          { loginOpen ? <Login/>: null}
+    
           
             
         </SetterContext.Provider>

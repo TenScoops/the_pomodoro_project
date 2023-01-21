@@ -74,7 +74,7 @@ const Rating = () => {
         <div className='ratingdiv'>
         
             <Modal
-              closeTimeoutMS={120}
+              // closeTimeoutMS={120}
               isOpen={modalOpen}
               onRequestClose={() => setModalOpen(false)}
               style={customStyles} 
