@@ -22,7 +22,7 @@
   }
   .time{
     display: inline-flex;
-    font-size: 230px;
+    font-size: 180px;
     margin: 0;
     font-family: 'Source Code Pro', monospace;
     /* margin-bottom: 30px; 
@@ -50,7 +50,7 @@
  }
 
 .play{
-  width:150px;
+  width:100px;
   margin-right: 50px;
   margin-left: 30px;
   border-radius: 15px;
@@ -59,7 +59,7 @@
 -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 }
 .pause{
-  width:150px;
+  width:100px;
   margin-right: 50px;
   border-radius: 15px;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
@@ -68,7 +68,7 @@
 }
 
 .skip{
-  width:150px;
+  width:100px;
   border-radius: 15px;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);

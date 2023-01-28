@@ -7,16 +7,14 @@ import Modal from "react-modal";
 
 const Sidebar = () => {
   const [modalOpen, setModalOpen] = useState(true);
-  // const synopInfo = useContext(SetterContext)
-  
+
   const customStyles = {
     overlay: {
       backgroundColor: 'transparent'
-     //#1e212d82
-     //#1e212da3
-     //#08080b97
     }};
+
   const barInfo = useContext(SetterContext);
+
   const modalClose = ()=>{
     barInfo.setHideButton(false)
     barInfo.setSideBar(false)
@@ -30,7 +28,7 @@ const Sidebar = () => {
     isOpen={modalOpen}
     onRequestClose={()=>modalClose()}
     nested> */}
-      <div className='sidebarbutton'>
+      {/* <div className='sidebarbutton'>
         <button onClick={()=>{(barInfo.sideBar === false? barInfo.setSideBar(true):barInfo.setSideBar(false)); barInfo.setHideButton(false)}} className='bars1'>
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -38,7 +36,7 @@ const Sidebar = () => {
           </svg>
           
         </button>
-      </div>
+      </div> */}
       <div className='sidebarcontent'>
         {/* <button className='home'>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -47,13 +45,14 @@ const Sidebar = () => {
         </svg>
 
         </button> */}
-        <h1 className='h1-text' style={{marginTop:'150px'}} >
+        <h2 style={{marginTop:'150px', marginBottom:'0', marginLeft:'20px', padding:'0'}}>Honest</h2>
+        <h1 className='h1-text' style={{marginTop:'0'}} >
           <svg style={{width:'60px', height:'38px',alignItems:'center', justifyContent:'center', display:'inline-flex', flexDirection:'row'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
             Pomodoro
         </h1> 
-            <hr className='breakpoint' style={{width : "300px"}}/>
+            <hr className='breakpoint' style={{width : "200px"}}/>
         
         <h3 className='text' onClick={()=>{barInfo.setData(true)}}>
           <svg style={{width:'60px', height:'38px',alignItems:'center', justifyContent:'center', display:'inline-flex', flexDirection:'row'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -84,16 +83,14 @@ const Sidebar = () => {
           Theme(Coming Soon)
         </h3>
 
-      
         <h3 className='text' id='firebaseui-auth-container' onClick={()=>{barInfo.setLoginOpen(true)}}>
           <svg style={{width:'60px', height:'38px',alignItems:'center', justifyContent:'center', display:'inline-flex', flexDirection:'row'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
           </svg>
-            Login/Signup
+            Login
         </h3>
+
       </div>
-    {/* <FontAwesomeIcon icon="fa-solid fa-user" /> */}
-  {/* </Modal> */}
   </div>
   )
 }

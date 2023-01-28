@@ -37,6 +37,7 @@ function App() {
   const [synopsis, setSynopsis] = useState(false);
   const [data, setData] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [loginDup, setLoginDup] = useState(false);
   const [openThemePage,setOpenThemePage] = useState(false);
 
   
@@ -83,6 +84,8 @@ function App() {
           data, setData,
           loginOpen, 
           setLoginOpen,
+          loginDup,
+          setLoginDup,
           openThemePage,
           setOpenThemePage,
           openTask,
