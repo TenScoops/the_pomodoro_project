@@ -5,77 +5,54 @@ import Modal from "react-modal";
 import './CSS/Login.css'
 // import { useState } from 'react';
 
-const Login = () => {
-    const [modalOpen, setModalOpen] = useState(true);
-    const[signup,setSignup] = useState(false);
-    // const [shouldOpen, setShouldOpen] = useState(true)
-    const loginInfo = useContext(SetterContext);
+import firebase from 'firebase/compat/app';
+import * as firebaseui from 'firebaseui';
+import 'firebaseui/dist/firebaseui.css'
 
-    const customStyles = {
-        overlay: {
-            backgroundColor: '#08080b97'
-        },
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: '#181a24',
-            height:'500px',
-            width: '500px',
-            borderRadius:'35px',
-            padding:'0'
-        }
-    };
+const firebaseConfig = {
+  apiKey: "AIzaSyBlmz1h-80L5aG4_16PlxRSfo_s4rT1pCo",
+  authDomain: "honest-pomodoro.firebaseapp.com",
+  projectId: "honest-pomodoro",
+  storageBucket: "honest-pomodoro.appspot.com",
+  messagingSenderId: "644997715064",
+  appId: "1:644997715064:web:62db616e6eaf7ebcd3c98d",
+  measurementId: "G-QK0E5L8DZY"
+};
 
-    const closeModal = () =>{
-      setModalOpen(false)
-      loginInfo.setLoginOpen(false)
-      }  
-
-
-    const login=()=>{
-      return<div style={{display:'flex', justifyContent:'center', alignItems:'center',flexDirection:'column', width:'100%', height:'100%'}}>
-          <label style={{marginRight:'125px'}}>Username/Email:</label>
-          <input type="text" placeholder="Enter Username" name="username" required />
-          <label style={{marginRight:'170px'}}>Password:</label>
-          <input type="password" placeholder="Enter Password" name="password" required />
-          <div style={{display:'inline-flex'}}> <button className='loginbutton'>Login</button> <button onClick={()=>{setSignup(true)}} className='loginbutton'>Sign Up</button></div>
-      </div>
-  }
-    const signUpPage=()=>{
-      return <div style={{display:'flex', justifyContent:'center', alignItems:'center',flexDirection:'column', width:'100%', height:'100%'}}>
-                  <label style={{marginRight:'160px'}}>Your Email:</label>
-                  <input type="text" placeholder="Enter Email" name="email" required />
-
-                  <label style={{marginRight:'170px'}}>Username:</label>
-                  <input type="text" placeholder="Enter Username" name="createusername" required />
-
-                  <label style={{marginRight:'170px'}}>Password:</label>
-                  <input type="password" placeholder="Enter Password" name="createpassword" required />
-
-                  <label style={{marginRight:'110px'}}>Re-enter Password:</label>
-                  <input type="password" placeholder="Re-enter Password" name="createrepassword" required />
-
-                  <div style={{display:'inline-flex'}}> <button className='loginbutton' onClick={()=>{setSignup(false)}}>Back</button> 
-                  <button className='loginbutton'>Confirm</button> </div>
-            </div>
+const uiConfig = {
+  callbacks: {
+    signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+      // User successfully signed in.
+      // Return type determines whether we continue the redirect automatically
+      // or whether we leave that to developer to handle.
+      return true;
+    },
+    uiShown: function() {
+      // The widget is rendered.
+      // Hide the loader.
+      document.getElementById('loader').style.display = 'none';
     }
+  },
+  // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+  signInFlow: 'popup',
+  signInSuccessUrl: '/', // add proper success url later
+  signInOptions: [
+    // Leave the lines as is for the providers you want to offer your users.
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+  ],
+  // Terms of service url.
+  // tosUrl: '<your-tos-url>',
+  // Privacy policy url.
+  // privacyPolicyUrl: '<your-privacy-policy-url>'
+};
 
+const app = firebase.initializeApp(firebaseConfig);
+const ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase.auth());
+
+
+const Login = () => {
   return (
-    <Modal 
-          isOpen={modalOpen}
-          onRequestClose={() => closeModal()}
-          style={customStyles} 
-        >
-           <div style={{height:'100%', width:'100%'}} >
-
-            {signup?signUpPage():login()}
-            
-          </div>
-        </Modal>
+    ui.start('#firebaseui-auth-container', uiConfig)
   )
 }
 

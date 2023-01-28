@@ -15,7 +15,6 @@ import Task from './Components/TaskList/Task';
 
 
 function App() {
-
   const[showSetterPage, setShowSetterPage] = useState(false);
   const[showTimerPage, setShowTimerPage] = useState(false);
   const[workMinutes, setWorkMinutes] = useState(1);
