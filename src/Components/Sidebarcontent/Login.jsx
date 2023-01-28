@@ -2,7 +2,7 @@ import React from 'react';
 import SetterContext from '../SetterContext';
 import { useContext, useState } from 'react';
 import Modal from "react-modal";
-import './Login.css'
+import './CSS/Login.css'
 // import { useState } from 'react';
 
 const Login = () => {
@@ -13,11 +13,7 @@ const Login = () => {
 
     const customStyles = {
         overlay: {
-            backgroundColor: '#08080b97',
-            //#1e212d82
-            //#1e212da3
-            //#08080b97
-        //  backdrop:'static'
+            backgroundColor: '#08080b97'
         },
         content: {
             top: '50%',
@@ -29,12 +25,7 @@ const Login = () => {
             backgroundColor: '#181a24',
             height:'500px',
             width: '500px',
-            borderRadius:'50px',
-            // borderColor:'transparent'
-            // backgroundRepeat: 'no-repeat',
-            // backgroundAttachment:'fixed',
-            // backgroundImage: `url(${'/5996460.jpg'})` ,
-            //  backgroundImage: "url(/images/background3.jpg)" 
+            borderRadius:'35px',
             padding:'0'
         }
     };

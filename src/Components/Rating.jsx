@@ -27,7 +27,7 @@ const Rating = () => {
       backgroundColor: '#181a24',
       height:'670px',
       width: '500px',
-      borderRadius:'32px',
+      // borderRadius:'32px',
       
     }
   };
@@ -40,7 +40,8 @@ const Rating = () => {
         <div className = 'scoreText' style={{justifyContent: 'center', display: 'flex', 
         flexDirection:'column', alignItems:'center', fontSize:'25px'}}>
           <p style={{display:'flex'}}>Rate your performance for block <p style={{marginLeft:'10px', fontSize:'35px', backgroundColor:'white', color:'black', borderRadius:'40px'}}> #{ratingInfo.blockNum}</p></p>
-          <p style={{fontSize:'18px', marginBottom:'25px'}}>Be as honest as possible!!</p>
+          <p style={{fontSize:'18px', marginBottom:'25px', marginBottom:'10px'}}>Be as honest as possible!!</p>
+          <hr style={{width:'400px', margin:'0'}}></hr>
           </div>
         <div className='score' id='score10' onClick={()=>{data=data+10; console.log(data); ratingInfo.setHasUserRated(true)}} >10 - Fantastic</div>
         <div className='score' id='score9' onClick={()=>{data=data+9; console.log(data); ratingInfo.setHasUserRated(true)}} >9 - Great</div>

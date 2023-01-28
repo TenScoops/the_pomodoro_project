@@ -15,7 +15,6 @@ body{
   /* font-family: 'Indie Flower', cursive; */
   /* font-family: 'Source Code Pro', monospace; */
   font-family: 'Kalam', cursive;
-  /* font-style: italic; */
 }
 
 .App{
@@ -34,7 +33,6 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .theApp{
@@ -42,15 +40,13 @@ body{
   align-items: center;
   justify-content: center;
   height:950px;
-  
-
 }
 
 .paragraph{
   display: flex;
+  align-items: center;
   width: 900px;
   font-size: 25px;
-
   animation: fadeInAnimation 0.61s;
   -webkit-animation: fadeInAnimation 0.61s;
   -moz-animation: fadeInAnimation 0.61s;
@@ -65,7 +61,6 @@ button{
   color: white;
   border-color: transparent;
   width:100px;
-  /* border-radius: 50%; */
   margin-right: 30px;
   cursor:pointer;
   transition: .08s ease-in;
@@ -74,15 +69,14 @@ button{
 
 .startSession{
   border-color: white;
-  background-color: #1e212d75;
+  background-color: #1e212da2;
   width:200px;
   font-size: 20px;
-  /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
   font-family: 'Kalam', cursive;
   height:60px;
-  border-radius: 15px;
+  border-radius: 10px;
   margin-right: 0px;
-  border-width: 3px;
+  border-width: 2px;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
@@ -126,8 +120,6 @@ button:hover{
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
-
-/* animation */
 
 @keyframes anvil {
   0% {

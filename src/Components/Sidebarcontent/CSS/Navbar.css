@@ -11,7 +11,7 @@
     position:fixed;
     top:0;
     left:0;
-    background-color:#34394d;
+    background-color:#16181fea;
     
     color: white;
     border-color: transparent;
@@ -21,7 +21,7 @@
 -moz-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
 }
 .bars2:hover{
-    background-color: rgb(30, 33, 45, 0.5);
+    background-color: rgba(64, 70, 95, 0.5);
 }
 
 

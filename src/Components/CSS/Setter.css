@@ -29,7 +29,7 @@
 .header{
   font-size: 35px;
   font-family: 'Kalam', cursive;
-  margin:10px;
+  margin:9px;
   font-style:oblique;
 }
 .setter p{
@@ -97,7 +97,7 @@
 
 .nextbackbuttons{
     display: inline-flex;
-    margin-top: 40px;
+    margin-top: 50px;
     margin-bottom: 0;
 }
 

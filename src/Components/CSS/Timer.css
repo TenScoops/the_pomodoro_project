@@ -77,6 +77,18 @@
 
 .cancel{
   font-family: 'Kalam', cursive;
+  /* background-color: #1e212ddf; */
+}
+
+.thetasklist{
+  font-family: 'Kalam', cursive;
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  background-color: #0d0e12df;
+}
+.thetasklist:hover{
+  background-color: #22252f84;
 }
 
 

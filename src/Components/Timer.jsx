@@ -7,6 +7,9 @@ import SetterContext from './SetterContext';
 import Rating from './Rating';
 import Skip from './Buttons/Skip';
 import Areyousure from './Areyousure';
+import {BsFileTextFill} from 'react-icons/bs'
+import {BsFileText} from 'react-icons/bs'
+
 
 const Timer = () => {
     const setterInfo = useContext(SetterContext);
@@ -70,7 +73,7 @@ const Timer = () => {
         if(isPausedRef.current){
             return;
         }
-        if(timeLeftRef.current === 0){
+       else if(timeLeftRef.current === 0){
             return switchMode();
         }
 
@@ -90,12 +93,6 @@ const Timer = () => {
        return number < 10 ? "0"+number :number;
     }
 
-    // function areYouSure(){
-    //     return <div>
-    //         <Areyousure/>
-    //     </div>
-    // }
-
     const showTheButtons =()=>{
         if(setterInfo.showButtons === true){
             return <div style={{display:'flex', justifyCotent:'center', alignItems:'center', flexDirection:'column'}}>
@@ -106,13 +103,21 @@ const Timer = () => {
                     
                 </div>
 
-                <div>
-                    <button className ='cancel' onClick={() =>{setterInfo.setCancelTheSession(true)}}
-                    style={{width:'150px', marginLeft:'20px',  borderRadius:'15px', fontSize:'15px'}}>Cancel Session</button>
+                <div style={{display:'flex', justifyCotent:'center', alignItems:'center'}}>
+                    
+                    <button className ='cancel' onClick={() =>{setterInfo.setCancelTheSession(true)}} style={{width:'150px', marginLeft:'20px',  borderRadius:'15px', fontSize:'15px'}}>
+                        Cancel Session
+                    </button>
                 </div>
                     
             </div>
         }
+    }
+
+    const theTasks = () =>{
+       return <button onClick={()=>{setterInfo.setOpenTask(true)}} className ='thetasklist'
+        style={{width:'40px', marginLeft:'20px',  borderRadius:'7px', fontSize:'15px', height:'35px', marginTop:'55px', paddingTop:'3px', marginRight:'10px'}}>
+            <BsFileText style={{fontSize:'24px'}}/></button>
     }
 
     // const [blockNum, setBlockNum] = useState(1);
@@ -184,7 +189,10 @@ const Timer = () => {
             {setterInfo.showData?<div className='blockdiv'><p>and {totalBreakTime} minutes of break time</p></div>:null}
             {setterInfo.showData?<div className='blockdiv'><p style={{color:'black', backgroundColor:'white'}}>Session will be completed in {numOfblocks} block(s)</p></div>:null}
 
-            {setterInfo.showData?null:<div style={{borderRadius:'10px',marginTop:'60px'}} className='blockdiv'><p>You are currently: {mode === 'work'?"working..":"on break."}</p></div>}
+            <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                {setterInfo.showData?null:theTasks()}
+                {setterInfo.showData?null:<div style={{borderRadius:'10px',marginTop:'60px', marginRight:'75px'}} className='blockdiv'><p>You are currently: {mode === 'work'?"working..":"on break."}</p></div>}
+            </div>
             {mode==="work"?<div style={{borderRadius:'10px'}} className='blockdiv'><p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
 
             <div className='time'>
@@ -208,18 +216,6 @@ const Timer = () => {
             {setterInfo.cancelTheSession? <Areyousure/>:null}
 
             {setterInfo.sessionComplete?setterInfo.setShowTimerPage(false):null}
-            {/* {mode === 'break'? <Rating/>:null} */}
-            {/* {isWorkTimeUp} */}
-            {/* {showThisRating? <Rating/> : null} */}
-            {/* {isBlockOver && isPaused === true?<Rating/>:null} */}
-
-        {/* <SetterContext.Provider value ={{
-          setBlockNum,
-          blockNum
-        }}>
-         
-        </SetterContext.Provider> */}
-
         </div>
     )
 }

@@ -11,6 +11,8 @@ import Datadisplay from './Components/Sidebarcontent/Datadisplay';
 import Synopsis from './Components/Sidebarcontent/Synopsis';
 import Theme from './Components/Sidebarcontent/Theme';
 import Login from './Components/Sidebarcontent/Login';
+import Task from './Components/TaskList/Task';
+
 
 function App() {
 
@@ -29,21 +31,15 @@ function App() {
   const[cancelTheSession, setCancelTheSession] = useState(false);
   const [blockNum, setBlockNum] = useState(1);
   const[sessionComplete, setSessionComplete] = useState(false);
+  const [openTask, setOpenTask] = useState(false);
 
   const [sideBar,setSideBar] = useState(true);
-  const [hideButton, setHideButton] = useState(false);
+  const [hideButton, setHideButton] = useState(true);
   const [synopsis, setSynopsis] = useState(false);
   const [data, setData] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
-  const [openThemePage,setOpenThemePage] = useState(false)
+  const [openThemePage,setOpenThemePage] = useState(false);
 
-  // let shows =()=>{
-  //   if(showParagraph === true){
-  //    return showSetterPage ? <Setter/> :  <Contents/>
-  //   }else{
-  //     return null;
-  //   }
-  // }
   
   return (
     <div className="App">
@@ -89,16 +85,18 @@ function App() {
           loginOpen, 
           setLoginOpen,
           openThemePage,
-          setOpenThemePage
+          setOpenThemePage,
+          openTask,
+          setOpenTask
           
           
         }}>
           <Navbar/>
-          {showParagraph? <Contents/>:null}
-          {showSetterPage? <Setter/>: null}
-          {showTimerPage ? <Timer/> : null}
+          { showParagraph? <Contents/>:null}
+          { showSetterPage? <Setter/>: null}
+          { showTimerPage ? <Timer/> : null}
           
-          {sessionComplete?<Finished/>:null}
+          { sessionComplete?<Finished/>:null}
           
           { sideBar ? <Sidebar/>:null}
           { data ? <Datadisplay/>:null}
@@ -106,10 +104,12 @@ function App() {
           { openThemePage ? <Theme/>: null}
           { loginOpen ? <Login/>: null}
     
+          { openTask? <Task/>: null}
           
-            
+     
         </SetterContext.Provider>
       
+     
       </div>
      
     </div>
