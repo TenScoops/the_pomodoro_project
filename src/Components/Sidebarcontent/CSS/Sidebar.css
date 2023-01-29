@@ -1,5 +1,5 @@
 .sidebar{
-    width: 300px;
+    width: 325px;
     height: 100%;
     background-color: #1e212dab;
     margin:0;
@@ -19,7 +19,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 300px;
+    width: 325px;
     
    
 }
@@ -27,7 +27,7 @@
 .text{
     width:280px;
     border-radius: 15px;
-    font-size: 18px;
+    font-size: 19.15px;
     
 }
 .text svg{

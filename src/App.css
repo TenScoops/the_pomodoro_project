@@ -18,7 +18,7 @@ body{
 }
 
 .App{
-  background-image: url("/public/Images/setup.jpeg");
+  background-image: url("/public/Images/cabin.jpeg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -70,10 +70,10 @@ button{
 .startSession{
   border-color: white;
   background-color: #1e212da2;
-  width:200px;
+  width:190px;
   font-size: 20px;
   font-family: 'Kalam', cursive;
-  height:60px;
+  height:58px;
   border-radius: 10px;
   margin-right: 0px;
   border-width: 2px;

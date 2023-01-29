@@ -27,20 +27,28 @@ const Rating = () => {
       backgroundColor: '#181a24',
       height:'670px',
       width: '500px',
-      // borderRadius:'32px',
+      borderRadius:'20px',
       
     }
   };
 
   let data = 0;//will hold block ratings
 
+  const questionMark =()=>{
+    return <button onClick={()=>{}} style={{backgroundColor:'transparent', width:'42px', marginRight:'0'}}>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+      </svg>
+    </button>
+  }
+
   const ratingOptions = ()=>{
 
     return <div className='scores'>
         <div className = 'scoreText' style={{justifyContent: 'center', display: 'flex', 
         flexDirection:'column', alignItems:'center', fontSize:'25px'}}>
-          <p style={{display:'flex'}}>Rate your performance for block <p style={{marginLeft:'10px', fontSize:'35px', backgroundColor:'white', color:'black', borderRadius:'40px'}}> #{ratingInfo.blockNum}</p></p>
-          <p style={{fontSize:'18px', marginBottom:'25px', marginBottom:'10px'}}>Be as honest as possible!!</p>
+          <p style={{display:'flex'}}>Rate your performance for block <p style={{marginLeft:'10px', fontSize:'35px', backgroundColor:'white', color:'black', borderRadius:'40px', marginBottom:'2px'}}> #{ratingInfo.blockNum}</p></p>
+          <p style={{fontSize:'18px', marginBottom:'25px', marginBottom:'10px', display:'flex', justifyContent:'center'}}>How to rate your performance{questionMark()}</p>
           <hr style={{width:'400px', margin:'0'}}></hr>
           </div>
         <div className='score' id='score10' onClick={()=>{data=data+10; console.log(data); ratingInfo.setHasUserRated(true)}} >10 - Fantastic</div>
