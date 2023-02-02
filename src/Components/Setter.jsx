@@ -22,11 +22,16 @@ const Setter = () => {
     setterInfo.setShowSetterPage(false);
     setterInfo.setShowTimerPage(false);
     setterInfo.setShowParagraph(true);
+    setterInfo.setClicked(false);
     
+  }
+
+  const hasClicked = () =>{
+    setterInfo.setShowTimerPage(false)
   }
   const breaks = setterInfo.numOfBreaks === 1? "break":"breaks";
 
-  const theTasks = () =>{
+  const taskButton = () =>{
     return <button onClick={()=>{setterInfo.setOpenTask(true)}} className='clockbutton'>
          <BsFileText style={{fontSize:'42px', paddingLeft:'3px'}}/>
          </button>
@@ -70,9 +75,9 @@ const Setter = () => {
 
           <div className='nextbackbuttons'>
             <Backbutton title ="Back" onClick={() => {goBack()}}/>
-            {theTasks()}
-            <Clock  title ="Show clock" onClick={() =>{setterInfo.showTimerPage === false?setterInfo.setShowTimerPage(true):setterInfo.setShowTimerPage(false)}}/>
-            <Nextbutton title ="Start"onClick={() => {goForward()}}/>
+            {taskButton()}
+            <Clock  title ="Show clock" onClick={() =>{ setterInfo.setClicked(true); {setterInfo.showTimerPage?setterInfo.setShowTimerPage(false):setterInfo.setShowTimerPage(true)}}}/>
+            {setterInfo.clicked?<Nextbutton title ="Start"onClick={() => {goForward()}}/>:null}
           </div>
       </div>
     </div>

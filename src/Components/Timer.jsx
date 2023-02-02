@@ -105,7 +105,8 @@ const Timer = () => {
 
                 <div style={{display:'flex', justifyCotent:'center', alignItems:'center'}}>
                     
-                    <button className ='cancel' onClick={() =>{setterInfo.setCancelTheSession(true)}} style={{width:'150px', marginLeft:'20px',  borderRadius:'15px', fontSize:'15px'}}>
+                    <button className ='cancel' style={{width:'150px', marginLeft:'20px',  borderRadius:'15px', fontSize:'15px'}} 
+                        onClick={() =>{setterInfo.setClicked(false);setterInfo.setCancelTheSession(true)}} >
                         Cancel Session
                     </button>
                 </div>
@@ -122,7 +123,6 @@ const Timer = () => {
 
     // const [blockNum, setBlockNum] = useState(1);
     const blockNumRef = useRef(setterInfo.blockNum);
-
     const[block, setBlock] = useState(0);
     const blockRef = useRef(block);
 
@@ -193,7 +193,7 @@ const Timer = () => {
                 {setterInfo.showData?null:theTasks()}
                 {setterInfo.showData?null:<div style={{borderRadius:'10px',marginTop:'60px', marginRight:'75px'}} className='blockdiv'><p>You are currently: {mode === 'work'?"working..":"on break."}</p></div>}
             </div>
-            {mode==="work"?<div style={{borderRadius:'10px'}} className='blockdiv'><p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
+            {mode==="work"?<div style={{borderRadius:'10px', marginBottom:'20px'}} className='blockdiv'><p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
 
             <div className='time'>
                 <p className='minutes'>{totalWorkTime < totalBreakTime?"00" :addZero(minutes)}</p>

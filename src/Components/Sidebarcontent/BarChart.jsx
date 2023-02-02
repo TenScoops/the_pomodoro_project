@@ -23,7 +23,8 @@ const data = {
   labels:['Monday', 'Tuesday', 'Wednesday','Thursday','Friday', 'Saturday', 'Sunday'],
   datasets: [
     {
-      label:'Performance Score',
+      // label:'Performance Score',
+      label:'Productivity avg',
       data:[10,9.2,3,5,7,2,1],
       backgroundColor: 
       ['rgba(0, 128, 0, 0.743)', 
@@ -46,6 +47,7 @@ const options = {
       display: true,
       text: 'Week of 1/21-1/27',
     },
+    responsive: true,
     scales: {
       y:{
         min: 0,

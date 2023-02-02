@@ -25,7 +25,7 @@ function App() {
   const[showData, setShowData] = useState(true);
   const[isWorkGreater,setIsWorkGreater] = useState(false);
   const [modalOpen, setModalOpen] = useState(true);
-  // const [clicked, setClicked] = useState(false);
+  const [clicked, setClicked] = useState(false);
   const[hasUserRated, setHasUserRated] = useState(false);
   const[cancelTheSession, setCancelTheSession] = useState(false);
   const [blockNum, setBlockNum] = useState(1);
@@ -64,8 +64,8 @@ function App() {
           setIsWorkGreater,
           modalOpen,
           setModalOpen,
-          // clicked,
-          // setClicked,
+          clicked,
+          setClicked,
           hasUserRated,
           setHasUserRated,
           cancelTheSession, 

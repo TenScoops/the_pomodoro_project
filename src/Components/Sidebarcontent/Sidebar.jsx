@@ -45,14 +45,14 @@ const Sidebar = () => {
         </svg>
 
         </button> */}
-        <h2 style={{marginTop:'100px', marginBottom:'0', marginLeft:'20px', padding:'0'}}>The Honest</h2>
-        <h1 className='h1-text' style={{marginTop:'0'}} >
-          <svg style={{width:'60px', height:'38px',alignItems:'center', justifyContent:'center', display:'inline-flex', flexDirection:'row'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <h2 style={{marginTop:'160px', marginBottom:'0', padding:'0', }}>The Honest</h2>
+        <h1 className='h1-text' style={{marginTop:'0', }} >
+          {/* <svg style={{width:'60px', height:'38px',alignItems:'center', justifyContent:'center', display:'inline-flex', flexDirection:'row'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+          </svg> */}
             Pomodoro
         </h1> 
-            <hr className='breakpoint' style={{width : "280px"}}/>
+            <hr style={{width:'50px', marginBottom:'75px' }}/>
 
         
         <h3 className='text' onClick={()=>{barInfo.setData(true)}}>

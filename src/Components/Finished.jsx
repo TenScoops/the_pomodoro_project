@@ -10,6 +10,7 @@ const Finished = () => {
         finishedInfo.setShowData(true);//resetting to default
         finishedInfo.setShowSetterPage(true);
         finishedInfo.setSessionComplete(false);
+        finishedInfo.setClicked(false);
       
       }
   return (
