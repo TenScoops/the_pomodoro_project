@@ -2,7 +2,8 @@ import React, { useContext, useState } from 'react';
 import './CSS/Sidebar.css';
 import SetterContext from '../SetterContext'; 
 import Modal from "react-modal";
-
+import {AiOutlineStock} from 'react-icons/ai'
+import {ImStatsBars} from 'react-icons/im'
 
 
 const Sidebar = () => {
@@ -45,14 +46,15 @@ const Sidebar = () => {
         </svg>
 
         </button> */}
-        <h2 style={{marginTop:'160px', marginBottom:'0', padding:'0', }}>The Honest</h2>
+        <h2 style={{marginTop:'160px', marginBottom:'0', padding:'0', }}>The Progress <ImStatsBars/> </h2>
         <h1 className='h1-text' style={{marginTop:'0', }} >
           {/* <svg style={{width:'60px', height:'38px',alignItems:'center', justifyContent:'center', display:'inline-flex', flexDirection:'row'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg> */}
+          {/* <AiOutlineStock style={{marginRight:'10px'}}/> */}
             Pomodoro
         </h1> 
-            <hr style={{width:'50px', marginBottom:'75px' }}/>
+            <hr style={{width:'10px', marginBottom:'45px' }}/>
 
         
         <h3 className='text' onClick={()=>{barInfo.setData(true)}}>
@@ -88,7 +90,7 @@ const Sidebar = () => {
           <svg style={{width:'60px', height:'38px',alignItems:'center', justifyContent:'center', display:'inline-flex', flexDirection:'row'}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
           </svg>
-            Sign-in
+            Sign in
         </h3>
 
       </div>
