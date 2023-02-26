@@ -26,6 +26,10 @@ const Timer = () => {
     const numOfblocks = setterInfo.numOfBreaks+1; // change block number
     const totalWorkTime = ( ((setterInfo.workMinutes*60))-totalBreakTime);
 
+    window.onbeforeunload = function() {
+        return true;
+    };
+
     //  let block = 0;
      
     // const cancelSession = () =>{
@@ -216,6 +220,8 @@ const Timer = () => {
             {setterInfo.cancelTheSession? <Areyousure/>:null}
 
             {setterInfo.sessionComplete?setterInfo.setShowTimerPage(false):null}
+
+            {window.onbeforeunload()}
         </div>
     )
 }

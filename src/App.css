@@ -94,6 +94,16 @@ button:hover{
  
 }
 
+.content-text{
+  display:flex;
+  justify-content:center;
+  align-content:center;
+  background-color:black;
+  border-radius:15px; 
+  max-width:650px; 
+  font-size:20px;
+}
+
 /*Animations*/
 
 @keyframes fadeInAnimation {

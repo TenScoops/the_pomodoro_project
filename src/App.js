@@ -10,8 +10,10 @@ import Sidebar from './Components/Sidebarcontent/Sidebar';
 import Datadisplay from './Components/Sidebarcontent/Datadisplay';
 import Synopsis from './Components/Sidebarcontent/Synopsis';
 import Theme from './Components/Sidebarcontent/Theme';
-import Login from './Components/Sidebarcontent/Login';
+
 import Task from './Components/TaskList/Task';
+import Logout from './Components/Logout'
+import { AuthContextProvider } from './FirebaseAuth/AuthContext';
 
 
 function App() {
@@ -36,15 +38,16 @@ function App() {
   const [hideButton, setHideButton] = useState(true);
   const [synopsis, setSynopsis] = useState(false);
   const [data, setData] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
+  const [logout, setLogout] = useState(false);
   const [openThemePage,setOpenThemePage] = useState(false);
 
+  
   
   return (
     <div className="App">
       
       <div className='theApp'>
-      
+      <AuthContextProvider>
         <SetterContext.Provider value ={{
           workMinutes,
           breakMinutes,
@@ -80,13 +83,14 @@ function App() {
           setHideButton,
           synopsis, 
           setSynopsis,
-          data, setData,
-          loginOpen, 
-          setLoginOpen,
+          data, 
+          setData,
           openThemePage,
           setOpenThemePage,
           openTask,
-          setOpenTask
+          setOpenTask,
+          logout,
+          setLogout
           
           
         }}>
@@ -101,13 +105,12 @@ function App() {
           { data ? <Datadisplay/>:null}
           { synopsis ? <Synopsis/>: null}
           { openThemePage ? <Theme/>: null}
-          { loginOpen ? <Login/>: null}
     
           { openTask? <Task/>: null}
-          
+          { logout? <Logout/>:null}
      
         </SetterContext.Provider>
-      
+        </AuthContextProvider>
      
       </div>
      

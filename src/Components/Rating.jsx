@@ -40,6 +40,7 @@ const Rating = () => {
         <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
       </svg>
     </button>
+    
   }
 
   const ratingOptions = ()=>{
@@ -51,17 +52,18 @@ const Rating = () => {
           <p style={{fontSize:'18px', marginBottom:'25px', marginBottom:'10px', display:'flex', justifyContent:'center'}}>How to rate your performance{questionMark()}</p>
           <hr style={{width:'400px', margin:'0'}}></hr>
           </div>
-        <div className='score' id='score10' onClick={()=>{data=data+10; console.log(data); ratingInfo.setHasUserRated(true)}} >10 - Fantastic</div>
-        <div className='score' id='score9' onClick={()=>{data=data+9; console.log(data); ratingInfo.setHasUserRated(true)}} >9 - Great</div>
-        <div className='score' id='score8' onClick={()=>{data=data+8; console.log(data); ratingInfo.setHasUserRated(true)}} >8 - Good</div>
-        <div className='score' id='score7' onClick={()=>{data=data+7; console.log(data); ratingInfo.setHasUserRated(true)}} >7 - Decent</div>
-        <div className='score' id='score6' onClick={()=>{data=data+6; console.log(data); ratingInfo.setHasUserRated(true)}} >6 - Ok</div>
-        <div className='score' id='score5' onClick={()=>{data=data+5; console.log(data); ratingInfo.setHasUserRated(true)}} >5 - Not good</div>
-        <div className='score' id='score4' onClick={()=>{data=data+4; console.log(data); ratingInfo.setHasUserRated(true)}} >4 - Bad</div>
-        <div className='score' id='score3' onClick={()=>{data=data+3; console.log(data); ratingInfo.setHasUserRated(true)}} >3 - Very bad</div>
-        <div className='score' id='score2' onClick={()=>{data=data+2; console.log(data); ratingInfo.setHasUserRated(true)}} >2 - Really bad</div>
-        <div className='score'id='score1' onClick={()=>{data=data+1; console.log(data); ratingInfo.setHasUserRated(true)}} >1 - Terrible</div>
+        <div className='score' id='score10' onClick={()=>{data=data+10; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem())}} >10 - Fantastic</div>
+        <div className='score' id='score9' onClick={()=>{data=data+9; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem())}} >9 - Great</div>
+        <div className='score' id='score8' onClick={()=>{data=data+8; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem())}} >8 - Good</div>
+        <div className='score' id='score7' onClick={()=>{data=data+7; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem())}} >7 - Decent</div>
+        <div className='score' id='score6' onClick={()=>{data=data+6; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem())}} >6 - Ok</div>
+        <div className='score' id='score5' onClick={()=>{data=data+5; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem())}} >5 - Not good</div>
+        <div className='score' id='score4' onClick={()=>{data=data+4; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem())}} >4 - Bad</div>
+        <div className='score' id='score3' onClick={()=>{data=data+3; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem())}} >3 - Very bad</div>
+        <div className='score' id='score2' onClick={()=>{data=data+2; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem())}} >2 - Really bad</div>
+        <div className='score' id='score1' onClick={()=>{data=data+1; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem())}} >1 - Terrible</div>
       </div>
+      
   }
   const thankYouPage=()=>{
     return <div className='thankyoupage' style={{display:'flex', justifyContent: 'center', alignItems:'center', height:'650px', flexDirection:"column"}}>
@@ -83,11 +85,11 @@ const Rating = () => {
         <div className='ratingdiv'>
         
             <Modal
-              // closeTimeoutMS={120}
+          
               isOpen={modalOpen}
               onRequestClose={() => setModalOpen(false)}
               style={customStyles} 
-              // closeTimeoutMS={5000}
+            
               shouldCloseOnOverlayClick={false}
             > 
               {ratingInfo.hasUserRated?thankYouPage():ratingOptions()}
