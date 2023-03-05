@@ -11,5 +11,4 @@ If it does not start
 2. Delete package-lock.json (`rm package-lock.json`)
 3. Run `npm start`
 
-Progress
-Still in production, ~70% complete
+## Still in production: ~70% complete
