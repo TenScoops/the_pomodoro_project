@@ -10,3 +10,6 @@ If it does not start
 1. Make sure you're in the the project's root directory (/the_pomodoro_project)
 2. Delete package-lock.json (`rm package-lock.json`)
 3. Run `npm start`
+
+Progress
+Still in production, ~70% complete
