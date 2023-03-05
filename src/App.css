@@ -18,7 +18,7 @@ body{
 }
 
 .App{
-  background-image: url("/public/Images/setup.jpeg");
+  background-image: url("/public/Images/cabin.jpeg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
