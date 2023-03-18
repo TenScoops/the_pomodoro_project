@@ -1,5 +1,5 @@
 ## Synopsis
-You are more likely to do better if you hold yourself accountable to your bad performances. I created this rating system to give you the incentive to scrutinize your own performances and in turn help you see growth in productivity and work ethic over time. We hope this helps you achieve your goals in life.
+You are more likely to do better if you hold yourself accountable to your bad performances. I created this rating system to give you the incentive to scrutinize your own performances and in turn help you see growth in productivity and work ethic over time. I hope this helps you achieve your goals in life.
 
 ## Setup
 1. Install Node.js
