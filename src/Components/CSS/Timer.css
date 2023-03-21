@@ -113,11 +113,34 @@
   background-color: #22252f84;
 }
 
+@media only screen and (max-width:1400px) {
+  .new-font{
+    font-size: 100px;
+  }
+  .blockdiv{
+    font-size: 13px;
+  }
+  .time{
+    font-size:80px;
+  }
+  .play{
+    font-size: 20px;
+  }
+  .pause{
+    font-size: 20px;
+  }
+  .skip{
+    width:42.5px;
+  }
+}
+
 @media only screen and (max-width:1800px) {
   .new-font{
     font-size: 100px;
   }
 }
+
+
 
 @media only screen and (max-width:1000px) 
                    and (max-height: 900px) {
@@ -151,6 +174,8 @@
   }
 
 }
+
+
 /* @media only screen and (max-width:700px) {
   
   .blockdiv{

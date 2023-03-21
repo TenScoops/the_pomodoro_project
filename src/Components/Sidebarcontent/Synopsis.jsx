@@ -10,13 +10,19 @@ const Synopsis = () => {
 
   
 
-  function modalWidth() {
+  function width() {
     if (typeof window !== 'undefined') {
-        // if()
-        return window.innerWidth < 700;
+         if(window.innerWidth < 900 ){
+           return '80vw';
+          } 
     }
-    return false;
+    return '40vw';
   }
+  function height() {
+   
+    return '80vh';
+  }
+
   const customStyles = {
     overlay: {
       backgroundColor: '#08080b97',
@@ -33,10 +39,11 @@ const Synopsis = () => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: '#181a24',
-      height:'800px',
-      width: modalWidth()? '450px' : '650px',
+      height:height(),
+      width: width(),
       borderRadius:'12px',
-      padding:'0'
+      padding:'0',
+      position:'relative'
       
     }
   };

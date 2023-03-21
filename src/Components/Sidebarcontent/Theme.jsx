@@ -9,6 +9,23 @@ const Theme = () => {
   const [modalOpen, setModalOpen] = useState(true);
   const themeInfo = useContext(SetterContext);
 
+  function width() {
+    if (typeof window !== 'undefined') {
+         if(window.innerWidth < 700 ){
+           return '450px';
+          } 
+    }
+    return '650px';
+  }
+  function height() {
+    if (typeof window !== 'undefined') {
+         if(window.innerHeight < 700 ){
+           return '500px';
+          } 
+    }
+    return '800px';
+  }
+
   const customStyles = {
     overlay: {
       backgroundColor: '#08080b97',
@@ -21,8 +38,8 @@ const Theme = () => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: '#181a24',
-      height:'800px',
-      width: '650px',
+      height:height(),
+      width: width(),
       borderRadius:'10px',
       padding:'0'
       
