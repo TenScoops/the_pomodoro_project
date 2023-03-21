@@ -104,16 +104,20 @@ const Timer = () => {
     const showTheButtons =()=>{
         if(setterInfo.showButtons === true){
             return <div style={{display:'flex', justifyCotent:'center', alignItems:'center', flexDirection:'column'}}>
-                <div style={{marginBottom:'60px'}}>
-                    <Play title="Play" className="play" onClick={() => { setIsPaused(false); isPausedRef.current = false; }}/>
-                    <Pause title="Pause" className="pause" onClick={() => { setIsPaused(true); isPausedRef.current = true; }}/>
+                <div style={{marginBottom:'60px',display:'flex', justifyCotent:'center', alignItems:'center',}}>
+                    {isPaused?<Play  className="play" onClick={() => { setIsPaused(false); isPausedRef.current = false; }}/>
+                    :
+                    <Pause  className="pause" onClick={() => { setIsPaused(true); isPausedRef.current = true; }}/>
+                    }
+                    
+                   
                     {mode==='break'?<Skip title="Skip Break" onClick={()=>{timeLeftRef.current = 0; setMode('work')}}/>:null}
                     
                 </div>
 
                 <div style={{display:'flex', justifyCotent:'center', alignItems:'center'}}>
                     
-                    <button className ='cancel' style={{width:'150px', marginLeft:'20px',  borderRadius:'15px', fontSize:'15px'}} 
+                    <button className ='cancel' style={{width:'150px', marginLeft:'40px',  borderRadius:'8px', fontSize:'15px'}} 
                         onClick={() =>{setterInfo.setClicked(false);setterInfo.setCancelTheSession(true)}} >
                         Cancel Session
                     </button>
@@ -165,7 +169,9 @@ const Timer = () => {
             }
 
             if(setterInfo.blockNum === numOfblocks && mode === 'break' ){//when session is complete
-                setterInfo.setSessionComplete(true);
+                
+                setterInfo.setSessionComplete(true);//end session
+             
                 setterInfo.blockNum = 0;
                 setterInfo.setBlockNum(setterInfo.blockNum);
             }
@@ -205,7 +211,7 @@ const Timer = () => {
             </div>
             {mode==="work"?<div style={{borderRadius:'10px', marginBottom:'20px'}} className='blockdiv'><p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
 
-            <div className='time'>
+            <div className={setterInfo.showButtons?'time':'time + new-font'}>
                 <p className='minutes'>{totalWorkTime < totalBreakTime?"00" :addZero(minutes)}</p>
                 <p className='semicolon'>:</p>
                 <p className='seconds'>{totalWorkTime < totalBreakTime?"00" :addZero(seconds)}</p>

@@ -1,4 +1,14 @@
 import React from 'react';
+import { useContext } from 'react';
+import SetterContext from '../SetterContext';
+import {
+  collection,
+  query,
+  onSnapshot,
+  doc
+} from "firebase/firestore";
+import { dataBase } from '../../Firebase';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,49 +28,62 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-//
-const data = {
-  labels:['Monday', 'Tuesday', 'Wednesday','Thursday','Friday', 'Saturday', 'Sunday'],
-  datasets: [
-    {
-      // label:'Performance Score',
-      label:'Productivity avg',
-      data:[10,9.2,3,5,7,2,1],
-      backgroundColor: 
-      ['rgba(0, 128, 0, 0.743)', 
-      'rgba(0, 128, 0, 0.743)',
-      'rgba(255, 0, 0, 0.733)', 
-      'rgba(255, 68, 0, 0.733)',
-      'rgba(255, 255, 0, 0.723)',
-      'rgba(255, 0, 0, 0.733)',
-      'rgba(255, 0, 0, 0.733)'],
-      borderColor: 'black',
-      borderWidth: 3.5,
-    }
-  ]
-}
-
-const options = {
-  maintainAspectRatio: false,
-  plugins: {
-    title: {
-      display: true,
-      text: 'Week of 1/21-1/27',
-    },
-    responsive: true,
-    scales: {
-      y:{
-        min: 0,
-        max: 10,
-      }
-    }
-  },
-}
-  
-
+//-------------------------------------------------------------------------------------------------
 const BarChart = () => {
+
+  const rating = useContext(SetterContext);
+
+  function createCharts(){}
+  function updateCharts(){}
+  const userRating = localStorage.getItem(rating.blockNum);
+  const data = {
+    font:{family:'Kalam'},
+    labels:['Monday', 'Tuesday', 'Wednesday','Thursday','Friday', 'Saturday', 'Sunday'],
+    datasets: [
+      
+      {
+        // label:'Performance Score',
+        label:'Productivity avg',
+        data:[userRating,9.2,3,5,7,2,1],
+        backgroundColor: 
+        ['rgba(0, 128, 0, 0.743)', 
+        'rgba(0, 128, 0, 0.743)',
+        'rgba(255, 0, 0, 0.733)', 
+        'rgba(255, 68, 0, 0.733)',
+        'rgba(255, 255, 0, 0.723)',
+        'rgba(255, 0, 0, 0.733)',
+        'rgba(255, 0, 0, 0.733)'],
+        borderColor: 'black',
+        borderWidth: 3.5,
+      }
+      
+    ]
+  }
+  
+  const options = {
+    maintainAspectRatio: false,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Week of 1/21-1/27',
+        font:{
+          family:'Kalam',
+          size:20,
+        }
+      },
+      responsive: true,
+      scales: {
+        y:{
+          min: 0,
+          max: 10,
+        }
+      }
+    },
+  }
+  
   return (
     <div >
+      {console.log(localStorage.getItem(rating.blockNum))}
          <Bar 
           style={
             {paddingTop:'50px'}
