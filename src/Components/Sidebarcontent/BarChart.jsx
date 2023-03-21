@@ -30,7 +30,22 @@ ChartJS.register(
 );
 //-------------------------------------------------------------------------------------------------
 const BarChart = () => {
-
+  function width() {
+    if (typeof window !== 'undefined') {
+         if(window.innerWidth < 700 ){
+           return 200;
+          } 
+    }
+    return 400;
+  }
+  function height() {
+    if (typeof window !== 'undefined') {
+         if(window.innerHeight < 700 ){
+           return 500;
+          } 
+    }
+    return 700;
+  }
   const rating = useContext(SetterContext);
 
   function createCharts(){}
@@ -82,7 +97,7 @@ const BarChart = () => {
   }
   
   return (
-    <div >
+    <div className='chart-container' style={{position:'relative',width:'780px', height:'730px'}}>
       {console.log(localStorage.getItem(rating.blockNum))}
          <Bar 
           style={
@@ -90,8 +105,8 @@ const BarChart = () => {
           }
           data = {data}
           options = {options}
-          height={700}
-          width={400}
+          // height='400px'
+          // width='0px'
         />
     </div>
   );
