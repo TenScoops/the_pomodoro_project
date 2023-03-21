@@ -21,9 +21,9 @@ const Contents = () => {
   return (
     <div>
         <div className='Content'>
-            <div className='paragraph' style={{display:'flex', flexDirection:'column'}}>
+            <div className='text-div' style={{display:'flex', flexDirection:'column', letterSpacing:'1px'}}>
 
-                {user?.displayName? <p style={{}} className='content-text'>{questionMark()}Welcome, {user?.displayName}!</p> 
+                {user?.displayName? <p style={{}} className='content-text'>{questionMark()}Hi {user?.displayName}!</p> 
                   :
                 <p className='content-text' style={{ }}>
                   Do you find yourself struggling with productivity? {questionMark()}  

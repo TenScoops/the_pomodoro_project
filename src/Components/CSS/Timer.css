@@ -18,16 +18,10 @@
   }
   .time{
     display: inline-flex;
-    font-size: 170px;
+    font-size: 112px;
+    /* font-size: 152px; */
     margin: 0;
     font-family: 'Source Code Pro', monospace;
-    /* margin-bottom: 30px; 
-    margin-top:30px; */
-   /* ********* */
-    /* box-shadow: 1px 10px 7px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 1px 10px 7px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 1px 10px 7px 0px rgba(0,0,0,0.75); */
-    /* text-shadow: 1px 1px 0 black, 1px 2px 0 black, 1px 3px 0 black, 1px 4px ; */
     border-radius: 20px;
   }
   
@@ -42,6 +36,10 @@
     align-items: center; */
     
   }
+  .new-font{
+    font-size: 132px;
+  }
+
   .timer button:hover{
     border-color: rgba(255, 255, 255, 0.651);
   }
@@ -51,8 +49,13 @@
  }
 
 .play{
-  width:100px;
-  margin-right: 50px;
+  font-family: 'Kalam', cursive;
+  /* font-style: italic; */
+  background-color: transparent;
+  border-color: white;
+  width:200px;
+  font-size: 30px;
+  margin-right: 20px;
   margin-left: 30px;
   border-radius: 15px;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
@@ -60,8 +63,14 @@
 -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 }
 .pause{
-  width:100px;
-  margin-right: 50px;
+  font-family: 'Kalam', cursive;
+  /* font-style: italic; */
+  background-color: transparent;
+  border-color: white;
+  width:200px;
+  font-size: 30px;
+  margin-right: 20px;
+  margin-left: 30px;
   border-radius: 15px;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
@@ -69,8 +78,17 @@
 }
 
 .skip{
-  width:100px;
-  border-radius: 15px;
+  font-family: 'Kalam', cursive;
+  background-color: transparent;
+  border-color: white;
+  border-width: 1px;
+  margin-right: 0;
+  align-items: center;
+  justify-content: center;
+  width:55px;
+  /* height: 55px; */
+  /* font-size: 30px; */
+  border-radius: 12px;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
@@ -79,6 +97,9 @@
 .cancel{
   font-family: 'Kalam', cursive;
   /* background-color: #1e212ddf; */
+  /* box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75); */
 }
 
 .thetasklist{
@@ -91,6 +112,66 @@
 .thetasklist:hover{
   background-color: #22252f84;
 }
+
+@media only screen and (max-width:1800px) {
+  .new-font{
+    font-size: 100px;
+  }
+}
+
+@media only screen and (max-width:1000px) 
+                   and (max-height: 900px) {
+  .new-font{
+    font-size: 70px;
+  }
+  /* .blockdiv{
+    font-size: 15px;
+  } */
+}
+@media only screen and (max-width:1000px) 
+                   and (max-height: 800px) {
+
+  /* .new-font{
+    font-size: 10px;
+  } */
+  .blockdiv{
+    font-size: 13px;
+  }
+  .time{
+    font-size:80px;
+  }
+  .play{
+    font-size: 20px;
+  }
+  .pause{
+    font-size: 20px;
+  }
+  .skip{
+    width:42.5px;
+  }
+
+}
+/* @media only screen and (max-width:700px) {
+  
+  .blockdiv{
+    font-size: 15px;
+  }
+  .time{
+    font-size:80px;
+  }
+  .play{
+    font-size: 20px;
+  }
+  .pause{
+    font-size: 20px;
+  
+  }
+  
+  .skip{
+    width:42.5px;
+  }
+  
+} */
 
 
 /* animation */

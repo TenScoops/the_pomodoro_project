@@ -30,7 +30,8 @@
   font-size: 35px;
   font-family: 'Kalam', cursive;
   margin:9px;
-  font-style:oblique;
+
+  letter-spacing: 1px;
 }
 .setter p{
   margin-top: 20px;
@@ -114,7 +115,145 @@
   background-color: rgb(25, 24, 33);
     /* border-color: transparent; */
 }
+/* max screen size : 1800 px */
+@media only screen and (max-width:1800px) {
+  .setter{
+    width:450px;
+    height:450px;
+  }
+  .nextbackbuttons{
+    margin-top:35px;
+    margin-bottom: 10px;
+  }
+  .slider{
+    height:23px;
+    border:2px solid white;
+    border-radius: 20px;
+    width:325px;
+  }
 
+  .thumb{
+      background-color: rgb(255, 255, 255);
+      cursor:pointer;
+      width:23px;
+      height:23px;
+      border-radius: 40px;
+
+  }
+  .backbutton{
+    width:62.5px;
+  }
+  .nextbutton{
+    width:62.5px;
+  }
+  .clockbutton{
+    width:62.5px;
+  }
+}
+
+
+
+
+@media only screen and (max-width:1000px) {
+  .setter{
+    width:430px;
+    height:430px;
+  }
+  .nextbackbuttons{
+    margin-top:35px;
+    margin-bottom: 10px;
+  }
+  .slider{
+    height:20px;
+    border:2px solid white;
+    border-radius: 20px;
+    width:325px;
+  }
+}
+@media only screen and (max-width:1000px) 
+                   and (max-height: 900px) {
+  .setter{
+    margin-top: 70px;
+  }
+}
+@media only screen and (max-width:1000px) 
+                   and (max-height: 800px) {
+  .header{
+    font-size: 20px;
+  }
+  .setter{
+    width:380px;
+    height:380px;
+    margin-top: 80px;
+  }
+  .nextbackbuttons{
+    margin-top:35px;
+    margin-bottom: 10px;
+  }
+  .slider{
+    height:23px;
+    border:2px solid white;
+    border-radius: 20px;
+    width:325px;
+  }
+
+  .thumb{
+      background-color: rgb(255, 255, 255);
+      cursor:pointer;
+      width:15px;
+      height:15px;
+      border-radius: 40px;
+
+  }
+  .backbutton{
+    width:60px;
+  }
+  .nextbutton{
+    width:60px;
+  }
+  .clockbutton{
+    width:60px;
+  }
+}
+
+@media only screen and (max-width:600px) {
+  .header{
+    font-size: 20px;
+  }
+  .setter{
+    width:380px;
+    height:380px;
+    margin-top: 80px;
+  }
+  .nextbackbuttons{
+    margin-top:35px;
+    margin-bottom: 10px;
+  }
+  .slider{
+    height:23px;
+    border:2px solid white;
+    border-radius: 20px;
+    width:325px;
+  }
+
+  .thumb{
+      background-color: rgb(255, 255, 255);
+      cursor:pointer;
+      width:15px;
+      height:15px;
+      border-radius: 40px;
+
+  }
+  .backbutton{
+    width:60px;
+  }
+  .nextbutton{
+    width:60px;
+  }
+  .clockbutton{
+    width:60px;
+  }
+}
 /*animations*/
   
   @keyframes anvil {

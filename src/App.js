@@ -33,6 +33,7 @@ function App() {
   const [blockNum, setBlockNum] = useState(1);
   const[sessionComplete, setSessionComplete] = useState(false);
   const [openTask, setOpenTask] = useState(false);
+  const[closeRatingModal, setCloseRatingModal] = useState(false);
 
   const [sideBar,setSideBar] = useState(true);
   const [hideButton, setHideButton] = useState(true);
@@ -49,6 +50,8 @@ function App() {
       <div className='theApp'>
       <AuthContextProvider>
         <SetterContext.Provider value ={{
+          closeRatingModal,
+          setCloseRatingModal,
           workMinutes,
           breakMinutes,
           setWorkMinutes,
@@ -94,22 +97,23 @@ function App() {
           
           
         }}>
-          <Navbar/>
-          { showParagraph? <Contents/>:null}
-          { showSetterPage? <Setter/>: null}
-          { showTimerPage ? <Timer/> : null}
-          
-          { sessionComplete?<Finished/>:null}
-          
-          { sideBar ? <Sidebar/>:null}
-          { data ? <Datadisplay/>:null}
-          { synopsis ? <Synopsis/>: null}
-          { openThemePage ? <Theme/>: null}
-    
-          { openTask? <Task/>: null}
-          { logout? <Logout/>:null}
+            <Navbar/>
+            { showParagraph? <Contents/>:null}
+            <div className='theTimer'>
+            { showSetterPage? <Setter/>: null}
+            { showTimerPage ? <Timer/> : null}
+            </div>
+            { sessionComplete?<Finished/>:null}
+            
+            { sideBar ? <Sidebar/>:null}
+            { data ? <Datadisplay/>:null}
+            { synopsis ? <Synopsis/>: null}
+            { openThemePage ? <Theme/>: null}
+      
+            { openTask? <Task/>: null}
+            { logout? <Logout/>:null}
      
-        </SetterContext.Provider>
+          </SetterContext.Provider>
         </AuthContextProvider>
      
       </div>

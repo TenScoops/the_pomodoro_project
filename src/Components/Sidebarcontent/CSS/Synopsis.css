@@ -18,3 +18,23 @@
   width: 26px;
   padding: 0;
 }
+.lorem{
+  width:650px;
+
+  display:flex; 
+  justify-content:center;
+  align-items: center;
+  flex-direction: column;
+}
+
+@media only screen and (max-width:600px) { 
+  .lorem{
+    width:450px;
+  }
+} 
+@media only screen and (max-width:600px) and (max-height:800px) { 
+  .lorem{
+    width:450px;
+    height:200px;
+  }
+}            
