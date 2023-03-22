@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Modal from "react-modal";
 import { useState } from 'react';
-import './CSS/Datadisplay.css';
+import './CSS/Chartdisplay.css';
 import SetterContext from '../SetterContext';
 // import './images/5996460.jpg';
 
@@ -38,8 +38,8 @@ const Theme = () => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: '#181a24',
-      height:height(),
-      width: width(),
+      height:'70vh',
+      width: '80vmin',
       borderRadius:'10px',
       padding:'0'
       

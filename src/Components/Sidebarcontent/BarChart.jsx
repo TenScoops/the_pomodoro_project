@@ -96,19 +96,22 @@ const BarChart = () => {
       }
     },
   }
-  
+
   return (
-    <div className='chart-container' style={{position:'relative',width:'700px', height:'700px'}}>
+    <div className='chart-container' style={{position:'relative',width:'80vmin', height:'65vh'}}>
       {/* {console.log(localStorage.getItem(rating.blockNum))} */}
          <Bar 
           style={
-            {paddingTop:'50px',}
+            {paddingTop:'50px'}
           }
           data = {data}
           options = {options}
           // height='400px'
           // width='0px'
         />
+        {/* <button style={{marginTop:'20px', marginLeft:'20px'}}>Weekly</button>
+        <button style={{marginTop:'20px', marginLeft:'20px'}}>Monthly</button>
+        <button style={{marginTop:'20px', marginLeft:'20px'}}>Yearly</button> */}
     </div>
   );
 };

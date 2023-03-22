@@ -20,7 +20,7 @@ const Synopsis = () => {
   }
   function height() {
    
-    return '80vh';
+    return ;
   }
 
   const customStyles = {
@@ -39,8 +39,9 @@ const Synopsis = () => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: '#181a24',
-      height:height(),
-      width: width(),
+      height:'65vh',
+      width: '80vmin',
+      // minWidth:'40vw',
       borderRadius:'12px',
       padding:'0',
       position:'relative'
@@ -70,7 +71,7 @@ const Synopsis = () => {
             </button>
               <div className='lorem' >
               
-                  <h2>Be productive but do it the right way!</h2>
+                  <h2 style={{marginTop:'35px', fontStyle:'oblique', fontFamily:'cursive'}}>Be productive but do it the right way!</h2>
                   <h2>The Rating System</h2>
 
                   <p>You are more likely to do better if you hold yourself accountable to your bad performances.
@@ -89,13 +90,13 @@ const Synopsis = () => {
                       years so you can see your own progress. You can check your progress in the "my data" section in the side bar. 
                   </p>
                       {/* <p>You dictate what is a 10/10 performance and you dictate what is a 5/10 performance.</p> */}
-                  <h2>How is the performance score calculated?</h2>
+                  <h2>How is performance score calculated?</h2>
                   <p>You will find your performance score in the "My Data" section. Your performance score will be calculated as ratings/number of blocks. 
                     Soon how many times you use the pause button as well as how long your session is paused will also affect your performance score.
                   </p>
                   <p style={{marginBottom:'0'}}>The more honest you are the better your results and the more you'll get out of this app!</p>
                       
-                  <p style={{margin:'5px', fontSize:'15px'}}>*Not yet supported on mobile*</p>
+                  {/* <p style={{margin:'5px', fontSize:'15px'}}>*Not yet supported on mobile*</p> */}
             
                 </div>
       

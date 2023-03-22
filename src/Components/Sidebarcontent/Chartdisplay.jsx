@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Modal from "react-modal";
 import { useState } from 'react';
-import './CSS/Datadisplay.css';
+import './CSS/Chartdisplay.css';
 import SetterContext from '../SetterContext';
 // import {Userdata} from './Userdata';
 import BarChart from './BarChart';
@@ -28,8 +28,8 @@ const Data = () => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: 'rgba(255, 255, 255,0.95)',
-      height:'800px',
-      width: '800px',
+      height:'70vh',
+      width: '80vmin',
       borderRadius:'10px',
       padding:'0'
       

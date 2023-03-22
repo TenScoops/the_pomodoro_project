@@ -15,14 +15,20 @@
   top: 8px;
   border-radius: 30%;
   background-color: rgb(157, 0, 0);
-  width: 26px;
+  width: 21px;
   padding: 0;
 }
 .lorem{
-  width:750px;
+  width:80vw;
+  /* width:750px; */
   display:flex; 
   justify-content:center;
   align-items: center;
   flex-direction: column;
 }
-
+.lorem p{
+  font-size: 1rem;
+}
+.lorem h2{
+  font-size: 1rem;
+}
