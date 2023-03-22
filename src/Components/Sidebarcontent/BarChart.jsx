@@ -30,22 +30,22 @@ ChartJS.register(
 );
 //-------------------------------------------------------------------------------------------------
 const BarChart = () => {
-  function width() {
-    if (typeof window !== 'undefined') {
-         if(window.innerWidth < 700 ){
-           return 200;
-          } 
-    }
-    return 400;
-  }
-  function height() {
-    if (typeof window !== 'undefined') {
-         if(window.innerHeight < 700 ){
-           return 500;
-          } 
-    }
-    return 700;
-  }
+  // function width() {
+  //   if (typeof window !== 'undefined') {
+  //        if(window.innerWidth < 700 ){
+  //          return 200;
+  //         } 
+  //   }
+  //   return 400;
+  // }
+  // function height() {
+  //   if (typeof window !== 'undefined') {
+  //        if(window.innerHeight < 700 ){
+  //          return 500;
+  //         } 
+  //   }
+  //   return 700;
+  // }
   const rating = useContext(SetterContext);
 
   function createCharts(){}
@@ -97,11 +97,11 @@ const BarChart = () => {
   }
   
   return (
-    <div className='chart-container' style={{position:'relative',width:'780px', height:'730px'}}>
-      {console.log(localStorage.getItem(rating.blockNum))}
+    <div className='chart-container' style={{position:'relative',width:'700px', height:'700px'}}>
+      {/* {console.log(localStorage.getItem(rating.blockNum))} */}
          <Bar 
           style={
-            {paddingTop:'50px'}
+            {paddingTop:'50px',}
           }
           data = {data}
           options = {options}
