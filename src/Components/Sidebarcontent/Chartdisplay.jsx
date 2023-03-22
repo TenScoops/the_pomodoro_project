@@ -48,7 +48,7 @@ const Data = () => {
           onRequestClose={() => closeModal()}
           style={customStyles} 
         >
-           <div style={{height:'100%', width:'100%'}}  >
+           {/* <div style={{height:'50%', width:'0%'}}  > */}
 
             {/* <button onClick={()=>{closeModal()}} className='close'>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -59,7 +59,7 @@ const Data = () => {
             <BarChart/>
             
             
-          </div>
+          {/* </div> */}
         </Modal>
         
     

@@ -17,6 +17,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  
 } from 'chart.js';
 import {Bar} from "react-chartjs-2";
 
@@ -97,17 +98,19 @@ const BarChart = () => {
   }
   
   return (
-    <div className='chart-container' style={{position:'relative',width:'780px', height:'730px'}}>
-      {console.log(localStorage.getItem(rating.blockNum))}
-         <Bar 
-          style={
-            {paddingTop:'50px'}
-          }
-          data = {data}
-          options = {options}
-          // height='400px'
-          // width='0px'
-        />
+    <div>
+      <div className='chart-container' style={{position:'relative',width:'780px', height:'730px'}}>
+        {console.log(localStorage.getItem(rating.blockNum))}
+          <Bar 
+            style={
+              {paddingTop:'50px'}
+            }
+            data = {data}
+            options = {options}
+            // height='400px'
+            // width='0px'
+          />
+      </div>
     </div>
   );
 };

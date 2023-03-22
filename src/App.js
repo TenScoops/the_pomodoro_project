@@ -7,7 +7,7 @@ import SetterContext from './Components/SetterContext';
 import Timer from './Components/Timer';
 import Finished from './Components/Finished';
 import Sidebar from './Components/Sidebarcontent/Sidebar';
-import Datadisplay from './Components/Sidebarcontent/Datadisplay';
+import Chartdisplay from './Components/Sidebarcontent/Chartdisplay';
 import Synopsis from './Components/Sidebarcontent/Synopsis';
 import Theme from './Components/Sidebarcontent/Theme';
 
@@ -106,7 +106,7 @@ function App() {
             { sessionComplete?<Finished/>:null}
             
             { sideBar ? <Sidebar/>:null}
-            { data ? <Datadisplay/>:null}
+            { data ? <Chartdisplay/>:null}
             { synopsis ? <Synopsis/>: null}
             { openThemePage ? <Theme/>: null}
       
