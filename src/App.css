@@ -176,5 +176,9 @@ button:hover{
 }
 
 
+.ReactModal__Content ReactModal__Content--after-open{
+  height: 200px;
+  width: 200px;
+}
 
-
+/* <div class="ReactModal__Content ReactModal__Content--after-open" tabindex="-1"  */

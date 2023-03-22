@@ -7,11 +7,15 @@ import SetterContext from './SetterContext';
 import Rating from './Rating';
 import Skip from './Buttons/Skip';
 import Areyousure from './Areyousure';
-import {BsFileTextFill} from 'react-icons/bs'
-import {BsFileText} from 'react-icons/bs'
+import {BsFileTextFill} from 'react-icons/bs';
+import {BsFileText} from 'react-icons/bs';
+// import ringer from "./flipdish-ringer.mp3";
 
 
 const Timer = () => {
+    // <audio id="ring" src="https://cdn.pixabay.com/audio/2021/09/27/audio_91211934db.mp3"></audio>
+    // const [timerIsDone, setTimerIsDone] = useState(false);
+    // let sound1 = document.getElementById("ring");
     const setterInfo = useContext(SetterContext);
 
     const[isPaused, setIsPaused] = useState(true);
@@ -44,7 +48,7 @@ const Timer = () => {
         timeLeftRef.current--;
         setTimeLeft(timeLeftRef.current);
     }
-
+    
     function initiateTimer(){
         if(mode==='work'){
             setTimeLeft( ( ( (setterInfo.workMinutes*60)-totalBreakTime ) / numOfblocks)*60);
@@ -59,10 +63,9 @@ const Timer = () => {
     function switchMode(){
         const nextMode = modeRef.current === 'work' ? 'break' : 'work';
         const nextTime = 60* (nextMode === 'work'? ( (60*setterInfo.workMinutes) - totalBreakTime ) / numOfblocks : setterInfo.breakMinutes);
-
+        // setTimerIsDone(true);
         setMode(nextMode);
         modeRef.current = nextMode;
-
         setTimeLeft(nextTime);
         timeLeftRef.current = nextTime;
 
@@ -73,11 +76,12 @@ const Timer = () => {
     initiateTimer();
 
    const interval = setInterval(()=>{
-   
+        
         if(isPausedRef.current){
             return;
         }
        else if(timeLeftRef.current === 0){
+           
             return switchMode();
         }
 
@@ -191,6 +195,8 @@ const Timer = () => {
     return (
         
         <div className='timer'>
+
+            {/* {timerIsDone?sound1.Play():null} */}
 
             {totalWorkTime <= totalBreakTime?setterInfo.setIsWorkGreater(false):setterInfo.setIsWorkGreater(true)}
 
