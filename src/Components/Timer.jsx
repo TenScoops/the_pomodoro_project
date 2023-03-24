@@ -9,6 +9,7 @@ import Skip from './Buttons/Skip';
 import Areyousure from './Areyousure';
 import {BsFileTextFill} from 'react-icons/bs';
 import {BsFileText} from 'react-icons/bs';
+import {FaLightbulb} from 'react-icons/fa'
 // import ringer from "./flipdish-ringer.mp3";
 
 
@@ -129,7 +130,8 @@ const Timer = () => {
 
     const theTasks = () =>{
        return <button onClick={()=>{setterInfo.setOpenTask(true)}} className ='thetasklist'
-        style={{width:'40px', marginLeft:'20px',  borderRadius:'7px', fontSize:'15px', height:'35px', marginTop:'55px', paddingTop:'3px', marginRight:'10px'}}>
+        style={{width:'40px', marginLeft:'20px',  borderRadius:'7px', fontSize:'15px', height:'35px', 
+                marginTop:'55px', paddingTop:'3px', marginRight:'10px'}}>
             <BsFileText style={{fontSize:'24px'}}/></button>
     }
 
@@ -206,8 +208,18 @@ const Timer = () => {
             {setterInfo.showData?<div className='blockdiv'><p style={{color:'black', backgroundColor:'white'}}>Session will be completed in {numOfblocks} block(s)</p></div>:null}
 
             <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                {setterInfo.showData?null:theTasks()}
-                {setterInfo.showData?null:<div style={{borderRadius:'10px',marginTop:'60px', marginRight:'75px'}} className='blockdiv'><p>You are currently: {mode === 'work'?"working..":"on break."}</p></div>}
+               {setterInfo.showData?null: 
+               <button 
+                onClick={()=>{}}
+                style={{width:'40px', marginLeft:'20px',  borderRadius:'7px', fontSize:'15px', height:'35px', 
+                        marginTop:'60px', paddingTop:'3px', marginRight:'10px', backgroundColor:'black'}}>
+                    <FaLightbulb/> 
+                </button>}
+                {/* {setterInfo.showData?null:theTasks()} */}
+                {setterInfo.showData?null:
+                <div style={{borderRadius:'10px',marginTop:'60px', marginRight:'75px'}} className='blockdiv'>
+                        <p>You are currently: {mode === 'work'?"working..":"on break."}</p>
+                </div>}
             </div>
             {mode==="work"?<div style={{borderRadius:'10px', marginBottom:'20px'}} className='blockdiv'><p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
 
@@ -221,6 +233,8 @@ const Timer = () => {
                 {setterInfo.showButtons?showTheButtons():null}
                
             </div> 
+
+            
 
             {totalWorkTime < totalBreakTime? 
             <div className='blockdiv'>

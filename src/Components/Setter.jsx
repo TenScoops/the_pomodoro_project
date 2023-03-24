@@ -75,7 +75,7 @@ const Setter = () => {
 
           <div className='nextbackbuttons'>
             <Backbutton title ="Back" onClick={() => {goBack()}}/>
-            {taskButton()}
+            {/* {taskButton()} */}
             <Clock  title ="Show clock" onClick={() =>{ setterInfo.setClicked(true); {setterInfo.showTimerPage?setterInfo.setShowTimerPage(false):setterInfo.setShowTimerPage(true)}}}/>
             {setterInfo.clicked?<Nextbutton title ="Start"onClick={() => {goForward()}}/>:null}
           </div>
