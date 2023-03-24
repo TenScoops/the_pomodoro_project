@@ -11,8 +11,8 @@
     box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
     -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
-    width:410px;
-    height:480px;
+    width:320px;
+    height:320px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -23,7 +23,7 @@
 }
 
 .thumbsup{
-    width:80px;
+    width:45px;
     /* height: 10px; */
     margin-top: 18px;
 }
@@ -43,50 +43,23 @@
 .thescores:hover{
   background-color: rgba(110, 110, 110, 0.44);
 }
-.newsession{
+.startNewSession{
   font-family: 'Kalam', cursive;
   letter-spacing: 1px;
   border-radius: 5px;
   width: 250px;
-  font-size: 20px;
+  /* height:25px; */
+  /* font-size: 20px; */
   background-color: rgba(18, 18, 18, 0.472);
-  margin-left: 35px;
+  /* margin-left: 35px; */
+  margin-right: 0;
   border-color: rgb(189, 189, 189);
   /* padding-top: 10px;
   padding-bottom: 10px; */
 }
 
-@media only screen and (max-width:600px) {
-  .finished{
-    background-color: #1e212d;
-    width:350px;
-    height:420px;
-  }
-  .thumbsup{
-    width:80px;
-    /* height: 10px; */
-    margin-top: 18px;
-}
-.thescores{
-  height:105px;
-  width:105px;
-}
-.thescores:hover{
-  background-color: rgba(110, 110, 110, 0.44);
-}
-.newsession{
-  font-family: 'Kalam', cursive;
-  letter-spacing: 1px;
-  border-radius: 5px;
-  width: 250px;
-  font-size: 20px;
-  background-color: rgba(18, 18, 18, 0.472);
-  margin-left: 35px;
-  border-color: rgb(189, 189, 189);
-  /* padding-top: 10px;
-  padding-bottom: 10px; */
-}
-}
+
+
 @keyframes anvil {
     0% {
       transform: scale(1) translateY(0px);

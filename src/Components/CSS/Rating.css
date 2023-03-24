@@ -1,5 +1,3 @@
-
-
 .headerating{
     display:flex;
     align-items: center;
@@ -42,18 +40,47 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    font-size: 25px;
+    font-size: 20px;
     border-radius: 10px;
     transition: 0.2s ease-in;
 }
-.scoreText p{
-    margin: 0;
+.scoreText{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* font-size:25px */
+}
+.scoreText h1{
+    display:flex;
+    margin-bottom: 0;
+    margin-top: 0;
+    letter-spacing: 1px;
+}
+
+.theBlockNum{
+    /* margin-left:10px; */
+    font-size:35px; 
+    /* height: 60px; */
+    background-color:white; 
+    color:black; 
+    border-radius:40px;
+    margin-bottom:2px;
+}
+.ratePerformance{
+    font-size:18px;  
+    margin-bottom:10px;
+    display:flex; 
+    justify-content:center;
 }
 .score:hover{
     /* border-color: rgb(255, 255, 255); */
     cursor: pointer;
     height: 45px;
     
+}
+.scoreText p{
+    margin: 0;
 }
 
 #score10:hover{

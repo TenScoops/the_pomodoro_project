@@ -71,14 +71,14 @@ const Synopsis = () => {
             </button>
               <div className='lorem' >
               
-                  <h2 style={{marginTop:'35px', fontStyle:'oblique', fontFamily:'cursive'}}>Be productive but do it the right way!</h2>
-                  <h2>The Rating System</h2>
+                  <h2 className='productive-header1' >Be productive but do it the right way!</h2>
+                  <h2 className='productive-header2'>The Rating System</h2>
 
                   <p>You are more likely to do better if you hold yourself accountable to your bad performances.
                 I created this rating system to give you the incentive to scrutinize your own performances
                   and in turn help you see growth in productivity and work ethic over time. I hope this helps you achieve your goals in life.</p>
 
-                  <h2>How this works?</h2>
+                  <h2 className='productive-header2'>How this works?</h2>
                   
                   <p>Pomodoro allows you to work in 25 minute intervals with breaks in between. But this app allows you to set your own 
                   session time, with however many breaks you want, and however many minutes per break as long as your total break time does 
@@ -90,7 +90,7 @@ const Synopsis = () => {
                       years so you can see your own progress. You can check your progress in the "my data" section in the side bar. 
                   </p>
                       {/* <p>You dictate what is a 10/10 performance and you dictate what is a 5/10 performance.</p> */}
-                  <h2>How is performance score calculated?</h2>
+                  <h2 className='productive-header2'>How is performance score calculated?</h2>
                   <p>You will find your performance score in the "My Data" section. Your performance score will be calculated as ratings/number of blocks. 
                     Soon how many times you use the pause button as well as how long your session is paused will also affect your performance score.
                   </p>

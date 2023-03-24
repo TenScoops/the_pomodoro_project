@@ -25,8 +25,8 @@ const Rating = () => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: '#181a24',
-      height:'670px',
-      width: '500px',
+      width:'70vmin',
+      height:'65vh',
       borderRadius:'20px',
       
     }
@@ -49,12 +49,19 @@ const Rating = () => {
 
     return <div className='scores'>
         {/* {ratingInfo.setCloseRatingModal(false)} */}
-        <div className = 'scoreText' style={{justifyContent: 'center', display: 'flex', 
-        flexDirection:'column', alignItems:'center', fontSize:'25px'}}>
-          <p style={{display:'flex'}}>Rate your performance for block <p style={{marginLeft:'10px', fontSize:'35px', backgroundColor:'white', color:'black', borderRadius:'40px', marginBottom:'2px'}}> #{ratingInfo.blockNum}</p></p>
-          <p style={{fontSize:'18px',  marginBottom:'10px', display:'flex', justifyContent:'center'}}>How to rate your performance{questionMark()}</p>
-          <hr style={{width:'400px', margin:'0'}}></hr>
+        <div className = 'scoreText' >
+          <div style={{display:'inline-flex', alignItems:'center', justifyContent:'center', marginTop:'20px'}}>
+            <h1>
+              Rate your performance for block 
+            </h1>
+            <p className='theBlockNum'> #{ratingInfo.blockNum}</p>
           </div>
+          <p className='ratePerformance'>
+            How to rate your performance{questionMark()}
+          </p>
+          <hr style={{width:'400px', margin:'0'}}></hr>
+        </div>
+
         <div className='score' id='score10' onClick={()=>{data=data+10; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem(ratingInfo.blockNum)); }} >10 - Fantastic</div>
         <div className='score' id='score9' onClick={()=>{data=data+9; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem()); }} >9 - Great</div>
         <div className='score' id='score8' onClick={()=>{data=data+8; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem()); }} >8 - Good</div>
@@ -65,6 +72,7 @@ const Rating = () => {
         <div className='score' id='score3' onClick={()=>{data=data+3; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem()); }} >3 - Very bad</div>
         <div className='score' id='score2' onClick={()=>{data=data+2; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem()); }} >2 - Really bad</div>
         <div className='score' id='score1' onClick={()=>{data=data+1; console.log(data); ratingInfo.setHasUserRated(true); localStorage.setItem(ratingInfo.blockNum, data); console.log(localStorage.getItem()); }} >1 - Terrible</div>
+     
       </div>
       
   }

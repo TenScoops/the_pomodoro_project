@@ -24,8 +24,8 @@ const Task = () => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: '#181a24',
-      height:'670px',
-      width: '550px',
+      height:'65vh',
+      width: '80vmin',
       borderRadius:'30px',
     }
   };
