@@ -1,5 +1,5 @@
 import './CSS/Setter.css';
-import React, { useContext } from 'react';
+import React, { useContext,useState } from 'react';
 import ReactSlider from 'react-slider';
 import Backbutton from './Buttons/Backbutton';
 import Nextbutton from './Buttons/Nextbutton';
@@ -10,6 +10,8 @@ import {BsFileText} from 'react-icons/bs'
 
 const Setter = () => {
   const setterInfo = useContext(SetterContext);
+
+  const[clickedNext,hasClickedNext] = useState(false);
 
   const goForward = () =>{
     // setterInfo.setShowParagraph(false)
@@ -76,7 +78,7 @@ const Setter = () => {
           <div className='nextbackbuttons'>
             <Backbutton title ="Back" onClick={() => {goBack()}}/>
             {/* {taskButton()} */}
-            <Clock  title ="Show clock" onClick={() =>{ setterInfo.setClicked(true); {setterInfo.showTimerPage?setterInfo.setShowTimerPage(false):setterInfo.setShowTimerPage(true)}}}/>
+            {setterInfo.clicked?null:<Clock  title ="Next" onClick={() =>{ setterInfo.setClicked(true); {setterInfo.showTimerPage?setterInfo.setShowTimerPage(false):setterInfo.setShowTimerPage(true)}}}/>}
             {setterInfo.clicked?<Nextbutton title ="Start"onClick={() => {goForward()}}/>:null}
           </div>
       </div>
