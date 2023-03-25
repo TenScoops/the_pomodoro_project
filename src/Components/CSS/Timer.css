@@ -51,7 +51,7 @@
 .play{
   font-family: 'Kalam', cursive;
   /* font-style: italic; */
-  background-color: transparent;
+  background-color: #1e212da2;
   border-color: white;
   width:200px;
   font-size: 30px;
@@ -65,7 +65,7 @@
 .pause{
   font-family: 'Kalam', cursive;
   /* font-style: italic; */
-  background-color: transparent;
+  background-color: #1e212da2;
   border-color: white;
   width:200px;
   font-size: 30px;
@@ -79,7 +79,7 @@
 
 .skip{
   font-family: 'Kalam', cursive;
-  background-color: transparent;
+  background-color: #1e212da2;
   border-color: white;
   border-width: 1px;
   margin-right: 0;
@@ -96,7 +96,7 @@
 
 .cancel{
   font-family: 'Kalam', cursive;
-  /* background-color: #1e212ddf; */
+  background-color: #1e212ddf;
   /* box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75); */

@@ -100,8 +100,8 @@ function App() {
             <Navbar/>
             { showParagraph? <Contents/>:null}
             <div className='theTimer'>
-            { showSetterPage? <Setter/>: null}
-            { showTimerPage ? <Timer/> : null}
+              { showSetterPage? <Setter/>: null}
+              { showTimerPage ? <Timer/> : null}
             </div>
             { sessionComplete?<Finished/>:null}
             

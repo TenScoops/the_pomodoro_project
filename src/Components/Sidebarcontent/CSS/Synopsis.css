@@ -18,6 +18,9 @@
   width: 21px;
   padding: 0;
 }
+.close:hover{
+  background-color:transparent ;
+}
 .lorem{
   width:80vw;
   /* width:750px; */
