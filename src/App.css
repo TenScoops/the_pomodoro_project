@@ -76,14 +76,16 @@ button{
   border-radius: 10px;
   margin-right: 5px;
   border-width: 2px;
-  box-shadow: -1px 2px 5px 3px rgba(127,218,247,0.75);
+  animation: blinking 1s infinite;
+  /* box-shadow: -1px 2px 5px 3px rgba(127,218,247,0.75);
 -webkit-box-shadow: -1px 2px 3px 5px rgba(127,218,247,0.75);
--moz-box-shadow: -1px 2px 5px 3px rgba(127,218,247,0.75);
+-moz-box-shadow: -1px 2px 5px 3px rgba(127,218,247,0.75); */
 }
 .startSession-button:hover{
-  box-shadow: -1px 2px 5px 5px rgb(208, 237, 255);
--webkit-box-shadow: -1px 2px 5px 5px rgb(208, 237, 255);
--moz-box-shadow: -1px 2px 5px 5px rgb(208, 237, 255);
+  animation: blinking2 1s infinite;
+  /* box-shadow: -1px 2px 5px 7px rgb(127, 217, 247);
+-webkit-box-shadow: -1px 2px 5px 7px rgb(127, 217, 247);
+-moz-box-shadow: -1px 2px 5px 7px rgb(127, 217, 247); */
 }
 button:hover{
   /* background-color: transparent; */
@@ -146,6 +148,43 @@ button:hover{
 
 /*Animations*/
 
+@keyframes blinking {
+  0% {
+    box-shadow: -1px 2px 5px 7px rgb(236, 250, 255);
+    -webkit-box-shadow: -1px 2px 5px 7px rgb(236, 250, 255);
+    -moz-box-shadow: -1px 2px 5px 7px rgb(236, 250, 255);
+    
+    /* background-color: #06c3d1; */
+  
+  }
+  100% {
+    box-shadow: -1px 2px 5px 3px rgba(127,218,247,0.75);
+    -webkit-box-shadow: -1px 2px 3px 5px rgba(127,218,247,0.75);
+    -moz-box-shadow: -1px 2px 5px 3px rgba(127,218,247,0.75);
+    /* background-color: #270da6; */
+  
+  }
+}
+
+@keyframes blinking2 {
+  0% {
+    background-color:rgba(140, 140, 140, 0.62);
+    /* box-shadow: -1px 2px 5px 7px rgb(236, 250, 255);
+    -webkit-box-shadow: -1px 2px 5px 7px rgb(236, 250, 255);
+    -moz-box-shadow: -1px 2px 5px 7px rgb(236, 250, 255); */
+    /* background-color: #06c3d1; */
+  
+  }
+  100% {
+    background-color: rgba(73, 73, 73, 0.844);
+    /* box-shadow: -1px 2px 5px 3px rgba(127,218,247,0.75);
+    -webkit-box-shadow: -1px 2px 3px 5px rgba(127,218,247,0.75);
+    -moz-box-shadow: -1px 2px 5px 3px rgba(127,218,247,0.75); */
+  
+  }
+}
+
+
 @keyframes fadeInAnimation {
   0% { opacity: 0; }
   100% { opacity: 1; }
@@ -188,11 +227,3 @@ button:hover{
     box-shadow: 0 0 500px rgba(241, 241, 241, 0);
   }
 }
-
-
-.ReactModal__Content ReactModal__Content--after-open{
-  height: 200px;
-  width: 200px;
-}
-
-/* <div class="ReactModal__Content ReactModal__Content--after-open" tabindex="-1"  */
