@@ -21,8 +21,10 @@
     font-size: 112px;
     /* font-size: 152px; */
     margin: 0;
+    margin-top:10px;
     font-family: 'Source Code Pro', monospace;
     border-radius: 20px;
+    background-color: #1e212da2;
   }
   
  .timer p{
