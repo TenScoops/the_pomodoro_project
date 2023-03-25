@@ -18,7 +18,7 @@ body{
 }
 
 .App{
-  background-image: url("/public/Images/nightcity.jpeg");
+  background-image: url("/public/Images/city.jpeg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
