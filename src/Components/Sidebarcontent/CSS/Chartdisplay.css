@@ -11,4 +11,18 @@
     -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
     -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
 }
-
+.close{
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    line-height: 20px;
+    right: -14px;
+    top: 8px;
+    border-radius: 30%;
+    background-color: rgb(214, 9, 9);
+    width: 21px;
+    padding: 0;
+  }
+  .close:hover{
+    background-color: rgb(208, 37, 37);
+  }

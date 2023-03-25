@@ -102,7 +102,7 @@ const BarChart = () => {
       {/* {console.log(localStorage.getItem(rating.blockNum))} */}
          <Bar 
           style={
-            {paddingTop:'50px'}
+            { marginTop:'30px'}
           }
           data = {data}
           options = {options}

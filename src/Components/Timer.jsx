@@ -129,9 +129,9 @@ const Timer = () => {
     }
 
     const theTasks = () =>{
-       return <button onClick={()=>{setterInfo.setOpenTask(true)}} className ='thetasklist'
-        style={{width:'40px', marginLeft:'20px',  borderRadius:'7px', fontSize:'15px', height:'35px', 
-                marginTop:'55px', paddingTop:'3px', marginRight:'10px'}}>
+       return <button onClick={()=>{setterInfo.setOpenTask(true)}} 
+        style={{width:'40px', borderRadius:'7px', fontSize:'15px', height:'35px', 
+                marginTop:'55px', paddingTop:'3px', marginRight:'10px', backgroundColor:'black'}}>
             <BsFileText style={{fontSize:'24px'}}/></button>
     }
 
@@ -203,9 +203,10 @@ const Timer = () => {
             {totalWorkTime <= totalBreakTime?setterInfo.setIsWorkGreater(false):setterInfo.setIsWorkGreater(true)}
 
             {setterInfo.showData?<div className='blockdiv'><p>Your session </p></div>:null}
-            {setterInfo.showData?<div className='blockdiv'><p>will have {totalWorkTime} minutes of work time</p></div>:null}
-            {setterInfo.showData?<div className='blockdiv'><p>and {totalBreakTime} minutes of break time</p></div>:null}
+            {setterInfo.showData?<div className='blockdiv'><p>Will have {totalWorkTime} minutes of worktime</p></div>:null}
+            {setterInfo.showData?<div className='blockdiv'><p>And {totalBreakTime} minutes of breaktime</p></div>:null}
             {setterInfo.showData?<div className='blockdiv'><p style={{color:'black', backgroundColor:'white'}}>Session will be completed in {numOfblocks} block(s)</p></div>:null}
+            {setterInfo.showData?<div className='blockdiv'><p >With {addZero(minutes)}:{addZero(seconds)} minutes per block</p></div>:null}
 
             <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                {setterInfo.showData?null: 
@@ -222,24 +223,25 @@ const Timer = () => {
                 </div>}
             </div>
             {mode==="work"?<div style={{borderRadius:'10px', marginBottom:'20px'}} className='blockdiv'><p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
-
-            <div className={setterInfo.showButtons?'time':'time + new-font'}>
-                <p className='minutes'>{totalWorkTime < totalBreakTime?"00" :addZero(minutes)}</p>
-                <p className='semicolon'>:</p>
-                <p className='seconds'>{totalWorkTime < totalBreakTime?"00" :addZero(seconds)}</p>
-            </div>
-            
-            <div className='timerbuttons'>
-                {setterInfo.showButtons?showTheButtons():null}
-               
-            </div> 
-
+            {setterInfo.showData?null:
+                <div className={setterInfo.showButtons?'time':'time + new-font'}>
+                    <p className='minutes'>{totalWorkTime < totalBreakTime?"00" :addZero(minutes)}</p>
+                    <p className='semicolon'>:</p>
+                    <p className='seconds'>{totalWorkTime < totalBreakTime?"00" :addZero(seconds)}</p>
+                </div>
+            }   
+            {setterInfo.showData?null:
+                <div className='timerbuttons'>
+                    {setterInfo.showButtons?showTheButtons():null}
+                
+                </div> 
+            }
             
 
             {totalWorkTime < totalBreakTime? 
-            <div className='blockdiv'>
-                <p>Your work time cannot be less than your break time.</p>
-                <p>For the sake of productivity.</p>
+            <div className='blockdiv' style={{backgroundColor:'white', color:'darkred'}}>
+                <p>Worktime cannot be less than your breaktime.</p>
+                {/* <p>For the sake of productivity.</p> */}
             </div>:null}
 
             {showRating()}
