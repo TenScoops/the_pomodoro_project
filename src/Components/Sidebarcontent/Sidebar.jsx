@@ -73,6 +73,7 @@ const Sidebar = () => {
             {/* <AiOutlineStock style={{marginRight:'10px'}}/> */}
               Pomodoro
           </h1> 
+          <h4 style={{margin:'0', marginLeft:'35px',}}> By TwoScoops</h4>
         </div>
             <hr className='breakpoint' style={{width:'10px'}}/>
 
@@ -125,6 +126,8 @@ const Sidebar = () => {
         {/* {user?.displayName? <p style={{fontSize:'20px'}}>Hi, {user?.displayName}!</p> : null} */}
 
       </div>
+
+      
   </div>
   )
 }

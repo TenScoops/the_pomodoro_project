@@ -11,7 +11,7 @@
     -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
     -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
 }
-.close{
+.Chart-close-button{
     cursor: pointer;
     position: absolute;
     display: block;
@@ -19,10 +19,10 @@
     right: -14px;
     top: 8px;
     border-radius: 30%;
-    background-color: rgb(214, 9, 9);
+    background-color: #1e212d;;
     width: 21px;
     padding: 0;
   }
   .close:hover{
-    background-color: rgb(208, 37, 37);
+    background-color: #1e212dca;;
   }

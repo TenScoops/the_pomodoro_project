@@ -22,6 +22,7 @@
     "react-slider": "^2.0.4",
     "reactjs-popup": "^2.0.5",
     "rsuite": "^5.24.0",
+    "use-local-storage": "^2.3.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

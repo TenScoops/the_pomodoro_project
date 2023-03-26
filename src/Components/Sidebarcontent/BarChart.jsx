@@ -81,7 +81,7 @@ const BarChart = () => {
     plugins: {
       title: {
         display: true,
-        text: 'Week of 1/21-1/27',
+        text: '(*still in progress*)',
         font:{
           family:'Kalam',
           size:20,

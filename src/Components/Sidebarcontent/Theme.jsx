@@ -3,9 +3,11 @@ import Modal from "react-modal";
 import { useState } from 'react';
 import './CSS/Chartdisplay.css';
 import SetterContext from '../SetterContext';
+import './CSS/Theme.css';
+import useLocalStorage from 'use-local-storage'
 // import './images/5996460.jpg';
 
-const Theme = () => {
+const Theme = ({changeTheme}) => {
   const [modalOpen, setModalOpen] = useState(true);
   const themeInfo = useContext(SetterContext);
 
@@ -26,6 +28,9 @@ const Theme = () => {
     return '800px';
   }
 
+  function changeTheme(wri){
+    return 'App';
+  }
   const customStyles = {
     overlay: {
       backgroundColor: '#08080b97',
@@ -39,7 +44,7 @@ const Theme = () => {
       transform: 'translate(-50%, -50%)',
       backgroundColor: '#181a24',
       height:'70vh',
-      width: '80vmin',
+      width: '70vmin',
       borderRadius:'10px',
       padding:'0'
       
@@ -66,9 +71,23 @@ const Theme = () => {
           onRequestClose={() => closeModal()}
           style={customStyles} 
         >
-           <div style={{height:'100%', width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}} >
+           <div style={{ display:'flex', justifyContent:'center',flexDirection:'column',alignItems:'center'}} >
               {closeButton()}
-              {/* <p style={{fontSize:'50px', margin:'0'}}>COMING SOON</p> */}
+              <h1 style={{marginBottom:'15px'}}>Choose a theme</h1>
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
+                <hr style={{margin:'0', width:'300px'}}/>
+                <div className='theme'  onClick={()=>{themeInfo.setTheme("App + city")}}>City(defaut)</div>
+                <div className='theme'  onClick={()=>{themeInfo.setTheme("App + nightTime")}}>Night time</div>
+                <div className='theme'  onClick={()=>{themeInfo.setTheme("App + spaceCabin")}} >Space cabin</div>
+                <div className='theme' onClick={()=>{themeInfo.setTheme("App + cornerStreet")}} >Corner street</div>
+                <div className='theme' onClick={()=>{themeInfo.setTheme("App + houses")}} >Houses</div>
+                <div className='theme' onClick={()=>{themeInfo.setTheme("App + mountain")}} >Mountain</div>
+                <div className='theme' onClick={()=>{themeInfo.setTheme("App + snowyCabin")}}>Snowy cabin</div>
+                <div className='theme' onClick={()=>{themeInfo.setTheme("App + rocket")}} >Rocket</div>
+                {/* <div className='theme' style={{}}>Room</div> */}
+                {/* <div className='theme' style={{}}>Futuristic</div> */}
+                {/* <div className='theme' style={{}}>Log cabin</div> */}
+              </div>
           </div>
         </Modal>
         

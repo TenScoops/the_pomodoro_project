@@ -10,10 +10,10 @@ import Sidebar from './Components/Sidebarcontent/Sidebar';
 import Chartdisplay from './Components/Sidebarcontent/Chartdisplay';
 import Synopsis from './Components/Sidebarcontent/Synopsis';
 import Theme from './Components/Sidebarcontent/Theme';
-
 import Task from './Components/TaskList/Task';
 import Logout from './Components/Logout'
 import { AuthContextProvider } from './FirebaseAuth/AuthContext';
+import useLocalStorage from 'use-local-storage'
 
 
 function App() {
@@ -42,10 +42,17 @@ function App() {
   const [logout, setLogout] = useState(false);
   const [openThemePage,setOpenThemePage] = useState(false);
 
-  
+  // function theme(){
+  //   if("Theme" in localStorage){//checks if there is anything in local storage
+  //     return localStorage.getItem("Theme");
+  //   }
+  //   return'App';
+  // }
+
+  const[theme, setTheme] = useLocalStorage("Theme","App");
   
   return (
-    <div className="App">
+    <div className={theme}>
       
       <div className='theApp'>
       <AuthContextProvider>
@@ -93,9 +100,8 @@ function App() {
           openTask,
           setOpenTask,
           logout,
-          setLogout
-          
-          
+          setLogout,
+          theme, setTheme
         }}>
             <Navbar/>
             { showParagraph? <Contents/>:null}
