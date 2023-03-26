@@ -55,6 +55,9 @@
 }
 .bars1:hover{
     background-color: #404762ab;
+    box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
 }
 
 .sidebar h1{

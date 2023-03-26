@@ -22,6 +22,9 @@
 }
 .bars2:hover{
     background-color: rgba(64, 70, 95, 0.5);
+    box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
 }
 
 

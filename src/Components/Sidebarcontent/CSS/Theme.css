@@ -18,35 +18,3 @@
     width:400px;
     background-color: #0404047a;
 }
-.city{
-    background-image: url("/public/Images/city.jpeg");
-    transition: all .5s;
-}
-.nightTime{
-    background-image: url("/public/Images/Nighttime.jpeg");
-    transition: all .5s;
-}
-.spaceCabin{
-    background-image: url("/public/Images/SpaceCabin.jpeg");
-    transition: all .5s;
-}
-.snowyCabin{
-    background-image: url("/public/Images/SnowyCabin.jpeg");
-    transition: all .5s;
-}
-.mountain{
-    background-image: url("/public/Images/Mountain.jpeg");
-    transition: all .5s;
-}
-.houses{
-    background-image: url("/public/Images/Houses.jpeg");
-    transition: all .5s;
-}
-.rocket{
-    background-image: url("/public/Images/rocket.jpeg");
-    transition: all .5s;
-}
-.cornerStreet{
-    background-image: url("/public/Images/CornerStreet.jpeg");
-    transition: all .5s;
-}

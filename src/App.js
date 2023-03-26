@@ -49,7 +49,7 @@ function App() {
   //   return'App';
   // }
 
-  const[theme, setTheme] = useLocalStorage("Theme","App");
+  const[theme, setTheme] = useLocalStorage("Theme","App + city");
   
   return (
     <div className={theme}>
