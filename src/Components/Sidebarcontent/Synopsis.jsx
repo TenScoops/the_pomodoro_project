@@ -10,18 +10,18 @@ const Synopsis = () => {
 
   
 
-  function width() {
-    if (typeof window !== 'undefined') {
-         if(window.innerWidth < 900 ){
-           return '80vw';
-          } 
-    }
-    return '40vw';
-  }
-  function height() {
+  // function width() {
+  //   if (typeof window !== 'undefined') {
+  //        if(window.innerWidth < 900 ){
+  //          return '80vw';
+  //         } 
+  //   }
+  //   return '40vw';
+  // }
+  // function height() {
    
-    return ;
-  }
+  //   return ;
+  // }
 
   const customStyles = {
     overlay: {
@@ -74,7 +74,7 @@ const Synopsis = () => {
                   <h2 className='productive-header1' >Be productive but do it the right way!</h2>
                   <h2 className='productive-header2'>The Rating System</h2>
 
-                  <p>You are more likely to do better if you hold yourself accountable to your bad performances.
+                  <p>You are much more likely to do better if you hold yourself accountable to your bad performances.
                 I created this rating system to give you the incentive to scrutinize your own performances
                   and in turn help you see growth in productivity and work ethic over time. </p>
                   {/* I hope this helps you achieve your goals in life. */}

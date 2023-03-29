@@ -31,6 +31,10 @@ const Timer = () => {
     const numOfblocks = setterInfo.numOfBreaks+1; // change block number
     const totalWorkTime = ( ((setterInfo.workMinutes*60))-totalBreakTime);
 
+    const blockNumRef = useRef(setterInfo.blockNum);
+    const[block, setBlock] = useState(0);
+    const blockRef = useRef(block);
+
     window.onbeforeunload = function() {
         return true;
     };
@@ -111,9 +115,7 @@ const Timer = () => {
                     <Pause  className="pause" onClick={() => { setIsPaused(true); isPausedRef.current = true; }}/>
                     }
                     
-                   
                     {mode==='break'?<Skip title="Skip Break" onClick={()=>{timeLeftRef.current = 0; setMode('work')}}/>:null}
-                    
                 </div>
 
                 <div style={{display:'flex', justifyCotent:'center', alignItems:'center'}}>
@@ -128,22 +130,33 @@ const Timer = () => {
         }
     }
 
-    const theTasks = () =>{
-       return <button onClick={()=>{setterInfo.setOpenTask(true)}} 
-        style={{width:'40px', borderRadius:'7px', fontSize:'15px', height:'35px', 
-                marginTop:'55px', paddingTop:'3px', marginRight:'10px', backgroundColor:'black'}}>
-            <BsFileText style={{fontSize:'24px'}}/></button>
+    const showRating =()=>{
+        if(mode === 'break'){
+            return <Rating/>
+        }
     }
 
+    // const focusMode =()=>{
+    //     setterInfo.setTheme("App + off");
+    //     setterInfo.setSideBar(false);
+    //     setterInfo.setHideButton(true);
+    //     // setterInfo.setShowData(true);
+    // }
+
+    // const theTasks = () =>{
+    //    return <button onClick={()=>{setterInfo.setOpenTask(true)}} 
+    //     style={{width:'40px', borderRadius:'7px', fontSize:'15px', height:'35px', 
+    //             marginTop:'55px', paddingTop:'3px', marginRight:'10px', backgroundColor:'black'}}>
+    //         <BsFileText style={{fontSize:'24px'}}/></button>
+    // }
+
     // const [blockNum, setBlockNum] = useState(1);
-    const blockNumRef = useRef(setterInfo.blockNum);
-    const[block, setBlock] = useState(0);
-    const blockRef = useRef(block);
+   
 
     // let block = 1;
 
      useEffect(() =>{
-        const timeout =  setTimeout(()=>{
+        // const timeout =  setTimeout(()=>{
 
             console.log("yes")
 
@@ -181,18 +194,13 @@ const Timer = () => {
                 //     setIsPaused(false);
                 //     isPausedRef.current = false;
                 // }
-        });
+        
             
-        return ()=>clearTimeout(timeout);
+        // return ()=>clearTimeout(timeout);
         
     },[isPaused,mode, setterInfo, block])
 
-    const showRating =()=>{
-        if(mode === 'break'){
-            return <Rating/>
-        }
-    }
-
+  
     
     return (
         
@@ -222,7 +230,8 @@ const Timer = () => {
                         <p>You are currently: {mode === 'work'?"working..":"on break."}</p>
                 </div>}
             </div>
-            {mode==="work"?<div style={{borderRadius:'10px', marginBottom:'20px'}} className='blockdiv'><p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
+            {mode==="work"?<div style={{borderRadius:'10px', marginBottom:'20px'}} className='blockdiv'>
+                <p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
             {setterInfo.showData?null:
                 <div className={setterInfo.showButtons?'time':'time + new-font'}>
                     <p className='minutes'>{totalWorkTime < totalBreakTime?"00" :addZero(minutes)}</p>

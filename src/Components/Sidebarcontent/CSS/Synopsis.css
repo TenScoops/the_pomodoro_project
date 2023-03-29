@@ -15,23 +15,16 @@
   cursor:pointer;
 }
 
-/* Handle on hover */
-/* ::-webkit-scrollbar-thumb:hover {
-  background: rgb(219, 219, 219); 
-} */
-
 .lorem p{
   font-size:19px;
   margin-left: 20px;
   margin-right: 20px;
 }
-/* .lorem h2{
-  font-size: 22px;
-} */
+
 .close{
   cursor: pointer;
   position: absolute;
-  display: block;
+  /* display: block; */
   line-height: 20px;
   right: -14px;
   top: 8px;
@@ -54,8 +47,8 @@
 .productive-header1{
   font-size:13px;
   margin-top:35px; 
-  font-style:oblique; 
-  font-family:cursive, 'Kalam'; 
+  /* font-style:oblique;  */
+  font-family:'Kalam',cursive; 
 }
 
 .productive-header2{

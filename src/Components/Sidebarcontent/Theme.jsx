@@ -4,29 +4,29 @@ import { useState } from 'react';
 import './CSS/Chartdisplay.css';
 import SetterContext from '../SetterContext';
 import './CSS/Theme.css';
-import useLocalStorage from 'use-local-storage'
-// import './images/5996460.jpg';
 
-const Theme = ({changeTheme}) => {
+
+
+const Theme = () => {
   const [modalOpen, setModalOpen] = useState(true);
   const themeInfo = useContext(SetterContext);
 
-  function width() {
-    if (typeof window !== 'undefined') {
-         if(window.innerWidth < 700 ){
-           return '450px';
-          } 
-    }
-    return '650px';
-  }
-  function height() {
-    if (typeof window !== 'undefined') {
-         if(window.innerHeight < 700 ){
-           return '500px';
-          } 
-    }
-    return '800px';
-  }
+  // function width() {
+  //   if (typeof window !== 'undefined') {
+  //        if(window.innerWidth < 700 ){
+  //          return '450px';
+  //         } 
+  //   }
+  //   return '650px';
+  // }
+  // function height() {
+  //   if (typeof window !== 'undefined') {
+  //        if(window.innerHeight < 700 ){
+  //          return '500px';
+  //         } 
+  //   }
+  //   return '800px';
+  // }
 
   function changeTheme(wri){
     return 'App';
@@ -66,7 +66,7 @@ const Theme = ({changeTheme}) => {
   return (
     
       <Modal 
-          closeTimeoutMS={120}
+       
           isOpen={modalOpen}
           onRequestClose={() => closeModal()}
           style={customStyles} 
@@ -76,10 +76,10 @@ const Theme = ({changeTheme}) => {
               <h1 style={{marginBottom:'15px'}}>Choose a theme</h1>
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
                 <hr style={{margin:'0', width:'300px'}}/>
-                <div className='theme'  onClick={()=>{themeInfo.setTheme("App + city")}}>City(defaut)</div>
-                <div className='theme'  onClick={()=>{themeInfo.setTheme("App + nightTime")}}>Night time</div>
-                <div className='theme'  onClick={()=>{themeInfo.setTheme("App + spaceCabin")}} >Space cabin</div>
-                <div className='theme' onClick={()=>{themeInfo.setTheme("App + cornerStreet")}} >Corner street</div>
+                <div className='theme' onClick={()=>{themeInfo.setTheme("App + city");}}>City(default)</div>
+                <div className='theme' onClick={()=>{themeInfo.setTheme("App + nightTime")}}>Night time</div>
+                <div className='theme' onClick={()=>{themeInfo.setTheme("App + spaceCabin")}} >Space cabin</div>
+                <div className='theme' onClick={()=>{themeInfo.setTheme("App + cornerStreet")}} >Flower shop</div>
                 <div className='theme' onClick={()=>{themeInfo.setTheme("App + houses")}} >Houses</div>
                 <div className='theme' onClick={()=>{themeInfo.setTheme("App + mountain")}} >Mountain</div>
                 <div className='theme' onClick={()=>{themeInfo.setTheme("App + snowyCabin")}}>Snowy cabin</div>

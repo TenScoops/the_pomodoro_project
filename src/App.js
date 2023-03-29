@@ -14,6 +14,11 @@ import Task from './Components/TaskList/Task';
 import Logout from './Components/Logout'
 import { AuthContextProvider } from './FirebaseAuth/AuthContext';
 import useLocalStorage from 'use-local-storage'
+import $ from 'jquery'
+import Howtorate from './Components/Howtorate'
+// const { JSDOM } = require( "jsdom" );
+// const { window } = new JSDOM( "" );
+
 
 
 function App() {
@@ -26,6 +31,7 @@ function App() {
   const[showButtons, setShowButtons] = useState(false);
   const[showData, setShowData] = useState(true);
   const[isWorkGreater,setIsWorkGreater] = useState(false);
+
   const [modalOpen, setModalOpen] = useState(true);
   const [clicked, setClicked] = useState(false);
   const[hasUserRated, setHasUserRated] = useState(false);
@@ -41,6 +47,7 @@ function App() {
   const [data, setData] = useState(false);
   const [logout, setLogout] = useState(false);
   const [openThemePage,setOpenThemePage] = useState(false);
+  const [openHowTo, setOpenHowTo] = useState(false);
 
   // function theme(){
   //   if("Theme" in localStorage){//checks if there is anything in local storage
@@ -52,6 +59,15 @@ function App() {
   const[theme, setTheme] = useLocalStorage("Theme","App + city");
   
   return (
+    // <div class="loader">
+    // {/* <div id="pre-loader">
+    //       <p>Loading Website...</p>
+    //       <img src="/images/my-loader.gif" />
+    // </div> */}
+    // $(window).load(function() {
+    //     $(".loader").fadeOut("slow")
+    // });
+
     <div className={theme}>
       
       <div className='theApp'>
@@ -101,11 +117,14 @@ function App() {
           setOpenTask,
           logout,
           setLogout,
-          theme, setTheme
+          theme, 
+          setTheme,
+          openHowTo, 
+          setOpenHowTo
         }}>
             <Navbar/>
             { showParagraph? <Contents/>:null}
-            <div className='theTimer'>
+            <div className='theTimerContents'>
               { showSetterPage? <Setter/>: null}
               { showTimerPage ? <Timer/> : null}
             </div>
@@ -115,6 +134,7 @@ function App() {
             { data ? <Chartdisplay/>:null}
             { synopsis ? <Synopsis/>: null}
             { openThemePage ? <Theme/>: null}
+            { openHowTo? <Howtorate/>:null}
       
             { openTask? <Task/>: null}
             { logout? <Logout/>:null}
@@ -125,6 +145,7 @@ function App() {
       </div>
      
     </div>
+  
   );
 }
 

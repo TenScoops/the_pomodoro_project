@@ -104,6 +104,8 @@
 }
 .google-label{
     cursor:pointer;
+    font-family: 'Kalam',sans-serif,'Roboto','Source Code Pro','Indie Flower', sans-serif, Impact, Haettenschweiler, 'Arial Narrow Bold', cursive;
+    font-weight: 600;
 }
 .google-icon{
     margin-right:15px;
@@ -117,7 +119,9 @@
         margin-top:22px;
     }
 }
+
 @media only screen and (max-width:1600px) {
+
     .progress-text{
         margin-top:127.5px;
     }
@@ -234,7 +238,11 @@
         margin-right:0px;
     }
 }
-  
+@media only screen and (max-width:1530px) {
+    .the-title h4{
+        display: none;
+    }
+} 
 @media only screen and (max-height:680px){
     .sidebar h1{
         font-size: 25px;
