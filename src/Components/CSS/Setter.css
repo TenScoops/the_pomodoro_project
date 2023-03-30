@@ -68,9 +68,10 @@
     border-color: rgba(255, 255, 255, 0.5);
     background-color: rgb(30, 33, 45, 0.5);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    width: 65px;
     display: inline-flex;
     border-radius: 10px;
-    margin-right: 20px;
+    margin-right: 25px;
     margin-left: 20px;
     align-items: center;
 }
@@ -78,17 +79,17 @@
   border-color: rgba(255, 255, 255, 0.5);
   background-color: rgb(30, 33, 45, 0.5);
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  width: 65px;
   display: inline-flex;
   border-radius: 10px;
   margin-right: 20px;
   align-items: center;
 }
 .checkbutton{
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.71);
     background-color: rgba(0, 248, 8, 0.733);
-    width:65px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    border-radius: 0%;
+    width: 65px;
     display: inline-flex;
     border-radius: 10px;
     align-items: center;
@@ -144,7 +145,7 @@
   .nextbutton{
     width:62.5px;
   }
-  .clockbutton{
+  .checkbutton{
     width:62.5px;
   }
 }
@@ -209,7 +210,7 @@
   .nextbutton{
     width:60px;
   }
-  .clockbutton{
+  .checkbutton{
     width:60px;
   }
 }
@@ -248,7 +249,7 @@
   .nextbutton{
     width:60px;
   }
-  .clockbutton{
+  .checkbutton{
     width:60px;
   }
 }

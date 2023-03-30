@@ -1,10 +1,9 @@
 import './CSS/Setter.css';
 import React, { useContext,useState } from 'react';
 import ReactSlider from 'react-slider';
-import Backbutton from './Buttons/Backbutton';
-import Nextbutton from './Buttons/Nextbutton';
+
 import SetterContext from './SetterContext';
-import Clock from './Buttons/Clock';
+
 import {BsFileText,BsArrowRight,BsArrowLeft} from 'react-icons/bs';
 import {AiOutlineCheck} from 'react-icons/ai';
 
