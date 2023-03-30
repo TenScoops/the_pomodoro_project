@@ -43,8 +43,6 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  /* z-index: 1000; */
-  /* background-image: url("/public/Images/SpaceCabin.jpeg"); */
 }
 
 .theApp{
@@ -177,7 +175,7 @@ button:hover{
   background-image: url("/public/Images/rocket.jpeg");
   /* transition: all .5s; */
 }
-.cornerStreet{
+.flowerShop{
   background-image: url("/public/Images/Flowershop.jpeg");
   /* transition: all .5s; */
 }

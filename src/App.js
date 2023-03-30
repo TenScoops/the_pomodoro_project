@@ -56,7 +56,7 @@ function App() {
   //   return'App';
   // }
 
-  const[theme, setTheme] = useLocalStorage("Theme","App + city");
+  const[theme, setTheme] = useLocalStorage("Theme","App + flowerShop");
   
   return (
     // <div class="loader">

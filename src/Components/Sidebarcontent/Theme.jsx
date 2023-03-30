@@ -79,7 +79,7 @@ const Theme = () => {
                 <div className='theme' onClick={()=>{themeInfo.setTheme("App + city");}}>City(default)</div>
                 <div className='theme' onClick={()=>{themeInfo.setTheme("App + nightTime")}}>Night time</div>
                 <div className='theme' onClick={()=>{themeInfo.setTheme("App + spaceCabin")}} >Space cabin</div>
-                <div className='theme' onClick={()=>{themeInfo.setTheme("App + cornerStreet")}} >Flower shop</div>
+                <div className='theme' onClick={()=>{themeInfo.setTheme("App + flowerShop")}} >Flower shop</div>
                 <div className='theme' onClick={()=>{themeInfo.setTheme("App + houses")}} >Houses</div>
                 <div className='theme' onClick={()=>{themeInfo.setTheme("App + mountain")}} >Mountain</div>
                 <div className='theme' onClick={()=>{themeInfo.setTheme("App + snowyCabin")}}>Snowy cabin</div>
