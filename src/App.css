@@ -144,7 +144,7 @@ button:hover{
 }
 .questionMark{
   background-color:#1e212dd8; 
-  width:60px; 
+  width:50px; 
   border-radius:30%; 
   animation: blinking 0.8s infinite;
   border-color: white;
@@ -209,7 +209,7 @@ button:hover{
     font-size: 15px;
   }
   .questionMark{
-    width:50px; 
+    width:40px; 
   }
 }
 
