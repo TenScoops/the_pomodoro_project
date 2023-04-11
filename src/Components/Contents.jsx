@@ -26,9 +26,12 @@ const Contents = () => {
 
                 {user?.displayName? <p className='content-text'>{questionMark2()}Hi {user?.displayName}!</p> 
                   :
+                  <div style={{ }}>
                 <p className='content-text'>
-                  Do you find yourself struggling with productivity?{questionMark2()}  
+                  Do you find yourself struggling with productivity?{questionMark2()}
                 </p>
+                <p className='content-text'></p>
+                </div>
                 }
             </div>
 
