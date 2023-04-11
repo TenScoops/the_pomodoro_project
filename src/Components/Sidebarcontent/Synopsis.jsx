@@ -98,7 +98,7 @@ const Synopsis = () => {
                   <p style={{marginBottom:'0'}}>The more honest you are the better your results and the more you'll get out of this app!</p>
                       
                   {/* <p style={{margin:'5px', fontSize:'15px'}}>*Not yet supported on mobile*</p> */}
-            
+                  {/* <p style={{color:'lightblue',textDecoration:'underline'}} onClick={synopInfo.setOpenHowTo(true)}>How to rate your performance</p> */}
                 </div>
       
                     {/* <button onClick={() => setModalOpen(false)}>Close Modal</button> */}

@@ -42,6 +42,11 @@ const Rating = () => {
     </button>
     
   }
+  const checkMark =()=>{
+    return <svg style={{width:'120px', color:'lightgreen', marginTop:'80px'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+      </svg>
+  }
 
   let data = 0;//will hold block ratings
 
@@ -79,9 +84,7 @@ const Rating = () => {
   const thankYouPage=()=>{
     return <div className='thankyoupage' style={{display:'flex', justifyContent: 'center', alignItems:'center', height:'650px', flexDirection:"column"}}>
       {/* {ratingInfo.setCloseRatingModal(true)} */}
-      <svg style={{width:'120px', color:'lightgreen', marginTop:'80px'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
-      </svg>
+      {checkMark()}
       <p style={{marginBottom:'80px', fontSize:'18.5px'}}>Performance Rated</p>
       <button style={{margin:'0', width:'100px'}} onClick={() => {  setModalOpen(false);}}>Close</button>  
     </div>
@@ -89,10 +92,7 @@ const Rating = () => {
 
   return (
     <div className='rating'>
-        {/* <div className='headerating'>
-            <h1>Please rate performance for block #1</h1>
-            <p><i>*Take into account distractions, losing focus, and general productivity. Decision cannot be undone.*</i></p>
-        </div> */}
+     
         <div className='ratingdiv'>
         
             <Modal

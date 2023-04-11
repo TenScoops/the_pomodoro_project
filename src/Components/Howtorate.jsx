@@ -7,22 +7,7 @@ import SetterContext from './SetterContext';
 const Howtorate = () => {
   const howToRateInfo = useContext(SetterContext);
   const [modalOpen, setModalOpen] = useState(true);
-
   
-
-  // function width() {
-  //   if (typeof window !== 'undefined') {
-  //        if(window.innerWidth < 900 ){
-  //          return '80vw';
-  //         } 
-  //   }
-  //   return '40vw';
-  // }
-  // function height() {
-   
-  //   return ;
-  // }
-
   const customStyles = {
     overlay: {
       backgroundColor: '#08080b97',
@@ -69,13 +54,35 @@ const Howtorate = () => {
                 </svg>
                 </button>
 
-                <div className='lorem' >
+                <div className='lorem + how-to-rate' >
                     <h2 style={{marginTop:'50px'}}>How to rate your performance</h2>
                     <hr style={{width:'200px', margin:'0'}}/>
-                    <p>If you are working 45 minutes per or more per block, you should base your ratings on times distracted, productivity, 
-                        and how long you were</p>
-                    <p>IF you are working less than 45 minutes per block, rate based on how often you were distracted</p>
-                    <p>If you are working by session, then you should base it</p>
+                    
+
+                    <h3>Rate by block</h3>
+                    <p>You've selected the rate by block option at the create a session screen.</p>
+              
+                   <p> If you are working 45 minutes or more per block, you should base your ratings on
+                    times distracted
+                    how productive you were,
+                    loss of focus
+                    If you are working less than 45 minutes per block, Base your ratings on:
+                    times distracted
+                    loss of focus
+                    </p>
+                    <h3>Rate by session</h3>
+                    <p>You've selected the rate by session option at the create a session screen.</p>
+                    <p>base your rating on how distracted you were, 
+                      how often you lost focus,
+                      how productive you were during your session.
+                      </p>
+                    <h3>Pioneer</h3>
+                    <p>You've selected either rate by block or rate by session</p>
+                    <p>You make your own rules and you set your own standards: instead of following a blueprint, 
+                      you decide to make your own. Maybe your standards for yourself are very high 
+                      and the current blueprint doesn't suit you, and that's fine. This app is not meant 
+                      to constrain you but it is ultimately a tool you use for self-improvement. 
+                      </p>
                 </div>
     
 

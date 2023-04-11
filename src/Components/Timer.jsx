@@ -1,22 +1,20 @@
 import React from 'react'
 import {useState, useEffect, useContext, useRef} from "react"; //hooks
-import Pause from './Buttons/Pause';
-import Play from './Buttons/Play';
-import './CSS/Timer.css';
 import SetterContext from './SetterContext';
 import Rating from './Rating';
 import Skip from './Buttons/Skip';
 import Areyousure from './Areyousure';
 import {BsFileTextFill} from 'react-icons/bs';
 import {BsFileText} from 'react-icons/bs';
-import {FaLightbulb} from 'react-icons/fa'
+import {FaLightbulb} from 'react-icons/fa';
+import './CSS/Timer.css';
 // import ringer from "./flipdish-ringer.mp3";
 
 
 const Timer = () => {
     // <audio id="ring" src="https://cdn.pixabay.com/audio/2021/09/27/audio_91211934db.mp3"></audio>
     // const [timerIsDone, setTimerIsDone] = useState(false);
-    // let sound1 = document.getElementById("ring");
+    let sound1 = document.getElementById("ring");
     const setterInfo = useContext(SetterContext);
 
     const[isPaused, setIsPaused] = useState(true);
@@ -110,9 +108,9 @@ const Timer = () => {
         if(setterInfo.showButtons === true){
             return <div style={{display:'flex', justifyCotent:'center', alignItems:'center', flexDirection:'column'}}>
                 <div style={{marginBottom:'60px',display:'flex', justifyCotent:'center', alignItems:'center',}}>
-                    {isPaused?<Play  className="play" onClick={() => { setIsPaused(false); isPausedRef.current = false; }}/>
+                    {isPaused?<button  className="play" onClick={() => { setIsPaused(false); isPausedRef.current = false; }}> Start</button>
                     :
-                    <Pause  className="pause" onClick={() => { setIsPaused(true); isPausedRef.current = true; }}/>
+                    <button  className="pause" onClick={() => { setIsPaused(true); isPausedRef.current = true; }}>Pause</button>
                     }
                     
                     {mode==='break'?<Skip title="Skip Break" onClick={()=>{timeLeftRef.current = 0; setMode('work')}}/>:null}
@@ -131,9 +129,12 @@ const Timer = () => {
     }
 
     const showRating =()=>{
-        if(mode === 'break'){
+        if(mode === 'break' && setterInfo.option==='block'){
             return <Rating/>
         }
+        // if(setterInfo.blockNum === numOfblocks && mode === 'break' ){
+        //     return <Rating/>
+        // }
     }
 
     // const focusMode =()=>{
@@ -158,7 +159,7 @@ const Timer = () => {
      useEffect(() =>{
         // const timeout =  setTimeout(()=>{
 
-            console.log("yes")
+    
 
             function pause(){
                 setIsPaused(true);
@@ -169,11 +170,13 @@ const Timer = () => {
                 // }
             }
 
-            if(mode === 'break' && setterInfo.hasUserRated===false){
+            if(mode === 'break' && setterInfo.hasUserRated===false){//if on break and user has not rated pause timer
                 
                 return pause();
-            }else if(mode === 'work' && setterInfo.hasUserRated===true){
+
+            }else if(mode === 'work' && setterInfo.hasUserRated===true){// if user has rated
                 setterInfo.setHasUserRated(false);
+              
                 blockRef.current = blockRef.current + 1;
                 blockNumRef.current = blockNumRef.current + blockRef.current;
 
@@ -181,6 +184,7 @@ const Timer = () => {
                 setterInfo.setBlockNum(setterInfo.blockNum);
 
                 blockRef.current = 0;
+                
             }
 
             if(setterInfo.blockNum === numOfblocks && mode === 'break' ){//when session is complete
@@ -198,55 +202,61 @@ const Timer = () => {
             
         // return ()=>clearTimeout(timeout);
         
-    },[isPaused,mode, setterInfo, block])
+    },[isPaused,mode, setterInfo, blockRef])
 
-  
+    function playSound(){
+        if(timeLeftRef.current===0){
+            return  sound1.play();
+        }
+    }
     
     return (
         
         <div className='timer'>
-
+            {/* {playSound()} */}
             {/* {timerIsDone?sound1.Play():null} */}
+            {/* <button onClick={()=>sound1.play()}>Play</button> */}
+            
 
             {totalWorkTime <= totalBreakTime?setterInfo.setIsWorkGreater(false):setterInfo.setIsWorkGreater(true)}
-
-            {setterInfo.showData?<div className='blockdiv'><p>Your session </p></div>:null}
-            {setterInfo.showData?<div className='blockdiv'><p>Will have {totalWorkTime} minutes of worktime</p></div>:null}
-            {setterInfo.showData?<div className='blockdiv'><p>And {totalBreakTime} minutes of breaktime</p></div>:null}
-            {setterInfo.showData?<div className='blockdiv'><p style={{color:'black', backgroundColor:'white'}}>Session will be completed in {numOfblocks} block(s)</p></div>:null}
-            {setterInfo.showData?<div className='blockdiv'><p >With {addZero(minutes)}:{addZero(seconds)} minutes per block</p></div>:null}
-
+            <div className='showUserData' style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
+                {setterInfo.showData?<div className='blockdiv'><p>Your session </p></div>:null}
+                {setterInfo.showData?<div className='blockdiv'><p>Will have {totalWorkTime} minutes of worktime</p></div>:null}
+                {setterInfo.showData?<div className='blockdiv'><p>And {totalBreakTime} minutes of breaktime</p></div>:null}
+                {setterInfo.showData?<div className='blockdiv'><p style={{color:'black', backgroundColor:'white'}}>Session will be completed in {numOfblocks} block(s)</p></div>:null}
+                {setterInfo.showData?<div className='blockdiv'><p >With {addZero(minutes)}:{addZero(seconds)} minutes per block</p></div>:null}
+            </div>
             <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-               {setterInfo.showData?null: 
+               {setterInfo.showClock&&
                <button 
+                title='Focus mode'
                 onClick={()=>{}}
                 style={{width:'40px', marginLeft:'20px',  borderRadius:'7px', fontSize:'15px', height:'35px', 
                         marginTop:'60px', paddingTop:'3px', marginRight:'10px', backgroundColor:'black'}}>
                     <FaLightbulb/> 
                 </button>}
                 {/* {setterInfo.showData?null:theTasks()} */}
-                {setterInfo.showData?null:
+                {setterInfo.showClock&&
                 <div style={{borderRadius:'10px',marginTop:'60px', marginRight:'75px'}} className='blockdiv'>
                         <p>You are currently: {mode === 'work'?"working..":"on break."}</p>
                 </div>}
             </div>
             {mode==="work"?<div style={{borderRadius:'10px', marginBottom:'20px'}} className='blockdiv'>
                 <p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
-            {setterInfo.showData?null:
+            {setterInfo.showClock&&
                 <div className={setterInfo.showButtons?'time':'time + new-font'}>
                     <p className='minutes'>{totalWorkTime < totalBreakTime?"00" :addZero(minutes)}</p>
                     <p className='semicolon'>:</p>
                     <p className='seconds'>{totalWorkTime < totalBreakTime?"00" :addZero(seconds)}</p>
                 </div>
             }   
-            {setterInfo.showData?null:
+            {setterInfo.showClock&&
                 <div className='timerbuttons'>
                     {setterInfo.showButtons?showTheButtons():null}
                 
                 </div> 
             }
             
-
             {totalWorkTime < totalBreakTime? 
             <div className='blockdiv' style={{backgroundColor:'white', color:'darkred'}}>
                 <p>Worktime cannot be less than your breaktime.</p>
@@ -257,7 +267,7 @@ const Timer = () => {
             {setterInfo.cancelTheSession? <Areyousure/>:null}
 
             {setterInfo.sessionComplete?setterInfo.setShowTimerPage(false):null}
-
+           
             {window.onbeforeunload()}
         </div>
     )

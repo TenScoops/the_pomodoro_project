@@ -8,7 +8,7 @@
 .task {
 display: flex;
 flex-direction: column;
-justify-content: flex-start;
+justify-content: center;
 /* box-sizing: border-box; */
 /* margin: 0;
 padding: 0; */
@@ -33,7 +33,7 @@ opacity: 0.4;
 }
 
 .task-form {
-    margin-top: 50px;
+margin-top: 50px;
 margin-bottom: 32px;
 display: flex;
 justify-content: center;
@@ -42,7 +42,7 @@ align-items: center;
 }
 
 .form-div{
-    display: flex;
+display: flex;
 justify-content: center;
 align-items: center;
 }
@@ -101,14 +101,6 @@ text-transform: capitalize; */
 border: 2px solid #149fff;
 }
 
-.task-button.edit {
-background: linear-gradient(
-    90deg,
-    rgba(20, 159, 255, 1) 0%,
-    rgba(17, 122, 255, 1) 100%
-);
-padding: 16px 22px;
-}
 
 .task-container {
 display: flex;
@@ -126,9 +118,9 @@ padding: 16px;
 font-size: 18px;
 /* font-weight: 500; */
 border-radius: 5px;
-width: 90%;
+width: 70%;
 cursor: pointer;
-margin-left: 11px;
+/* margin-left: 11px; */
 }
 
 .task-row:nth-child(n) {

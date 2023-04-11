@@ -17,6 +17,7 @@ const Areyousure = () => {
     areYouSureInfo.setCancelTheSession(false);//reset button
     areYouSureInfo.blockNum = 1;//reset counter for block
     areYouSureInfo.setBlockNum(areYouSureInfo.blockNum);//reset counter for block
+    areYouSureInfo.setShowClock(false);
   }
   const customStyles = {
     overlay: {

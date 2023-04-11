@@ -6,7 +6,7 @@ const TaskList = () => {
     const[tasks, setTasks] = useState([]);
 
     const addTask = (task) =>{
-        if(!task.text || /^\s*$/.test(task.text)){
+        if(!task.text || /^\s*$/.test(task.text)){ //gets rid of unnecessary spaces
             return;
         }
 
@@ -39,7 +39,7 @@ const TaskList = () => {
     }
 
   return (
-    <div>
+    <div style={{display:'flex', justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
         <TaskForm onSubmit={addTask}/>
         <TheTasks tasks={tasks} completeTask={completeTask} removeTask={removeTask} updateTask={updateTask}/>
     </div>

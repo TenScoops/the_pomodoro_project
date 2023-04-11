@@ -15,6 +15,10 @@
     /* transition: 0.3s; */
     cursor: pointer;
     /* height: 35px; */
-    width:400px;
+    width:45vmin;
     background-color: #0404047a;
 }
+.extracss{
+    background-color: black;
+    width:45vmin
+  }

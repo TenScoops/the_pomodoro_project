@@ -16,6 +16,7 @@ import { AuthContextProvider } from './FirebaseAuth/AuthContext';
 import useLocalStorage from 'use-local-storage'
 import $ from 'jquery'
 import Howtorate from './Components/Howtorate'
+import RatingMethod from './Components/RatingMethod'
 // const { JSDOM } = require( "jsdom" );
 // const { window } = new JSDOM( "" );
 
@@ -48,6 +49,10 @@ function App() {
   const [logout, setLogout] = useState(false);
   const [openThemePage,setOpenThemePage] = useState(false);
   const [openHowTo, setOpenHowTo] = useState(false);
+  const [openMethod, setOpenMethod] = useState(false);
+
+  const[showClock, setShowClock] = useState(false);
+  const [option, setOption] = useState();
 
   // function theme(){
   //   if("Theme" in localStorage){//checks if there is anything in local storage
@@ -56,7 +61,7 @@ function App() {
   //   return'App';
   // }
 
-  const[theme, setTheme] = useLocalStorage("Theme","App + flowerShop");
+  const[theme, setTheme] = useLocalStorage("Theme","App + nightTime");
   
   return (
     // <div class="loader">
@@ -69,12 +74,11 @@ function App() {
     // });
 
     <div className={theme}>
-      
+      {/* <RatingMethod/> */}
       <div className='theApp'>
       <AuthContextProvider>
         <SetterContext.Provider value ={{
-          closeRatingModal,
-          setCloseRatingModal,
+          closeRatingModal,setCloseRatingModal,
           workMinutes,
           breakMinutes,
           setWorkMinutes,
@@ -120,25 +124,35 @@ function App() {
           theme, 
           setTheme,
           openHowTo, 
-          setOpenHowTo
+          setOpenHowTo,
+          openMethod,
+          setOpenMethod,
+          showClock, 
+          setShowClock,
+          option, 
+          setOption
         }}>
             <Navbar/>
-            { showParagraph? <Contents/>:null}
+            { showParagraph&& <Contents/>}
             <div className='theTimerContents'>
-              { showSetterPage? <Setter/>: null}
-              { showTimerPage ? <Timer/> : null}
+              { openMethod&& <RatingMethod/>}
+              { showSetterPage&& <Setter/>}
+              { showTimerPage && <Timer/> }
+              
             </div>
-            { sessionComplete?<Finished/>:null}
+            { sessionComplete&&<Finished/>}
             
-            { sideBar ? <Sidebar/>:null}
-            { data ? <Chartdisplay/>:null}
-            { synopsis ? <Synopsis/>: null}
-            { openThemePage ? <Theme/>: null}
-            { openHowTo? <Howtorate/>:null}
+            { sideBar&& <Sidebar/>}
+            { data&& <Chartdisplay/>}
+            { synopsis && <Synopsis/>}
+            { openThemePage && <Theme/>}
+            { openHowTo&& <Howtorate/>}
       
-            { openTask? <Task/>: null}
-            { logout? <Logout/>:null}
+            { openTask&& <Task/>}
+            { logout&& <Logout/>}
+            
      
+        
           </SetterContext.Provider>
         </AuthContextProvider>
      

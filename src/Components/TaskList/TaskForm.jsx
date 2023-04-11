@@ -2,8 +2,9 @@ import React,{useState, useEffect, useRef} from 'react';
 import {AiOutlinePlusCircle} from 'react-icons/ai'
 import {ImPencil2} from 'react-icons/im'
 
+
 const TaskForm = (props) => {
-    const[input, setInput] = useState('');
+    const[input, setInput] = useState(props.edit ? props.edit.value:'');
 
     const inputRef = useRef(null)
 
@@ -15,15 +16,18 @@ const TaskForm = (props) => {
         setInput(e.target.value);
     }
 
-    const handleSubmit = e =>{
+    const handleSubmit = (e) =>{
         e.preventDefault();
-
+        let theId = Math.floor(Math.random()*100000);
+        if(input!==''){//to prevent generating ids on empty inputs
+            localStorage.setItem(theId, input)
+        }
         props.onSubmit({
-            id: Math.floor(Math.random()*10000),
-            text: input
+            id: theId,
+            text: localStorage.getItem(theId)
         });
 
-        setInput('')
+        setInput('')//reset on submit
     };
 
   return (
@@ -38,6 +42,7 @@ const TaskForm = (props) => {
              ref={inputRef}
         />
         <button title='add' className='task-button'><ImPencil2 style={{fontSize:'30px'}}/></button>
+        {/* <TheTasks input={input}/> */}
     </form>
   )
 }

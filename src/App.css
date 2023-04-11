@@ -165,38 +165,41 @@ button:hover{
   margin-right: 0;
   
 }
+.checkbutton:hover{
+  background-color: transparent;
+}
 
 .city{
   background-image: url("/public/Images/city.jpeg");
-  /* transition: all .5s; */
+  transition: all .5s;
 }
 .nightTime{
   background-image: url("/public/Images/Nighttime.jpeg");
-  /* transition: all .5s; */
+  transition: all .5s;
 }
 .spaceCabin{
   background-image: url("/public/Images/SpaceCabin.jpeg");
-  /* transition: all .5s; */
+  transition: all .5s;
 }
 .snowyCabin{
   background-image: url("/public/Images/SnowyCabin.jpeg");
-  /* transition: all .5s; */
+  transition: all .5s;
 }
 .mountain{
   background-image: url("/public/Images/Mountain.jpeg");
-  /* transition: all .5s; */
+  transition: all .5s;
 }
 .houses{
   background-image: url("/public/Images/Houses.jpeg");
-  /* transition: all .5s; */
+  transition: all .5s;
 }
 .rocket{
   background-image: url("/public/Images/rocket.jpeg");
-  /* transition: all .5s; */
+  transition: all .5s;
 }
 .flowerShop{
   background-image: url("/public/Images/Flowershop.jpeg");
-  /* transition: all .5s; */
+  transition: all .5s;
 }
 .off{
   background-image: url("");
@@ -207,7 +210,7 @@ button:hover{
 @media only screen and (max-width:1600px) {
   .startSession-button{
     width:170px;
-    font-size: 20px;
+    font-size: 18px;
     height:48px;
   }
   .questionMark2{
@@ -315,6 +318,8 @@ button:hover{
   100% { opacity: 1; }
 }
 
+
+
 @keyframes anvil {
   0% {
     transform: scale(1) translateY(0px);
@@ -331,4 +336,16 @@ button:hover{
     opacity: 1;
     box-shadow: 0 0 500px rgba(241, 241, 241, 0);
   }
+}
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 0.09s ease-in;
+}
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
 }

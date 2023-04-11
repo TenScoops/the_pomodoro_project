@@ -3,7 +3,7 @@ import TaskForm from './TaskForm';
 import {HiOutlinePencilAlt} from 'react-icons/hi'
 import {TfiTrash} from 'react-icons/tfi'
 
-const TheTasks = ({tasks, completeTask, removeTask, updateTask}) => {
+const TheTasks = ({tasks, completeTask, removeTask, updateTask,}) => {
     const[edit, setEdit] = useState({
         id:null,
         value: ''
@@ -25,9 +25,10 @@ if(edit.id) {
     <div 
         className={task.isComplete ? 'task-row + complete' : 'task-row'} 
         key={index}
+        onClick={() => completeTask(task.id)}
     >
 
-        <div key={task.id} onClick={() => completeTask(task.id)}>
+        <div >
             {task.text}
         </div>
 

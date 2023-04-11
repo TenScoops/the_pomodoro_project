@@ -12,6 +12,7 @@ const Finished = () => {
         finishedInfo.setShowSetterPage(true);
         finishedInfo.setSessionComplete(false);
         finishedInfo.setClicked(false);
+        finishedInfo.setShowClock(false);
       
       }
       function statIcon(){

@@ -27,6 +27,8 @@
     margin:0;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 
 .header{
@@ -45,7 +47,9 @@
   display: flex;
   justify-content: center;
 }
-
+/* .session-label{
+  margin:0;
+} */
 /*Sliders*/
 .slider{
     height:27px;
@@ -63,6 +67,23 @@
 
 }
 
+/* .dropDown{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  background-color:#1e212d;
+  width: 200px;
+  left:145px;
+  border-radius: 20px;
+  bottom:-90px;
+}
+.dropDown ul{
+  padding:0;
+}
+.dropDown p:hover{
+  background-color: black;
+} */
 /*buttons*/
 .backbutton{
     border-color: rgba(255, 255, 255, 0.5);

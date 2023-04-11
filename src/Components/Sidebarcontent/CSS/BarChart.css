@@ -1,0 +1,26 @@
+.timeChart-button{
+    width:15.3vmin;
+    font-family:'kalam';
+    margin-top:20px; 
+    margin-left:0px;
+    margin-right:0px;  
+    background-color:white;
+    border-color: black;
+    color: black;
+}
+.timeChart-button:hover{
+    box-shadow: 0px 0px 0px 0px rgba(127,218,247,0.75);
+    -webkit-box-shadow: 0px 0px 0px 0px rgba(127,218,247,0.75);
+    -moz-box-shadow: 0px 0px 0px 0px rgba(127,218,247,0.75);
+    background-color: black;
+    color:white;
+}
+/* .timeChart-button:focus{
+    background-color: black;
+    color:white
+} */
+
+.extra{
+    background-color: black;
+    color:white;
+}

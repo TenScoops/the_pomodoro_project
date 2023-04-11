@@ -375,6 +375,9 @@
     .text svg{
         margin-left:0;
     }
+    .google-button{
+        margin-right: 15px;
+    }
 }
 
 

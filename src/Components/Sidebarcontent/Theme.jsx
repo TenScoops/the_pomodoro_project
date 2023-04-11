@@ -76,14 +76,31 @@ const Theme = () => {
               <h1 style={{marginBottom:'15px'}}>Choose a theme</h1>
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
                 <hr style={{margin:'0', width:'300px'}}/>
-                <div className='theme' onClick={()=>{themeInfo.setTheme("App + city");}}>City(default)</div>
-                <div className='theme' onClick={()=>{themeInfo.setTheme("App + nightTime")}}>Night time</div>
-                <div className='theme' onClick={()=>{themeInfo.setTheme("App + spaceCabin")}} >Space cabin</div>
-                <div className='theme' onClick={()=>{themeInfo.setTheme("App + flowerShop")}} >Flower shop</div>
-                <div className='theme' onClick={()=>{themeInfo.setTheme("App + houses")}} >Houses</div>
-                <div className='theme' onClick={()=>{themeInfo.setTheme("App + mountain")}} >Mountain</div>
-                <div className='theme' onClick={()=>{themeInfo.setTheme("App + snowyCabin")}}>Snowy cabin</div>
-                <div className='theme' onClick={()=>{themeInfo.setTheme("App + rocket")}} >Rocket</div>
+
+                <div 
+                  className={themeInfo.theme ==="App + city"? 'theme + extracss': 'theme'}
+                  onClick={()=>{themeInfo.setTheme("App + city");}}>City</div>
+                <div 
+                  className={themeInfo.theme ==="App + nightTime"? 'theme + extracss': 'theme'}
+                  onClick={()=>{themeInfo.setTheme("App + nightTime")}}>Breezy night</div>
+                <div 
+                  className={themeInfo.theme ==="App + spaceCabin"? 'theme + extracss': 'theme'}
+                  onClick={()=>{themeInfo.setTheme("App + spaceCabin")}} >Space cabin</div>
+                <div 
+                  className={themeInfo.theme ==="App + flowerShop"? 'theme + extracss': 'theme'}
+                  onClick={()=>{themeInfo.setTheme("App + flowerShop")}} >Flower shop</div>
+                <div 
+                  className={themeInfo.theme ==="App + houses"? 'theme + extracss': 'theme'}
+                  onClick={()=>{themeInfo.setTheme("App + houses")}} >Houses</div>
+                <div 
+                  className={themeInfo.theme ==="App + mountain"? 'theme + extracss': 'theme'}
+                  onClick={()=>{themeInfo.setTheme("App + mountain")}} >Mountain</div>
+                <div 
+                  className={themeInfo.theme ==="App + snowyCabin"? 'theme + extracss': 'theme'}
+                  onClick={()=>{themeInfo.setTheme("App + snowyCabin")}}>Snowy cabin</div>
+                <div 
+                  className={themeInfo.theme ==="App + rocket"? 'theme + extracss': 'theme'}
+                  onClick={()=>{themeInfo.setTheme("App + rocket")}} >Rocket</div>
                 {/* <div className='theme' style={{}}>Room</div> */}
                 {/* <div className='theme' style={{}}>Futuristic</div> */}
                 {/* <div className='theme' style={{}}>Log cabin</div> */}

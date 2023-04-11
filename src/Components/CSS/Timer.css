@@ -4,11 +4,11 @@
     justify-content: center;
     flex-direction: column;
   
-    animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    /* animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
     -webkit-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
     -moz-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
     -o-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -ms-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards; */
     font-family: 'Kalam', cursive;
   }
   .blockdiv{
@@ -29,6 +29,13 @@
   
  .timer p{
     margin:0px;
+  }
+  .showUserData{
+    animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
   }
   .timerbuttons{
     margin-bottom: 20px;
@@ -175,27 +182,6 @@
 }
 
 
-/* @media only screen and (max-width:700px) {
-  
-  .blockdiv{
-    font-size: 15px;
-  }
-  .time{
-    font-size:80px;
-  }
-  .play{
-    font-size: 20px;
-  }
-  .pause{
-    font-size: 20px;
-  
-  }
-  
-  .skip{
-    width:42.5px;
-  }
-  
-} */
 
 
 /* animation */

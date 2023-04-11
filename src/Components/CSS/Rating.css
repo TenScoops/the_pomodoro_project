@@ -83,6 +83,10 @@
     margin: 0;
 }
 
+.how-to-rate p{
+    margin:0;
+}
+
 #score10:hover{
     background-color: green;
 }
@@ -113,17 +117,3 @@
 #score1:hover{
     background-color: rgb(170, 0, 0);
 }
-
-  /* animation */
-  /* .ReactModal__Overlay {
-    opacity: 0;
-    transition: opacity 60ms ease-in-out;
-  }
-  
-  .ReactModal__Overlay--after-open{
-    opacity: 1;
-  }
-  
-  .ReactModal__Overlay--before-close{
-    opacity: 0;
-  } */

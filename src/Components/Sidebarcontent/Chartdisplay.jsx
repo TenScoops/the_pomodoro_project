@@ -28,8 +28,8 @@ const Data = () => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: 'rgba(255, 255, 255,0.95)',
-      height:'70vh',
-      width: '80vmin',
+      height:'75vh',
+      width: '83vmin',
       borderRadius:'10px',
       padding:'0'
       
