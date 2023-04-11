@@ -35,11 +35,11 @@ body{
   background-size: cover;
   height: 100vh;
   width: 100vw;
-  animation: fadeInAnimation 1.5s;
+  /* animation: fadeInAnimation 1.5s;
   -webkit-animation: fadeInAnimation 1.5s;
   -moz-animation: fadeInAnimation 1.5s;
   -o-animation: fadeInAnimation 1.5s;
-  -ms-animation: fadeInAnimation 1.5s;
+  -ms-animation: fadeInAnimation 1.5s; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,19 +105,31 @@ button:hover{
 
 
 .content{
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 .content-text{
-  display:flex;
+  /* display:flex;
   justify-content:center;
-  align-content:center;
+  align-content:center; */
   background-color:#1e212d;
-  border-radius:15px; 
+  border-radius:5px; 
   font-size:20px;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid white; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+ /* Gives that scrolling effect as the typing happens */
+/* Adjust as needed */
+  animation: 
+    typing 2.5s steps(40, end),
+    blink-caret .75s step-end infinite;
 }
-
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: white; }
+}
 .theTimerContents{
   display: flex;
 }
@@ -126,7 +138,7 @@ button:hover{
   display: flex;
   align-items: center;
   justify-content: center;
-  
+  /* transition: 5s ease-in-out; */
 }
 .questionMark{
   background-color:#1e212dd8; 
@@ -147,6 +159,12 @@ button:hover{
   margin-right: 20px;
   margin-right: 0;
   
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
 }
 
 .city{
