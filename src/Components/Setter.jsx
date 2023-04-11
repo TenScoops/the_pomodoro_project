@@ -1,11 +1,12 @@
 import './CSS/Setter.css';
 import React, { useContext,useState } from 'react';
 import ReactSlider from 'react-slider';
-import Backbutton from './Buttons/Backbutton';
-import Nextbutton from './Buttons/Nextbutton';
+
 import SetterContext from './SetterContext';
-import Clock from './Buttons/Clock';
-import {BsFileText} from 'react-icons/bs'
+
+import {BsFileText,BsArrowRight,BsArrowLeft} from 'react-icons/bs';
+import {AiOutlineCheck} from 'react-icons/ai';
+
 
 
 const Setter = () => {
@@ -76,10 +77,16 @@ const Setter = () => {
           />
 
           <div className='nextbackbuttons'>
-            <Backbutton title ="Back" onClick={() => {goBack()}}/>
+            <button className='backbutton' title ="Back" onClick={() => {goBack()}}><BsArrowLeft style={{fontSize:'42px'}}/></button>
             {/* {taskButton()} */}
-            {setterInfo.clicked?null:<Clock  title ="Next" onClick={() =>{ setterInfo.setClicked(true); {setterInfo.showTimerPage?setterInfo.setShowTimerPage(false):setterInfo.setShowTimerPage(true)}}}/>}
-            {setterInfo.clicked?<Nextbutton title ="Start"onClick={() => {goForward()}}/>:null}
+            {setterInfo.clicked?null:<button className='nextbutton' title ="Next" 
+            onClick={() =>{ setterInfo.setClicked(true); {setterInfo.showTimerPage?setterInfo.setShowTimerPage(false):setterInfo.setShowTimerPage(true)}}}>
+              <BsArrowRight style={{fontSize:'42px', marginLeft:'4px'}}/>
+              </button>}
+
+            {setterInfo.clicked?<button className='checkbutton' title ="Start"onClick={() => {goForward()}}>
+              <AiOutlineCheck style={{fontSize:'42px', marginLeft:'4px'}}/>
+              </button>:null}
           </div>
       </div>
     </div>
