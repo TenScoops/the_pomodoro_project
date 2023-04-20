@@ -13,6 +13,10 @@
     -moz-animation: anvil 0.11s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
     -o-animation: anvil 0.11s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
     -ms-animation: anvil 0.11s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .ratingdiv{
@@ -35,12 +39,13 @@
 }
 .score{
     margin-top: 20px;
-    height: 35px;
+    height: 45px;
     background-color: #181a24;
     align-items: center;
     display: flex;
     justify-content: center;
     font-size: 20px;
+    width: 50vmin;
     border-radius: 10px;
     transition: 0.2s ease-in;
 }
@@ -51,7 +56,7 @@
     align-items: center;
     /* font-size:25px */
 }
-.scoreText h1{
+.scoreText h3{
     display:flex;
     margin-bottom: 0;
     margin-top: 0;
@@ -76,7 +81,7 @@
 .score:hover{
     /* border-color: rgb(255, 255, 255); */
     cursor: pointer;
-    height: 45px;
+    width: 55vmin;
     
 }
 .scoreText p{

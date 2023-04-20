@@ -24,11 +24,14 @@ const Contents = () => {
         <div className='Content'>
             <div className='text-div' style={{display:'flex', flexDirection:'column', letterSpacing:'1px'}}>
 
-                {user?.displayName? <p className='content-text'>{questionMark2()}Hi {user?.displayName}!</p> 
+                {user?.displayName? <div>
+                  <p className='content-text'>&nbsp;{questionMark2()} Hi {user?.displayName}! &nbsp;</p>
+                <p className='content-text'></p>
+                </div> 
                   :
-                  <div style={{ }}>
+                  <div>
                 <p className='content-text'>
-                  Do you find yourself struggling with productivity?{questionMark2()}
+                  &nbsp;Do you find yourself struggling with productivity?{questionMark2()} 
                 </p>
                 <p className='content-text'></p>
                 </div>

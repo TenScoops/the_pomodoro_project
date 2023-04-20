@@ -83,7 +83,7 @@ const Synopsis = () => {
                   
                   <p>Pomodoro allows you to work in 25 minute intervals with breaks in between. But this app allows you to set your own 
                   session time, with however many breaks you want, and however many minutes per break as long as your total break time does 
-                  not exceed your total work time for the sake of productivity. And at the end 
+                  not exceed your total work time for the benefit of your productivity. And at the end 
                       of every session you will have a session score, this will be based on your ratings.</p>
 
                   <p>You will complete your session in blocks and after each block you will be asked to rate your performance.
@@ -95,8 +95,8 @@ const Synopsis = () => {
                   <p>You will find your performance score in the "My Data" section. Your performance score will be calculated as ratings/number of blocks. 
                     Soon how many times you use the pause button as well as how long your session is paused will also affect your performance score.
                   </p>
-                  <p style={{marginBottom:'0'}}>The more honest you are the better your results and the more you'll get out of this app!</p>
-                      
+                  <p >The more honest you are the better your results and the more you'll get out of this app!</p>
+                  <p style={{marginBottom:'0'}}>~app created by TwoScoops~</p>    
                   {/* <p style={{margin:'5px', fontSize:'15px'}}>*Not yet supported on mobile*</p> */}
                   {/* <p style={{color:'lightblue',textDecoration:'underline'}} onClick={synopInfo.setOpenHowTo(true)}>How to rate your performance</p> */}
                 </div>

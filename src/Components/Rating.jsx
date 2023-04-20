@@ -26,7 +26,7 @@ const Rating = () => {
       transform: 'translate(-50%, -50%)',
       backgroundColor: '#181a24',
       width:'70vmin',
-      height:'65vh',
+      height:'70vh',
       borderRadius:'20px',
       
     }
@@ -56,9 +56,9 @@ const Rating = () => {
         {/* {ratingInfo.setCloseRatingModal(false)} */}
         <div className = 'scoreText' >
           <div style={{display:'inline-flex', alignItems:'center', justifyContent:'center', marginTop:'20px'}}>
-            <h1>
+            <h3>
               Rate your performance for block 
-            </h1>
+            </h3>
             <p className='theBlockNum'> #{ratingInfo.blockNum}</p>
           </div>
           <p className='ratePerformance'>

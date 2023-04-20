@@ -1,25 +1,33 @@
 .sidebar{
-    width: 325px;
-    height: 100%;
-    background-color: #1e212dd8;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height:70px;
+    width:100%;
+    background-color: #1e212dde;
     margin:0;
     position: fixed;
-    left:0;
     top: 0;
-    backdrop-filter: blur(0px);
+    /* backdrop-filter: blur(0px); */
      box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
     -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
     -webkit-animation: slide-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	        animation: slide-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    border-color: 'transparent';
+    /* border-color: 'transparent'; */
 }
 .sidebarcontent{
     display:flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 805px;
+        height:50px;
+    /* display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 325px;
+    width: 325px; */
 }
 
 .text{
@@ -28,6 +36,7 @@
     font-size: 19.55px;
     margin-top:32px;
     margin-bottom: 8px;
+    transition: 0.09s ease-in;
     
 }
 .text svg{
@@ -63,20 +72,26 @@
 .sidebar h1{
     margin-bottom: 0;
     /* margin-right: 10px; */
-    font-size: 45px;
+    /* font-size: 45px; */
+    font-size: 25px;
+        /* display:none; */
+        margin-right:20px;
     font-family: 'Kalam', cursive;
 }
 .progress-text{
     margin-bottom: 0;
     font-size: 26px;
     font-family: 'Kalam', cursive;
-    margin-top:155px;
+    /* margin-top:155px; */
     margin-bottom:0;
     padding:0;
+    margin-top: 0px;
+        margin-right:20px;
 }
 
 .breakpoint{
     margin-bottom: 10px;
+    display: none;
 }
 
 .sidebar label{
@@ -86,16 +101,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width:230px;
+    /* width:210px; */
     height: 50px;
     background-color:white;
     color:black;
+    border-radius: 4px;
+    margin-left: 8px;
     /* font-family: sans-serif; */
-    font-family:cursive; 
+    /* font-family:cursive;  */
     /* font-weight: 500; */
     font-size:17px;
+    
     border-radius: 4px;
     margin-top:19px;
+    margin-top: 15px;
+    width:50px;
+    margin-right:0;
+    height:40px;
+    margin-bottom: 10px;
+    margin-left: 10px;
 }
 .google-button:hover{
     background-color: white;
@@ -106,21 +130,50 @@
     cursor:pointer;
     font-family: 'Kalam',sans-serif,'Roboto','Source Code Pro','Indie Flower', sans-serif, Impact, Haettenschweiler, 'Arial Narrow Bold', cursive;
     font-weight: 600;
+    display:none
 }
 .google-icon{
     margin-right:15px;
+    margin-right: 0;
     font-size: 23px;;
 }
-
-  /*------------------------------------------------------------------------*/
-
-@media only screen and (max-width:1700px) {
-    .text{
-        margin-top:22px;
-    }
+.tooltip{
+    display: none;
+}
+.the-title{
+    top:0;
+    left:0;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-@media only screen and (max-width:1600px) {
+.text{
+    width:80px;
+    border-radius: 8px;
+    margin-right:18px;
+    margin-bottom: 15px;
+    margin-top:22px;
+}
+
+.the-title h4{
+    display: none;
+}
+.sidebar h2{
+    font-size:18px;
+}
+.sidebarbutton{
+    display: none;
+}
+.lesvg{
+    /* className='lesvg' style={{width:'60px', height:'38px',alignItems:'center', justifyContent:'center', display:'inline-flex', flexDirection:'row'}} */
+    /* font-size: 50px; */
+    width: 60px;
+    height: 44px;
+}
+  /*------------------------------------------------------------------------*/
+
+/* @media only screen and (max-width:1600px) {
 
     .progress-text{
         margin-top:127.5px;
@@ -159,7 +212,7 @@
         font-size: 25px;
     }
 
-}
+} */
 
 @media only screen and (max-width:1400px) {
     .text svg{
@@ -187,12 +240,12 @@
     .sidebarbutton{
         display: none;
     }
-    .theLabel{
+    .tooltip{
         display: none;
     }
-    .text{
+    /* .text{
         width:100px;
-    }
+    } */
 
     .sidebar{
         display:flex;
@@ -220,6 +273,7 @@
     .text{
         width:80px;
         border-radius: 8px;
+        margin-right:0px;
     }
     .the-title{
         top:0;
@@ -230,8 +284,8 @@
     }
     .google-button{
         margin-top: 15px;
-        width:50px;
         margin-right:0;
+        width:50px;
         height:40px;
         margin-bottom: 10px;
         margin-left: 10px;
@@ -270,7 +324,7 @@
     .sidebarbutton{
         display: none;
     }
-    .theLabel{
+    .tooltip{
         display: none;
     }
 
@@ -323,7 +377,7 @@
         display: none;
     }
 
-    .theLabel{
+    .tooltip{
         display: none;
     }
     .text{

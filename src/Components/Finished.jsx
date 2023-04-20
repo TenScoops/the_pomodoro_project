@@ -40,7 +40,7 @@ const Finished = () => {
           <p style={{ marginBottom:'40px', fontSize:'13.5px', marginLeft:'13px'}}>
             Take a look at the "{statIcon()}My Data" section to view your progress. </p>
           </div>
-          <button className='startNewSession' onClick={()=>{startNewSession()}}>Start A New Session</button>
+          <button className='startNewSession' onClick={()=>{startNewSession()}}>Start a new session</button>
           
       </div>
     </div>

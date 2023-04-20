@@ -6,6 +6,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+
+
 body{
   background-color: #1e212d;
   color:#fff;
@@ -18,15 +20,15 @@ body{
   Haettenschweiler, 'Arial Narrow Bold', cursive;
 }
 
-.loader {
+/* .loader {
   position: fixed;
-  /* left: 0px;
-  top: 0px; */
+  left: 0px;
+  top: 0px;
   width: 100%;
   height: 100%;
-  /* z-index: 9999; */
+  z-index: 9999;
   background: url('https://lkp.dispendik.surabaya.go.id/assets/loading.gif') 50% 50% no-repeat rgb(249,249,249);
-}
+} */
 
 .App{
   background-repeat: no-repeat;
@@ -35,15 +37,16 @@ body{
   background-size: cover;
   height: 100vh;
   width: 100vw;
-  /* animation: fadeInAnimation 1.5s;
+  animation: fadeInAnimation 1.5s;
   -webkit-animation: fadeInAnimation 1.5s;
   -moz-animation: fadeInAnimation 1.5s;
   -o-animation: fadeInAnimation 1.5s;
-  -ms-animation: fadeInAnimation 1.5s; */
+  -ms-animation: fadeInAnimation 1.5s;
   display: flex;
   align-items: center;
   justify-content: center;
   margin:0;
+  background-image: url("/public/Images/castle.jpeg");
 }
 
 .theApp{
@@ -74,25 +77,31 @@ button{
   width:100px;
   margin-right: 30px;
   cursor:pointer;
-  transition: .08s ease-in;
+  transition: 0.091s ease-in;
 }
 
 .startSession-button{
-  border-color: white;
-  background-color:#1e212dd8; 
+  /* border-color: white; */
+  background-color:#1e212dde; 
   /* background-color: black; */
   width:190px;
   font-size: 20px;
   font-family: 'Kalam', cursive;
-  height:58px;
+  height:52px;
   border-radius: 10px;
   margin-right: 5px;
-  border-width: 2px;
-  animation: blinking 0.8s infinite;
+  /* box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75); */
+  /* border-width: 2px; */
+  /* animation: blinking 1.5s infinite; */
 
 }
 .startSession-button:hover{
   animation: blinking2 0.8s infinite;
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 
 }
 button:hover{
@@ -108,22 +117,31 @@ button:hover{
   justify-content: center;
   align-items: center; */
 }
+
 .content-text{
-  /* display:flex;
-  justify-content:center;
-  align-content:center; */
-  background-color:#1e212d;
+  background-color:#1e212dde;
   border-radius:5px; 
-  font-size:20px;
+  font-size:19.3px;
   overflow: hidden; /* Ensures the content is not revealed until the animation */
   border-right: .15em solid white; /* The typwriter cursor */
   white-space: nowrap; /* Keeps the content on a single line */
+  /* box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75); */
  /* Gives that scrolling effect as the typing happens */
 /* Adjust as needed */
   animation: 
     typing 2.5s steps(40, end),
     blink-caret .75s step-end infinite;
+
+  
 }
+
+/* .content-text ::after{
+  content: '...'; */
+  /* animation-play-state: paused; */
+/* } */
+
 /* The typewriter cursor effect */
 @keyframes blink-caret {
   from, to { border-color: transparent }
@@ -145,9 +163,9 @@ button:hover{
   justify-content: center;
   background-color:#1e212dd8; 
   animation: blinking 0.8s infinite;
-  border-color: white;
+  /* border-color: white; */
   font-size: 50px;
-  border-radius:30%; 
+  border-radius:40%; 
   margin-right: 20px;
   width:50px;
   height:47px;
@@ -166,16 +184,19 @@ button:hover{
 
 .questionMark2{
   align-items: center;
-  /* justify-content: center; */
+  justify-content: center;
   /* display: flex; */
   /* width:48px;  */
   font-size: 23px;
-  width: 50px;
-  /* padding-left: 0; */
+   background-color:#1e212d2d; 
+  width: 30px;
+  padding-right: 30px;
+  /* padding-top: 2px; */
   border-radius:30%; 
   margin-right: 5px;
-  /* margin-right: 0; */
   padding-left: 0;
+  /* padding-left: 0; */
+  /* margin-right: 0; */
   
 }
 .checkbutton:hover{
@@ -187,16 +208,28 @@ button:hover{
   from { width: 0 }
   to { width: 100% }
 }
-
+/* 
 .city{
   background-image: url("/public/Images/city.jpeg");
   transition: all .5s;
-}
-.nightTime{
+} */
+/* .nightTime{
   background-image: url("/public/Images/Nighttime.jpeg");
   transition: all .5s;
+} */
+.castle{
+  background-image: url("/public/Images/castle.jpeg");
+  transition: all .5s;
 }
-.spaceCabin{
+.plains{
+  background-image: url("/public/Images/plains.jpeg");
+  transition: all .5s;
+}
+/* .melancholy{
+  background-image: url("/public/Images/castle.jpeg");
+  transition: all .5s;
+} */
+/* .spaceCabin{
   background-image: url("/public/Images/SpaceCabin.jpeg");
   transition: all .5s;
 }
@@ -211,15 +244,13 @@ button:hover{
 .houses{
   background-image: url("/public/Images/Houses.jpeg");
   transition: all .5s;
-}
-.rocket{
-  background-image: url("/public/Images/rocket.jpeg");
-  transition: all .5s;
-}
-.flowerShop{
+} */
+
+/* .flowerShop{
   background-image: url("/public/Images/Flowershop.jpeg");
   transition: all .5s;
-}
+} */
+
 .off{
   background-image: url("");
   background-color: black;
@@ -231,9 +262,6 @@ button:hover{
     width:170px;
     font-size: 18px;
     height:48px;
-  }
-  .questionMark2{
-    width:42px; 
   }
 
   .text-div{
@@ -290,9 +318,9 @@ button:hover{
   
   }
   100% {
-    box-shadow: -1px 2px 5px 3px rgba(127,218,247,0.75);
-    -webkit-box-shadow: -1px 2px 3px 5px rgba(127,218,247,0.75);
-    -moz-box-shadow: -1px 2px 5px 3px rgba(127,218,247,0.75);
+    box-shadow: -1px 2px 5px 3px rgba(240, 251, 255, 0.75);
+    -webkit-box-shadow: -1px 2px 3px 5px rgba(233, 249, 255, 0.75);
+    -moz-box-shadow: -1px 2px 5px 3px rgba(236, 250, 255, 0.75);
  
   
   }
@@ -337,8 +365,6 @@ button:hover{
   100% { opacity: 1; }
 }
 
-
-
 @keyframes anvil {
   0% {
     transform: scale(1) translateY(0px);
@@ -358,7 +384,7 @@ button:hover{
 }
 .ReactModal__Overlay {
   opacity: 0;
-  transition: opacity 0.09s ease-in;
+  transition: opacity 0.1s ease-in;
 }
 
 .ReactModal__Overlay--after-open{
@@ -367,4 +393,22 @@ button:hover{
 
 .ReactModal__Overlay--before-close{
   opacity: 0;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(85, 85, 85); 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: white; 
+  border-radius: 10px;
+  cursor:pointer;
 }

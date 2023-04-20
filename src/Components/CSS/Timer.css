@@ -3,18 +3,32 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-  
-    /* animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -webkit-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -moz-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -o-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -ms-animation: anvil 0.4s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards; */
     font-family: 'Kalam', cursive;
   }
   .blockdiv{
     background-color: rgb(0, 0, 0);
     margin-top: 10px;
     font-size: 20px;
+  }
+  .blockdiv2{
+    background-color: rgb(0, 0, 0);
+    margin-top: 10px;
+    font-size: 20px;
+    animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+  }
+  .timediv{
+    animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .time{
     display: inline-flex;
@@ -25,8 +39,24 @@
     font-family: 'Source Code Pro', monospace;
     border-radius: 20px;
     background-color: #1e212da2;
+    border:1px solid white;
+    box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+/* animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards; */
+ 
   }
-  
+  .timebox{
+    animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+  }
  .timer p{
     margin:0px;
   }
@@ -38,12 +68,20 @@
     -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
   }
   .timerbuttons{
+    animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
     margin-bottom: 20px;
-    margin-top: 30px;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    
+    margin-top: 50px;
+  }
+  .lightbulb{
+    animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
   }
   .new-font{
     font-size: 132px;
@@ -62,6 +100,7 @@
   /* font-style: italic; */
   background-color: #1e212da2;
   border-color: white;
+  border-width: 1px;
   width:200px;
   font-size: 30px;
   margin-right: 20px;
@@ -76,6 +115,7 @@
   /* font-style: italic; */
   background-color: #1e212da2;
   border-color: white;
+  border-width: 1px;
   width:200px;
   font-size: 30px;
   margin-right: 20px;
@@ -105,10 +145,12 @@
 
 .cancel{
   font-family: 'Kalam', cursive;
-  background-color: #1e212ddf;
-  /* box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  background-color: #1e212da2;
+  border-color: white;
+  border-width: 1px;
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75); */
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
 .thetasklist{

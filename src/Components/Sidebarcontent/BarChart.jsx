@@ -132,7 +132,7 @@ const BarChart = () => {
 
   
   return (
-    <div className='chart-container' style={{position:'absolute',bottom:'70px',width:'80vmin', height:'65vh', display:'flex', alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
+    <div className='chart-container' style={{marginTop:'20px',width:'80vmin', height:'65vh', display:'flex', alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
         {/* {console.log(localStorage.getItem(rating.blockNum))} */}
          <Bar 
           style={

@@ -19,7 +19,7 @@ const Timer = () => {
 
     const[isPaused, setIsPaused] = useState(true);
     const[timeLeft, setTimeLeft] = useState(0);
-    const[mode, setMode] = useState(0);
+    const[mode, setMode] = useState('');
    
     const timeLeftRef = useRef(timeLeft);
     const isPausedRef = useRef(isPaused);
@@ -204,11 +204,11 @@ const Timer = () => {
         
     },[isPaused,mode, setterInfo, blockRef])
 
-    function playSound(){
-        if(timeLeftRef.current===0){
-            return  sound1.play();
-        }
-    }
+    // function playSound(){
+    //     if(timeLeftRef.current===0){
+    //         return  sound1.play();
+    //     }
+    // }
     
     return (
         
@@ -216,19 +216,20 @@ const Timer = () => {
             {/* {playSound()} */}
             {/* {timerIsDone?sound1.Play():null} */}
             {/* <button onClick={()=>sound1.play()}>Play</button> */}
-            
+            {/* <div className='timebox'> */}
 
             {totalWorkTime <= totalBreakTime?setterInfo.setIsWorkGreater(false):setterInfo.setIsWorkGreater(true)}
             <div className='showUserData' style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
-                {setterInfo.showData?<div className='blockdiv'><p>Your session </p></div>:null}
-                {setterInfo.showData?<div className='blockdiv'><p>Will have {totalWorkTime} minutes of worktime</p></div>:null}
-                {setterInfo.showData?<div className='blockdiv'><p>And {totalBreakTime} minutes of breaktime</p></div>:null}
-                {setterInfo.showData?<div className='blockdiv'><p style={{color:'black', backgroundColor:'white'}}>Session will be completed in {numOfblocks} block(s)</p></div>:null}
-                {setterInfo.showData?<div className='blockdiv'><p >With {addZero(minutes)}:{addZero(seconds)} minutes per block</p></div>:null}
+                {setterInfo.showData?<div className='blockdiv'><p>&nbsp;Your session &nbsp;</p></div>:null}
+                {setterInfo.showData?<div className='blockdiv'><p>&nbsp;Will have {totalWorkTime} minutes of worktime&nbsp;</p></div>:null}
+                {setterInfo.showData?<div className='blockdiv'><p>&nbsp;And {totalBreakTime} minutes of breaktime&nbsp;</p></div>:null}
+                {setterInfo.showData?<div style={{marginLeft:'15px'}} className='blockdiv'><p style={{color:'black', backgroundColor:'white'}}>&nbsp;Session will be completed in {numOfblocks} block(s)&nbsp;</p></div>:null}
+                {setterInfo.showData?<div className='blockdiv'><p >&nbsp;With {addZero(minutes)}:{addZero(seconds)} minutes per block&nbsp;</p></div>:null}
             </div>
             <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                {setterInfo.showClock&&
                <button 
+                className='lightbulb'
                 title='Focus mode'
                 onClick={()=>{}}
                 style={{width:'40px', marginLeft:'20px',  borderRadius:'7px', fontSize:'15px', height:'35px', 
@@ -237,17 +238,20 @@ const Timer = () => {
                 </button>}
                 {/* {setterInfo.showData?null:theTasks()} */}
                 {setterInfo.showClock&&
-                <div style={{borderRadius:'10px',marginTop:'60px', marginRight:'75px'}} className='blockdiv'>
-                        <p>You are currently: {mode === 'work'?"working..":"on break."}</p>
+                <div style={{borderRadius:'10px',marginTop:'60px', marginRight:'75px'}} className='blockdiv2'>
+                        <p>&nbsp;You are currently: {mode === 'work'?"working..":"on break."}&nbsp;</p>
                 </div>}
             </div>
-            {mode==="work"?<div style={{borderRadius:'10px', marginBottom:'20px'}} className='blockdiv'>
-                <p>Block #{blockNumRef.current}/{numOfblocks}</p></div>:null}
+            {mode==="break"|| mode===''&&<p>&nbsp;</p>}
+            {mode==="work"&&<div style={{borderRadius:'10px', marginBottom:'20px'}} className='blockdiv2'>
+                <p>&nbsp;Block #{blockNumRef.current}/{numOfblocks}&nbsp;</p></div>}
             {setterInfo.showClock&&
-                <div className={setterInfo.showButtons?'time':'time + new-font'}>
-                    <p className='minutes'>{totalWorkTime < totalBreakTime?"00" :addZero(minutes)}</p>
-                    <p className='semicolon'>:</p>
-                    <p className='seconds'>{totalWorkTime < totalBreakTime?"00" :addZero(seconds)}</p>
+                <div className='timediv'>
+                    <div className={setterInfo.showButtons?'time':'time + new-font'}>
+                        <p style={{marginLeft:'20px'}} className='minutes'>{totalWorkTime < totalBreakTime?"00" :addZero(minutes)}</p>
+                        <p className='semicolon'>:</p>
+                        <p style={{marginRight:'20px'}} className='seconds'>{totalWorkTime < totalBreakTime?"00" :addZero(seconds)}</p>
+                    </div>
                 </div>
             }   
             {setterInfo.showClock&&
@@ -269,6 +273,7 @@ const Timer = () => {
             {setterInfo.sessionComplete?setterInfo.setShowTimerPage(false):null}
            
             {window.onbeforeunload()}
+            {/* </div> */}
         </div>
     )
 }

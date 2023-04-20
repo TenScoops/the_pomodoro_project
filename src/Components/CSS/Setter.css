@@ -1,41 +1,43 @@
+
+.divsetter{
+  animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+  -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+  -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+  -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+  -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+  margin:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .setter{
     width:490px;
     height:490px;
     background-color: #1e212d;
-    border-radius: 7%;
+    border-radius: 5%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
-    font-family: 'Kalam', cursive;
-    /* font-style: italic; */
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 600;
     letter-spacing: 0.5px;
     box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
     -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+    /* border-top-right-radius: 20%;
+    border-top-left-radius: 20%; */
+    
   }
 
-  .divsetter{
-    animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    margin:0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
+  
 
 .header{
-  font-size: 35px;
+  font-size: 27.5px;
   font-family: 'Kalam', cursive;
   margin:9px;
-
   letter-spacing: 1px;
 }
 .setter p{
@@ -67,23 +69,6 @@
 
 }
 
-/* .dropDown{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  background-color:#1e212d;
-  width: 200px;
-  left:145px;
-  border-radius: 20px;
-  bottom:-90px;
-}
-.dropDown ul{
-  padding:0;
-}
-.dropDown p:hover{
-  background-color: black;
-} */
 /*buttons*/
 .backbutton{
     border-color: rgba(255, 255, 255, 0.5);
@@ -125,16 +110,14 @@
 
 .backbutton:hover{
     background-color: rgb(25, 24, 33);
-    /* border-color: transparent; */
 }
 .nextbutton:hover{
   background-color: rgb(25, 24, 33);
-    /* border-color: transparent; */
 }
 .clockbutton:hover{
   background-color: rgb(25, 24, 33);
-    /* border-color: transparent; */
 }
+
 /* max screen size : 1800 px */
 @media only screen and (max-width:1800px) {
   .setter{
@@ -171,9 +154,6 @@
   }
 }
 
-
-
-
 @media only screen and (max-width:1000px) {
   .setter{
     width:430px;
@@ -184,7 +164,7 @@
     margin-bottom: 10px;
   }
   .slider{
-    height:20px;
+    height:23px;
     border:2px solid white;
     border-radius: 20px;
     width:325px;
@@ -242,7 +222,7 @@
   }
   .setter{
     width:380px;
-    height:380px;
+    height:390px;
     margin-top: 80px;
   }
   .nextbackbuttons{
@@ -259,8 +239,8 @@
   .thumb{
       background-color: rgb(255, 255, 255);
       cursor:pointer;
-      width:15px;
-      height:15px;
+      width:20px;
+      height:20px;
       border-radius: 40px;
 
   }
@@ -276,21 +256,5 @@
 }
 /*animations*/
   
-  @keyframes anvil {
-    0% {
-      transform: scale(1) translateY(0px);
-      opacity: 0;
-      box-shadow: 0 0 0 rgba(241, 241, 241, 0);
-    }
-    1% {
-      transform: scale(0.96) translateY(10px);
-      opacity: 0;
-      box-shadow: 0 0 0 rgba(241, 241, 241, 0);
-    }
-    100% {
-      transform: scale(1) translateY(0px);
-      opacity: 1;
-      box-shadow: 0 0 500px rgba(241, 241, 241, 0);
-    }
-  }
+
   

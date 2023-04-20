@@ -61,7 +61,7 @@ function App() {
   //   return'App';
   // }
 
-  const[theme, setTheme] = useLocalStorage("Theme","App + nightTime");
+  const[theme, setTheme] = useLocalStorage("Theme","App + castle");
   
   return (
     // <div class="loader">
@@ -72,9 +72,9 @@ function App() {
     // $(window).load(function() {
     //     $(".loader").fadeOut("slow")
     // });
-
+   
     <div className={theme}>
-      {/* <RatingMethod/> */}
+    
       <div className='theApp'>
       <AuthContextProvider>
         <SetterContext.Provider value ={{
