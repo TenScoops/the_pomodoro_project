@@ -31,20 +31,25 @@
 }
 
 .text{
-    width:280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:80px;
+    padding-bottom: 10px;
+    /* width:280px; */
     border-radius: 15px;
     font-size: 19.55px;
-    margin-top:32px;
-    margin-bottom: 8px;
+    /* margin-top:32px; */
+    /* margin-bottom: 8px; */
     transition: 0.09s ease-in;
+    
     
 }
 .text svg{
-    margin-left: 12px;
+    /* margin-left: 12px; */
 }
 
 .text:hover{
-    text-decoration: underline;
     background-color: rgb(18, 18, 18);
     cursor:pointer;
 }
@@ -124,7 +129,7 @@
 .google-button:hover{
     background-color: white;
     cursor:pointer;
-    border-color: rgb(85, 139, 255);
+    /* border-color: rgb(85, 139, 255); */
 }
 .google-label{
     cursor:pointer;
@@ -137,9 +142,7 @@
     margin-right: 0;
     font-size: 23px;;
 }
-.tooltip{
-    display: none;
-}
+
 .the-title{
     top:0;
     left:0;
@@ -218,8 +221,8 @@
     .text svg{
         /* margin-left: 12px; */
         /* margin:0 */
-        margin-left:2px;
-        margin-top: 5px;
+        /* margin-left:2px;
+        margin-top: 5px; */
     }
     .sidebar h1{
         font-size: 25px;
@@ -271,6 +274,9 @@
         display: none;
     }
     .text{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width:80px;
         border-radius: 8px;
         margin-right:0px;

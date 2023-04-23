@@ -8,10 +8,30 @@ import {BsFileTextFill} from 'react-icons/bs';
 import {BsFileText} from 'react-icons/bs';
 import {FaLightbulb} from 'react-icons/fa';
 import './CSS/Timer.css';
+import Tooltip from "@material-ui/core/Tooltip";
+import {withStyles} from "@material-ui/core/styles";
 // import ringer from "./flipdish-ringer.mp3";
 
 
 const Timer = () => {
+
+    const TheTooltip = withStyles({
+        tooltip: {
+          display:'flex',
+          justifyContent:'center',
+          alignItems:'center',
+          color: "white",
+          backgroundColor: "rgb(18, 18, 18)",
+          maxWidth:'120px',
+          height:'23px',
+          fontSize:'12px',
+          fontFamily:'kalam',
+          marginTop:'20px',
+          // boxShadow: '7px 10px 5px 0px rgba(0,0,0,0.75)',
+    
+        }
+      })(Tooltip);
+
     // <audio id="ring" src="https://cdn.pixabay.com/audio/2021/09/27/audio_91211934db.mp3"></audio>
     // const [timerIsDone, setTimerIsDone] = useState(false);
     let sound1 = document.getElementById("ring");
@@ -228,14 +248,17 @@ const Timer = () => {
             </div>
             <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                {setterInfo.showClock&&
-               <button 
-                className='lightbulb'
-                title='Focus mode'
-                onClick={()=>{}}
-                style={{width:'40px', marginLeft:'20px',  borderRadius:'7px', fontSize:'15px', height:'35px', 
-                        marginTop:'60px', paddingTop:'3px', marginRight:'10px', backgroundColor:'black'}}>
-                    <FaLightbulb/> 
-                </button>}
+               <TheTooltip title = 'Focus mode' placement='top'>
+                <button 
+                    className='lightbulb'
+                 
+                    onClick={()=>{}}
+                    style={{width:'40px', marginLeft:'20px',  borderRadius:'7px', fontSize:'15px', height:'35px', 
+                            marginTop:'60px', paddingTop:'3px', marginRight:'10px', backgroundColor:'black'}}>
+                        <FaLightbulb/> 
+                    </button>
+                </TheTooltip>
+                }
                 {/* {setterInfo.showData?null:theTasks()} */}
                 {setterInfo.showClock&&
                 <div style={{borderRadius:'10px',marginTop:'60px', marginRight:'75px'}} className='blockdiv2'>

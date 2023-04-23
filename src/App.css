@@ -162,7 +162,7 @@ button:hover{
   display: flex;
   justify-content: center;
   background-color:#1e212dd8; 
-  animation: blinking 0.8s infinite;
+  /* animation: blinking 0.8s infinite; */
   /* border-color: white; */
   font-size: 50px;
   border-radius:40%; 
@@ -180,6 +180,9 @@ button:hover{
 }
 .questionMark:hover{
   animation: blinking2 0.8s infinite;
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
 .questionMark2{
@@ -192,6 +195,7 @@ button:hover{
   width: 30px;
   padding-right: 30px;
   /* padding-top: 2px; */
+  padding-bottom: 0;
   border-radius:30%; 
   margin-right: 5px;
   padding-left: 0;
