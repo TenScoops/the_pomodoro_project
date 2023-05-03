@@ -20,16 +20,6 @@ body{
   Haettenschweiler, 'Arial Narrow Bold', cursive;
 }
 
-/* .loader {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-  background: url('https://lkp.dispendik.surabaya.go.id/assets/loading.gif') 50% 50% no-repeat rgb(249,249,249);
-} */
-
 .App{
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -46,27 +36,43 @@ body{
   align-items: center;
   justify-content: center;
   margin:0;
-  background-image: url("/public/Images/castle.jpeg");
+  background-image: url("/public/Images/plains.jpeg");
 }
 
 .theApp{
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 1400px;
   /* height:950px; */
+}
+.fullscreen-button{
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  background-color: transparent;
+  
+}
+.fullscreen-button:hover{
+  background-color: #1e212dde ;
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
 .text-div{
   display: flex;
+  justify-content: center;
   align-items: center;
+  width: 350px;
   /* max-width: 900px; */
-  font-size: 25px;
+  /* font-size: 30px; */
   animation: fadeInAnimation 0.61s;
   -webkit-animation: fadeInAnimation 0.61s;
   -moz-animation: fadeInAnimation 0.61s;
   -o-animation: fadeInAnimation 0.61s;
   -ms-animation: fadeInAnimation 0.61s;
-  line-height: 50px;
+  line-height: 45px;
 }
 
 /*Buttons*/
@@ -78,31 +84,7 @@ button{
   margin-right: 30px;
   cursor:pointer;
   transition: 0.091s ease-in;
-}
-
-.startSession-button{
-  /* border-color: white; */
-  background-color:#1e212dde; 
-  /* background-color: black; */
-  width:190px;
-  font-size: 20px;
-  font-family: 'Kalam', cursive;
-  height:52px;
-  border-radius: 10px;
-  margin-right: 5px;
-  /* box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
--webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75); */
-  /* border-width: 2px; */
-  /* animation: blinking 1.5s infinite; */
-
-}
-.startSession-button:hover{
-  animation: blinking2 0.8s infinite;
-  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
--webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
-
+  font-family: 'Kalam';
 }
 button:hover{
   box-shadow: -1px 2px 1px 3.5px rgba(148, 228, 255, 0.868);
@@ -110,72 +92,77 @@ button:hover{
 -moz-box-shadow: -1px 2px 1px 3.5px rgba(148, 228, 255, 0.868);
 
 }
+.startSession-button{
+  background-color:#3584cdde; 
+  width:190px;
+  font-size: 15px;
+  font-family: 'Kalam', cursive;
+  border-radius: 10px;
+  margin-right: 5px;
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 
+}
+.the-content-text{
+ margin-top: 140px;
+ margin-bottom: 30px;
+}
 
-.content{
-  /* display: flex;
+.startSession-button:hover{
+  animation: blinking2 0.8s infinite;
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.Content{
+  display: flex;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
+  flex-direction: column;
+  background-color: #1e212dc8;
+  width: 410px;
+  height: 500px;
+  border-radius: 15px;
+-webkit-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
+box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
+}
+
+p, h1, h2,h3{
+  cursor:default; 
 }
 
 .content-text{
-  background-color:#1e212dde;
-  border-radius:5px; 
-  font-size:19.3px;
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .15em solid white; /* The typwriter cursor */
-  white-space: nowrap; /* Keeps the content on a single line */
-  /* box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
--webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75); */
- /* Gives that scrolling effect as the typing happens */
-/* Adjust as needed */
-  animation: 
-    typing 2.5s steps(40, end),
-    blink-caret .75s step-end infinite;
-
-  
+  border-radius:5px;
+  font-size: 17px;
+  text-align: center;
+  margin-bottom: 25px;
 }
 
-/* .content-text ::after{
-  content: '...'; */
-  /* animation-play-state: paused; */
-/* } */
-
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: white; }
-}
 .theTimerContents{
   display: flex;
 }
 
-.divsession{
+.divsession-buttons{
   display: flex;
   align-items: center;
   justify-content: center;
-  /* transition: 5s ease-in-out; */
 }
 .questionMark{
   align-items: center;
   display: flex;
   justify-content: center;
-  background-color:#1e212dd8; 
-  /* animation: blinking 0.8s infinite; */
-  /* border-color: white; */
-  font-size: 50px;
-  border-radius:40%; 
+  background-color:#32b22ede; 
+  font-size: 40px;
+  border-radius:50%; 
   margin-right: 20px;
-  width:50px;
-  height:47px;
-  /* height:45px; */
-  display: none;
-  padding:0;
+  width:40px;
+  height:40px;
 }
 .questionMark svg{
   font-size:30px;
-  margin-bottom: 10px;
   padding:0;
 }
 .questionMark:hover{
@@ -185,75 +172,19 @@ button:hover{
 -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
-.questionMark2{
-  align-items: center;
-  justify-content: center;
-  /* display: flex; */
-  /* width:48px;  */
-  font-size: 23px;
-   background-color:#1e212d2d; 
-  width: 30px;
-  padding-right: 30px;
-  /* padding-top: 2px; */
-  padding-bottom: 0;
-  border-radius:30%; 
-  margin-right: 5px;
-  padding-left: 0;
-  /* padding-left: 0; */
-  /* margin-right: 0; */
-  
-}
 .checkbutton:hover{
   background-color: transparent;
 }
 
-/* The typing effect */
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-/* 
-.city{
-  background-image: url("/public/Images/city.jpeg");
-  transition: all .5s;
-} */
-/* .nightTime{
-  background-image: url("/public/Images/Nighttime.jpeg");
-  transition: all .5s;
-} */
+
 .castle{
   background-image: url("/public/Images/castle.jpeg");
-  transition: all .5s;
+  /* transition: all .5s; */
 }
 .plains{
   background-image: url("/public/Images/plains.jpeg");
-  transition: all .5s;
+  /* transition: all .5s; */
 }
-/* .melancholy{
-  background-image: url("/public/Images/castle.jpeg");
-  transition: all .5s;
-} */
-/* .spaceCabin{
-  background-image: url("/public/Images/SpaceCabin.jpeg");
-  transition: all .5s;
-}
-.snowyCabin{
-  background-image: url("/public/Images/SnowyCabin.jpeg");
-  transition: all .5s;
-}
-.mountain{
-  background-image: url("/public/Images/Mountain.jpeg");
-  transition: all .5s;
-}
-.houses{
-  background-image: url("/public/Images/Houses.jpeg");
-  transition: all .5s;
-} */
-
-/* .flowerShop{
-  background-image: url("/public/Images/Flowershop.jpeg");
-  transition: all .5s;
-} */
 
 .off{
   background-image: url("");
@@ -261,35 +192,15 @@ button:hover{
   transition: all 2s;
 }
 
-@media only screen and (max-width:1600px) {
-  .startSession-button{
-    width:170px;
-    font-size: 18px;
-    height:48px;
-  }
-
-  .text-div{
-    font-size: 25px;
-    line-height: 40px;
-  }
-  .content-text{
-    font-size: 15px;
-  }
- 
-}
-
 @media only screen and (max-width:1000px) {
+  .fullscreen-button{
+    display: none;
+  }
   .theTimerContents{
     flex-direction: column;
   }
   .content-text{
     font-size: 13.5px;
-  }
-  .questionMark{
-    display:block;
-  }
-  .questionMark2{
-    display:none;
   }
 }
 
@@ -305,7 +216,6 @@ button:hover{
     font-size: 10px;
   }
   .startSession-button{
-    /* height:30px */
     font-size: 15px;
     height: 38px;
   }
@@ -369,23 +279,6 @@ button:hover{
   100% { opacity: 1; }
 }
 
-@keyframes anvil {
-  0% {
-    transform: scale(1) translateY(0px);
-    opacity: 0;
-    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
-  }
-  1% {
-    transform: scale(0.96) translateY(10px);
-    opacity: 0;
-    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
-  }
-  100% {
-    transform: scale(1) translateY(0px);
-    opacity: 1;
-    box-shadow: 0 0 500px rgba(241, 241, 241, 0);
-  }
-}
 .ReactModal__Overlay {
   opacity: 0;
   transition: opacity 0.1s ease-in;
@@ -404,13 +297,11 @@ button:hover{
   height: 7px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px rgb(85, 85, 85); 
   border-radius: 10px;
 }
  
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: white; 
   border-radius: 10px;

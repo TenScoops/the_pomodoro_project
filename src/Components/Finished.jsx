@@ -6,7 +6,6 @@ import {ImStatsBars} from 'react-icons/im';
 const Finished = () => {
     const finishedInfo = useContext(SetterContext);
     const startNewSession = () =>{
-        // finishedInfo.setShowParagraph(false)
         finishedInfo.setShowButtons(false);//resetting to default
         finishedInfo.setShowData(true);//resetting to default
         finishedInfo.setShowSetterPage(true);
@@ -32,10 +31,7 @@ const Finished = () => {
             {thumbsUp()}
           </div>
           <p style={{fontSize:'25px', marginTop:'0', marginBottom:'10px'}}>Session Complete!</p>
-          {/* <p style={{fontSize:'18px',marginTop:'0', marginBottom:'10px', }}>Your Session Score Is: </p> */}
-          {/* <div className='thescores' title='Your Productivity Score'>
-            <p>9/10</p>
-          </div> */}
+     
           <div style={{display:'flex', justifyContent:'center', alignItems:'center',width:'220px'}}>
           <p style={{ marginBottom:'40px', fontSize:'13.5px', marginLeft:'13px'}}>
             Take a look at the "{statIcon()}My Data" section to view your progress. </p>

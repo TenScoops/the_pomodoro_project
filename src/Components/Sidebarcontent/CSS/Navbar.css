@@ -6,25 +6,6 @@
 
 }
 
-.bars2{
-    width:50px;
-    position:fixed;
-    top:0;
-    left:0;
-    background-color:#16181fea;
-    
-    color: white;
-    border-color: transparent;
-    cursor:pointer;
-    box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
--webkit-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
-}
-.bars2:hover{
-    background-color: rgba(64, 70, 95, 0.5);
-    box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
-}
+
 
 

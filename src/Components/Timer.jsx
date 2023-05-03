@@ -16,6 +16,11 @@ import {withStyles} from "@material-ui/core/styles";
 const Timer = () => {
 
     const TheTooltip = withStyles({
+        arrow:{
+            "&::before": {
+              backgroundColor: "black",
+            }
+          },
         tooltip: {
           display:'flex',
           justifyContent:'center',
@@ -24,9 +29,10 @@ const Timer = () => {
           backgroundColor: "rgb(18, 18, 18)",
           maxWidth:'120px',
           height:'23px',
-          fontSize:'12px',
+          fontSize:'13px',
           fontFamily:'kalam',
           marginTop:'20px',
+          letterSpacing:'1px'
           // boxShadow: '7px 10px 5px 0px rgba(0,0,0,0.75)',
     
         }
@@ -127,7 +133,7 @@ const Timer = () => {
     const showTheButtons =()=>{
         if(setterInfo.showButtons === true){
             return <div style={{display:'flex', justifyCotent:'center', alignItems:'center', flexDirection:'column'}}>
-                <div style={{marginBottom:'60px',display:'flex', justifyCotent:'center', alignItems:'center',}}>
+                <div style={{marginBottom:'30px',display:'flex', justifyCotent:'center', alignItems:'center',}}>
                     {isPaused?<button  className="play" onClick={() => { setIsPaused(false); isPausedRef.current = false; }}> Start</button>
                     :
                     <button  className="pause" onClick={() => { setIsPaused(true); isPausedRef.current = true; }}>Pause</button>
@@ -248,7 +254,7 @@ const Timer = () => {
             </div>
             <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                {setterInfo.showClock&&
-               <TheTooltip title = 'Focus mode' placement='top'>
+               <TheTooltip title = 'Focus mode' placement='top' arrow>
                 <button 
                     className='lightbulb'
                  

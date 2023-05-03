@@ -32,7 +32,7 @@ const RatingMethod = ()=>{
     return (
       <div className='theRatingMethodDiv'>
           <div className='theRatingMethod' style={{display:'flex', justifyContent:'center', 
-          alignItems:'center', flexDirection:'column', height:'370px', width:'370px',backgroundColor:'#1e212d'}}>
+          alignItems:'center', flexDirection:'column', height:'360px', width:'360px',backgroundColor:'#1e212d'}}>
             
               <h3 style={{marginTop:'60px', marginBottom:'20px'}}>How will you be rating your session?</h3>
             

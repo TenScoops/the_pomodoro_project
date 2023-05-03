@@ -4,6 +4,7 @@ import { UserAuth } from '../FirebaseAuth/AuthContext';
 import {AiOutlineQuestionCircle} from 'react-icons/ai';
 import Tooltip from "@material-ui/core/Tooltip";
 import {withStyles} from "@material-ui/core/styles";
+import {ImStatsBars} from 'react-icons/im';
 
 const Contents = () => {
   const setterInfo = useContext(SetterContext);
@@ -11,20 +12,25 @@ const Contents = () => {
   const {user} = UserAuth();
   
   const questionMark =()=>{
-    return <TheTooltip title="More Info" placement='bottom'>
+    return <TheTooltip title="More Info" placement='bottom' arrow>
       <button className='questionMark'onClick={()=>{setterInfo.setSynopsis(true)}} >
         <AiOutlineQuestionCircle/>
       </button>
     </TheTooltip>
   }
   const questionMark2 =()=>{
-    return <TheTooltip title="More Info" placement='top'><button className='questionMark2' onClick={()=>{setterInfo.setSynopsis(true)}} >
+    return <TheTooltip title="More Info" placement='top' arrow><button className='questionMark2' onClick={()=>{setterInfo.setSynopsis(true)}} >
       <AiOutlineQuestionCircle className='questionMark2'/>
     </button>
     </TheTooltip>
   }
 
   const TheTooltip = withStyles({
+    arrow:{
+      "&::before": {
+        backgroundColor: "black",
+      }
+    },
     tooltip: {
       display:'flex',
       justifyContent:'center',
@@ -33,10 +39,10 @@ const Contents = () => {
       backgroundColor: "rgb(18, 18, 18)",
       maxWidth:'120px',
       height:'23px',
-      fontSize:'12px',
+      fontSize:'13px',
       fontFamily:'kalam',
       marginTop:'20px',
-      // boxShadow: '7px 10px 5px 0px rgba(0,0,0,0.75)',
+      letterSpacing:'1px'
 
     }
   })(Tooltip);
@@ -44,29 +50,34 @@ const Contents = () => {
   return (
     <div>
         <div className='Content'>
-            <div className='text-div' style={{display:'flex', flexDirection:'column', letterSpacing:'1px'}}>
+              
+              <h1 className='h1-text' style={{marginTop:'0', marginBottom:'0'}} >
+                The Progress Pomodoro <ImStatsBars/> 
+              </h1> 
 
-                {user?.displayName? <div>
-                  <p className='content-text'>&nbsp;{questionMark2()} Hi {user?.displayName}! &nbsp;</p>
-                <p className='content-text'></p>
-                </div> 
-                  :
-                  <div>
-                <p className='content-text'>
-                  &nbsp;Do you find yourself struggling with productivity? {questionMark2()}
-                </p>
-                <p className='content-text'></p>
-                </div>
-                }
+            <hr style={{margin:'0', padding:'0', width:'80px'}}/>
+            <div className='the-content-text'>
+              <div >
+                  {user?.displayName? <div className='text-div' style={{letterSpacing:'1px'}}>
+                    <p className='content-text'> Hi {user?.displayName}!</p>
+                  </div> 
+                    :
+                    <div className='text-div' style={{letterSpacing:'1px'}}>
+                  <p className='content-text'>
+                    Do you find yourself struggling with productivity?
+                  </p>
+                 
+                  </div>
+                  }
+              </div>
+
+              <div className='divsession-buttons'>
+                {questionMark()} 
+                <button className='startSession-button' 
+                onClick={() => {setterInfo.setShowSetterPage(true); setterInfo.setShowParagraph(false); }}>
+                  Start a session </button>
+              </div>
             </div>
-
-            <div className='divsession'>
-              {questionMark()} 
-              <button className='startSession-button' 
-              onClick={() => {setterInfo.setShowSetterPage(true); setterInfo.setShowParagraph(false); }}>
-                 Start a session </button>
-            </div>
-
             
         </div>
     </div>

@@ -2,52 +2,29 @@
     display:flex;
     justify-content: center;
     align-items: center;
-    height:70px;
-    width:100%;
-    background-color: #1e212dde;
+    height:48px;
+    width:450px;
+    background-color: #1e212dec;
     margin:0;
     position: fixed;
-    top: 0;
-    /* backdrop-filter: blur(0px); */
-     box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+    bottom: 20px;
+    -webkit-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
+    box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
     -webkit-animation: slide-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	        animation: slide-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    /* border-color: 'transparent'; */
+    border-radius: 10px;
 }
 .sidebarcontent{
     display:flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 805px;
-        height:50px;
-    /* display:flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 325px; */
+    max-width: 2000px;
+    height:50px;
+
 }
 
-.text{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width:80px;
-    padding-bottom: 10px;
-    /* width:280px; */
-    border-radius: 15px;
-    font-size: 19.55px;
-    /* margin-top:32px; */
-    /* margin-bottom: 8px; */
-    transition: 0.09s ease-in;
-    
-    
-}
-.text svg{
-    /* margin-left: 12px; */
-}
 
 .text:hover{
     background-color: rgb(18, 18, 18);
@@ -55,17 +32,19 @@
 }
 
 .bars1{
-    width:50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:4vmin;
+    height:45.3px;
     position:fixed;
     top:0;
     left:0;
+    border-top-left-radius: 10px ;
+    border-bottom-left-radius: 10px ;
     background-color: rgb(30, 33, 45, 0.5);
     color: white;
-    border-color: transparent;
     cursor:pointer;
-    box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
--webkit-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
 }
 .bars1:hover{
     background-color: #404762ab;
@@ -73,63 +52,66 @@
 -webkit-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
 }
-
-.sidebar h1{
-    margin-bottom: 0;
-    /* margin-right: 10px; */
-    /* font-size: 45px; */
-    font-size: 25px;
-        /* display:none; */
-        margin-right:20px;
-    font-family: 'Kalam', cursive;
+.bars2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:4vmin;
+    height: 45.3px;
+    border-top-left-radius: 10px ;
+    border-bottom-left-radius: 10px ;
+    position:fixed;
+    bottom: 20px;
+    left: 550px;
+    background-color:#16181fea;
+    
+    color: white;
+    border-color: transparent;
+    cursor:pointer;
+    box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
 }
+
+.bars2:hover{
+    background-color: rgba(64, 70, 95, 0.5);
+    box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 6px 5px 5px 0px rgba(0,0,0,0.75);
+}
+
 .progress-text{
     margin-bottom: 0;
-    font-size: 26px;
-    font-family: 'Kalam', cursive;
-    /* margin-top:155px; */
     margin-bottom:0;
     padding:0;
-    margin-top: 0px;
-        margin-right:20px;
+    margin-top: 10px;
+    font-size: 12px;
 }
-
-.breakpoint{
-    margin-bottom: 10px;
-    display: none;
-}
-
-.sidebar label{
-    cursor:pointer;
+.h1-text{
+    font-size: 25px;
 }
 .google-button{
     display: flex;
     align-items: center;
     justify-content: center;
-    /* width:210px; */
     height: 50px;
     background-color:white;
     color:black;
     border-radius: 4px;
     margin-left: 8px;
-    /* font-family: sans-serif; */
-    /* font-family:cursive;  */
-    /* font-weight: 500; */
     font-size:17px;
-    
     border-radius: 4px;
     margin-top:19px;
     margin-top: 15px;
-    width:50px;
+    width:40px;
     margin-right:0;
-    height:40px;
-    margin-bottom: 10px;
+    height:30px;
+    margin-bottom: 15px;
     margin-left: 10px;
 }
 .google-button:hover{
     background-color: white;
     cursor:pointer;
-    /* border-color: rgb(85, 139, 255); */
 }
 .google-label{
     cursor:pointer;
@@ -143,284 +125,29 @@
     font-size: 23px;;
 }
 
-.the-title{
-    top:0;
-    left:0;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .text{
     width:80px;
-    border-radius: 8px;
-    margin-right:18px;
-    margin-bottom: 15px;
-    margin-top:22px;
-}
-
-.the-title h4{
-    display: none;
-}
-.sidebar h2{
-    font-size:18px;
-}
-.sidebarbutton{
-    display: none;
-}
-.lesvg{
-    /* className='lesvg' style={{width:'60px', height:'38px',alignItems:'center', justifyContent:'center', display:'inline-flex', flexDirection:'row'}} */
-    /* font-size: 50px; */
-    width: 60px;
-    height: 44px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 19.55px;
+    transition: 0.09s ease-in;
+    padding-bottom: 7px;   
 }
   /*------------------------------------------------------------------------*/
 
-/* @media only screen and (max-width:1600px) {
-
-    .progress-text{
-        margin-top:127.5px;
-    }
-    .sidebar{
-        width: 285px;
-        height: 100%;
-        background-color: #1e212dd8;
-        margin:0;
-        position: fixed;
-        left:0;
-        top: 0;
-    }
-
-    .sidebarcontent{
-        display:flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 300px;
-    }
-
-    .text{
-        width:265px;
-        border-radius: 15px;
-        font-size: 19.55px;
-        
-    }
-    .theLabel{
-        font-size: 18px;
-    }
-    .sidebar h1{
-        font-size: 38px;
-    }
-    .sidebar h2{
-        font-size: 25px;
-    }
-
-} */
 
 @media only screen and (max-width:1400px) {
-    .text svg{
-        /* margin-left: 12px; */
-        /* margin:0 */
-        /* margin-left:2px;
-        margin-top: 5px; */
-    }
-    .sidebar h1{
-        font-size: 25px;
-        /* display:none; */
-        margin-right:20px
-    }
-    .progress-text{
-        margin-top: 0px;
-        margin-right:20px;
-    }
-    .sidebar h2{
-        font-size:18px;
-    }
-
-    .breakpoint{
-        display:none;
-    }
     .sidebarbutton{
         display: none;
-    }
-    .tooltip{
-        display: none;
-    }
-    /* .text{
-        width:100px;
-    } */
-
-    .sidebar{
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        height:70px;
-        width:100%;
-        background-color: #1e212dab;
-        margin:0;
-        position: fixed;
-        top: 0;
         
     }
-    .sidebarcontent{
-        display:flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 805px;
-        height:50px;
-    }
-    .the-title h4{
-        display: none;
-    }
-    .text{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width:80px;
-        border-radius: 8px;
-        margin-right:0px;
-    }
-    .the-title{
-        top:0;
-        left:0;
-        display:flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .google-button{
-        margin-top: 15px;
-        margin-right:0;
-        width:50px;
-        height:40px;
-        margin-bottom: 10px;
-        margin-left: 10px;
-        
-    }
-    .google-label{
-        display:none;
-    }
-    .google-icon{
-        margin-right:0px;
-    }
-}
-@media only screen and (max-width:1530px) {
-    .the-title h4{
-        display: none;
-    }
-} 
-@media only screen and (max-height:680px){
-    .sidebar h1{
-        font-size: 25px;
-    /* display:none; */
-    margin-right:20px
-
-    }
-    .progress-text{
-        margin-top: 0px;
-        margin-right:20px;
-    }
-    .sidebar h2{
-        font-size:18px;
-    }
-
-    .breakpoint{
-        display:none;
-    }
-    .sidebarbutton{
-        display: none;
-    }
-    .tooltip{
-        display: none;
-    }
-
     .sidebar{
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        height:70px;
-        width:100%;
-        background-color: #1e212dab;
-        margin:0;
-        position: fixed;
-        top: 0;
-
-    }
-    .sidebarcontent{
-        display:flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 805px;
-        height:50px;
-    }
-    .text{
-        width:80px;
-        border-radius: 8px;
-    }
-    .the-title{
-        top:0;
-        left:0;
-        display:flex;
-        flex-direction: column;
-        align-items: center;
+        bottom: 0;
     }
 }
 
-@media only screen and (max-width:550px) {
-    .sidebar h1{
-        /* font-size: 25px; */
-        display:none;
-    }
-    .progress-text{
-        display: none;
-    }
-
-    .breakpoint{
-        display:none;
-    }
-    .sidebarbutton{
-        display: none;
-    }
-
-    .tooltip{
-        display: none;
-    }
-    .text{
-        width:100px;
-    }
-
-    .sidebar{
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        height:70px;
-        width:100%;
-        background-color: #1e212dab;
-        margin:0;
-        position: fixed;
-        top: 0;
-        
-    }
-    .sidebarcontent{
-        display:flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 805px;
-        height:50px;
-    }
-    .text{
-        width:80px;
-    }
-    .the-title{
-        top:0;
-        left:0;
-        display:flex;
-        flex-direction: column;
-        align-items: center;
-    }
-}
 
 @media only screen and (max-width:380px){
     .text{

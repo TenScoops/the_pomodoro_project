@@ -17,12 +17,55 @@ import useLocalStorage from 'use-local-storage'
 import $ from 'jquery'
 import Howtorate from './Components/Howtorate'
 import RatingMethod from './Components/RatingMethod'
+import {BsFullscreen} from 'react-icons/bs'
+import Tooltip from "@material-ui/core/Tooltip";
+import {withStyles} from "@material-ui/core/styles";
+import React, {useCallback} from 'react';
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import {ImStatsBars} from 'react-icons/im';
 // const { JSDOM } = require( "jsdom" );
 // const { window } = new JSDOM( "" );
 
 
 
 function App() {
+
+  const TheTooltip = withStyles({
+    arrow:{
+      "&::before": {
+        backgroundColor: "black",
+      }
+    },
+    tooltip: {
+      display:'flex',
+      justifyContent:'center',
+      alignItems:'center',
+      color: "white",
+      backgroundColor: "rgb(18, 18, 18)",
+      maxWidth:'120px',
+      height:'23px',
+      fontSize:'13px',
+      fontFamily:'kalam',
+      marginLeft:'7px',
+      marginTop:'20px',
+      letterSpacing:'1px'
+      // boxShadow: '7px 10px 5px 0px rgba(0,0,0,0.75)',
+
+    }
+  })(Tooltip);
+  
+  // let elem = document.getElementById('theApp')
+
+  // function openFullscreen() {
+  //   if (elem.requestFullscreen) {
+  //     elem.requestFullscreen();
+  //   } else if (elem.webkitRequestFullscreen) { 
+  //     elem.webkitRequestFullscreen();
+  //   } else if (elem.msRequestFullscreen) { 
+  //     elem.msRequestFullscreen();
+  //   }
+  // }
+
   const[showSetterPage, setShowSetterPage] = useState(false);
   const[showTimerPage, setShowTimerPage] = useState(false);
   const[workMinutes, setWorkMinutes] = useState(1);
@@ -54,27 +97,14 @@ function App() {
   const[showClock, setShowClock] = useState(false);
   const [option, setOption] = useState();
 
-  // function theme(){
-  //   if("Theme" in localStorage){//checks if there is anything in local storage
-  //     return localStorage.getItem("Theme");
-  //   }
-  //   return'App';
-  // }
-
-  const[theme, setTheme] = useLocalStorage("Theme","App + castle");
+  const[theme, setTheme] = useLocalStorage("Theme","App + plains");
   
+  const handle = useFullScreenHandle();
   return (
-    // <div class="loader">
-    // {/* <div id="pre-loader">
-    //       <p>Loading Website...</p>
-    //       <img src="/images/my-loader.gif" />
-    // </div> */}
-    // $(window).load(function() {
-    //     $(".loader").fadeOut("slow")
-    // });
-   
+ 
+   <FullScreen handle={handle}>
     <div className={theme}>
-    
+     
       <div className='theApp'>
       <AuthContextProvider>
         <SetterContext.Provider value ={{
@@ -150,15 +180,23 @@ function App() {
       
             { openTask&& <Task/>}
             { logout&& <Logout/>}
+
             
-     
-        
+              <div className='fullscreen-button-div'>
+                <TheTooltip title = 'Full screen' placement='top' arrow>
+                  <button onClick={handle.enter} style={{ margin:'0', borderRadius:'5px', width:'4vmin', height:'4vmin', display:'flex', alignItems:'center',justifyContent:'center'}} 
+                    className='fullscreen-button'>  <BsFullscreen style={{fontSize:'4vmin'}}/> </button>
+              </TheTooltip>
+              </div>
+            
+            
           </SetterContext.Provider>
         </AuthContextProvider>
      
       </div>
      
     </div>
+    </FullScreen>
   
   );
 }

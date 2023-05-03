@@ -11,10 +11,6 @@ const Howtorate = () => {
   const customStyles = {
     overlay: {
       backgroundColor: '#08080b97',
-     //#1e212d82
-     //#1e212da3
-     //#08080b97
-    //  backdrop:'static'
     },
     content: {
       top: '50%',
@@ -26,7 +22,6 @@ const Howtorate = () => {
       backgroundColor: '#181a24',
       height:'65vh',
       width: '80vmin',
-      // minWidth:'40vw',
       borderRadius:'12px',
       padding:'0',
       position:'relative'

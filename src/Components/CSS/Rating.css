@@ -8,11 +8,6 @@
 }
 
 .scores{
-    animation: anvil 0.11s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -webkit-animation: anvil 0.11s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -moz-animation: anvil 0.11s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -o-animation: anvil 0.11s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-    -ms-animation: anvil 0.11s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,9 +18,8 @@
     display:flex;
     align-items: center;
     justify-content: center;
-    /* animation-delay: 20s; */
-    
 }
+
 .headerating h1{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin:0;
@@ -54,7 +48,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* font-size:25px */
 }
 .scoreText h3{
     display:flex;
@@ -64,9 +57,7 @@
 }
 
 .theBlockNum{
-    /* margin-left:10px; */
     font-size:35px; 
-    /* height: 60px; */
     background-color:white; 
     color:black; 
     border-radius:40px;
@@ -79,7 +70,6 @@
     justify-content:center;
 }
 .score:hover{
-    /* border-color: rgb(255, 255, 255); */
     cursor: pointer;
     width: 55vmin;
     

@@ -1,10 +1,10 @@
 
 .divsetter{
-  animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-  -webkit-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-  -moz-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-  -o-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
-  -ms-animation: anvil 0.2s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+  animation: fadeInAnimation 0.31s;
+  -webkit-animation: fadeInAnimation 0.31s;
+  -moz-animation: fadeInAnimation 0.31s;
+  -o-animation: fadeInAnimation 0.31s;
+  -ms-animation: fadeInAnimation 0.31s;
   margin:0;
   display: flex;
   justify-content: center;
@@ -13,22 +13,20 @@
 }
 
 .setter{
-    width:490px;
-    height:490px;
+    width:395px;
+    height:420px;
     background-color: #1e212d;
     border-radius: 5%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    font-size: 18px;
+    /* font-size: 18px; */
     font-weight: 600;
     letter-spacing: 0.5px;
-    box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
-    /* border-top-right-radius: 20%;
-    border-top-left-radius: 20%; */
+    -webkit-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
+box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
     
   }
 
@@ -49,10 +47,7 @@
   display: flex;
   justify-content: center;
 }
-/* .session-label{
-  margin:0;
-} */
-/*Sliders*/
+
 .slider{
     height:27px;
     border:2px solid white;
@@ -74,6 +69,7 @@
     border-color: rgba(255, 255, 255, 0.5);
     background-color: rgb(30, 33, 45, 0.5);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    height: 45px;
     width: 65px;
     display: inline-flex;
     border-radius: 10px;
@@ -83,8 +79,9 @@
 }
 .nextbutton{
   border-color: rgba(255, 255, 255, 0.5);
-  background-color: rgb(30, 33, 45, 0.5);
+  background-color:#3584cdde; 
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  height: 45px;
   width: 65px;
   display: inline-flex;
   border-radius: 10px;
@@ -95,6 +92,7 @@
     border-color: rgba(255, 255, 255, 0.71);
     background-color: rgba(0, 248, 8, 0.733);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    height: 45px;
     width: 65px;
     display: inline-flex;
     border-radius: 10px;
@@ -118,47 +116,8 @@
   background-color: rgb(25, 24, 33);
 }
 
-/* max screen size : 1800 px */
-@media only screen and (max-width:1800px) {
-  .setter{
-    width:450px;
-    height:450px;
-  }
-  .nextbackbuttons{
-    margin-top:35px;
-    margin-bottom: 10px;
-  }
-  .slider{
-    height:23px;
-    border:2px solid white;
-    border-radius: 20px;
-    width:325px;
-  }
-
-  .thumb{
-      background-color: rgb(255, 255, 255);
-      cursor:pointer;
-      width:23px;
-      height:23px;
-      border-radius: 40px;
-
-  }
-  .backbutton{
-    width:62.5px;
-  }
-  .nextbutton{
-    width:62.5px;
-  }
-  .checkbutton{
-    width:62.5px;
-  }
-}
 
 @media only screen and (max-width:1000px) {
-  .setter{
-    width:430px;
-    height:430px;
-  }
   .nextbackbuttons{
     margin-top:35px;
     margin-bottom: 10px;
@@ -170,22 +129,12 @@
     width:325px;
   }
 }
-@media only screen and (max-width:1000px) 
-                   and (max-height: 900px) {
-  .setter{
-    margin-top: 70px;
-  }
-}
+
 @media only screen and (max-width:1000px) 
                    and (max-height: 800px) {
   .header{
     font-size: 20px;
   }
-  .setter{
-    width:380px;
-    height:380px;
-    margin-top: 80px;
-  }
   .nextbackbuttons{
     margin-top:35px;
     margin-bottom: 10px;
@@ -200,8 +149,8 @@
   .thumb{
       background-color: rgb(255, 255, 255);
       cursor:pointer;
-      width:15px;
-      height:15px;
+      width:22.5px;
+      height:22.5px;
       border-radius: 40px;
 
   }
@@ -253,8 +202,6 @@
   .checkbutton{
     width:60px;
   }
-}
-/*animations*/
-  
+}  
 
   
