@@ -9,11 +9,6 @@ const RatingMethod = ()=>{
     
     const [chosen, setChosen] = useState(false);
     const goForward = () =>{
-        // setterInfo.setShowParagraph(false)
-        
-        // setterInfo.setShowTimerPage(true);
-       
-        // setterInfo.setShowData(false);
         setterInfo.setShowSetterPage(false)
         setterInfo.setShowButtons(true);
         setterInfo.setShowClock(true);
@@ -24,9 +19,7 @@ const RatingMethod = ()=>{
         setterInfo.setOpenMethod(false);
         setterInfo.setShowData(true);
         setChosen(false);
-        // setterInfo.setShowTimerPage(false);
-        // setterInfo.setShowParagraph(true);
-        // setterInfo.setClicked(false);
+
         
       }
     return (
@@ -45,8 +38,6 @@ const RatingMethod = ()=>{
                   <input style={{cursor:'pointer'}} value='session' name='option' onChange={e=>setterInfo.setOption(e.target.value)} type='radio' onClick={()=>{setChosen(true)}}/>I'll be rating by session
               </label>
               
-              {/* <p style={{fontSize:'13px', fontStyle:'italic'}}> "Please choose one to proceed"</p> */}
-              {console.log(setterInfo.option)}
 
               <div className='nextbackbuttons'>
                   <button className='backbutton' title ="Back" onClick={() => {goBack()}}><BsArrowLeft style={{fontSize:'42px'}}/></button>
@@ -56,7 +47,6 @@ const RatingMethod = ()=>{
                   onClick={() =>{ setterInfo.setClicked(true); {setterInfo.showTimerPage?setterInfo.setShowTimerPage(false):setterInfo.setShowTimerPage(true)}}}>
                   <BsArrowRight style={{fontSize:'42px', marginLeft:'4px'}}/>
                   </button>}  
-                  {/* {Dropdown()} */}
                   
                   {chosen?<button className='checkbutton' title ="Start"onClick={() => {goForward()}}>
                   <AiOutlineCheck style={{fontSize:'42px', marginLeft:'4px'}}/>

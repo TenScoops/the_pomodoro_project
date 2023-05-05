@@ -1,13 +1,8 @@
 import React, { useContext, useState } from 'react';
 import './CSS/Sidebar.css';
 import SetterContext from '../SetterContext'; 
-import Modal from "react-modal";
-import {AiOutlineStock} from 'react-icons/ai'
-import {ImStatsBars} from 'react-icons/im';
-import {BsDoorOpenFill, BsDoorOpen} from 'react-icons/bs';
+import {BsDoorOpen} from 'react-icons/bs';
 import { UserAuth } from '../../FirebaseAuth/AuthContext';
-import GoogleButton from 'react-google-button';
-import {AiOutlineSetting} from 'react-icons/ai';
 import {FcGoogle} from 'react-icons/fc';
 import Tooltip from "@material-ui/core/Tooltip";
 import {withStyles} from "@material-ui/core/styles";
@@ -25,24 +20,8 @@ const Sidebar = () => {
       console.log(error);
     }
   }
-
- 
-
-  const [modalOpen, setModalOpen] = useState(true);
-
-  const customStyles = {
-    overlay: {
-      backgroundColor: 'transparent'
-    }};
-
   const barInfo = useContext(SetterContext);
 
-  const modalClose = ()=>{
-    barInfo.setHideButton(false)
-    barInfo.setSideBar(false)
-    setModalOpen(false)
-    
-  }
 
   const TheTooltip = withStyles({
     arrow:{
@@ -61,10 +40,7 @@ const Sidebar = () => {
       fontSize:'13px',
       fontWeight:'bolder',
       fontFamily:'kalam',
-      // marginBottom:'10px',
       letterSpacing:'1px'
-      // boxShadow: '7px 10px 5px 0px rgba(0,0,0,0.75)',
-
     }
   })(Tooltip);
   return (

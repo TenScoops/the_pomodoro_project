@@ -36,7 +36,7 @@ body{
   align-items: center;
   justify-content: center;
   margin:0;
-  background-image: url("/public/Images/plains.jpeg");
+  /* background-image: url("/public/Images/plains.webp"); */
 }
 
 .theApp{
@@ -44,7 +44,7 @@ body{
   align-items: center;
   justify-content: center;
   max-width: 1400px;
-  /* height:950px; */
+
 }
 .fullscreen-button{
   position: absolute;
@@ -65,8 +65,6 @@ body{
   justify-content: center;
   align-items: center;
   width: 350px;
-  /* max-width: 900px; */
-  /* font-size: 30px; */
   animation: fadeInAnimation 0.61s;
   -webkit-animation: fadeInAnimation 0.61s;
   -moz-animation: fadeInAnimation 0.61s;
@@ -174,16 +172,6 @@ p, h1, h2,h3{
 
 .checkbutton:hover{
   background-color: transparent;
-}
-
-
-.castle{
-  background-image: url("/public/Images/castle.jpeg");
-  /* transition: all .5s; */
-}
-.plains{
-  background-image: url("/public/Images/plains.jpeg");
-  /* transition: all .5s; */
 }
 
 .off{

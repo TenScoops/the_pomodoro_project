@@ -26,10 +26,6 @@ const Synopsis = () => {
   const customStyles = {
     overlay: {
       backgroundColor: '#08080b97',
-     //#1e212d82
-     //#1e212da3
-     //#08080b97
-    //  backdrop:'static'
     },
     content: {
       top: '50%',
@@ -41,7 +37,6 @@ const Synopsis = () => {
       backgroundColor: '#181a24',
       height:'65vh',
       width: '80vmin',
-      // minWidth:'40vw',
       borderRadius:'12px',
       padding:'0',
       position:'relative'
@@ -77,7 +72,6 @@ const Synopsis = () => {
                   <p>You are much more likely to do better if you hold yourself accountable to your bad performances.
                 I created this rating system to give you the incentive to scrutinize your own performances
                   and in turn help you see growth in productivity and work ethic over time. </p>
-                  {/* I hope this helps you achieve your goals in life. */}
 
                   <h2 className='productive-header2'>How this works?</h2>
                   
@@ -90,18 +84,18 @@ const Synopsis = () => {
                   Every rating per block will be added to your data, it will be recorded in the section of days, months, and
                       years so you can see your own progress. You can check your progress in the "my data" section in the side bar. 
                   </p>
-                      {/* <p>You dictate what is a 10/10 performance and you dictate what is a 5/10 performance.</p> */}
+                     
                   <h2 className='productive-header2'>How is performance score calculated?</h2>
                   <p>You will find your performance score in the "My Data" section. Your performance score will be calculated as ratings/number of blocks. 
                     Soon how many times you use the pause button as well as how long your session is paused will also affect your performance score.
                   </p>
                   <p >The more honest you are the better your results and the more you'll get out of this app!</p>
                   <p style={{marginBottom:'0'}}>~app created by TwoScoops~</p>    
-                  {/* <p style={{margin:'5px', fontSize:'15px'}}>*Not yet supported on mobile*</p> */}
-                  {/* <p style={{color:'lightblue',textDecoration:'underline'}} onClick={synopInfo.setOpenHowTo(true)}>How to rate your performance</p> */}
+                 
+                 
                 </div>
       
-                    {/* <button onClick={() => setModalOpen(false)}>Close Modal</button> */}
+                   
 
             </div>
 

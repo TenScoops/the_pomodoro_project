@@ -4,6 +4,8 @@ import { useState } from 'react';
 import './CSS/Chartdisplay.css';
 import SetterContext from '../SetterContext';
 import './CSS/Theme.css';
+import plains from "../../imgs/plains.webp";
+import castle from "../../imgs/castle.webp";
 
 
 
@@ -76,11 +78,11 @@ const Theme = () => {
                 <hr style={{margin:'0', width:'300px'}}/>
 
                <div 
-                  className={themeInfo.theme ==="App + plains"? 'theme + extracss': 'theme'}
-                  onClick={()=>{themeInfo.setTheme("App + plains")}} >The Great Plains</div>
+                  className={themeInfo.theme ===plains? 'theme + extracss': 'theme'}
+                  onClick={()=>{themeInfo.setTheme(plains)}} >The Great Plains</div>
                 <div 
-                  className={themeInfo.theme ==="App + castle"? 'theme + extracss': 'theme'}
-                  onClick={()=>{themeInfo.setTheme("App + castle")}}>Howl's Moving Castle</div>
+                  className={themeInfo.theme ===castle? 'theme + extracss': 'theme'}
+                  onClick={()=>{themeInfo.setTheme(castle)}}>Howl's Moving Castle</div>
           
               </div>
           </div>

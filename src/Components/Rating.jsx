@@ -83,7 +83,6 @@ const Rating = () => {
   }
   const thankYouPage=()=>{
     return <div className='thankyoupage' style={{display:'flex', justifyContent: 'center', alignItems:'center', height:'650px', flexDirection:"column"}}>
-      {/* {ratingInfo.setCloseRatingModal(true)} */}
       {checkMark()}
       <p style={{marginBottom:'80px', fontSize:'18.5px'}}>Performance Rated</p>
       <button style={{margin:'0', width:'100px'}} onClick={() => {  setModalOpen(false);}}>Close</button>  

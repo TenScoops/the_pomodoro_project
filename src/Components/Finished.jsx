@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import SetterContext from './SetterContext'
 import './CSS/Finished.css'
-import {ImStatsBars} from 'react-icons/im';
 
 const Finished = () => {
     const finishedInfo = useContext(SetterContext);

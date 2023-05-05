@@ -22,10 +22,6 @@ const Areyousure = () => {
   const customStyles = {
     overlay: {
       backgroundColor: '#08080b97',
-     //#1e212d82
-     //#1e212da3
-     //#08080b97
-    //  backdrop:'static'
     },
     content: {
       top: '50%',
@@ -39,12 +35,6 @@ const Areyousure = () => {
       width: '330px',
       borderColor:'gray',
       borderRadius:'20px',
-      
-      // backgroundRepeat: 'no-repeat',
-      // backgroundAttachment:'fixed',
-      // backgroundImage: `url(${'/5996460.jpg'})` ,
-      //  backgroundImage: "url(/images/background3.jpg)" 
-    //   padding:'0'
       
     }
   };
