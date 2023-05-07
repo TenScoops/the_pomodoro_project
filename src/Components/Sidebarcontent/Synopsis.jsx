@@ -90,7 +90,7 @@ const Synopsis = () => {
                     Soon how many times you use the pause button as well as how long your session is paused will also affect your performance score.
                   </p>
                   <p >The more honest you are the better your results and the more you'll get out of this app!</p>
-                  <p style={{marginBottom:'0'}}>~app created by TwoScoops~</p>    
+                  <p style={{marginBottom:'0', fontSize:'12px'}}>~app created by TenScoops~</p>    
                  
                  
                 </div>

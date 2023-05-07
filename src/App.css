@@ -9,7 +9,7 @@
 
 
 body{
-  background-color: #1e212d;
+  background-color: white;
   color:#fff;
   margin: 0;
   /* font-family: 'Nanum Pen Script', cursive; */
@@ -27,11 +27,11 @@ body{
   background-size: cover;
   height: 100vh;
   width: 100vw;
-  animation: fadeInAnimation 1.5s;
+  /* animation: fadeInAnimation 1.5s;
   -webkit-animation: fadeInAnimation 1.5s;
   -moz-animation: fadeInAnimation 1.5s;
   -o-animation: fadeInAnimation 1.5s;
-  -ms-animation: fadeInAnimation 1.5s;
+  -ms-animation: fadeInAnimation 1.5s; */
   display: flex;
   align-items: center;
   justify-content: center;

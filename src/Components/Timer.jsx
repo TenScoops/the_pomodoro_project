@@ -4,35 +4,35 @@ import SetterContext from './SetterContext';
 import Rating from './Rating';
 import Skip from './Buttons/Skip';
 import Areyousure from './Areyousure';
-import {FaLightbulb} from 'react-icons/fa';
+// import {FaLightbulb} from 'react-icons/fa';
 import './CSS/Timer.css';
-import Tooltip from "@material-ui/core/Tooltip";
-import {withStyles} from "@material-ui/core/styles";
+// import Tooltip from "@material-ui/core/Tooltip";
+// import {withStyles} from "@material-ui/core/styles";
 
 
 const Timer = () => {
 
-    const TheTooltip = withStyles({
-        arrow:{
-            "&::before": {
-              backgroundColor: "black",
-            }
-          },
-        tooltip: {
-          display:'flex',
-          justifyContent:'center',
-          alignItems:'center',
-          color: "white",
-          backgroundColor: "rgb(18, 18, 18)",
-          maxWidth:'120px',
-          height:'23px',
-          fontSize:'13px',
-          fontFamily:'kalam',
-          marginTop:'20px',
-          letterSpacing:'1px'
+    // const TheTooltip = withStyles({
+    //     arrow:{
+    //         "&::before": {
+    //           backgroundColor: "black",
+    //         }
+    //       },
+    //     tooltip: {
+    //       display:'flex',
+    //       justifyContent:'center',
+    //       alignItems:'center',
+    //       color: "white",
+    //       backgroundColor: "rgb(18, 18, 18)",
+    //       maxWidth:'120px',
+    //       height:'23px',
+    //       fontSize:'13px',
+    //       fontFamily:'kalam',
+    //       marginTop:'20px',
+    //       letterSpacing:'1px'
     
-        }
-      })(Tooltip);
+    //     }
+    //   })(Tooltip);
 
     const setterInfo = useContext(SetterContext);
 

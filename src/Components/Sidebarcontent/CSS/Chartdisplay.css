@@ -10,6 +10,7 @@
     width: 21px;
     padding: 0;
   }
-  .close:hover{
-    background-color: #1e212dca;;
+  .Chart-close-button:hover{
+    background-color: transparent;
+    color: black;
   }
