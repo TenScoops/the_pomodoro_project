@@ -201,7 +201,7 @@ const Timer = () => {
                 {setterInfo.showData?<div style={{marginLeft:'15px'}} className='blockdiv'><p style={{color:'black', backgroundColor:'white'}}>&nbsp;Session will be completed in {numOfblocks} block(s)&nbsp;</p></div>:null}
                 {setterInfo.showData?<div className='blockdiv'><p >&nbsp;With {addZero(minutes)}:{addZero(seconds)} minutes per block&nbsp;</p></div>:null}
             </div>
-
+        
             <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                {/* {setterInfo.showClock&&
                <TheTooltip title = 'Focus mode' placement='top' arrow>

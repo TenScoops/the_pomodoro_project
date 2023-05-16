@@ -51,20 +51,20 @@ const Contents = () => {
     <div>
         <div className='Content'>
               
-              <h1 className='h1-text' style={{marginTop:'0', marginBottom:'0'}} >
+              <h1 className='h1-text' style={{marginTop:'40px', marginBottom:'0'}} >
                 The Progress Pomodoro <ImStatsBars/> 
               </h1> 
 
-            <hr style={{margin:'0', padding:'0', width:'80px'}}/>
+            {/* <hr style={{margin:'0', padding:'0', width:'80px'}}/> */}
             <div className='the-content-text'>
               <div >
                   {user?.displayName? <div className='text-div' style={{letterSpacing:'1px'}}>
                     <p className='content-text'> Hi {user?.displayName}!</p>
                   </div> 
                     :
-                    <div className='text-div' style={{letterSpacing:'1px'}}>
+                    <div className='text-div' >
                   <p className='content-text'>
-                    Do you find yourself struggling with productivity?
+                    Do you find yourself struggling with productivity?{questionMark()} 
                   </p>
                  
                   </div>
@@ -72,7 +72,7 @@ const Contents = () => {
               </div>
 
               <div className='divsession-buttons'>
-                {questionMark()} 
+                
                 <button className='startSession-button' 
                 onClick={() => {setterInfo.setShowSetterPage(true); setterInfo.setShowParagraph(false); }}>
                   Start a session </button>

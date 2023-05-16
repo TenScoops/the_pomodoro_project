@@ -13,6 +13,7 @@
   top: 8px;
   border-radius: 30%;
   background-color: rgb(157, 0, 0);
+  border: transparent;
   width: 21px;
   padding: 0;
 }

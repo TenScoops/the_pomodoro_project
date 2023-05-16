@@ -1,10 +1,10 @@
 
 .divsetter{
-  animation: fadeInAnimation 0.31s;
+  /* animation: fadeInAnimation 0.31s;
   -webkit-animation: fadeInAnimation 0.31s;
   -moz-animation: fadeInAnimation 0.31s;
   -o-animation: fadeInAnimation 0.31s;
-  -ms-animation: fadeInAnimation 0.31s;
+  -ms-animation: fadeInAnimation 0.31s; */
   margin:0;
   display: flex;
   justify-content: center;
@@ -14,9 +14,10 @@
 
 .setter{
     width:395px;
-    height:420px;
-    background-color: #1e212d;
-    border-radius: 5%;
+    height:430px;
+    background-color: #1e212df4;
+    border: 1px solid black;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,7 +67,7 @@ box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
 
 /*buttons*/
 .backbutton{
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: rgb(0, 0, 0);
     background-color: rgb(30, 33, 45, 0.5);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     height: 45px;
@@ -172,7 +173,7 @@ box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
   .setter{
     width:380px;
     height:390px;
-    margin-top: 80px;
+    /* margin-top: 80px; */
   }
   .nextbackbuttons{
     margin-top:35px;
