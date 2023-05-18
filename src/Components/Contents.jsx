@@ -64,7 +64,7 @@ const Contents = () => {
                     :
                     <div className='text-div' >
                   <p className='content-text'>
-                    Do you find yourself struggling with productivity?{questionMark()} 
+                    Do you find yourself struggling with productivity? Can't seem to get motivated? Can't seem to get out bed?
                   </p>
                  
                   </div>
@@ -72,7 +72,7 @@ const Contents = () => {
               </div>
 
               <div className='divsession-buttons'>
-                
+                {questionMark()}
                 <button className='startSession-button' 
                 onClick={() => {setterInfo.setShowSetterPage(true); setterInfo.setShowParagraph(false); }}>
                   Start a session </button>
