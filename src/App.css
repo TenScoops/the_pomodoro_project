@@ -67,14 +67,14 @@ button{
   transition: 0.05s ease-in;
   font-family: 'Kalam';
 }
-button:hover{
+/* button:hover{
   box-shadow: -1px 2px 1px 3.5px rgba(148, 228, 255, 0.868);
 -webkit-box-shadow: -1px 1px 3.5px 5px rgba(148, 228, 255, 0.868);
 -moz-box-shadow: -1px 2px 1px 3.5px rgba(148, 228, 255, 0.868);
 
-}
+} */
 .startSession-button{
-  background-color:#127498;
+  background-color: rgba(73, 73, 73, 0.844);
   color: white;
   width:190px;
   height: 40.5px;
@@ -86,9 +86,8 @@ button:hover{
 -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 border: 1px solid black;
-
-
 }
+
 .startSession-button:hover{
   animation: blinking2 0.8s infinite;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
@@ -106,13 +105,14 @@ border: 1px solid black;
   align-items: center;
   flex-direction: column;
   background-color: #1e212dba;
-  width: 320px;
-  height: 100px;
+  /* backdrop-filter: blur(2px); */
+  width: 300px;
+  height: 80px;
   border-radius: 8px;
-  border: 1px solid black;
--webkit-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
+  /* border: 1px solid black; */
+/* -webkit-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
+box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75); */
 }
 
 p, h1, h2,h3{
@@ -142,7 +142,7 @@ p, h1, h2,h3{
   /* display: flex; */
   /* justify-content: center; */
   background-color:rgba(61, 61, 61, 0.426); 
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.526);
   font-size: 20px;
   padding-top: 5px;
   border-radius:30%; 

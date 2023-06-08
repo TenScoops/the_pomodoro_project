@@ -75,7 +75,7 @@ const Theme = () => {
               {closeButton()}
               <h1 style={{marginBottom:'15px'}}>Select a theme</h1>
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
-                <hr style={{margin:'0', width:'300px'}}/>
+                <hr style={{margin:'0', width:'70px'}}/>
 
                <div 
                   className={themeInfo.theme ===plains? 'theme + extracss': 'theme'}

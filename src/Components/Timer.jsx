@@ -128,7 +128,7 @@ const Timer = () => {
 
                 <div style={{display:'flex', justifyCotent:'center', alignItems:'center'}}>
                     
-                    <button className ='cancel' style={{width:'150px', height:'37px', marginLeft:'40px',  borderRadius:'12px', fontSize:'15px'}} 
+                    <button className ='cancel' style={{width:'150px', height:'25px', marginLeft:'55px',  borderRadius:'12px', }} 
                         onClick={() =>{setterInfo.setClicked(false);setterInfo.setCancelTheSession(true)}} >
                         Cancel Session
                     </button>

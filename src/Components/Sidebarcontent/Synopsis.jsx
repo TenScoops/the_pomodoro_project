@@ -65,15 +65,16 @@ const Synopsis = () => {
               </svg>
             </button>
               <div className='lorem' >
-              
-                  <h2 className='productive-header1' >Be productive but do it the right way!</h2>
-                  <h2 className='productive-header2'>The Rating System</h2>
+                  <h2 className='productive-header2' >~The Progress Pomodoro~</h2>
+                  {/* <h2 className='productive-header1' >Be productive but do it the right way!</h2> */}
+                  {/* <h2 className='productive-header1' style={{margin:'0', fontSize:'11px'}}>Be Productive but do it the right way!</h2> */}
+                  <h2 className='productive-header1' style={{marginTop:'10px'}}>The Rating System</h2>
 
                   <p>You are much more likely to do better if you hold yourself accountable to your bad performances.
                 I created this rating system to give you the incentive to scrutinize your own performances
                   and in turn help you see growth in productivity and work ethic over time. </p>
 
-                  <h2 className='productive-header2'>How this works?</h2>
+                  <h2 className='productive-header1'>How this works?</h2>
                   
                   <p>Pomodoro allows you to work in 25 minute intervals with breaks in between. But this app allows you to set your own 
                   session time, with however many breaks you want, and however many minutes per break as long as your total break time does 
@@ -85,11 +86,12 @@ const Synopsis = () => {
                       years so you can see your own progress. You can check your progress in the "my data" section in the side bar. 
                   </p>
                      
-                  <h2 className='productive-header2'>How is performance score calculated?</h2>
+                  <h2 className='productive-header1'>How is performance score calculated?</h2>
                   <p>You will find your performance score in the "My Data" section. Your performance score will be calculated as ratings/number of blocks. 
                     Soon how many times you use the pause button as well as how long your session is paused will also affect your performance score.
                   </p>
                   <p >The more honest you are the better your results and the more you'll get out of this app!</p>
+                  <h2 className='productive-header1' >Be Productive but do it the right way!</h2>
                   <p style={{marginBottom:'0', fontSize:'12px'}}>~app created by TenScoops~</p>    
                  
                  

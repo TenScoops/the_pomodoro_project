@@ -4,7 +4,7 @@ import { UserAuth } from '../FirebaseAuth/AuthContext';
 import {AiOutlineQuestionCircle} from 'react-icons/ai';
 import Tooltip from "@material-ui/core/Tooltip";
 import {withStyles} from "@material-ui/core/styles";
-import {ImStatsBars} from 'react-icons/im';
+
 
 const Contents = () => {
   const setterInfo = useContext(SetterContext);
@@ -12,7 +12,7 @@ const Contents = () => {
   const {user} = UserAuth();
   
   const questionMark =()=>{
-    return <TheTooltip title="More Info" placement='bottom' arrow>
+    return <TheTooltip title="More Info" placement='top' arrow>
       <button className='questionMark'onClick={()=>{setterInfo.setSynopsis(true)}} >
         <AiOutlineQuestionCircle/>
       </button>
@@ -51,9 +51,9 @@ const Contents = () => {
     <div>
         <div className='Content'>
               
-              <h1 className='h1-text' style={{marginTop:'40px', marginBottom:'0'}} >
-                The Progress Pomodoro <ImStatsBars/> 
-              </h1> 
+              {/* <h1 className='h1-text' style={{marginTop:'40px', marginBottom:'0'}} >
+                The Progress Pomodoro 
+              </h1>  */}
 
             {/* <hr style={{margin:'0', padding:'0', width:'80px'}}/> */}
             <div className='the-content-text'>
