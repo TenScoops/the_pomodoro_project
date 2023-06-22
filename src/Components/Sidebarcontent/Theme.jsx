@@ -46,7 +46,8 @@ const Theme = () => {
       height:'40vh',
       width: '70vmin',
       borderRadius:'10px',
-      padding:'0'
+      padding:'0',
+      border:'solid 2px black'
       
     }
   };

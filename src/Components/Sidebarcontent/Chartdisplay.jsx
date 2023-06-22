@@ -27,7 +27,8 @@ const Data = () => {
       height:'75vh',
       width: '83vmin',
       borderRadius:'10px',
-      padding:'0'
+      padding:'0',
+      border:'solid 3px black'
       
     }
   };

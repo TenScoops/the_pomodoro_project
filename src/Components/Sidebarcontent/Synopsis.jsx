@@ -39,7 +39,8 @@ const Synopsis = () => {
       width: '80vmin',
       borderRadius:'12px',
       padding:'0',
-      position:'relative'
+      position:'relative',
+      border:'solid 2px black'
       
     }
   };
@@ -92,7 +93,7 @@ const Synopsis = () => {
                   </p>
                   <p >The more honest you are the better your results and the more you'll get out of this app!</p>
                   <h2 className='productive-header1' >Be Productive but do it the right way!</h2>
-                  <p style={{marginBottom:'0', fontSize:'12px'}}>~app created by TenScoops~</p>    
+                  <p style={{marginBottom:'0', fontSize:'12px'}}>~A web-based app created by TenScoops~</p>    
                  
                  
                 </div>

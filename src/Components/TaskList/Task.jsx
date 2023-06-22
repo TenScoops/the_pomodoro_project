@@ -27,6 +27,7 @@ const Task = () => {
       height:'65vh',
       width: '80vmin',
       borderRadius:'30px',
+      border:'solid 2px black'
     }
   };
 

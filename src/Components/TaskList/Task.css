@@ -123,20 +123,20 @@ cursor: pointer;
 /* margin-left: 11px; */
 }
 
-.task-row:nth-child(n) {
+.task-row {
     background-color: #2d333e;
 }
-.task-row:nth-child(4n + 1) {
+/* .task-row:nth-child(4n + 1) {
     background-color: #2a303c;
-}
+} */
 
-.task-row:nth-child(4n + 2) {
+/* .task-row:nth-child(4n + 1) {
     background-color: #393e49;
-}
+} */
 
-.task-row:nth-child(4n + 3) {
-    background-color: #212630;
-}
+/* .task-row:nth-child(2n + 1) {
+    background-color: #2c323e;
+} */
 
 .icons {
 display: flex;
