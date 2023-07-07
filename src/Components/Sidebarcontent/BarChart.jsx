@@ -8,7 +8,7 @@ import {
   onSnapshot,
   doc
 } from "firebase/firestore";
-import { dataBase } from '../../Firebase';
+import { db } from '../../Firebase';
 
 import {
   Chart as ChartJS,

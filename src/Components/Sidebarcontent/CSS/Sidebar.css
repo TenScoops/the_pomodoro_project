@@ -4,11 +4,12 @@
     align-items: center;
     height:100%;
     width:280px;
-    background-color: #1e212dd8;
+    background-color: #1e212ddb;
     margin:0;
     position: fixed;
     /* bottom: 0; */
     left:0;
+    border: 2px solid black;
     -webkit-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
     box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
@@ -96,10 +97,10 @@
     /* height: 120px; */
     background-color:white;
     color:black;
-    border-radius: 4px;
+    border-radius: 8px;
     margin-left: 8px;
     font-size:17px;
-    border-radius: 4px;
+    /* border-radius: 4px; */
     /* margin-top:19px; */
     margin-top: 15px;
     width:210px;
@@ -159,6 +160,9 @@
         bottom:0;
         left:auto;
         border-radius: 8px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        background-color: #1e212dee;
     }
     .sidebarcontent{
         flex-direction: row;

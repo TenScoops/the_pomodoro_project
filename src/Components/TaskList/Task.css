@@ -28,8 +28,13 @@ font-size: 24px;
 }
 
 .complete {
-text-decoration: line-through;
 opacity: 0.4;
+}
+.text-complete{
+    text-decoration: line-through;
+}
+.texts{
+    text-decoration:double;
 }
 
 .task-form {
@@ -97,16 +102,16 @@ text-transform: capitalize; */
   -moz-box-shadow: 0px 0px 0px 0px rgba(238, 246, 249, 0);
 }
 
-.task-input.edit {
+/* .task-input.edit {
 border: 2px solid #149fff;
-}
+} */
 
-
+/* 
 .task-container {
 display: flex;
 flex-direction: row;
 position: relative;
-}
+} */
 
 .task-row {
 display: flex;
@@ -114,7 +119,7 @@ justify-content: space-between;
 align-items: center;
 margin-right: 0;
 margin-bottom: 5px;
-padding: 16px;
+padding: 10px;
 font-size: 18px;
 /* font-weight: 500; */
 border-radius: 5px;
@@ -146,7 +151,7 @@ cursor: pointer;
 }
 
 .delete-icon {
-font-size: 22.5px;
+font-size: 24.5px;
 /* color: rgb(255, 223, 223);
  */
  color:#fff;

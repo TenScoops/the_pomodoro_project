@@ -13,7 +13,7 @@ const Data = () => {
 
   const customStyles = {
     overlay: {
-      backgroundColor: '#08080b97',
+      backgroundColor: 'transparent',
  
     },
     content: {
@@ -23,10 +23,10 @@ const Data = () => {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      backgroundColor: 'rgba(255, 255, 255,0.95)',
+      backgroundColor: 'rgba(255, 255, 255)',
       height:'75vh',
       width: '83vmin',
-      borderRadius:'10px',
+      borderRadius:'20px',
       padding:'0',
       border:'solid 3px black'
       

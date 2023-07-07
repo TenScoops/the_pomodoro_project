@@ -18,6 +18,7 @@ import Howtorate from './Components/Howtorate'
 import RatingMethod from './Components/RatingMethod'
 import React from 'react';
 import plains from "./imgs/plains.webp";
+import MyTask from './Components/Tasklist2/MyTask';
 
 
 function App() {
@@ -134,7 +135,7 @@ function App() {
             { openThemePage && <Theme/>}
             { openHowTo&& <Howtorate/>}
       
-            { openTask&& <Task/>}
+            { openTask&& <MyTask/>}
             { logout&& <Logout/>} 
             
           </SetterContext.Provider>

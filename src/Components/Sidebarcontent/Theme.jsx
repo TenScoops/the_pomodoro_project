@@ -74,7 +74,7 @@ const Theme = () => {
         >
            <div style={{ display:'flex', justifyContent:'center',flexDirection:'column',alignItems:'center'}} >
               {closeButton()}
-              <h1 style={{marginBottom:'15px'}}>Select a theme</h1>
+              <h3 style={{marginBottom:'15px', marginTop:'30px'}}>Select a theme</h3>
               <div style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
                 <hr style={{margin:'0', width:'70px'}}/>
 
