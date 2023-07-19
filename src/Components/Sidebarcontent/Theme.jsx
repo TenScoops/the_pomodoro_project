@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import Modal from "react-modal";
 import { useState } from 'react';
-import './CSS/Chartdisplay.css';
+// import './CSS/Chartdisplay.css';
 import SetterContext from '../SetterContext';
 import './CSS/Theme.css';
 import plains from "../../imgs/plains.webp";
-import castle from "../../imgs/castle.webp";
+import castle from "../../imgs/pxfuel.jpg";
 
 
 

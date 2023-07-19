@@ -41,9 +41,9 @@
     /* background-color: #1e212de3; */
     background-color: #1e212dcd;
     border:1px solid rgb(198, 198, 198);
-    box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 7px 8px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 7px 8px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 7px 8px 5px 0px rgba(0,0,0,0.75);
  
   }
   .time:hover{

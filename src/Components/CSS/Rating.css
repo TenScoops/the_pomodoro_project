@@ -83,10 +83,10 @@
 }
 
 #score10:hover{
-    background-color: green;
+    background-color: rgb(0, 197, 3);
 }
 #score9:hover{
-    background-color: rgb(0, 228, 4);
+    background-color: rgb(2, 188, 5);
 }
 #score8:hover{
     background-color: rgb(184, 255, 18);
@@ -111,4 +111,5 @@
 }
 #score1:hover{
     background-color: rgb(170, 0, 0);
+   /* background-color: rgba(255, 0, 0, 0.733); */
 }

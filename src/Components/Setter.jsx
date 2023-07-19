@@ -10,8 +10,11 @@ const Setter = () => {
 
   const goForward = () =>{
     setterInfo.setShowSetterPage(false)
+    setterInfo.setShowButtons(true);
+    setterInfo.setShowClock(true);
+    // setterInfo.setShowSetterPage(false)
     setterInfo.setShowData(false);
-    setterInfo.setOpenMethod(true);
+    // setterInfo.setOpenMethod(true);
   }
   const goBack = () =>{
     setterInfo.setShowSetterPage(false);
@@ -24,7 +27,7 @@ const Setter = () => {
   const breaks = setterInfo.numOfBreaks === 1? "break":"breaks";
 
 
- //--------------------------------
+ //----------------------------------------------------------------
   return (
     <div className='divsetter'>
        

@@ -3,7 +3,8 @@ import Modal from "react-modal";
 import SetterContext from '../SetterContext';
 import '../TaskList/Task.css';
 import {ImPencil2} from 'react-icons/im';
-import MyTaskForm from './MyTaskForm';
+import TaskDiv from './TaskDiv';
+import { UserAuth } from '../../FirebaseAuth/AuthContext';
 import { db } from '../../Firebase';
 import {query, collection, onSnapshot, 
   updateDoc, doc, addDoc, deleteDoc, editDoc} from 'firebase/firestore';
@@ -16,7 +17,8 @@ const Task = () => {
   const [tasks, setTasks] = useState([])
   const [input, setInput] = useState('')
   // const [edit, setEdit] = useState('')
-
+  const { user } = UserAuth();
+  
   const taskInfo = useContext(SetterContext);
 
   const customStyles = {
@@ -50,45 +52,68 @@ const Task = () => {
           </button>
   }
   
-  const taskLength = tasks.length;
-  
   //create task
   const createTask = async (e) => {
     e.preventDefault(e);
     if(input === ''){
       return;
     }
-    await addDoc(collection(db, 'tasks'), {
-      text:input,
-      completed:false
+    try{
+      await addDoc(collection(db, `users/${user.uid}/tasks`), {
+        text:input,
+        completed:false
     })
     setInput('')
+    }catch (error){
+      console.log('Error creating task:', error)
+    }
   }
 
   //read taskfrom firebase
   useEffect(()=>{
-    const q = query(collection(db, 'tasks'))
-    const unsubscribe = onSnapshot(q,(querySnapshot) => {
-      let tasksArr= []
-      querySnapshot.forEach((doc) =>{
-        tasksArr.push({...doc.data(), id: doc.id})
-      });
-      setTasks(tasksArr)
-    })
-    return () => unsubscribe()
+    try{
+      const q = query(collection(db, `users/${user.uid}/tasks`))
+      const unsubscribe = onSnapshot(q,(querySnapshot) => {
+        let tasksArr= []
+        querySnapshot.forEach((doc) =>{
+          tasksArr.push({...doc.data(), id: doc.id})
+        });
+        setTasks(tasksArr)
+      })
+      return () => unsubscribe()
+
+      }catch (error){
+        console.log('Error reading task:', error)
+      }
   }, [])
   //update task in fire base
   const toggleComplete = async (task) => {
-    
-    await updateDoc(doc(db, 'tasks', task.id), {
+    try{
+     await updateDoc(doc(db, `users/${user.uid}/tasks`, task.id), {
       completed: !task.completed
     })
-    
+
+    }catch(error){
+      console.log('error updating task:', error)
+    }
   }
   //delete todo
   const deleteTask = async (id) =>{
-    await deleteDoc(doc(db, 'tasks', id))
+    try{
+      await deleteDoc(doc(db, `users/${user.uid}/tasks`, id))
+
+    }catch(error){
+      console.log('error deleting task:', error)
+    }
   }
+
+  const TheTask =()=>{
+    if (!user) {//if null, undefined, user not authenticated
+      // User is not authenticated, you can show a loading spinner or redirect to the login page
+      return <div>Loading...</div>;
+    }
+  }
+  
   //edit todo
   // const editTask =  () => {
   //   return<form onSubmit={createTask} className='task-form'>
@@ -110,7 +135,7 @@ const Task = () => {
         > 
             {closeButton()}
             
-            <div className='task'>
+            {user?<div className='task'>
               {/* <div > */}
                 
                 <form onSubmit={createTask} className='task-form'>
@@ -129,7 +154,7 @@ const Task = () => {
                   alignItems:'center', justifyContent:'center', padding:'0'}}>
                     
                   {tasks.map((task, index)=>(
-                    <MyTaskForm 
+                    <TaskDiv
                       key={index} 
                       task={task} 
                       toggleComplete={toggleComplete} 
@@ -141,7 +166,8 @@ const Task = () => {
                 </ul>
               {/* </div> */}
 
-            </div>
+            </div>:null
+}
         </Modal>
     </div>
   )

@@ -18,7 +18,7 @@ const Sidebar = () => {
     try {
       await googleSignIn();
     }catch(error){
-      console.log(error);
+      console.log('error Signing in: ',error);
     }
   }
   const barInfo = useContext(SetterContext);
@@ -55,8 +55,10 @@ const Sidebar = () => {
             
           </button>
         </div>
+        <div>
           <h2 style={{margin:'0'}}>The Progress <ImStatsBars/> </h2>
-          <h1 style={{marginBottom:'40px', marginTop:'0',fontSize:'30px'}}> Pomodoro</h1>        
+          <h1> Pomodoro</h1>        
+        </div>
         {/* <TheTooltip 
         title="My Data" 
         placement="top"
@@ -91,6 +93,8 @@ const Sidebar = () => {
             </svg>
             <label> Rating System </label>
           </h3>
+
+          
 
         {user?.displayName ? 
        

@@ -7,7 +7,7 @@ import SetterContext from './Components/SetterContext';
 import Timer from './Components/Timer';
 import Finished from './Components/Finished';
 import Sidebar from './Components/Sidebarcontent/Sidebar';
-import Chartdisplay from './Components/Sidebarcontent/Chartdisplay';
+import Chartdisplay from './Components/Sidebarcontent/Chart/Chartdisplay';
 import Synopsis from './Components/Sidebarcontent/Synopsis';
 import Theme from './Components/Sidebarcontent/Theme';
 import Task from './Components/TaskList/Task';
