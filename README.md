@@ -1,7 +1,7 @@
 ## Access site with: https://www.pomoprogress.com/
 
 ## Synopsis
-You are more likely to do better if you hold yourself accountable to your bad performances. I created this rating system to give you the incentive to scrutinize your own performances and in turn help you see growth in productivity and work ethic over time. 
+This project combines the Pomodoro Technique, a time management method, with a user rating system and progress visualization. A progress graph that visualizes the aggregated ratings over time and provides users with a clear and intuitive representation of their productivity progress. This visual feedback enhances user understanding and motivation, contributing to an innovative user experience and help them make informed decisions to enhance their work habits. 
 
 ## Setup
 1. Install Node.js
