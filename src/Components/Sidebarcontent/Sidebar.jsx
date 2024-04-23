@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
-import './CSS/Sidebar.css';
-import SetterContext from '../SetterContext'; 
-import {BsDoorOpen} from 'react-icons/bs';
+// import Tooltip from "@material-ui/core/Tooltip";
+// import { withStyles } from "@material-ui/core/styles";
+import React, { useContext } from 'react';
+import { BsDoorOpen } from 'react-icons/bs';
+import { FcGoogle } from 'react-icons/fc';
+import { ImStatsBars } from 'react-icons/im';
+import { IoIosArrowBack } from 'react-icons/io';
 import { UserAuth } from '../../FirebaseAuth/AuthContext';
-import {FcGoogle} from 'react-icons/fc';
-import Tooltip from "@material-ui/core/Tooltip";
-import {withStyles} from "@material-ui/core/styles";
-import {IoIosArrowBack} from 'react-icons/io'
-import {ImStatsBars} from 'react-icons/im';
+import SetterContext from '../SetterContext';
+import './CSS/Sidebar.css';
 
 const Sidebar = () => {
   const { googleSignIn, user } = UserAuth();
@@ -24,26 +24,26 @@ const Sidebar = () => {
   const barInfo = useContext(SetterContext);
 
 
-  const TheTooltip = withStyles({
-    arrow:{
-      "&::before": {
-        backgroundColor: "black",
-      }
-    },
-    tooltip: {
-      display:'flex',
-      justifyContent:'center',
-      alignItems:'center',
-      color: "white",
-      backgroundColor: "rgb(18, 18, 18)",
-      maxWidth:'150px',
-      height:'23px',
-      fontSize:'13px',
-      fontWeight:'bolder',
-      fontFamily:'kalam',
-      letterSpacing:'1px'
-    }
-  })(Tooltip);
+  // const TheTooltip = withStyles({
+  //   arrow:{
+  //     "&::before": {
+  //       backgroundColor: "black",
+  //     }
+  //   },
+  //   tooltip: {
+  //     display:'flex',
+  //     justifyContent:'center',
+  //     alignItems:'center',
+  //     color: "white",
+  //     backgroundColor: "rgb(18, 18, 18)",
+  //     maxWidth:'150px',
+  //     height:'23px',
+  //     fontSize:'13px',
+  //     fontWeight:'bolder',
+  //     fontFamily:'kalam',
+  //     letterSpacing:'1px'
+  //   }
+  // })(Tooltip);
   return (
     <div className='sidebar'>
       <div className='sidebarcontent'>
@@ -104,14 +104,10 @@ const Sidebar = () => {
           </h3>
     
         :
-        <TheTooltip 
-        title="Sign in with Google" 
-        placement="top"
-        arrow
-       >
+      
           <button className='google-button' onClick={handleGoogleSignIn}><FcGoogle className='google-icon'/>
           <label className='google-label'>Sign in with Google</label></button>
-        </TheTooltip>
+        
         }
       </div>
 

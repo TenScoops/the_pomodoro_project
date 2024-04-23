@@ -1,9 +1,9 @@
+// import Tooltip from "@material-ui/core/Tooltip";
+// import { withStyles } from "@material-ui/core/styles";
 import React, { useContext } from 'react';
-import SetterContext from './SetterContext';
+import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import { UserAuth } from '../FirebaseAuth/AuthContext';
-import {AiOutlineQuestionCircle} from 'react-icons/ai';
-import Tooltip from "@material-ui/core/Tooltip";
-import {withStyles} from "@material-ui/core/styles";
+import SetterContext from './SetterContext';
 
 
 const Contents = () => {
@@ -12,40 +12,39 @@ const Contents = () => {
   const {user} = UserAuth();
   
   const questionMark =()=>{
-    return <TheTooltip title="More Info" placement='top' arrow>
-      <button className='questionMark'onClick={()=>{setterInfo.setSynopsis(true)}} >
+    return <button className='questionMark'onClick={()=>{setterInfo.setSynopsis(true)}} >
         <AiOutlineQuestionCircle/>
       </button>
-    </TheTooltip>
+    
   }
   const questionMark2 =()=>{
-    return <TheTooltip title="More Info" placement='top' arrow><button className='questionMark2' onClick={()=>{setterInfo.setSynopsis(true)}} >
+    return <button className='questionMark2' onClick={()=>{setterInfo.setSynopsis(true)}} >
       <AiOutlineQuestionCircle className='questionMark2'/>
     </button>
-    </TheTooltip>
+   
   }
 
-  const TheTooltip = withStyles({
-    arrow:{
-      "&::before": {
-        backgroundColor: "black",
-      }
-    },
-    tooltip: {
-      display:'flex',
-      justifyContent:'center',
-      alignItems:'center',
-      color: "white",
-      backgroundColor: "rgb(18, 18, 18)",
-      maxWidth:'120px',
-      height:'23px',
-      fontSize:'13px',
-      fontFamily:'kalam',
-      marginTop:'20px',
-      letterSpacing:'1px'
+  // const TheTooltip = withStyles({
+  //   arrow:{
+  //     "&::before": {
+  //       backgroundColor: "black",
+  //     }
+  //   },
+  //   tooltip: {
+  //     display:'flex',
+  //     justifyContent:'center',
+  //     alignItems:'center',
+  //     color: "white",
+  //     backgroundColor: "rgb(18, 18, 18)",
+  //     maxWidth:'120px',
+  //     height:'23px',
+  //     fontSize:'13px',
+  //     fontFamily:'kalam',
+  //     marginTop:'20px',
+  //     letterSpacing:'1px'
 
-    }
-  })(Tooltip);
+  //   }
+  // })(Tooltip);
   
   return (
     <div>
