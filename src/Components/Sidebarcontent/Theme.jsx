@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Modal from "react-modal";
-import { useState } from 'react';
 // import './CSS/Chartdisplay.css';
+import castle from "../../imgs/castle.webp";
+import plains from "../../imgs/plains.webp";
+import streets from "../../imgs/pxfuel.webp";
 import SetterContext from '../SetterContext';
 import './CSS/Theme.css';
-import plains from "../../imgs/plains.webp";
-import castle from "../../imgs/pxfuel.jpg";
 
 
 
@@ -84,6 +84,9 @@ const Theme = () => {
                 <div 
                   className={themeInfo.theme ===castle? 'theme + extracss': 'theme'}
                   onClick={()=>{themeInfo.setTheme(castle)}}>Howl's Moving Castle</div>
+                  <div 
+                  className={themeInfo.theme ===castle? 'theme + extracss': 'theme'}
+                  onClick={()=>{themeInfo.setTheme(streets)}}>Streets</div>
           
               </div>
           </div>

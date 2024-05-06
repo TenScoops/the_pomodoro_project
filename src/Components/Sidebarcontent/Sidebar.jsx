@@ -104,10 +104,14 @@ const Sidebar = () => {
           </h3>
     
         :
-      
+      //   <TheTooltip 
+      //   title="Sign in with Google" 
+      //   placement="top"
+      //   arrow
+      //  >
           <button className='google-button' onClick={handleGoogleSignIn}><FcGoogle className='google-icon'/>
           <label className='google-label'>Sign in with Google</label></button>
-        
+       
         }
       </div>
 
