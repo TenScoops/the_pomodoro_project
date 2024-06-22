@@ -2,14 +2,14 @@
 // import { withStyles } from "@material-ui/core/styles";
 import React, { useContext } from 'react';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
-import { UserAuth } from '../FirebaseAuth/AuthContext';
+// import { UserAuth } from '../FirebaseAuth/AuthContext';
 import SetterContext from './SetterContext';
 
 
 const Contents = () => {
   const setterInfo = useContext(SetterContext);
 
-  const {user} = UserAuth();
+  // const {user} = UserAuth();
   
   const questionMark =()=>{
     return <button className='questionMark'onClick={()=>{setterInfo.setSynopsis(true)}} >
@@ -56,19 +56,7 @@ const Contents = () => {
 
             {/* <hr style={{margin:'0', padding:'0', width:'80px'}}/> */}
             <div className='the-content-text'>
-              <div >
-                  {user?.displayName? <div className='text-div' style={{letterSpacing:'1px'}}>
-                    <p className='content-text'> Hi {user?.displayName}!</p>
-                  </div> 
-                    :
-                    <div className='text-div' >
-                  <p className='content-text'>
-                    Do you find yourself struggling with productivity? Can't seem to get motivated? Can't seem to get out bed?
-                  </p>
-                 
-                  </div>
-                  }
-              </div>
+            
 
               <div className='divsession-buttons'>
                 {questionMark()}

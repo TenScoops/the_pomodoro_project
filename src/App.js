@@ -1,24 +1,21 @@
+import React, { useState } from 'react';
+import useLocalStorage from 'use-local-storage';
 import './App.css';
-import Setter from './Components/Setter';
-import Navbar from './Components/Sidebarcontent/Navbar';
 import Contents from './Components/Contents';
-import { useState } from 'react';
-import SetterContext from './Components/SetterContext';
-import Timer from './Components/Timer';
 import Finished from './Components/Finished';
-import Sidebar from './Components/Sidebarcontent/Sidebar';
+import Howtorate from './Components/Howtorate';
+import Logout from './Components/Logout';
+import RatingMethod from './Components/RatingMethod';
+import Setter from './Components/Setter';
+import SetterContext from './Components/SetterContext';
 import Chartdisplay from './Components/Sidebarcontent/Chart/Chartdisplay';
+import Navbar from './Components/Sidebarcontent/Navbar';
+import Sidebar from './Components/Sidebarcontent/Sidebar';
 import Synopsis from './Components/Sidebarcontent/Synopsis';
 import Theme from './Components/Sidebarcontent/Theme';
-import Task from './Components/TaskList/Task';
-import Logout from './Components/Logout'
-import { AuthContextProvider } from './FirebaseAuth/AuthContext';
-import useLocalStorage from 'use-local-storage'
-import Howtorate from './Components/Howtorate'
-import RatingMethod from './Components/RatingMethod'
-import React from 'react';
-import plains from "./imgs/plains.webp";
-import MyTask from './Components/Tasklist2/MyTask';
+
+import Timer from './Components/Timer';
+import Streets from "./imgs/pxfuel.webp";
 
 
 function App() {
@@ -54,7 +51,7 @@ function App() {
   const[showClock, setShowClock] = useState(false);
   const [option, setOption] = useState();
 
-  const[theme, setTheme] = useLocalStorage("Themes",plains);
+  const[theme, setTheme] = useLocalStorage("Themes",Streets);
   
   return (
  
@@ -63,7 +60,7 @@ function App() {
     style={{backgroundImage:`url(${theme})`}}>
      {localStorage.removeItem("Theme")}
       <div className='theApp'>
-      <AuthContextProvider>
+  
         <SetterContext.Provider value ={{
           closeRatingModal,setCloseRatingModal,
           workMinutes,
@@ -134,12 +131,10 @@ function App() {
             { synopsis && <Synopsis/>}
             { openThemePage && <Theme/>}
             { openHowTo&& <Howtorate/>}
-      
-            { openTask&& <MyTask/>}
+    
             { logout&& <Logout/>} 
             
           </SetterContext.Provider>
-        </AuthContextProvider>
      
       </div>
      

@@ -85,7 +85,7 @@ const Theme = () => {
                   className={themeInfo.theme ===castle? 'theme + extracss': 'theme'}
                   onClick={()=>{themeInfo.setTheme(castle)}}>Howl's Moving Castle</div>
                   <div 
-                  className={themeInfo.theme ===castle? 'theme + extracss': 'theme'}
+                  className={themeInfo.theme ===streets? 'theme + extracss': 'theme'}
                   onClick={()=>{themeInfo.setTheme(streets)}}>Streets</div>
           
               </div>

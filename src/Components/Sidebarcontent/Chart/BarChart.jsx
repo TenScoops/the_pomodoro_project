@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import SetterContext from '../../SetterContext';
 import './BarChart.css';
-import { UserAuth } from '../../../FirebaseAuth/AuthContext';
-import { db } from '../../../Firebase';
+// import { UserAuth } from '../../../FirebaseAuth/AuthContext';
+// import { db } from '../../../Firebase';
 import 'chartjs-plugin-datalabels';
 
 
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
   BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
   Title,
   Tooltip,
-  Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
@@ -33,7 +32,7 @@ const BarChart = () => {
   const [theTime, setTheTime] = useState('Month');
   const rating = useContext(SetterContext);
 
-  const { user } = UserAuth();
+  // const { user } = UserAuth();
   
   const getMonthDates = () => {
     const currentDate = new Date();
