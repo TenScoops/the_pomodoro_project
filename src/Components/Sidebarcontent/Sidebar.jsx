@@ -9,10 +9,7 @@ import SetterContext from '../SetterContext';
 import './CSS/Sidebar.css';
 
 const Sidebar = () => {
-  // const { googleSignIn, user } = UserAuth();
 
-  // const [user, logOut] = UserAuth();
-  // const [user, setUser] = useState(null);
   const [isauthenticated, setIsAuthenticated] = useState(false);
   const baseURL = 'http://localhost:3000'
   useEffect(() => {
@@ -47,17 +44,17 @@ const Sidebar = () => {
     const response = await fetch(`${baseURL}/auth/logout`, {
       method: 'GET',
       credentials: 'include'
-  });
-  if (response.redirected) {
-      window.location.href = response.url; // Manually handle redirection if necessary
-  } else if (response.ok) {
-      setIsAuthenticated(false);
-      window.location.href = 'http://localhost:3001'; // Optionally redirect on the client-side
-  } else {
-      console.error('Error logging out:', response.statusText);
-  }
+    });
+    if (response.redirected) {
+        window.location.href = response.url; // Manually handle redirection if necessary
+    } else if (response.ok) {
+        setIsAuthenticated(false);
+        window.location.href = 'http://localhost:3001'; // Optionally redirect on the client-side
+    } else {
+        console.error('Error logging out:', response.statusText);
+    }
   
-};
+  };
 
 
   const barInfo = useContext(SetterContext);

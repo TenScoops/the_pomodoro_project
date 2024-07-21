@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import SetterContext from './SetterContext';
-import Rating from './Rating';
-import Skip from './Buttons/Skip';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Areyousure from './Areyousure';
+import Skip from './Buttons/Skip';
 import './CSS/Timer.css';
+import Rating from './Rating';
+import SetterContext from './SetterContext';
 
 const Timer = () => {
   const setterInfo = useContext(SetterContext);
@@ -32,6 +32,12 @@ const Timer = () => {
     setTimeLeft(timeLeftRef.current);
   }
 
+  const grabTimeWorked = () =>{
+    const timeWorked = timeLeft/60
+  }
+  const whenUserRates = () =>{
+    
+  }
   function initiateTimer() {
     if (mode === 'work') {
       setTimeLeft(((setterInfo.workMinutes * 60 - totalBreakTime) / numOfblocks) * 60);
