@@ -14,4 +14,4 @@ If it does not start, please restart your code editor. If that does not work
 2. Delete package-lock.json (`rm package-lock.json`)
 3. Run `npm start`
 
-## Still in production: ~90% complete
+
