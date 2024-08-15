@@ -1,7 +1,7 @@
 ## Access site with: https://the-pomodoro-project.vercel.app/
 
 ## Synopsis
-This project combines the Pomodoro Technique, a time management method, with a user rating system and progress visualization. A progress graph that visualizes user ratings over time and provides users with a clear, intuitive representation of their productivity progress. This feedback enhances user understanding and motivation, contributing to an innovative user experience which help them make informed decisions to enhance their work habits. 
+This project combines the Pomodoro Technique, a time management method, with a user rating system and progress visualization. A progress graph that visualizes user ratings over time and provides users with a clear, intuitive representation of their productivity progress. This feedback gives users a great understanding of their productivity contributing to an innovative user experience. This helps them make informed decisions to enhance their work habits. 
 
 ## Setup
 1. Install Node.js
