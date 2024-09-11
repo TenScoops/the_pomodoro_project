@@ -1,12 +1,15 @@
 // import Tooltip from "@material-ui/core/Tooltip";
 // import { withStyles } from "@material-ui/core/styles";
+import Tippy from '@tippyjs/react';
 import React, { useContext, useEffect, useState } from 'react';
 import { BsDoorOpen } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
 import { ImStatsBars } from 'react-icons/im';
 import { IoIosArrowBack } from 'react-icons/io';
+import 'tippy.js/dist/tippy.css'; // optional for styling
 import SetterContext from '../SetterContext';
 import './CSS/Sidebar.css';
+
 
 const Sidebar = () => {
 
@@ -132,10 +135,17 @@ const Sidebar = () => {
           </h3>
     
         :
-    
-          <button className='google-button' onClick={handleGoogleLogin}><FcGoogle className='google-icon'/>
-          <label className='google-label'>Sign in with Google</label></button>
-       
+        <Tippy
+          delay={10}
+          placement="top"
+          content="coming soon">
+          <button className='google-button' 
+                  // onClick={handleGoogleLogin}
+          >
+            <FcGoogle className='google-icon'/>
+            <label className='google-label'>Sign in with Google</label>
+          </button>
+       </Tippy>
         }
       </div>
 

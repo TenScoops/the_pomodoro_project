@@ -5,6 +5,8 @@ import './BarChart.css';
 // import { db } from '../../../Firebase';
 import 'chartjs-plugin-datalabels';
 
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; // optional for styling
 
 import {
   BarElement,
@@ -267,6 +269,7 @@ const BarChart = () => {
 
   return (
     <div className='chart-container' style={{ marginTop: '12px', width: '100vmin', height: '65vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+      
       <div style={{ marginTop: '80px', marginLeft: '40px', marginBottom: '10px', padding: '0', display: 'flex', flexDirection: 'row' }}>
         <button style={{ width: '5.3vmin', height: '25px', marginRight: '0', backgroundColor: 'white', color: 'black', borderRight: 'transparent' }}>
           {'<'}
@@ -293,14 +296,20 @@ const BarChart = () => {
         >
           by Month
         </button>
-        <button
-          className={theTime === 'Year' ? 'timeChart-button + extra ' : 'timeChart-button'}
-          onClick={(e) => setTheTime(e.target.value)}
-          value='Year'
-          style={{ borderTopRightRadius: '7px', borderBottomRightRadius: '7px', borderLeft: 'transparent' }}
-        >
-          by Year
-        </button>
+
+        <Tippy
+          delay={10}
+          placement="top"
+          content="coming soon">
+          <button
+            className={theTime === 'Year' ? 'timeChart-button + extra ' : 'timeChart-button'}
+            // onClick={(e) => setTheTime(e.target.value)}
+            // value='Year'
+            style={{ borderTopRightRadius: '7px', borderBottomRightRadius: '7px', borderLeft: 'transparent' }}
+          >
+            by Year
+          </button>
+        </Tippy>
       </div>
     </div>
   );
