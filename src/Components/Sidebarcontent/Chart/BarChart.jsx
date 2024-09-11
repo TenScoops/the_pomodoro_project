@@ -269,19 +269,22 @@ const BarChart = () => {
 
   return (
     <div className='chart-container' style={{ marginTop: '12px', width: '100vmin', height: '65vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-      
-      <div style={{ marginTop: '80px', marginLeft: '40px', marginBottom: '10px', padding: '0', display: 'flex', flexDirection: 'row' }}>
-        <button style={{ width: '5.3vmin', height: '25px', marginRight: '0', backgroundColor: 'white', color: 'black', borderRight: 'transparent' }}>
-          {'<'}
-        </button>
-        <div style={{ backgroundColor: 'black', color: 'white', fontSize: '13px', paddingLeft: '10px', paddingRight: '10px', border: 'solid 2px black' }}>
-          This {theTime}
+      <Tippy
+          delay={10}
+          placement="top"
+          content="coming soon">
+        <div style={{ marginTop: '80px', marginLeft: '40px', marginBottom: '10px', padding: '0', display: 'flex', flexDirection: 'row' }}>
+          <button style={{ width: '5.3vmin', height: '25px', marginRight: '0', backgroundColor: 'white', color: 'black', borderRight: 'transparent' }}>
+            {'<'}
+          </button>
+          <div style={{ backgroundColor: 'black', color: 'white', fontSize: '13px', paddingLeft: '10px', paddingRight: '10px', border: 'solid 2px black' }}>
+            This {theTime}
+          </div>
+          <button style={{ width: '5.3vmin', height: '25px', backgroundColor: 'white', color: 'black', borderLeft: 'transparent' }}>
+            {'>'}
+          </button>
         </div>
-        <button style={{ width: '5.3vmin', height: '25px', backgroundColor: 'white', color: 'black', borderLeft: 'transparent' }}>
-          {'>'}
-        </button>
-      </div>
-      
+      </Tippy>
       <Bar
         style={{ marginTop: '0px', }}
         data={ data}
