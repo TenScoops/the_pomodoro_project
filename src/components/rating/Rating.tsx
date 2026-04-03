@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import "./Rating.css";
+import { logBlockRatingForCurrentSession } from "../../services/pomoprogressService";
 import { useSessionStore } from "../../store/sessionStore";
 
 const Rating = () => {
@@ -66,7 +67,12 @@ const Rating = () => {
 
   const handleRatingClick = (score: number) => {
     setHasUserRated(true);
-    localStorage.setItem(String(blockNum), String(score));
+    window.localStorage.setItem(String(blockNum), String(score));
+    void logBlockRatingForCurrentSession(blockNum, score).then((result) => {
+      if (result.error) {
+        console.error("Failed to log block rating", result.error);
+      }
+    });
   };
 
   const ratingOptions = () => {

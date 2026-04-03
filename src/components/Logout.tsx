@@ -13,9 +13,11 @@ const Logout = () => {
   const setClicked = useSessionStore((s) => s.setClicked);
   const setCancelTheSession = useSessionStore((s) => s.setCancelTheSession);
   const setBlockNum = useSessionStore((s) => s.setBlockNum);
+  const setHasUserRated = useSessionStore((s) => s.setHasUserRated);
   const setLogout = useSessionStore((s) => s.setLogout);
 
   const cancelSession = () => {
+    setHasUserRated(false);
     setShowParagraph(true);
     setShowTimerPage(false);
     setShowButtons(false);

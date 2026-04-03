@@ -9,6 +9,8 @@ const Finished = () => {
   const setSessionComplete = useSessionStore((s) => s.setSessionComplete);
   const setClicked = useSessionStore((s) => s.setClicked);
   const setShowClock = useSessionStore((s) => s.setShowClock);
+  const setBlockNum = useSessionStore((s) => s.setBlockNum);
+  const setHasUserRated = useSessionStore((s) => s.setHasUserRated);
 
   const startNewSession = () => {
     setShowButtons(false);
@@ -17,6 +19,8 @@ const Finished = () => {
     setSessionComplete(false);
     setClicked(false);
     setShowClock(false);
+    setBlockNum(1);
+    setHasUserRated(false);
   };
 
   function statIcon() {

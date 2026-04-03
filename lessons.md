@@ -17,3 +17,15 @@
 - **Migrations:** SQL lives under `supabase/migrations/`; apply with Supabase CLI (`supabase db push`) or paste into the SQL Editor. Order matters: sessions migration references `auth.users`; profiles migration adds the trigger after `profiles` exists.
 - **Client auth module:** `src/lib/auth.ts` wraps `signInWithPassword`, `signUp` (with `emailRedirectTo` for confirmation emails), and `signOut` so UI code stays thin and typed; `AuthForm` uses these helpers.
 - **Session load errors:** `useAuth` exposes `authError` when `getSession` fails (bad network, misconfiguration). `App` shows a retry screen instead of failing silently — covers loading, error, and signed-out/signed-in states per `rules.md`.
+
+### Charts + session persistence
+
+- **RLS-first reads:** `getSessionsWithRatingsForMonth` / `Year` select `sessions` with nested `block_ratings`; Postgrest returns only the signed-in user’s rows—no extra `user_id` filter in client code.
+- **Per-block logging:** While signed in, each rating calls `logBlockRatingForCurrentSession` — creates a draft `sessions` row on the first block if needed, inserts `block_ratings` immediately, bumps `chartDataRevision` so charts refetch. **`finalizeActivePomodoroSession`** (on timer completion) sets final `total_time_worked` / completion flags; **`cancelActivePomodoroSession`** deletes the draft if the user cancels. Guests skip DB (`getUser()` null) and only use `localStorage`; bulk insert fallback: `persistCompletedPomodoroSessionBulkInsert`.
+- **Bar chart:** Logged-in users get aggregated bars from Supabase (`sessionChartData` + `useChartBarData`); guests still see `dummyData` builders. UI states: loading, fetch error, empty period hint, and chart data per `rules.md`.
+
+### Timer / last block rating
+
+- **Finalize only after the last rating:** The post–last-work `break` is still the **rating** step (`Rating` when `mode === "break"`). The old condition `blockNum === numOfblocks && mode === "break"` ran `finalizeActivePomodoroSession` + `sessionComplete` as soon as that break started—**before** `hasUserRated`, which could skip or break the rating UI. Fix: require **`hasUserRated`** (and include it in the effect deps) so completion runs **after** the user submits the final block score.
+- **Reset `hasUserRated` at session boundaries:** If it stays `true` after the last block’s rating, the next run’s first `mode === "work"` tick can hit `mode === "work" && hasUserRated` and **increment `blockNum` early** (e.g. 1→2). Clear it in **Setter `goForward`**, **Finished `startNewSession`**, **cancel / logout** resets, and when **finalizing** the session in `Timer`.
+- **No “unset” timer mode:** Initial state `""` made the status line use `mode === "work" ? … : …`, so **empty string looked like “on break.”** and `switchMode` treated `""` as not-work, flipping the first transition wrong. Use **`"work" | "break"` only** and default to **`"work"`** on mount; label with **`mode === "break" ? "on break." : "working.."`** so only real breaks read as break.

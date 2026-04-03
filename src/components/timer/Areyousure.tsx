@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { cancelActivePomodoroSession } from "../../services/pomoprogressService";
 import { useSessionStore } from "../../store/sessionStore";
 
 const Areyousure = () => {
@@ -12,8 +13,11 @@ const Areyousure = () => {
   const setCancelTheSession = useSessionStore((s) => s.setCancelTheSession);
   const setBlockNum = useSessionStore((s) => s.setBlockNum);
   const setShowClock = useSessionStore((s) => s.setShowClock);
+  const setHasUserRated = useSessionStore((s) => s.setHasUserRated);
 
   const cancelSession = () => {
+    void cancelActivePomodoroSession();
+    setHasUserRated(false);
     setShowParagraph(true);
     setShowTimerPage(false);
     setShowButtons(false);

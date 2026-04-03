@@ -20,8 +20,12 @@ const Setter = () => {
   const setShowTimerPage = useSessionStore((s) => s.setShowTimerPage);
   const setShowParagraph = useSessionStore((s) => s.setShowParagraph);
   const setClicked = useSessionStore((s) => s.setClicked);
+  const setBlockNum = useSessionStore((s) => s.setBlockNum);
+  const setHasUserRated = useSessionStore((s) => s.setHasUserRated);
 
   const goForward = () => {
+    setBlockNum(1);
+    setHasUserRated(false);
     setShowSetterPage(false);
     setShowButtons(true);
     setShowClock(true);

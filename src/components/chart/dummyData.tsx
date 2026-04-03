@@ -9,6 +9,8 @@ export type ChartPoint = {
   length: number;
   sessions: number;
   backgroundColor: string;
+  /** Set for Supabase-backed charts; tooltip shows total blocks completed in the bucket. */
+  blocksCompleted?: number;
 };
 
 export type DummyBarDataset = {

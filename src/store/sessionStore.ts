@@ -36,6 +36,10 @@ export type SessionState = {
   showClock: boolean;
   option: string | undefined;
   theme: string;
+  /** Supabase `sessions.id` for the in-progress pomodoro; blocks append here as the user rates each block. */
+  activeSupabaseSessionId: string | null;
+  /** Bumped after block/session DB writes so charts refetch live data. */
+  chartDataRevision: number;
 };
 
 export type SessionActions = {
@@ -67,6 +71,8 @@ export type SessionActions = {
   setShowClock: (value: boolean) => void;
   setOption: (value: string | undefined) => void;
   setTheme: (value: string) => void;
+  setActiveSupabaseSessionId: (value: string | null) => void;
+  bumpChartDataRevision: () => void;
 };
 
 const initialSessionState: SessionState = {
@@ -98,6 +104,8 @@ const initialSessionState: SessionState = {
   showClock: false,
   option: undefined,
   theme: THEME_STREETS,
+  activeSupabaseSessionId: null,
+  chartDataRevision: 0,
 };
 
 /** Best-effort read of legacy `use-local-storage` key so users keep their background image. */
@@ -156,6 +164,9 @@ export const useSessionStore = create<SessionState & SessionActions>()(
       setShowClock: (value) => set({ showClock: value }),
       setOption: (value) => set({ option: value }),
       setTheme: (value) => set({ theme: value }),
+      setActiveSupabaseSessionId: (value) => set({ activeSupabaseSessionId: value }),
+      bumpChartDataRevision: () =>
+        set((state) => ({ chartDataRevision: state.chartDataRevision + 1 })),
     }),
     {
       name: "pomoprogress-session",

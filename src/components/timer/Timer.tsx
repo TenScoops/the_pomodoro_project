@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import Areyousure from "./Areyousure";
 import Skip from "../buttons/Skip";
 import "./Timer.css";
+import BlockCompleteToast from "../notifications/BlockCompleteToast";
 import Rating from "../rating/Rating";
+import { finalizeActivePomodoroSession } from "../../services/pomoprogressService";
 import { useSessionStore } from "../../store/sessionStore";
 
-type TimerMode = "work" | "break" | "";
+type TimerMode = "work" | "break";
 
 const Timer = () => {
   const {
@@ -17,6 +19,7 @@ const Timer = () => {
     setShowTimerPage,
     setIsWorkGreater,
     blockNum,
+    hasUserRated,
     showData,
     showButtons,
     showClock,
@@ -32,6 +35,7 @@ const Timer = () => {
       setShowTimerPage: s.setShowTimerPage,
       setIsWorkGreater: s.setIsWorkGreater,
       blockNum: s.blockNum,
+      hasUserRated: s.hasUserRated,
       showData: s.showData,
       showButtons: s.showButtons,
       showClock: s.showClock,
@@ -43,11 +47,20 @@ const Timer = () => {
 
   const [isPaused, setIsPaused] = useState(true);
   const [timeLeft, setTimeLeft] = useState(0);
-  const [mode, setMode] = useState<TimerMode>("");
+  /** Always start a session in work — the old `""` state displayed as "on break" and broke `switchMode` toggling. */
+  const [mode, setMode] = useState<TimerMode>("work");
 
   const timeLeftRef = useRef(timeLeft);
   const isPausedRef = useRef(isPaused);
   const modeRef = useRef<TimerMode>(mode);
+  const previousModeRef = useRef<TimerMode>(mode);
+
+  const [showBlockCompleteToast, setShowBlockCompleteToast] = useState(false);
+  const [toastBlockNumber, setToastBlockNumber] = useState(1);
+
+  const dismissBlockCompleteToast = useCallback(() => {
+    setShowBlockCompleteToast(false);
+  }, []);
 
   const totalBreakTime = numOfBreaks * breakMinutes;
   const numOfblocks = numOfBreaks + 1;
@@ -71,34 +84,60 @@ const Timer = () => {
   const [block] = useState(0);
   const blockRef = useRef(block);
 
+  useEffect(() => {
+    blockNumRef.current = blockNum;
+  }, [blockNum]);
+
+  /** When the work timer hits zero we go to break — that is one finished work block. */
+  useEffect(() => {
+    const previousMode = previousModeRef.current;
+    previousModeRef.current = mode;
+
+    if (previousMode === "work" && mode === "break") {
+      setToastBlockNumber(useSessionStore.getState().blockNum);
+      setShowBlockCompleteToast(true);
+    }
+  }, [mode]);
+
   window.onbeforeunload = function () {
     return true;
   };
 
+  /**
+   * Single place to update countdown: integer seconds, clamped at 0, ref + state stay aligned.
+   * (initiateTimer used to only call setTimeLeft, so the interval read a stale ref and could
+   * mis-count; floats also broke `=== 0` and let tick() run past zero.)
+   */
+  const applyTimeLeft = useCallback((rawSeconds: number) => {
+    const next = Math.max(0, Math.round(rawSeconds));
+    timeLeftRef.current = next;
+    setTimeLeft(next);
+  }, []);
+
   function tick() {
-    timeLeftRef.current--;
-    setTimeLeft(timeLeftRef.current);
+    const current = timeLeftRef.current;
+    if (current <= 0) {
+      return;
+    }
+    applyTimeLeft(current - 1);
   }
 
   function initiateTimer() {
-    if (mode === "work") {
-      setTimeLeft(((workMinutes * 60 - totalBreakTime) / numOfblocks) * 60);
-    } else if (mode === "break") {
-      setTimeLeft(breakMinutes * 60);
+    const workBlockSeconds = ((workMinutes * 60 - totalBreakTime) / numOfblocks) * 60;
+    if (mode === "break") {
+      applyTimeLeft(breakMinutes * 60);
     } else {
-      setTimeLeft(((workMinutes * 60 - totalBreakTime) / numOfblocks) * 60);
+      applyTimeLeft(workBlockSeconds);
     }
   }
 
   function switchMode() {
     const nextMode: TimerMode = modeRef.current === "work" ? "break" : "work";
-    const nextTime =
-      60 *
-      (nextMode === "work" ? (60 * workMinutes - totalBreakTime) / numOfblocks : breakMinutes);
+    const nextTimeRaw =
+      60 * (nextMode === "work" ? (60 * workMinutes - totalBreakTime) / numOfblocks : breakMinutes);
     setMode(nextMode);
     modeRef.current = nextMode;
-    setTimeLeft(nextTime);
-    timeLeftRef.current = nextTime;
+    applyTimeLeft(nextTimeRaw);
   }
 
   useEffect(() => {
@@ -110,7 +149,7 @@ const Timer = () => {
     const interval = window.setInterval(() => {
       if (isPausedRef.current) {
         return;
-      } else if (timeLeftRef.current === 0) {
+      } else if (timeLeftRef.current <= 0) {
         switchMode();
       } else {
         tick();
@@ -141,17 +180,38 @@ const Timer = () => {
     }
 
     const latest = useSessionStore.getState();
-    if (latest.blockNum === numOfblocks && mode === "break") {
+    /**
+     * Last work block → `break` is the rating window for that block. We must NOT finalize here
+     * until `hasUserRated` is true; otherwise we complete the session before the rating modal can run.
+     */
+    const isFinalRatingBreak =
+      latest.blockNum === numOfblocks &&
+      mode === "break" &&
+      latest.hasUserRated &&
+      !latest.sessionComplete;
+
+    if (isFinalRatingBreak) {
+      void finalizeActivePomodoroSession().then((result) => {
+        if (result.error) {
+          console.error("Failed to finalize session on the server", result.error);
+        }
+      });
       latest.setSessionComplete(true);
       latest.setBlockNum(0);
+      latest.setHasUserRated(false);
     }
-  }, [isPaused, mode, numOfblocks]);
+  }, [isPaused, mode, numOfblocks, hasUserRated]);
 
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = Math.floor(timeLeft % 60);
+  const safeTimeLeft = Math.max(0, timeLeft);
+  const minutes = Math.floor(safeTimeLeft / 60);
+  const seconds = Math.floor(safeTimeLeft % 60);
+
+  /** Session end sets `blockNum` to 0; new runs must reset to 1 from Setter/Finished. This caps display so we never show 0/N while working. */
+  const currentWorkBlockIndex = Math.min(numOfblocks, Math.max(1, blockNum));
 
   const addZero = (value: number) => {
-    return value < 10 ? "0" + value : String(value);
+    const safe = Math.max(0, value);
+    return safe < 10 ? "0" + safe : String(safe);
   };
 
   const showTheButtons = () => {
@@ -186,8 +246,10 @@ const Timer = () => {
               <Skip
                 title="Skip Break"
                 onClick={() => {
-                  timeLeftRef.current = 0;
+                  const workBlockSeconds = ((workMinutes * 60 - totalBreakTime) / numOfblocks) * 60;
                   setMode("work");
+                  modeRef.current = "work";
+                  applyTimeLeft(workBlockSeconds);
                 }}
               />
             ) : null}
@@ -253,7 +315,7 @@ const Timer = () => {
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         {showClock && (
           <div style={{ borderRadius: "10px" }} className="blockdiv2">
-            <p>&nbsp;You are currently: {mode === "work" ? "working.." : "on break."}&nbsp;</p>
+            <p>&nbsp;You are currently: {mode === "break" ? "on break." : "working.."}&nbsp;</p>
           </div>
         )}
       </div>
@@ -261,7 +323,7 @@ const Timer = () => {
       {mode === "work" && (
         <div style={{ borderRadius: "10px", marginBottom: "20px" }} className="blockdiv2">
           <p>
-            &nbsp;Block #{blockNumRef.current}/{numOfblocks}&nbsp;
+            &nbsp;Block #{currentWorkBlockIndex}/{numOfblocks}&nbsp;
           </p>
         </div>
       )}
@@ -290,6 +352,13 @@ const Timer = () => {
 
       {showRating()}
       {cancelTheSession ? <Areyousure /> : null}
+
+      <BlockCompleteToast
+        show={showBlockCompleteToast}
+        blockNumber={toastBlockNumber}
+        totalBlocks={numOfblocks}
+        onDismiss={dismissBlockCompleteToast}
+      />
     </div>
   );
 };
