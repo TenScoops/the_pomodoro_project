@@ -3,7 +3,7 @@ import type { User } from "@supabase/supabase-js";
 import { BsBoxArrowInRight, BsDoorOpen } from "react-icons/bs";
 import { ImStatsBars } from "react-icons/im";
 import { IoIosArrowBack } from "react-icons/io";
-import { supabase } from "../../lib/supabaseClient";
+import { signOut } from "../../lib/auth";
 import { useSessionStore } from "../../store/sessionStore";
 import "./Sidebar.css";
 
@@ -23,7 +23,7 @@ const Sidebar = ({ user, onOpenSignIn, isAuthModalOpen = false }: SidebarProps) 
   const setSynopsis = useSessionStore((s) => s.setSynopsis);
 
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
+    const { error } = await signOut();
     if (error) {
       console.error(error);
     }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { useSessionStore } from "../store/sessionStore";
-import { supabase } from "../lib/supabaseClient";
+import { signOut } from "../lib/auth";
 
 const Logout = () => {
   const [modalOpen, setModalOpen] = useState(true);
@@ -27,7 +27,7 @@ const Logout = () => {
   };
 
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
+    const { error } = await signOut();
     if (error) {
       console.error(error);
     }

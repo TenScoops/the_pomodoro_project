@@ -17,7 +17,7 @@ import { useAuth } from "./hooks/useAuth";
 import { useSessionStore } from "./store/sessionStore";
 
 function App() {
-  const { session, loading: authLoading } = useAuth();
+  const { session, loading: authLoading, authError } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const theme = useSessionStore((s) => s.theme);
   const showParagraph = useSessionStore((s) => s.showParagraph);
@@ -54,6 +54,17 @@ function App() {
 
   if (authLoading) {
     return <div className="app-auth-loading">Loading…</div>;
+  }
+
+  if (authError) {
+    return (
+      <div className="app-auth-error">
+        <p className="app-auth-error-message">Could not restore your session: {authError}</p>
+        <button type="button" className="app-auth-error-retry" onClick={() => window.location.reload()}>
+          Retry
+        </button>
+      </div>
+    );
   }
 
   return (

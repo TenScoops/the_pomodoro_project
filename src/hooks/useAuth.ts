@@ -6,6 +6,8 @@ type UseAuthResult = {
   session: Session | null;
   user: User | null;
   loading: boolean;
+  /** Set when getSession fails (network or config); sign-in flow can still work after. */
+  authError: string | null;
 };
 
 /**
@@ -15,22 +17,45 @@ type UseAuthResult = {
 export function useAuth(): UseAuthResult {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
-    void supabase.auth.getSession().then(({ data: { session: initialSession } }) => {
-      if (!cancelled) {
-        setSession(initialSession);
+    void supabase.auth
+      .getSession()
+      .then(({ data: { session: initialSession }, error }) => {
+        if (cancelled) {
+          return;
+        }
+        if (error) {
+          setAuthError(error.message);
+          setSession(null);
+        } else {
+          setAuthError(null);
+          setSession(initialSession);
+        }
         setLoading(false);
-      }
-    });
+      })
+      .catch((unknownError: unknown) => {
+        if (cancelled) {
+          return;
+        }
+        const message =
+          unknownError instanceof Error ? unknownError.message : "Could not load session.";
+        setAuthError(message);
+        setSession(null);
+        setLoading(false);
+      });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       if (!cancelled) {
         setSession(nextSession);
+        if (nextSession) {
+          setAuthError(null);
+        }
       }
     });
 
@@ -44,5 +69,6 @@ export function useAuth(): UseAuthResult {
     session,
     user: session?.user ?? null,
     loading,
+    authError,
   };
 }

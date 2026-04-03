@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { supabase } from "../../lib/supabaseClient";
+import { signInWithEmailPassword, signUpWithEmailPassword } from "../../lib/auth";
 import "./AuthForm.css";
 
 type AuthMode = "signIn" | "signUp";
@@ -39,27 +39,21 @@ const AuthForm = ({ onAuthSuccess }: AuthFormProps) => {
     setSubmitting(true);
     try {
       if (mode === "signIn") {
-        const { error } = await supabase.auth.signInWithPassword({
-          email: trimmedEmail,
-          password,
-        });
+        const { error } = await signInWithEmailPassword(trimmedEmail, password);
         if (error) {
           setErrorMessage(error.message);
           return;
         }
         onAuthSuccess?.();
       } else {
-        const { data, error } = await supabase.auth.signUp({
-          email: trimmedEmail,
-          password,
-        });
+        const { session, needsEmailConfirmation, error } = await signUpWithEmailPassword(trimmedEmail, password);
         if (error) {
           setErrorMessage(error.message);
           return;
         }
-        if (data.user && !data.session) {
+        if (needsEmailConfirmation) {
           setInfoMessage("Check your email to confirm your account, then sign in.");
-        } else if (data.session) {
+        } else if (session) {
           onAuthSuccess?.();
         }
       }
