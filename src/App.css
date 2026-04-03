@@ -35,7 +35,32 @@ body{
   align-items: center;
   justify-content: center;
   max-width: 1400px;
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+}
 
+/* No z-index here: a higher z-index was painting the whole column over the fixed sidebar.
+   DOM order (mainStage then Sidebar) keeps the sidebar on top where they overlap; padding keeps them apart. */
+.mainStage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Reserve space for the fixed sidebar so centered UI is not underneath it (clicks were hitting the sidebar). */
+.theApp--withSidebar {
+  padding-left: 280px;
+}
+
+@media only screen and (max-width: 1400px) {
+  .theApp--withSidebar {
+    padding-left: 0;
+    padding-bottom: 47px;
+  }
 }
 .h1-text{
   font-size: 21px;
