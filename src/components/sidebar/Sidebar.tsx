@@ -1,56 +1,33 @@
-import Tippy from "@tippyjs/react";
-import React, { useEffect, useState } from "react";
-import { BsDoorOpen } from "react-icons/bs";
-import { FcGoogle } from "react-icons/fc";
+import React from "react";
+import type { User } from "@supabase/supabase-js";
+import { BsBoxArrowInRight, BsDoorOpen } from "react-icons/bs";
 import { ImStatsBars } from "react-icons/im";
 import { IoIosArrowBack } from "react-icons/io";
-import "tippy.js/dist/tippy.css";
+import { supabase } from "../../lib/supabaseClient";
 import { useSessionStore } from "../../store/sessionStore";
 import "./Sidebar.css";
 
-const Sidebar = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const baseURL = "http://localhost:3000";
+type SidebarProps = {
+  user: User | null;
+  onOpenSignIn: () => void;
+  /** When true and guest, the sign-in row shows a muted "Signing in…" state. */
+  isAuthModalOpen?: boolean;
+};
 
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const response = await fetch(`${baseURL}/auth/status`, { credentials: "include" });
-        if (response.ok) {
-          const data = (await response.json()) as { isAuthenticated?: boolean };
-          setIsAuthenticated(Boolean(data.isAuthenticated));
-        } else {
-          console.error("Error checking authentication status:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error checking authentication status:", error);
-      }
-    };
-
-    void checkAuthStatus();
-  }, [baseURL]);
-
-  const handleLogout = async () => {
-    const response = await fetch(`${baseURL}/auth/logout`, {
-      method: "GET",
-      credentials: "include",
-    });
-    if (response.redirected) {
-      window.location.href = response.url;
-    } else if (response.ok) {
-      setIsAuthenticated(false);
-      window.location.href = "http://localhost:3001";
-    } else {
-      console.error("Error logging out:", response.statusText);
-    }
-  };
-
+const Sidebar = ({ user, onOpenSignIn, isAuthModalOpen = false }: SidebarProps) => {
   const sideBar = useSessionStore((s) => s.sideBar);
   const setSideBar = useSessionStore((s) => s.setSideBar);
   const setHideButton = useSessionStore((s) => s.setHideButton);
   const setData = useSessionStore((s) => s.setData);
   const setOpenThemePage = useSessionStore((s) => s.setOpenThemePage);
   const setSynopsis = useSessionStore((s) => s.setSynopsis);
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="sidebar">
@@ -73,6 +50,9 @@ const Sidebar = () => {
           </h2>
           <h1> Pomodoro</h1>
         </div>
+        <p className="sidebar-user-email" title={user?.email ?? undefined}>
+          {user?.email ?? "Not signed in"}
+        </p>
         <h3 className="text" onClick={() => setData(true)}>
           <svg
             className="lesvg"
@@ -154,18 +134,21 @@ const Sidebar = () => {
           <label> Rating System </label>
         </h3>
 
-        {isAuthenticated ? (
+        {user ? (
           <h3 className="text" onClick={() => void handleLogout()}>
             <BsDoorOpen style={{ fontSize: "30px", width: "60px", paddingTop: "5px" }} />
             <label> Logout </label>
           </h3>
+        ) : isAuthModalOpen ? (
+          <h3 className="text sidebar-signin-row--modal-open" aria-live="polite">
+            <BsBoxArrowInRight style={{ fontSize: "30px", width: "60px", paddingTop: "5px" }} />
+            <label> Signing in… </label>
+          </h3>
         ) : (
-          <Tippy delay={10} placement="top" content="coming soon">
-            <button className="google-button" type="button">
-              <FcGoogle className="google-icon" />
-              <label className="google-label">Sign in with Google</label>
-            </button>
-          </Tippy>
+          <h3 className="text" onClick={() => onOpenSignIn()}>
+            <BsBoxArrowInRight style={{ fontSize: "30px", width: "60px", paddingTop: "5px" }} />
+            <label> Sign in </label>
+          </h3>
         )}
       </div>
     </div>

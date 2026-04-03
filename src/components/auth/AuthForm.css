@@ -1,0 +1,152 @@
+/* App.css sets global `button { width: 100px; margin-right: 30px }` — reset inside auth so tabs and submit work */
+.auth-panel button {
+  width: auto;
+  min-width: 0;
+  margin-right: 0;
+}
+
+.auth-panel .auth-tab {
+  flex: 1 1 0;
+  width: auto !important;
+  min-width: 0;
+}
+
+.auth-panel .auth-submit {
+  width: 100%;
+  display: block;
+  margin-right: 0 !important;
+  margin-top: 8px;
+}
+
+.auth-panel {
+  width: 100%;
+  max-width: 520px;
+  background-color: #1e212df2;
+  border: 2px solid black;
+  border-radius: 16px;
+  padding: 28px 32px 32px;
+  box-sizing: border-box;
+  box-shadow: 7px 10px 5px 0px rgba(0, 0, 0, 0.45);
+}
+
+.auth-title {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+  text-align: center;
+  font-family: "Kalam", sans-serif;
+}
+
+.auth-subtitle {
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  background-color: rgba(30, 33, 45, 0.6);
+  color: #fff;
+  font-family: "Kalam", sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+  margin: 0;
+  width: auto;
+  transition: background-color 0.15s ease;
+}
+
+.auth-tab:hover {
+  background-color: rgba(50, 54, 70, 0.9);
+}
+
+.auth-tab--active {
+  background-color: rgba(73, 73, 73, 0.95);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.auth-field {
+  margin-bottom: 14px;
+}
+
+.auth-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
+
+.auth-field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #6b7280;
+  background-color: #2d3348;
+  color: #f9fafb;
+  font-size: 15px;
+  font-family: "Roboto", sans-serif;
+}
+
+.auth-field input::placeholder {
+  color: #9ca3af;
+}
+
+.auth-field input:focus {
+  outline: none;
+  border-color: rgba(148, 228, 255, 0.85);
+  background-color: #353b52;
+}
+
+.auth-field input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-submit {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: "Kalam", sans-serif;
+  cursor: pointer;
+  background-color: rgba(73, 73, 73, 0.844);
+  border: 1px solid black;
+  box-shadow: 7px 10px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.auth-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.auth-error {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: rgba(120, 20, 20, 0.45);
+  border: 1px solid rgba(255, 80, 80, 0.35);
+  color: #ffb4b4;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
+
+.auth-info {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: rgba(20, 80, 40, 0.35);
+  border: 1px solid rgba(100, 200, 120, 0.35);
+  color: #c8f5d0;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
