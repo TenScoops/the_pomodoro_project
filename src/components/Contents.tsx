@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { clearPersistedTimer } from "../lib/timerPersistence";
 import { useSessionStore } from "../store/sessionStore";
 
 const Contents = () => {
@@ -25,6 +26,7 @@ const Contents = () => {
               className="startSession-button"
               type="button"
               onClick={() => {
+                clearPersistedTimer();
                 setShowSetterPage(true);
                 setShowParagraph(false);
               }}

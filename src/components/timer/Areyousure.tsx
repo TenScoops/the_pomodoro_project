@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { clearPersistedTimer } from "../../lib/timerPersistence";
 import { cancelActivePomodoroSession } from "../../services/pomoprogressService";
 import { useSessionStore } from "../../store/sessionStore";
 
@@ -16,6 +17,7 @@ const Areyousure = () => {
   const setHasUserRated = useSessionStore((s) => s.setHasUserRated);
 
   const cancelSession = () => {
+    clearPersistedTimer();
     void cancelActivePomodoroSession();
     setHasUserRated(false);
     setShowParagraph(true);

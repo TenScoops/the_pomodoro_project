@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { clearPersistedTimer } from "../lib/timerPersistence";
 import { useSessionStore } from "../store/sessionStore";
 import { signOut } from "../lib/auth";
 
@@ -17,6 +18,7 @@ const Logout = () => {
   const setLogout = useSessionStore((s) => s.setLogout);
 
   const cancelSession = () => {
+    clearPersistedTimer();
     setHasUserRated(false);
     setShowParagraph(true);
     setShowTimerPage(false);

@@ -9,9 +9,40 @@ import type {
 } from "../types/pomoprogress";
 import { supabase } from "../lib/supabaseClient";
 import { todayLocalISODate } from "../lib/calendarDates";
-import { useSessionStore } from "../store/sessionStore";
+import { ACTIVE_SESSION_ID_STORAGE_KEY, useSessionStore } from "../store/sessionStore";
 
 // --- Helpers ---
+
+/**
+ * Finds the in-progress `sessions` row for today (draft = not completed) so finalize still works if
+ * `activeSupabaseSessionId` was lost from memory.
+ */
+export async function findLatestDraftSessionIdForUser(userId: string): Promise<string | null> {
+  const today = todayLocalISODate();
+  const response = await supabase
+    .from("sessions")
+    .select("id")
+    .eq("user_id", userId)
+    .eq("date", today)
+    .eq("sessions_completed", 0)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const row = response.data as { id: string } | null;
+  return row?.id ?? null;
+}
+
+function resolveActiveSessionIdFromStorage(): string | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  try {
+    return window.localStorage.getItem(ACTIVE_SESSION_ID_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
 
 /** Inclusive first and last calendar dates (YYYY-MM-DD) for a month (1–12). */
 function getMonthDateRange(
@@ -33,6 +64,93 @@ function getMonthDateRange(
   const endDate = `${year}-${monthPadded}-${dayPadded}`;
 
   return { startDate, endDate };
+}
+
+/** Guest ratings use `localStorage` keys `"1"`…`"N"` with no date — cap how many we strip when clearing. */
+const LOCAL_BLOCK_RATING_KEY_MAX = 48;
+
+/**
+ * Removes guest block rating keys from `localStorage` (`"1"`…`"N"`). Keys are not date-stamped, so this clears all guest scores in that range, not only “today”.
+ */
+export function clearGuestBlockRatingLocalStorage(): number {
+  if (typeof window === "undefined" || !window.localStorage) {
+    return 0;
+  }
+  let cleared = 0;
+  for (let blockIndex = 1; blockIndex <= LOCAL_BLOCK_RATING_KEY_MAX; blockIndex++) {
+    const key = String(blockIndex);
+    if (window.localStorage.getItem(key) !== null) {
+      window.localStorage.removeItem(key);
+      cleared += 1;
+    }
+  }
+  return cleared;
+}
+
+/**
+ * Deletes your `sessions` rows for a calendar day (CASCADE removes `block_ratings`). RLS applies; no-op if not signed in.
+ */
+export async function deleteMySessionsForCalendarDate(
+  isoDate: string
+): Promise<{ error: PostgrestError | null }> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: null };
+  }
+  const { error } = await supabase.from("sessions").delete().eq("date", isoDate);
+  return { error };
+}
+
+/**
+ * Wipes server-side sessions for **today** (local date) when signed in, clears guest `localStorage` block keys, drops the active draft session id, and bumps chart revision.
+ */
+export async function clearTodaysRatingData(): Promise<{
+  error: PostgrestError | null;
+  localKeysCleared: number;
+}> {
+  const today = todayLocalISODate();
+  const store = useSessionStore.getState();
+
+  let error: PostgrestError | null = null;
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    const result = await supabase.from("sessions").delete().eq("date", today);
+    error = result.error;
+    store.setActiveSupabaseSessionId(null);
+  }
+
+  const localKeysCleared = clearGuestBlockRatingLocalStorage();
+  store.bumpChartDataRevision();
+
+  return { error, localKeysCleared };
+}
+
+// --- Session time (seconds) — matches Timer net work per session / per block ---
+
+/**
+ * After `blockNumber` work blocks are rated, cumulative net work seconds for this session config.
+ * Uses the same net session total as `finalizeActivePomodoroSession`, spread proportionally by block count.
+ */
+export function cumulativeWorkSecondsAfterRatedBlocks(
+  workMinutes: number,
+  numOfBreaks: number,
+  breakMinutes: number,
+  blockNumber: number
+): number {
+  const numOfBlocks = numOfBreaks + 1;
+  const totalBreakTimeMinutes = numOfBreaks * breakMinutes;
+  const netWorkMinutes = workMinutes * 60 - totalBreakTimeMinutes;
+  const totalSeconds = Math.max(0, Math.round(netWorkMinutes * 60));
+  if (numOfBlocks <= 0 || blockNumber <= 0) {
+    return 0;
+  }
+  const cappedBlocks = Math.min(blockNumber, numOfBlocks);
+  return Math.round((totalSeconds * cappedBlocks) / numOfBlocks);
 }
 
 // --- API ---
@@ -70,9 +188,31 @@ export async function insertBlockRating(
 export async function updateSession(
   id: string,
   patch: SessionUpdate
-): Promise<{ error: PostgrestError | null }> {
-  const response = await supabase.from("sessions").update(patch).eq("id", id);
-  return { error: response.error };
+): Promise<{ error: PostgrestError | null; data: SessionRow | null }> {
+  const response = await supabase
+    .from("sessions")
+    .update(patch)
+    .eq("id", id)
+    .select("id, user_id, date, total_time_worked, sessions_completed, blocks_completed, created_at")
+    .maybeSingle();
+
+  if (response.error) {
+    return { error: response.error, data: null };
+  }
+  if (!response.data) {
+    return {
+      error: {
+        name: "PostgrestError",
+        message:
+          "Session update matched no row (stale activeSupabaseSessionId, RLS, or wrong id). total_time_worked was not saved.",
+        details: "",
+        hint: "",
+        code: "PGRST116",
+      } as PostgrestError,
+      data: null,
+    };
+  }
+  return { error: null, data: response.data as SessionRow };
 }
 
 /**
@@ -120,8 +260,16 @@ export async function logBlockRatingForCurrentSession(
     return { error: ratingError };
   }
 
+  const totalTimeWorked = cumulativeWorkSecondsAfterRatedBlocks(
+    store.workMinutes,
+    store.numOfBreaks,
+    store.breakMinutes,
+    blockNumber
+  );
+
   const { error: updateError } = await updateSession(sessionId, {
     blocks_completed: blockNumber,
+    total_time_worked: totalTimeWorked,
   });
   if (updateError) {
     return { error: updateError };
@@ -288,18 +436,36 @@ export async function finalizeActivePomodoroSession(): Promise<{
     return { error: null, skipped: true };
   }
 
-  if (sessionId) {
-    const { error } = await updateSession(sessionId, {
+  let sessionIdToFinalize =
+    sessionId ?? resolveActiveSessionIdFromStorage() ?? (await findLatestDraftSessionIdForUser(user.id));
+
+  if (sessionIdToFinalize) {
+    store.setActiveSupabaseSessionId(sessionIdToFinalize);
+  }
+
+  if (sessionIdToFinalize) {
+    const patch = {
       total_time_worked: totalTimeWorkedSeconds,
       sessions_completed: 1,
       blocks_completed: numOfBlocks,
-    });
+    };
+    let { error } = await updateSession(sessionIdToFinalize, patch);
+    if (error) {
+      const recoveredId = await findLatestDraftSessionIdForUser(user.id);
+      if (recoveredId) {
+        store.setActiveSupabaseSessionId(recoveredId);
+        ({ error } = await updateSession(recoveredId, patch));
+      }
+    }
+    if (error) {
+      return { error, skipped: false };
+    }
     store.setActiveSupabaseSessionId(null);
     for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
       window.localStorage.removeItem(String(blockIndex));
     }
     store.bumpChartDataRevision();
-    return { error, skipped: false };
+    return { error: null, skipped: false };
   }
 
   return persistCompletedPomodoroSessionBulkInsert();

@@ -7,6 +7,9 @@ import { THEME_STREETS } from "../theme/backgrounds";
  * Theme is persisted so the background survives reloads; other fields are session-only.
  */
 
+/** Mirrors `activeSupabaseSessionId` so finalize can find the draft after refresh / remount. */
+export const ACTIVE_SESSION_ID_STORAGE_KEY = "pomoprogress_active_session_id";
+
 export type SessionState = {
   closeRatingModal: boolean;
   workMinutes: number;
@@ -164,7 +167,20 @@ export const useSessionStore = create<SessionState & SessionActions>()(
       setShowClock: (value) => set({ showClock: value }),
       setOption: (value) => set({ option: value }),
       setTheme: (value) => set({ theme: value }),
-      setActiveSupabaseSessionId: (value) => set({ activeSupabaseSessionId: value }),
+      setActiveSupabaseSessionId: (value) => {
+        set({ activeSupabaseSessionId: value });
+        try {
+          if (typeof window !== "undefined") {
+            if (value) {
+              window.localStorage.setItem(ACTIVE_SESSION_ID_STORAGE_KEY, value);
+            } else {
+              window.localStorage.removeItem(ACTIVE_SESSION_ID_STORAGE_KEY);
+            }
+          }
+        } catch {
+          /* ignore quota / private mode */
+        }
+      },
       bumpChartDataRevision: () =>
         set((state) => ({ chartDataRevision: state.chartDataRevision + 1 })),
     }),

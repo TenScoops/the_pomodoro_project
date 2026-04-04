@@ -1,4 +1,5 @@
 import React from "react";
+import { clearPersistedTimer } from "../lib/timerPersistence";
 import { useSessionStore } from "../store/sessionStore";
 import "./Finished.css";
 
@@ -13,6 +14,8 @@ const Finished = () => {
   const setHasUserRated = useSessionStore((s) => s.setHasUserRated);
 
   const startNewSession = () => {
+    // Drop any saved timer phase so the next run cannot restore a break/rating snapshot from the prior session.
+    clearPersistedTimer();
     setShowButtons(false);
     setShowData(true);
     setShowSetterPage(true);

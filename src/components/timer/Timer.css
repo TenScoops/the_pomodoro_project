@@ -127,6 +127,21 @@
   -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
+.speedBoost {
+  background-color: #1e212dcd;
+  border-color: rgb(219, 219, 219);
+  border-width: 1px;
+  min-width: 72px;
+  padding: 6px 14px;
+  font-size: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  color: inherit;
+  box-shadow: 7px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 7px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 7px 10px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
 .skip{
   background-color: #1e212da2;
   border-color: white;
@@ -163,6 +178,9 @@
   }
   .pause{
     font-size: 20px;
+  }
+  .speedBoost {
+    font-size: 18px;
   }
   .skip{
     width:42.5px;

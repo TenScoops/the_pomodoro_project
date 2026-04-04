@@ -2,6 +2,7 @@ import "./RatingMethod.css";
 import React, { useState } from "react";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 import { AiOutlineCheck } from "react-icons/ai";
+import { clearPersistedTimer } from "../../lib/timerPersistence";
 import { useSessionStore } from "../../store/sessionStore";
 
 const RatingMethod = () => {
@@ -15,9 +16,14 @@ const RatingMethod = () => {
   const setOption = useSessionStore((s) => s.setOption);
   const setClicked = useSessionStore((s) => s.setClicked);
   const setShowTimerPage = useSessionStore((s) => s.setShowTimerPage);
+  const setBlockNum = useSessionStore((s) => s.setBlockNum);
+  const setHasUserRated = useSessionStore((s) => s.setHasUserRated);
   const [chosen, setChosen] = useState(false);
 
   const goForward = () => {
+    clearPersistedTimer();
+    setBlockNum(1);
+    setHasUserRated(false);
     setShowSetterPage(false);
     setShowButtons(true);
     setShowClock(true);

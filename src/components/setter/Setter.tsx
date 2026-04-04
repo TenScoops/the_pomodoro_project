@@ -2,6 +2,7 @@ import "./Setter.css";
 import React from "react";
 import ReactSlider from "react-slider";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
+import { clearPersistedTimer } from "../../lib/timerPersistence";
 import { useSessionStore } from "../../store/sessionStore";
 
 const Setter = () => {
@@ -24,6 +25,7 @@ const Setter = () => {
   const setHasUserRated = useSessionStore((s) => s.setHasUserRated);
 
   const goForward = () => {
+    clearPersistedTimer();
     setBlockNum(1);
     setHasUserRated(false);
     setShowSetterPage(false);

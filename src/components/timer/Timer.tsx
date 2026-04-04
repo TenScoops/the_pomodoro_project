@@ -5,10 +5,21 @@ import Skip from "../buttons/Skip";
 import "./Timer.css";
 import BlockCompleteToast from "../notifications/BlockCompleteToast";
 import Rating from "../rating/Rating";
+import { clearPersistedTimer, readPersistedTimer, writePersistedTimer } from "../../lib/timerPersistence";
+import {
+  RUNTIME_SPEED_BOOST_MULTIPLIER,
+  TIMER_SPEED_MULTIPLIER,
+  phaseEndFromDisplaySecondsRemaining,
+  remainingDisplaySeconds,
+  timerTickIntervalMs,
+} from "../../lib/timerSpeed";
 import { finalizeActivePomodoroSession } from "../../services/pomoprogressService";
 import { useSessionStore } from "../../store/sessionStore";
 
 type TimerMode = "work" | "break";
+
+/** Matches `public/index.html` — restored when the timer unmounts or the session ends. */
+const DEFAULT_DOCUMENT_TITLE = "The Progress Pomodoro";
 
 const Timer = () => {
   const {
@@ -53,10 +64,18 @@ const Timer = () => {
   const timeLeftRef = useRef(timeLeft);
   const isPausedRef = useRef(isPaused);
   const modeRef = useRef<TimerMode>(mode);
+  /** While running (not paused), phase ends at this UTC ms — survives background tab throttling. */
+  const phaseEndAtRef = useRef<number | null>(null);
   const previousModeRef = useRef<TimerMode>(mode);
+  const hasInitializedTimerRef = useRef(false);
 
   const [showBlockCompleteToast, setShowBlockCompleteToast] = useState(false);
   const [toastBlockNumber, setToastBlockNumber] = useState(1);
+  /** When true, effective speed is `RUNTIME_SPEED_BOOST_MULTIPLIER` × base env multiplier; toggle is next to Start. */
+  const [speedBoostEnabled, setSpeedBoostEnabled] = useState(false);
+  const effectiveMultiplier = speedBoostEnabled ? RUNTIME_SPEED_BOOST_MULTIPLIER : TIMER_SPEED_MULTIPLIER;
+  const effectiveMultiplierRef = useRef(effectiveMultiplier);
+  effectiveMultiplierRef.current = effectiveMultiplier;
 
   const dismissBlockCompleteToast = useCallback(() => {
     setShowBlockCompleteToast(false);
@@ -76,6 +95,7 @@ const Timer = () => {
 
   useEffect(() => {
     if (sessionComplete) {
+      clearPersistedTimer();
       setShowTimerPage(false);
     }
   }, [sessionComplete, setShowTimerPage]);
@@ -99,35 +119,126 @@ const Timer = () => {
     }
   }, [mode]);
 
-  window.onbeforeunload = function () {
-    return true;
-  };
-
-  /**
-   * Single place to update countdown: integer seconds, clamped at 0, ref + state stay aligned.
-   * (initiateTimer used to only call setTimeLeft, so the interval read a stale ref and could
-   * mis-count; floats also broke `=== 0` and let tick() run past zero.)
-   */
-  const applyTimeLeft = useCallback((rawSeconds: number) => {
-    const next = Math.max(0, Math.round(rawSeconds));
-    timeLeftRef.current = next;
-    setTimeLeft(next);
-  }, []);
-
-  function tick() {
-    const current = timeLeftRef.current;
-    if (current <= 0) {
+  const persistSnapshot = useCallback(() => {
+    const store = useSessionStore.getState();
+    if (store.sessionComplete) {
       return;
     }
-    applyTimeLeft(current - 1);
-  }
+    writePersistedTimer({
+      version: 1,
+      phaseEndAtMs: phaseEndAtRef.current,
+      timeLeftSeconds: timeLeftRef.current,
+      mode: modeRef.current,
+      isPaused: isPausedRef.current,
+      workMinutes,
+      numOfBreaks,
+      breakMinutes,
+      blockNum: store.blockNum,
+      hasUserRated: store.hasUserRated,
+      speedMultiplier: effectiveMultiplierRef.current,
+    });
+  }, [workMinutes, numOfBreaks, breakMinutes]);
+
+  /**
+   * Single place to update countdown: integer seconds, clamped at 0.
+   * When not paused, `phaseEndAtRef` is set from wall clock so the timer stays accurate in background tabs.
+   */
+  const applyTimeLeft = useCallback(
+    (rawSeconds: number) => {
+      const next = Math.max(0, Math.round(rawSeconds));
+      timeLeftRef.current = next;
+      setTimeLeft(next);
+      if (!isPausedRef.current) {
+        phaseEndAtRef.current = phaseEndFromDisplaySecondsRemaining(next, effectiveMultiplierRef.current);
+      } else {
+        phaseEndAtRef.current = null;
+      }
+      persistSnapshot();
+    },
+    [persistSnapshot]
+  );
+
+  const pauseFromClock = useCallback(() => {
+    let nextRemaining: number;
+    if (phaseEndAtRef.current !== null) {
+      // Same formula as the interval (`remainingDisplaySeconds`); display seconds use the speed multiplier vs wall time.
+      nextRemaining = remainingDisplaySeconds(phaseEndAtRef.current, effectiveMultiplierRef.current);
+      // `Math.round` can yield 0 while the phase end is still in the future and the last tick still showed time — don't snap the UI to 0.
+      if (nextRemaining === 0 && timeLeftRef.current > 0 && phaseEndAtRef.current > Date.now()) {
+        nextRemaining = timeLeftRef.current;
+      }
+    } else {
+      // Running paused state should always have a phase end; if not, keep the number already on screen.
+      nextRemaining = timeLeftRef.current;
+    }
+    timeLeftRef.current = nextRemaining;
+    setTimeLeft(nextRemaining);
+    phaseEndAtRef.current = null;
+    isPausedRef.current = true;
+    setIsPaused(true);
+    persistSnapshot();
+  }, [persistSnapshot]);
+
+  const resumeTimer = useCallback(() => {
+    isPausedRef.current = false;
+    setIsPaused(false);
+    phaseEndAtRef.current = phaseEndFromDisplaySecondsRemaining(timeLeftRef.current, effectiveMultiplierRef.current);
+    persistSnapshot();
+  }, [persistSnapshot]);
+
+  const toggleSpeedBoost = useCallback(() => {
+    setSpeedBoostEnabled((previous) => {
+      const next = !previous;
+      const nextMult = next ? RUNTIME_SPEED_BOOST_MULTIPLIER : TIMER_SPEED_MULTIPLIER;
+      effectiveMultiplierRef.current = nextMult;
+      if (!isPausedRef.current && phaseEndAtRef.current !== null) {
+        phaseEndAtRef.current = phaseEndFromDisplaySecondsRemaining(timeLeftRef.current, nextMult);
+      }
+      queueMicrotask(() => persistSnapshot());
+      return next;
+    });
+  }, [persistSnapshot]);
 
   function initiateTimer() {
     const workBlockSeconds = ((workMinutes * 60 - totalBreakTime) / numOfblocks) * 60;
+    phaseEndAtRef.current = null;
     if (mode === "break") {
       applyTimeLeft(breakMinutes * 60);
     } else {
       applyTimeLeft(workBlockSeconds);
+    }
+  }
+
+  function applyRestore(persisted: NonNullable<ReturnType<typeof readPersistedTimer>>) {
+    const store = useSessionStore.getState();
+    const speed = persisted.speedMultiplier ?? TIMER_SPEED_MULTIPLIER;
+    effectiveMultiplierRef.current = speed;
+    setSpeedBoostEnabled(speed === RUNTIME_SPEED_BOOST_MULTIPLIER);
+
+    store.setBlockNum(persisted.blockNum);
+    store.setHasUserRated(persisted.hasUserRated);
+
+    setMode(persisted.mode);
+    modeRef.current = persisted.mode;
+    previousModeRef.current = persisted.mode;
+
+    setIsPaused(persisted.isPaused);
+    isPausedRef.current = persisted.isPaused;
+
+    if (!persisted.isPaused && persisted.phaseEndAtMs !== null) {
+      const remaining = remainingDisplaySeconds(persisted.phaseEndAtMs, speed);
+      timeLeftRef.current = remaining;
+      setTimeLeft(remaining);
+      phaseEndAtRef.current = phaseEndFromDisplaySecondsRemaining(remaining, speed);
+      persistSnapshot();
+      if (remaining <= 0) {
+        window.setTimeout(() => switchModeAfterRestore(), 0);
+      }
+    } else {
+      timeLeftRef.current = persisted.timeLeftSeconds;
+      setTimeLeft(persisted.timeLeftSeconds);
+      phaseEndAtRef.current = null;
+      persistSnapshot();
     }
   }
 
@@ -140,37 +251,98 @@ const Timer = () => {
     applyTimeLeft(nextTimeRaw);
   }
 
+  /** Used only when restore finds the phase already elapsed (e.g. long absence). */
+  function switchModeAfterRestore() {
+    switchMode();
+  }
+
   useEffect(() => {
+    if (!hasInitializedTimerRef.current) {
+      hasInitializedTimerRef.current = true;
+      const persisted = readPersistedTimer();
+      const fingerprintOk =
+        persisted &&
+        persisted.workMinutes === workMinutes &&
+        persisted.numOfBreaks === numOfBreaks &&
+        persisted.breakMinutes === breakMinutes;
+
+      if (fingerprintOk && persisted) {
+        applyRestore(persisted);
+        return;
+      }
+
+      clearPersistedTimer();
+      initiateTimer();
+      return;
+    }
+
+    clearPersistedTimer();
     initiateTimer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workMinutes, numOfBreaks, breakMinutes]);
 
   useEffect(() => {
-    const interval = window.setInterval(() => {
-      if (isPausedRef.current) {
+    const intervalId = window.setInterval(() => {
+      if (isPausedRef.current || phaseEndAtRef.current === null) {
         return;
-      } else if (timeLeftRef.current <= 0) {
-        switchMode();
-      } else {
-        tick();
       }
-    }, 1);
+      const remaining = remainingDisplaySeconds(phaseEndAtRef.current, effectiveMultiplierRef.current);
+      timeLeftRef.current = remaining;
+      setTimeLeft(remaining);
+      persistSnapshot();
+      if (remaining <= 0) {
+        switchMode();
+      }
+    }, timerTickIntervalMs(effectiveMultiplierRef.current));
 
-    return () => clearInterval(interval);
+    return () => window.clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [workMinutes, numOfBreaks, breakMinutes]);
+  }, [workMinutes, numOfBreaks, breakMinutes, speedBoostEnabled]);
 
   useEffect(() => {
-    function pause() {
-      setIsPaused(true);
-      isPausedRef.current = true;
-    }
+    const onVisibility = () => {
+      if (document.visibilityState !== "visible") {
+        return;
+      }
+      if (isPausedRef.current || phaseEndAtRef.current === null) {
+        return;
+      }
+      const remaining = remainingDisplaySeconds(phaseEndAtRef.current, effectiveMultiplierRef.current);
+      timeLeftRef.current = remaining;
+      setTimeLeft(remaining);
+      persistSnapshot();
+      if (remaining <= 0) {
+        switchMode();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [workMinutes, numOfBreaks, breakMinutes, speedBoostEnabled]);
 
+  useEffect(() => {
+    const onPageHide = () => {
+      persistSnapshot();
+    };
+    window.addEventListener("pagehide", onPageHide);
+    return () => window.removeEventListener("pagehide", onPageHide);
+  }, [persistSnapshot]);
+
+  /**
+   * While a break is waiting for a rating, keep the countdown frozen (resume is immediately paused again).
+   * This must not depend on `isPaused` alone — doing so re-ran `pauseFromClock` when pausing *work* and could corrupt the displayed time.
+   */
+  useEffect(() => {
+    if (mode !== "break" || hasUserRated || isPaused) {
+      return;
+    }
+    pauseFromClock();
+  }, [mode, hasUserRated, isPaused, pauseFromClock]);
+
+  useEffect(() => {
     const store = useSessionStore.getState();
 
-    if (mode === "break" && !store.hasUserRated) {
-      pause();
-    } else if (mode === "work" && store.hasUserRated) {
+    if (mode === "work" && store.hasUserRated) {
       store.setHasUserRated(false);
       blockRef.current += 1;
       blockNumRef.current += blockRef.current;
@@ -194,13 +366,15 @@ const Timer = () => {
       void finalizeActivePomodoroSession().then((result) => {
         if (result.error) {
           console.error("Failed to finalize session on the server", result.error);
+          return;
         }
+        const storeAfter = useSessionStore.getState();
+        storeAfter.setSessionComplete(true);
+        storeAfter.setBlockNum(0);
+        storeAfter.setHasUserRated(false);
       });
-      latest.setSessionComplete(true);
-      latest.setBlockNum(0);
-      latest.setHasUserRated(false);
     }
-  }, [isPaused, mode, numOfblocks, hasUserRated]);
+  }, [mode, numOfblocks, hasUserRated]);
 
   const safeTimeLeft = Math.max(0, timeLeft);
   const minutes = Math.floor(safeTimeLeft / 60);
@@ -214,34 +388,65 @@ const Timer = () => {
     return safe < 10 ? "0" + safe : String(safe);
   };
 
+  useEffect(() => {
+    if (sessionComplete) {
+      document.title = DEFAULT_DOCUMENT_TITLE;
+      return () => {
+        document.title = DEFAULT_DOCUMENT_TITLE;
+      };
+    }
+
+    const minutesPart = Math.floor(safeTimeLeft / 60);
+    const secondsPart = Math.floor(safeTimeLeft % 60);
+    const timeStr =
+      totalWorkTime < totalBreakTime
+        ? "00:00"
+        : `${String(minutesPart).padStart(2, "0")}:${String(secondsPart).padStart(2, "0")}`;
+    const phaseLabel = mode === "break" ? "Break" : "Work";
+    const pauseLabel = isPaused ? " · Paused" : "";
+    const blockLabel = mode === "work" ? ` · ${currentWorkBlockIndex}/${numOfblocks}` : "";
+
+    document.title = `${timeStr} · ${phaseLabel}${blockLabel}${pauseLabel} · ${DEFAULT_DOCUMENT_TITLE}`;
+
+    return () => {
+      document.title = DEFAULT_DOCUMENT_TITLE;
+    };
+  }, [
+    sessionComplete,
+    safeTimeLeft,
+    mode,
+    isPaused,
+    totalWorkTime,
+    totalBreakTime,
+    currentWorkBlockIndex,
+    numOfblocks,
+  ]);
+
   const showTheButtons = () => {
     if (showButtons === true) {
       return (
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-          <div style={{ marginBottom: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <div
+            className="timer-control-row"
+            style={{ marginBottom: "30px", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap", gap: "12px" }}
+          >
             {isPaused ? (
-              <button
-                className="play"
-                type="button"
-                onClick={() => {
-                  setIsPaused(false);
-                  isPausedRef.current = false;
-                }}
-              >
+              <button className="play" type="button" onClick={() => resumeTimer()}>
                 Start
               </button>
             ) : (
-              <button
-                className="pause"
-                type="button"
-                onClick={() => {
-                  setIsPaused(true);
-                  isPausedRef.current = true;
-                }}
-              >
+              <button className="pause" type="button" onClick={() => pauseFromClock()}>
                 Pause
               </button>
             )}
+            <button
+              className="speedBoost"
+              type="button"
+              title={speedBoostEnabled ? "Return to normal speed" : `Speed up ${RUNTIME_SPEED_BOOST_MULTIPLIER}× (display time)`}
+              onClick={() => toggleSpeedBoost()}
+            >
+              {speedBoostEnabled ? "1×" : `${RUNTIME_SPEED_BOOST_MULTIPLIER}×`}
+            </button>
             {mode === "break" ? (
               <Skip
                 title="Skip Break"
@@ -339,6 +544,12 @@ const Timer = () => {
               {totalWorkTime < totalBreakTime ? "00" : addZero(seconds)}
             </p>
           </div>
+        </div>
+      )}
+
+      {showClock && effectiveMultiplier > 1 && (
+        <div style={{ borderRadius: "10px", marginTop: "8px" }} className="blockdiv2">
+          <p style={{ fontSize: "15px" }}>&nbsp;Speed ×{effectiveMultiplier}&nbsp;</p>
         </div>
       )}
 

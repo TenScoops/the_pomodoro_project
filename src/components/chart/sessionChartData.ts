@@ -45,6 +45,7 @@ export function buildMonthBarDatasetFromSessions(
     const daySessions = byDate.get(iso) ?? [];
     const ratings = collectRatingsFromSessions(daySessions);
     const productivityAvg = averageRatings(ratings);
+    /** `total_time_worked` increases each rated block; completed sessions hold the full session total. */
     const totalSeconds = daySessions.reduce((sum, session) => sum + session.total_time_worked, 0);
     const lengthHours = Number((totalSeconds / 3600).toFixed(1));
     const sessionCount = daySessions.length;
