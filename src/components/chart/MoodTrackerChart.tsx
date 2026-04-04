@@ -13,11 +13,19 @@ import {
   type ChartOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { getMonthDayMetas, monthLineChartShowAllDaysTicks } from "./chartLabels";
+import type { ChartPeriodRange } from "./chartLabels";
+import {
+  getCurrentMonthDayMetasLineCharts,
+  getCurrentYearMonthLabels,
+  monthLineChartShowAllDaysTicks,
+  monthLineChartXAxisGrid,
+  monthLineChartYearXAxisTicks,
+} from "./chartLabels";
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, LineController, Title, Tooltip, Legend);
 
-function buildMoodTrackerOptions(): ChartOptions<"line"> {
+function buildMoodTrackerOptions(timeRange: ChartPeriodRange): ChartOptions<"line"> {
+  const isMonth = timeRange === "Month";
   return {
     maintainAspectRatio: false,
     plugins: {
@@ -25,19 +33,35 @@ function buildMoodTrackerOptions(): ChartOptions<"line"> {
         display: false,
       },
       tooltip: {
-        enabled: false,
+        callbacks: {
+          title: (items) => {
+            const first = items[0];
+            if (!first) {
+              return "";
+            }
+            const chartLabels = first.chart.data.labels;
+            const label = chartLabels?.[first.dataIndex];
+            return typeof label === "string" ? label : "";
+          },
+          label: () => "Mood data not available yet",
+        },
+        titleFont: { family: "Roboto", size: 13 },
+        bodyFont: { family: "Roboto", size: 12 },
       },
     },
     scales: {
       x: {
         title: {
           display: true,
-          text: "Date",
+          text: isMonth ? "Date" : "Month",
           color: "#111",
           font: { family: "Roboto, sans-serif", size: 13 },
         },
+        grid: {
+          ...monthLineChartXAxisGrid,
+        },
         ticks: {
-          ...monthLineChartShowAllDaysTicks,
+          ...(isMonth ? monthLineChartShowAllDaysTicks : monthLineChartYearXAxisTicks),
         },
       },
       y: {
@@ -60,15 +84,22 @@ function buildMoodTrackerOptions(): ChartOptions<"line"> {
   };
 }
 
+export type MoodTrackerChartProps = {
+  timeRange: ChartPeriodRange;
+};
+
 /**
- * Placeholder mood series: dates on the x-axis; y-axis reserved until mood data exists.
+ * Placeholder mood series: x-axis matches Hours worked / Productivity for the same period.
  */
-const MoodTrackerChart = () => {
+const MoodTrackerChart = ({ timeRange }: MoodTrackerChartProps) => {
   const labels = useMemo(() => {
-    const now = new Date();
-    return getMonthDayMetas(now.getFullYear(), now.getMonth(), "compact").map((meta) => meta.label);
-  }, []);
-  const options = useMemo(() => buildMoodTrackerOptions(), []);
+    if (timeRange === "Month") {
+      return getCurrentMonthDayMetasLineCharts().map((meta) => meta.label);
+    }
+    return getCurrentYearMonthLabels();
+  }, [timeRange]);
+
+  const options = useMemo(() => buildMoodTrackerOptions(timeRange), [timeRange]);
 
   const data = useMemo(
     () => ({
@@ -91,7 +122,7 @@ const MoodTrackerChart = () => {
     <div
       className="chart-container mood-tracker-chart"
       style={{
-        marginTop: "12px",
+        marginTop: "8px",
         width: "100vmin",
         height: "58vh",
         display: "flex",

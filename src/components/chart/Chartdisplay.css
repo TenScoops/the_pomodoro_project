@@ -4,16 +4,64 @@
   align-items: stretch;
   box-sizing: border-box;
   height: 100%;
-  padding: 16px 12px 8px 16px;
+  padding: 12px 12px 8px 16px;
 }
 
 .chart-toolbar {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px 24px;
+  width: 100%;
+  flex-shrink: 0;
+  margin-bottom: 6px;
+}
+
+.chart-toolbar-cluster {
+  display: flex;
   align-items: center;
   gap: 10px;
-  flex-shrink: 0;
-  align-self: flex-start;
-  margin-bottom: 4px;
+}
+
+.chart-toolbar-cluster--period {
+  flex-wrap: wrap;
+}
+
+.chart-period-toggle {
+  display: inline-flex;
+  border: solid 2px #000;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.chart-period-button {
+  font-family: "Kalam", cursive, sans-serif;
+  font-size: 14px;
+  padding: 6px 16px;
+  border: none;
+  background-color: #fff;
+  color: #111;
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.chart-period-button + .chart-period-button {
+  border-left: solid 2px #000;
+}
+
+.chart-period-button:hover {
+  background-color: #f4f4f4;
+}
+
+.chart-period-button--active {
+  background-color: #000;
+  color: #fff;
+}
+
+.chart-period-button--active:hover {
+  background-color: #1e212d;
+  color: #fff;
 }
 
 .chart-view-label {

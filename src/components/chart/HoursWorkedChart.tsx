@@ -14,7 +14,14 @@ import {
   type ChartOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { getMonthDayMetas, monthLineChartShowAllDaysTicks } from "./chartLabels";
+import type { ChartPeriodRange } from "./chartLabels";
+import {
+  getCurrentMonthDayMetasLineCharts,
+  getCurrentYearMonthLabels,
+  monthLineChartShowAllDaysTicks,
+  monthLineChartXAxisGrid,
+  monthLineChartYearXAxisTicks,
+} from "./chartLabels";
 import { useHoursWorkedChartData } from "../../hooks/useHoursWorkedChartData";
 
 ChartJS.register(
@@ -29,17 +36,33 @@ ChartJS.register(
   Filler
 );
 
-function buildGuestPlaceholderSeries(): { labels: string[]; hoursPerDay: number[] } {
-  const now = new Date();
-  const dayMetas = getMonthDayMetas(now.getFullYear(), now.getMonth(), "compact");
+const HOURS_WORKED_LINE_STROKE = "#1e212d";
+const HOURS_WORKED_AREA_FILL = "rgba(186, 230, 253, 0.55)";
+
+function buildGuestPlaceholderSeries(timeRange: ChartPeriodRange): {
+  labels: string[];
+  hoursSeries: number[];
+} {
+  if (timeRange === "Month") {
+    const dayMetas = getCurrentMonthDayMetasLineCharts();
+    return {
+      labels: dayMetas.map((meta) => meta.label),
+      hoursSeries: dayMetas.map(() => 0),
+    };
+  }
+  const labels = getCurrentYearMonthLabels();
   return {
-    labels: dayMetas.map((meta) => meta.label),
-    hoursPerDay: dayMetas.map(() => 0),
+    labels,
+    hoursSeries: labels.map(() => 0),
   };
 }
 
-function buildHoursWorkedOptions(maxHours: number): ChartOptions<"line"> {
+function buildHoursWorkedLineOptions(
+  timeRange: ChartPeriodRange,
+  maxHours: number
+): ChartOptions<"line"> {
   const paddedMax = Math.max(1, maxHours * 1.15);
+  const isMonth = timeRange === "Month";
   return {
     maintainAspectRatio: false,
     plugins: {
@@ -61,12 +84,15 @@ function buildHoursWorkedOptions(maxHours: number): ChartOptions<"line"> {
       x: {
         title: {
           display: true,
-          text: "Date",
+          text: isMonth ? "Date" : "Month",
           color: "#111",
           font: { family: "Roboto, sans-serif", size: 13 },
         },
+        grid: {
+          ...monthLineChartXAxisGrid,
+        },
         ticks: {
-          ...monthLineChartShowAllDaysTicks,
+          ...(isMonth ? monthLineChartShowAllDaysTicks : monthLineChartYearXAxisTicks),
         },
       },
       y: {
@@ -89,21 +115,28 @@ function buildHoursWorkedOptions(maxHours: number): ChartOptions<"line"> {
   };
 }
 
-const HoursWorkedChart = () => {
-  const { loading, errorMessage, series, hasUser } = useHoursWorkedChartData();
-  const guestSeries = useMemo(() => buildGuestPlaceholderSeries(), []);
+export type HoursWorkedChartProps = {
+  timeRange: ChartPeriodRange;
+};
+
+const HoursWorkedChart = ({ timeRange }: HoursWorkedChartProps) => {
+  const { loading, errorMessage, series, hasUser } = useHoursWorkedChartData(timeRange);
+  const guestSeries = useMemo(() => buildGuestPlaceholderSeries(timeRange), [timeRange]);
 
   const displaySeries = hasUser ? series : guestSeries;
-  const { labels, hoursPerDay } = displaySeries;
+  const { labels, hoursSeries } = displaySeries;
 
   const maxHours = useMemo(() => {
-    if (hoursPerDay.length === 0) {
+    if (hoursSeries.length === 0) {
       return 0;
     }
-    return Math.max(...hoursPerDay, 0);
-  }, [hoursPerDay]);
+    return Math.max(...hoursSeries, 0);
+  }, [hoursSeries]);
 
-  const options = useMemo(() => buildHoursWorkedOptions(maxHours), [maxHours]);
+  const options = useMemo(
+    () => buildHoursWorkedLineOptions(timeRange, maxHours),
+    [timeRange, maxHours]
+  );
 
   const lineData = useMemo(
     () => ({
@@ -111,9 +144,9 @@ const HoursWorkedChart = () => {
       datasets: [
         {
           label: "Hours worked",
-          data: hoursPerDay,
-          borderColor: "#1e212d",
-          backgroundColor: "rgba(30, 33, 45, 0.12)",
+          data: hoursSeries,
+          borderColor: HOURS_WORKED_LINE_STROKE,
+          backgroundColor: HOURS_WORKED_AREA_FILL,
           fill: true,
           tension: 0.2,
           pointRadius: 3,
@@ -122,23 +155,28 @@ const HoursWorkedChart = () => {
         },
       ],
     }),
-    [labels, hoursPerDay]
+    [labels, hoursSeries]
   );
 
   const showEmptyHint =
     hasUser &&
     !loading &&
     !errorMessage &&
-    hoursPerDay.length > 0 &&
-    hoursPerDay.every((hours) => hours === 0);
+    hoursSeries.length > 0 &&
+    hoursSeries.every((hours) => hours === 0);
 
   const showLoadingOnly = hasUser && loading;
+
+  const emptyHintText =
+    timeRange === "Month"
+      ? "No time logged for this month yet. Complete work blocks while signed in to see the line fill in."
+      : "No time logged for this year yet. Complete sessions while signed in to see the line fill in.";
 
   return (
     <div
       className="chart-container hours-worked-chart"
       style={{
-        marginTop: "12px",
+        marginTop: "8px",
         width: "100vmin",
         height: "65vh",
         display: "flex",
@@ -157,11 +195,7 @@ const HoursWorkedChart = () => {
           {hasUser && errorMessage ? (
             <p className="chart-status chart-status--error">{errorMessage}</p>
           ) : null}
-          {showEmptyHint ? (
-            <p className="chart-status chart-status--empty">
-              No time logged for this month yet. Complete work blocks while signed in to see the line fill in.
-            </p>
-          ) : null}
+          {showEmptyHint ? <p className="chart-status chart-status--empty">{emptyHintText}</p> : null}
 
           <div style={{ flex: 1, width: "100%", minHeight: "48vh", position: "relative", marginTop: "8px" }}>
             {labels.length > 0 ? <Line data={lineData} options={options} /> : null}

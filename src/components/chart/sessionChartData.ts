@@ -33,23 +33,42 @@ function groupSessionsByDate(sessions: SessionWithRatings[]): Map<string, Sessio
   return map;
 }
 
-/** Per-calendar-day hours (sum of `total_time_worked` / 3600) for the line chart; labels match productivity month bars. */
+/** Per-calendar-day hours (sum of `total_time_worked` / 3600); x labels use `getMonthDayMetas(..., "full")` like Productivity month bars. */
 export function buildMonthHoursLineSeriesFromSessions(
   sessions: SessionWithRatings[],
   year: number,
   monthIndex0: number
-): { labels: string[]; hoursPerDay: number[] } {
+): { labels: string[]; hoursSeries: number[] } {
   const byDate = groupSessionsByDate(sessions);
-  const dayMetas = getMonthDayMetas(year, monthIndex0, "compact");
+  const dayMetas = getMonthDayMetas(year, monthIndex0, "full");
   const labels: string[] = [];
-  const hoursPerDay: number[] = [];
+  const hoursSeries: number[] = [];
   for (const { iso, label } of dayMetas) {
     labels.push(label);
     const daySessions = byDate.get(iso) ?? [];
     const totalSeconds = daySessions.reduce((sum, session) => sum + session.total_time_worked, 0);
-    hoursPerDay.push(Number((totalSeconds / 3600).toFixed(3)));
+    hoursSeries.push(Number((totalSeconds / 3600).toFixed(3)));
   }
-  return { labels, hoursPerDay };
+  return { labels, hoursSeries };
+}
+
+/** Per-calendar-month hours for a year (sum of `total_time_worked` / 3600); labels match `getYearMonthMetas`. */
+export function buildYearHoursLineSeriesFromSessions(
+  sessions: SessionWithRatings[],
+  year: number
+): { labels: string[]; hoursSeries: number[] } {
+  const monthMetas = getYearMonthMetas(year);
+  const labels: string[] = [];
+  const hoursSeries: number[] = [];
+  for (const { label, startDate, endDate } of monthMetas) {
+    labels.push(label);
+    const monthSessions = sessions.filter(
+      (session) => session.date >= startDate && session.date <= endDate
+    );
+    const totalSeconds = monthSessions.reduce((sum, session) => sum + session.total_time_worked, 0);
+    hoursSeries.push(Number((totalSeconds / 3600).toFixed(3)));
+  }
+  return { labels, hoursSeries };
 }
 
 export function buildMonthBarDatasetFromSessions(

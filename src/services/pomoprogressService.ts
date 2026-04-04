@@ -14,8 +14,8 @@ import { ACTIVE_SESSION_ID_STORAGE_KEY, useSessionStore } from "../store/session
 // --- Helpers ---
 
 /**
- * Finds the in-progress `sessions` row for today (draft = not completed) so finalize still works if
- * `activeSupabaseSessionId` was lost from memory.
+ * Finds a legacy draft `sessions` row for today (`sessions_completed = 0`) — e.g. after an older client
+ * created drafts per block. Used by cancel to delete orphan rows.
  */
 export async function findLatestDraftSessionIdForUser(userId: string): Promise<string | null> {
   const today = todayLocalISODate();
@@ -130,29 +130,6 @@ export async function clearTodaysRatingData(): Promise<{
   return { error, localKeysCleared };
 }
 
-// --- Session time (seconds) — matches Timer net work per session / per block ---
-
-/**
- * After `blockNumber` work blocks are rated, cumulative net work seconds for this session config.
- * Uses the same net session total as `finalizeActivePomodoroSession`, spread proportionally by block count.
- */
-export function cumulativeWorkSecondsAfterRatedBlocks(
-  workMinutes: number,
-  numOfBreaks: number,
-  breakMinutes: number,
-  blockNumber: number
-): number {
-  const numOfBlocks = numOfBreaks + 1;
-  const totalBreakTimeMinutes = numOfBreaks * breakMinutes;
-  const netWorkMinutes = workMinutes * 60 - totalBreakTimeMinutes;
-  const totalSeconds = Math.max(0, Math.round(netWorkMinutes * 60));
-  if (numOfBlocks <= 0 || blockNumber <= 0) {
-    return 0;
-  }
-  const cappedBlocks = Math.min(blockNumber, numOfBlocks);
-  return Math.round((totalSeconds * cappedBlocks) / numOfBlocks);
-}
-
 // --- API ---
 
 export async function insertSession(
@@ -216,13 +193,13 @@ export async function updateSession(
 }
 
 /**
- * When the user rates a block while signed in: ensure a draft `sessions` row exists,
- * insert `block_ratings`, and bump chart revision so My Data updates immediately.
- * Guests only use localStorage (handled in `Rating` before this runs).
+ * Signed-in users: `Rating` already stores each score in `localStorage`. Nothing is written to Supabase
+ * until the full pomodoro session completes — see `finalizeActivePomodoroSession` →
+ * `persistCompletedPomodoroSessionBulkInsert`. Guests never hit the DB here (`getUser()` is null).
  */
 export async function logBlockRatingForCurrentSession(
-  blockNumber: number,
-  rating: number
+  _blockNumber: number,
+  _rating: number
 ): Promise<{ error: PostgrestError | null }> {
   const {
     data: { user },
@@ -232,63 +209,29 @@ export async function logBlockRatingForCurrentSession(
     return { error: null };
   }
 
-  const store = useSessionStore.getState();
-  let sessionId = store.activeSupabaseSessionId;
-
-  if (!sessionId) {
-    const draftPayload: SessionInsert = {
-      user_id: user.id,
-      date: todayLocalISODate(),
-      total_time_worked: 0,
-      sessions_completed: 0,
-      blocks_completed: 0,
-    };
-    const { data: created, error: createError } = await insertSession(draftPayload);
-    if (createError || !created) {
-      return { error: createError };
-    }
-    sessionId = created.id;
-    store.setActiveSupabaseSessionId(sessionId);
-  }
-
-  const { error: ratingError } = await insertBlockRating({
-    session_id: sessionId,
-    block_number: blockNumber,
-    rating,
-  });
-  if (ratingError) {
-    return { error: ratingError };
-  }
-
-  const totalTimeWorked = cumulativeWorkSecondsAfterRatedBlocks(
-    store.workMinutes,
-    store.numOfBreaks,
-    store.breakMinutes,
-    blockNumber
-  );
-
-  const { error: updateError } = await updateSession(sessionId, {
-    blocks_completed: blockNumber,
-    total_time_worked: totalTimeWorked,
-  });
-  if (updateError) {
-    return { error: updateError };
-  }
-
-  store.bumpChartDataRevision();
   return { error: null };
 }
 
 /**
- * Remove draft session + ratings (CASCADE) when the user cancels mid-session.
+ * Clears in-memory ratings and removes any legacy draft `sessions` row for today (older clients
+ * created drafts incrementally). Completed sessions are never deleted here.
  */
 export async function cancelActivePomodoroSession(): Promise<void> {
   const store = useSessionStore.getState();
-  const sessionId = store.activeSupabaseSessionId;
   const numOfBlocks = store.numOfBreaks + 1;
 
-  if (sessionId) {
-    await supabase.from("sessions").delete().eq("id", sessionId);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    let sessionId = store.activeSupabaseSessionId ?? resolveActiveSessionIdFromStorage();
+    if (!sessionId) {
+      sessionId = await findLatestDraftSessionIdForUser(user.id);
+    }
+    if (sessionId) {
+      await supabase.from("sessions").delete().eq("id", sessionId);
+    }
     store.setActiveSupabaseSessionId(null);
   }
 
@@ -405,20 +348,15 @@ export async function getSessionsWithRatingsForYear(
 }
 
 /**
- * Finalize the active session after the last block: set total time and completion flags.
- * Block ratings were already saved per block via `logBlockRatingForCurrentSession`.
- * If there is no draft row but the user is signed in, falls back to a one-shot insert (legacy).
+ * After the last block is rated: persist one `sessions` row + all `block_ratings` from `localStorage`.
+ * No Supabase session row exists before this (signed-in path).
  */
 export async function finalizeActivePomodoroSession(): Promise<{
   error: PostgrestError | Error | null;
   skipped: boolean;
 }> {
   const store = useSessionStore.getState();
-  const sessionId = store.activeSupabaseSessionId;
   const numOfBlocks = store.numOfBreaks + 1;
-  const totalBreakTimeMinutes = store.numOfBreaks * store.breakMinutes;
-  const netWorkMinutes = store.workMinutes * 60 - totalBreakTimeMinutes;
-  const totalTimeWorkedSeconds = Math.max(0, Math.round(netWorkMinutes * 60));
 
   const {
     data: { user },
@@ -436,43 +374,14 @@ export async function finalizeActivePomodoroSession(): Promise<{
     return { error: null, skipped: true };
   }
 
-  let sessionIdToFinalize =
-    sessionId ?? resolveActiveSessionIdFromStorage() ?? (await findLatestDraftSessionIdForUser(user.id));
-
-  if (sessionIdToFinalize) {
-    store.setActiveSupabaseSessionId(sessionIdToFinalize);
-  }
-
-  if (sessionIdToFinalize) {
-    const patch = {
-      total_time_worked: totalTimeWorkedSeconds,
-      sessions_completed: 1,
-      blocks_completed: numOfBlocks,
-    };
-    let { error } = await updateSession(sessionIdToFinalize, patch);
-    if (error) {
-      const recoveredId = await findLatestDraftSessionIdForUser(user.id);
-      if (recoveredId) {
-        store.setActiveSupabaseSessionId(recoveredId);
-        ({ error } = await updateSession(recoveredId, patch));
-      }
-    }
-    if (error) {
-      return { error, skipped: false };
-    }
-    store.setActiveSupabaseSessionId(null);
-    for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
-      window.localStorage.removeItem(String(blockIndex));
-    }
-    store.bumpChartDataRevision();
-    return { error: null, skipped: false };
-  }
+  store.setActiveSupabaseSessionId(null);
 
   return persistCompletedPomodoroSessionBulkInsert();
 }
 
 /**
- * Legacy path: one session row + all block_ratings in one go (e.g. draft creation failed mid-run).
+ * Single transaction path for a completed session: insert `sessions`, then each `block_ratings` row.
+ * Requires every block `1..numOfBlocks` to have a rating in `localStorage`.
  */
 export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
   error: PostgrestError | Error | null;
@@ -503,12 +412,21 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
   for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
     const raw = window.localStorage.getItem(String(blockIndex));
     if (raw === null) {
-      continue;
+      return {
+        error: new Error(
+          `Cannot save session: missing rating for block ${blockIndex} of ${numOfBlocks}.`
+        ),
+        skipped: false,
+      };
     }
     const rating = Number(raw);
-    if (!Number.isNaN(rating)) {
-      ratings.push({ blockNumber: blockIndex, rating });
+    if (Number.isNaN(rating)) {
+      return {
+        error: new Error(`Cannot save session: invalid rating for block ${blockIndex}.`),
+        skipped: false,
+      };
     }
+    ratings.push({ blockNumber: blockIndex, rating });
   }
 
   const sessionPayload: SessionInsert = {

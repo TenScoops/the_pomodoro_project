@@ -1,20 +1,27 @@
 import { useLayoutEffect, useState } from "react";
-import { buildMonthHoursLineSeriesFromSessions } from "../components/chart/sessionChartData";
-import { getSessionsWithRatingsForMonth } from "../services/pomoprogressService";
+import type { ChartPeriodRange } from "../components/chart/chartLabels";
+import {
+  buildMonthHoursLineSeriesFromSessions,
+  buildYearHoursLineSeriesFromSessions,
+} from "../components/chart/sessionChartData";
+import {
+  getSessionsWithRatingsForMonth,
+  getSessionsWithRatingsForYear,
+} from "../services/pomoprogressService";
 import { useSessionStore } from "../store/sessionStore";
 import { useAuth } from "./useAuth";
 
 export type HoursWorkedSeriesState = {
   labels: string[];
-  hoursPerDay: number[];
+  hoursSeries: number[];
 };
 
-const emptySeries: HoursWorkedSeriesState = { labels: [], hoursPerDay: [] };
+const emptySeries: HoursWorkedSeriesState = { labels: [], hoursSeries: [] };
 
 /**
- * Current calendar month: one point per day, hours worked = sum of session `total_time_worked` that day.
+ * Hours worked line chart: current calendar month (per day) or year (per month), from Supabase.
  */
-export function useHoursWorkedChartData() {
+export function useHoursWorkedChartData(timeRange: ChartPeriodRange) {
   const { user } = useAuth();
   const chartDataRevision = useSessionStore((state) => state.chartDataRevision);
   const [loading, setLoading] = useState(false);
@@ -39,7 +46,23 @@ export function useHoursWorkedChartData() {
     const monthOneThroughTwelve = monthIndex0 + 1;
 
     void (async () => {
-      const { data, error } = await getSessionsWithRatingsForMonth(year, monthOneThroughTwelve);
+      if (timeRange === "Month") {
+        const { data, error } = await getSessionsWithRatingsForMonth(year, monthOneThroughTwelve);
+        if (cancelled) {
+          return;
+        }
+        if (error) {
+          setErrorMessage(error.message);
+          setSeries(emptySeries);
+          setLoading(false);
+          return;
+        }
+        setSeries(buildMonthHoursLineSeriesFromSessions(data ?? [], year, monthIndex0));
+        setLoading(false);
+        return;
+      }
+
+      const { data, error } = await getSessionsWithRatingsForYear(year);
       if (cancelled) {
         return;
       }
@@ -49,14 +72,14 @@ export function useHoursWorkedChartData() {
         setLoading(false);
         return;
       }
-      setSeries(buildMonthHoursLineSeriesFromSessions(data ?? [], year, monthIndex0));
+      setSeries(buildYearHoursLineSeriesFromSessions(data ?? [], year));
       setLoading(false);
     })();
 
     return () => {
       cancelled = true;
     };
-  }, [user, chartDataRevision]);
+  }, [user, timeRange, chartDataRevision]);
 
   return {
     loading,

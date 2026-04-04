@@ -1,4 +1,5 @@
 import { useLayoutEffect, useState } from "react";
+import type { ChartPeriodRange } from "../components/chart/chartLabels";
 import type { DummyBarDataset } from "../components/chart/dummyData";
 import {
   buildMonthBarDatasetFromSessions,
@@ -11,9 +12,7 @@ import {
 import { useSessionStore } from "../store/sessionStore";
 import { useAuth } from "./useAuth";
 
-type TimeRange = "Month" | "Year";
-
-export function useChartBarData(theTime: TimeRange) {
+export function useChartBarData(theTime: ChartPeriodRange) {
   const { user } = useAuth();
   const chartDataRevision = useSessionStore((state) => state.chartDataRevision);
   const [loading, setLoading] = useState(false);

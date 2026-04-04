@@ -1,18 +1,14 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import "./BarChart.css";
 import "chartjs-plugin-datalabels";
 
-import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css";
-
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip, type ChartData, type ChartOptions } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import type { ChartPeriodRange } from "./chartLabels";
 import { buildDummyMonthBarDataset, buildDummyYearBarDataset, type ChartPoint } from "./dummyData";
 import { useChartBarData } from "../../hooks/useChartBarData";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-type TimeRange = "Month" | "Year";
 
 function buildBarChartOptions(): ChartOptions<"bar"> {
   return {
@@ -61,19 +57,22 @@ function buildBarChartOptions(): ChartOptions<"bar"> {
   };
 }
 
-const BarChart = () => {
-  const [theTime, setTheTime] = useState<TimeRange>("Month");
-  const { loading, errorMessage, liveDataset, hasUser } = useChartBarData(theTime);
+export type BarChartProps = {
+  timeRange: ChartPeriodRange;
+};
+
+const BarChart = ({ timeRange }: BarChartProps) => {
+  const { loading, errorMessage, liveDataset, hasUser } = useChartBarData(timeRange);
 
   const barDataset = useMemo(() => {
     if (!hasUser) {
-      return theTime === "Month" ? buildDummyMonthBarDataset() : buildDummyYearBarDataset();
+      return timeRange === "Month" ? buildDummyMonthBarDataset() : buildDummyYearBarDataset();
     }
     if (loading || errorMessage) {
       return null;
     }
     return liveDataset;
-  }, [hasUser, theTime, loading, errorMessage, liveDataset]);
+  }, [hasUser, timeRange, loading, errorMessage, liveDataset]);
 
   const showEmptyHint =
     hasUser &&
@@ -106,7 +105,7 @@ const BarChart = () => {
     <div
       className="chart-container"
       style={{
-        marginTop: "12px",
+        marginTop: "8px",
         width: "100vmin",
         height: "65vh",
         display: "flex",
@@ -122,81 +121,12 @@ const BarChart = () => {
         </div>
       ) : (
         <>
-          <div
-            style={{
-              marginTop: "36px",
-              marginLeft: "40px",
-              marginBottom: "10px",
-              padding: "0",
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <button
-              style={{ width: "5.3vmin", height: "25px", marginRight: "0", backgroundColor: "white", color: "black", borderRight: "transparent" }}
-              type="button"
-            >
-              {"<"}
-            </button>
-            <div
-              style={{
-                backgroundColor: "black",
-                color: "white",
-                fontSize: "13px",
-                paddingLeft: "10px",
-                paddingRight: "10px",
-                border: "solid 2px black",
-              }}
-            >
-              This {theTime}
-            </div>
-            <button
-              style={{ width: "5.3vmin", height: "25px", backgroundColor: "white", color: "black", borderLeft: "transparent" }}
-              type="button"
-            >
-              {">"}
-            </button>
-          </div>
-
           {hasUser && errorMessage ? <p className="chart-status chart-status--error">{errorMessage}</p> : null}
           {showEmptyHint ? (
             <p className="chart-status chart-status--empty">No sessions saved for this period yet. Complete a session while signed in to see real bars.</p>
           ) : null}
 
           {barData && chartPayload ? <Bar style={{ marginTop: "0px" }} data={barData} options={chartPayload.options} /> : null}
-
-          <div>
-            <button
-              className={theTime === "Month" ? "timeChart-button + extra " : "timeChart-button"}
-              onClick={(event) => setTheTime(event.currentTarget.value as TimeRange)}
-              value="Month"
-              type="button"
-              style={{
-                marginLeft: "10px",
-                borderTopLeftRadius: "7px",
-                borderBottomLeftRadius: "7px",
-                borderRight: "transparent",
-              }}
-            >
-              by Month
-            </button>
-
-            <Tippy delay={10} placement="top" content="Current calendar year">
-              <button
-                className={theTime === "Year" ? "timeChart-button + extra " : "timeChart-button"}
-                onClick={(event) => setTheTime(event.currentTarget.value as TimeRange)}
-                value="Year"
-                type="button"
-                style={{
-                  borderTopRightRadius: "7px",
-                  borderBottomRightRadius: "7px",
-                  borderLeft: "transparent",
-                }}
-              >
-                by Year
-              </button>
-            </Tippy>
-          </div>
         </>
       )}
     </div>

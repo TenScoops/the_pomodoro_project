@@ -22,6 +22,9 @@ function monthDateRangeInclusive(year: number, monthOneThroughTwelve: number): {
 
 export type MonthDayLabelStyle = "full" | "compact";
 
+/** Shared by Productivity, Hours worked, and Mood tracker modals (`by Month` / `by Year`). */
+export type ChartPeriodRange = "Month" | "Year";
+
 /** Each day in the month with a stable ISO key for joining session rows. */
 export function getMonthDayMetas(
   year: number,
@@ -46,15 +49,45 @@ export function getMonthDayMetas(
 }
 
 /**
+ * All days in the **current** calendar month (local), same label shape as **Productivity** month bars
+ * (`formatChartDayLabel`: weekday + month + day, e.g. Wed, Apr 3).
+ */
+export function getCurrentMonthDayMetasLineCharts(): { iso: string; label: string }[] {
+  const now = new Date();
+  return getMonthDayMetas(now.getFullYear(), now.getMonth(), "full");
+}
+
+/** Twelve month labels for the current calendar year (matches productivity year bars). */
+export function getCurrentYearMonthLabels(): string[] {
+  const year = new Date().getFullYear();
+  return getYearMonthMetas(year).map((meta) => meta.label);
+}
+
+/** Fewer categories than day view — all 12 month labels stay visible. */
+export const monthLineChartYearXAxisTicks = {
+  autoSkip: false,
+  color: "#111",
+  maxRotation: 0,
+  minRotation: 0,
+  font: { family: "Roboto, sans-serif", size: 11 },
+} as const;
+
+/**
  * Chart.js category-axis settings so every day in the month is drawn (no auto-skipping).
  * Use with one label per calendar day; rotate slightly so 28–31 ticks stay readable.
  */
 export const monthLineChartShowAllDaysTicks = {
   autoSkip: false,
   color: "#111",
-  maxRotation: 55,
-  minRotation: 45,
-  font: { family: "Roboto, sans-serif", size: 10 },
+  maxRotation: 60,
+  minRotation: 50,
+  font: { family: "Roboto, sans-serif", size: 9 },
+} as const;
+
+/** Vertical grid at each day so every calendar slot is visible alongside tick labels. */
+export const monthLineChartXAxisGrid = {
+  display: true,
+  color: "rgba(0, 0, 0, 0.06)",
 } as const;
 
 /** Twelve month buckets for a calendar year (for filtering session `date`). */

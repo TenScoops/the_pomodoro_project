@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import "./Chartdisplay.css";
+import type { ChartPeriodRange } from "./chartLabels";
 import { useSessionStore } from "../../store/sessionStore";
 import BarChart from "./BarChart";
 import HoursWorkedChart from "./HoursWorkedChart";
@@ -11,6 +12,7 @@ type ChartView = "productivity" | "mood" | "hoursWorked";
 const Chartdisplay = () => {
   const [modalOpen, setModalOpen] = useState(true);
   const [chartView, setChartView] = useState<ChartView>("productivity");
+  const [period, setPeriod] = useState<ChartPeriodRange>("Month");
   const setData = useSessionStore((s) => s.setData);
 
   const customStyles = {
@@ -52,28 +54,58 @@ const Chartdisplay = () => {
 
       <div className="chart-modal-inner">
         <div className="chart-toolbar">
-          <label className="chart-view-label" htmlFor="chart-view-select">
-            View
-          </label>
-          <select
-            id="chart-view-select"
-            className="chart-view-select"
-            value={chartView}
-            onChange={(event) => setChartView(event.target.value as ChartView)}
-            aria-label="Choose chart: productivity, mood tracker, or hours worked"
-          >
-            <option value="productivity">Productivity</option>
-            <option value="mood">Mood Tracker</option>
-            <option value="hoursWorked">Hours worked</option>
-          </select>
+          <div className="chart-toolbar-cluster">
+            <label className="chart-view-label" htmlFor="chart-view-select">
+              View
+            </label>
+            <select
+              id="chart-view-select"
+              className="chart-view-select"
+              value={chartView}
+              onChange={(event) => setChartView(event.target.value as ChartView)}
+              aria-label="Choose chart: productivity, mood tracker, or hours worked"
+            >
+              <option value="productivity">Productivity</option>
+              <option value="mood">Mood Tracker</option>
+              <option value="hoursWorked">Hours worked</option>
+            </select>
+          </div>
+
+          <div className="chart-toolbar-cluster chart-toolbar-cluster--period">
+            <span className="chart-view-label" id="chart-period-label">
+              Period
+            </span>
+            <div
+              className="chart-period-toggle"
+              role="group"
+              aria-labelledby="chart-period-label"
+            >
+              <button
+                type="button"
+                className={period === "Month" ? "chart-period-button chart-period-button--active" : "chart-period-button"}
+                onClick={() => setPeriod("Month")}
+              >
+                by Month
+              </button>
+              <button
+                type="button"
+                className={period === "Year" ? "chart-period-button chart-period-button--active" : "chart-period-button"}
+                onClick={() => setPeriod("Year")}
+                title="Current calendar year"
+              >
+                by Year
+              </button>
+            </div>
+          </div>
         </div>
+
         <div className="chart-view-area">
           {chartView === "productivity" ? (
-            <BarChart />
+            <BarChart timeRange={period} />
           ) : chartView === "mood" ? (
-            <MoodTrackerChart />
+            <MoodTrackerChart timeRange={period} />
           ) : (
-            <HoursWorkedChart />
+            <HoursWorkedChart timeRange={period} />
           )}
         </div>
       </div>
