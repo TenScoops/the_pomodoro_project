@@ -33,6 +33,25 @@ function groupSessionsByDate(sessions: SessionWithRatings[]): Map<string, Sessio
   return map;
 }
 
+/** Per-calendar-day hours (sum of `total_time_worked` / 3600) for the line chart; labels match productivity month bars. */
+export function buildMonthHoursLineSeriesFromSessions(
+  sessions: SessionWithRatings[],
+  year: number,
+  monthIndex0: number
+): { labels: string[]; hoursPerDay: number[] } {
+  const byDate = groupSessionsByDate(sessions);
+  const dayMetas = getMonthDayMetas(year, monthIndex0, "compact");
+  const labels: string[] = [];
+  const hoursPerDay: number[] = [];
+  for (const { iso, label } of dayMetas) {
+    labels.push(label);
+    const daySessions = byDate.get(iso) ?? [];
+    const totalSeconds = daySessions.reduce((sum, session) => sum + session.total_time_worked, 0);
+    hoursPerDay.push(Number((totalSeconds / 3600).toFixed(3)));
+  }
+  return { labels, hoursPerDay };
+}
+
 export function buildMonthBarDatasetFromSessions(
   sessions: SessionWithRatings[],
   year: number,

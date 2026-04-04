@@ -6,6 +6,7 @@ import "./Timer.css";
 import BlockCompleteToast from "../notifications/BlockCompleteToast";
 import Rating from "../rating/Rating";
 import { clearPersistedTimer, readPersistedTimer, writePersistedTimer } from "../../lib/timerPersistence";
+import { playTimerPhaseCompleteSound } from "../../lib/timerSounds";
 import {
   RUNTIME_SPEED_BOOST_MULTIPLIER,
   TIMER_SPEED_MULTIPLIER,
@@ -242,10 +243,23 @@ const Timer = () => {
     }
   }
 
-  function switchMode() {
-    const nextMode: TimerMode = modeRef.current === "work" ? "break" : "work";
+  function switchMode(options?: { silent?: boolean }) {
+    const previousMode = modeRef.current;
+    const nextMode: TimerMode = previousMode === "work" ? "break" : "work";
     const nextTimeRaw =
       60 * (nextMode === "work" ? (60 * workMinutes - totalBreakTime) / numOfblocks : breakMinutes);
+
+    if (!options?.silent) {
+      playTimerPhaseCompleteSound(previousMode);
+    }
+
+    // When the break countdown hits zero, show the next work block but stay paused until the user presses Start.
+    const pauseWorkUntilUserStarts = previousMode === "break" && nextMode === "work";
+    if (pauseWorkUntilUserStarts) {
+      isPausedRef.current = true;
+      setIsPaused(true);
+    }
+
     setMode(nextMode);
     modeRef.current = nextMode;
     applyTimeLeft(nextTimeRaw);
@@ -253,7 +267,7 @@ const Timer = () => {
 
   /** Used only when restore finds the phase already elapsed (e.g. long absence). */
   function switchModeAfterRestore() {
-    switchMode();
+    switchMode({ silent: true });
   }
 
   useEffect(() => {

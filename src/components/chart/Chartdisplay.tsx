@@ -3,9 +3,14 @@ import Modal from "react-modal";
 import "./Chartdisplay.css";
 import { useSessionStore } from "../../store/sessionStore";
 import BarChart from "./BarChart";
+import HoursWorkedChart from "./HoursWorkedChart";
+import MoodTrackerChart from "./MoodTrackerChart";
+
+type ChartView = "productivity" | "mood" | "hoursWorked";
 
 const Chartdisplay = () => {
   const [modalOpen, setModalOpen] = useState(true);
+  const [chartView, setChartView] = useState<ChartView>("productivity");
   const setData = useSessionStore((s) => s.setData);
 
   const customStyles = {
@@ -45,7 +50,33 @@ const Chartdisplay = () => {
         </svg>
       </button>
 
-      <BarChart />
+      <div className="chart-modal-inner">
+        <div className="chart-toolbar">
+          <label className="chart-view-label" htmlFor="chart-view-select">
+            View
+          </label>
+          <select
+            id="chart-view-select"
+            className="chart-view-select"
+            value={chartView}
+            onChange={(event) => setChartView(event.target.value as ChartView)}
+            aria-label="Choose chart: productivity, mood tracker, or hours worked"
+          >
+            <option value="productivity">Productivity</option>
+            <option value="mood">Mood Tracker</option>
+            <option value="hoursWorked">Hours worked</option>
+          </select>
+        </div>
+        <div className="chart-view-area">
+          {chartView === "productivity" ? (
+            <BarChart />
+          ) : chartView === "mood" ? (
+            <MoodTrackerChart />
+          ) : (
+            <HoursWorkedChart />
+          )}
+        </div>
+      </div>
     </Modal>
   );
 };

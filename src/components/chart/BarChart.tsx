@@ -124,7 +124,7 @@ const BarChart = () => {
         <>
           <div
             style={{
-              marginTop: "80px",
+              marginTop: "36px",
               marginLeft: "40px",
               marginBottom: "10px",
               padding: "0",
