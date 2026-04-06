@@ -7,6 +7,8 @@ const Contents = () => {
   const setSynopsis = useSessionStore((s) => s.setSynopsis);
   const setShowSetterPage = useSessionStore((s) => s.setShowSetterPage);
   const setShowParagraph = useSessionStore((s) => s.setShowParagraph);
+  // const setOpenMoodInput = useSessionStore((s) => s.setOpenMoodInput);
+  // const moodSelection = useSessionStore((s) => s.moodSelection);
 
   const questionMark = () => {
     return (
@@ -33,7 +35,19 @@ const Contents = () => {
             >
               Start a session{" "}
             </button>
+            {/* Mood picker removed from nav — keep store fields for a future return if needed.
+            <button
+              className="mood-input-button"
+              type="button"
+              onClick={() => setOpenMoodInput(true)}
+            >
+              Input your mood
+            </button>
+            */}
           </div>
+          {/* {moodSelection ? (
+            <p className="mood-selection-summary">Mood: {moodSelection}</p>
+          ) : null} */}
         </div>
       </div>
     </div>

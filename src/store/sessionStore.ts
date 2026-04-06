@@ -43,6 +43,10 @@ export type SessionState = {
   activeSupabaseSessionId: string | null;
   /** Bumped after block/session DB writes so charts refetch live data. */
   chartDataRevision: number;
+  /** Mood picker modal (frontend; persistence can come later). */
+  openMoodInput: boolean;
+  /** Display label for the mood the user chose (e.g. "Happy"). */
+  moodSelection: string | null;
 };
 
 export type SessionActions = {
@@ -76,6 +80,8 @@ export type SessionActions = {
   setTheme: (value: string) => void;
   setActiveSupabaseSessionId: (value: string | null) => void;
   bumpChartDataRevision: () => void;
+  setOpenMoodInput: (value: boolean) => void;
+  setMoodSelection: (value: string | null) => void;
 };
 
 const initialSessionState: SessionState = {
@@ -109,6 +115,8 @@ const initialSessionState: SessionState = {
   theme: THEME_STREETS,
   activeSupabaseSessionId: null,
   chartDataRevision: 0,
+  openMoodInput: false,
+  moodSelection: null,
 };
 
 /** Best-effort read of legacy `use-local-storage` key so users keep their background image. */
@@ -183,6 +191,8 @@ export const useSessionStore = create<SessionState & SessionActions>()(
       },
       bumpChartDataRevision: () =>
         set((state) => ({ chartDataRevision: state.chartDataRevision + 1 })),
+      setOpenMoodInput: (value) => set({ openMoodInput: value }),
+      setMoodSelection: (value) => set({ moodSelection: value }),
     }),
     {
       name: "pomoprogress-session",

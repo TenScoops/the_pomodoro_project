@@ -1,0 +1,102 @@
+.mood-input-modal {
+  position: relative;
+  padding: 20px 18px 22px;
+  color: #e8e8ec;
+}
+
+.mood-input-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 30%;
+  background-color: rgba(61, 61, 61, 0.55);
+  color: #fff;
+  cursor: pointer;
+}
+
+.mood-input-modal__close:hover {
+  background-color: rgba(90, 90, 90, 0.75);
+}
+
+.mood-input-modal__title {
+  margin: 8px 40px 6px 0;
+  font-family: "Kalam", cursive, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+}
+
+.mood-input-modal__hint {
+  margin: 0 0 18px;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+  color: #a8a8b2;
+  text-align: center;
+}
+
+.mood-input-modal__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 440px) {
+  .mood-input-modal__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.mood-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 96px;
+  padding: 14px 10px;
+  border: solid 2px #000;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(40, 42, 52, 0.95) 0%, rgba(24, 26, 36, 0.98) 100%);
+  box-shadow: 4px 6px 8px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.mood-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 8px 12px rgba(0, 0, 0, 0.55);
+  background: linear-gradient(180deg, rgba(50, 54, 68, 0.98) 0%, rgba(30, 33, 45, 1) 100%);
+}
+
+.mood-card:active {
+  transform: translateY(0);
+}
+
+.mood-card__face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.mood-card__icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #e8e8ec;
+  flex-shrink: 0;
+}
+
+.mood-card__label {
+  font-family: "Kalam", cursive, sans-serif;
+  font-size: 15px;
+  color: #f0f0f4;
+  text-align: center;
+}

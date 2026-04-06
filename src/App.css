@@ -160,7 +160,7 @@ button{
   font-size: 16px;
   font-family: 'Kalam', cursive;
   border-radius: 8px;
-  margin-right: 40px;
+  margin-right: 0;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
@@ -172,6 +172,37 @@ border: 1px solid black;
   box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.mood-input-button{
+  background-color: rgba(73, 73, 73, 0.844);
+  color: white;
+  min-width: 170px;
+  height: 40.5px;
+  font-size: 15px;
+  font-family: 'Kalam', cursive;
+  border-radius: 8px;
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  border: 1px solid black;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.mood-input-button:hover{
+  animation: blinking2 0.8s infinite;
+  box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 7px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.mood-selection-summary{
+  margin: 10px 0 0;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
 }
 .the-content-text{
  margin-top: 25px;
@@ -185,8 +216,11 @@ border: 1px solid black;
   flex-direction: column;
   background-color: #1e212dba;
   /* backdrop-filter: blur(2px); */
-  width: 300px;
-  height: 80px;
+  width: auto;
+  min-width: 300px;
+  max-width: min(100%, 520px);
+  min-height: 80px;
+  padding: 10px 14px 12px;
   border-radius: 8px;
   /* border: 1px solid black; */
 /* -webkit-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
@@ -213,8 +247,10 @@ p, h1, h2,h3{
 
 .divsession-buttons{
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  gap: 10px 12px;
 }
 .questionMark{
   /* align-items: center; */

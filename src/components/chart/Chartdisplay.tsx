@@ -5,9 +5,9 @@ import type { ChartPeriodRange } from "./chartLabels";
 import { useSessionStore } from "../../store/sessionStore";
 import BarChart from "./BarChart";
 import HoursWorkedChart from "./HoursWorkedChart";
-import MoodTrackerChart from "./MoodTrackerChart";
+// import MoodTrackerChart from "./MoodTrackerChart";
 
-type ChartView = "productivity" | "mood" | "hoursWorked";
+type ChartView = "productivity" | "hoursWorked";
 
 const Chartdisplay = () => {
   const [modalOpen, setModalOpen] = useState(true);
@@ -63,11 +63,11 @@ const Chartdisplay = () => {
               className="chart-view-select"
               value={chartView}
               onChange={(event) => setChartView(event.target.value as ChartView)}
-              aria-label="Choose chart: productivity, mood tracker, or hours worked"
+              aria-label="Choose chart: productivity or hours worked"
             >
-              <option value="productivity">Productivity</option>
-              <option value="mood">Mood Tracker</option>
-              <option value="hoursWorked">Hours worked</option>
+            <option value="productivity">Productivity</option>
+            <option value="hoursWorked">Hours worked</option>
+            {/* <option value="mood">Mood Tracker</option> */}
             </select>
           </div>
 
@@ -102,11 +102,10 @@ const Chartdisplay = () => {
         <div className="chart-view-area">
           {chartView === "productivity" ? (
             <BarChart timeRange={period} />
-          ) : chartView === "mood" ? (
-            <MoodTrackerChart timeRange={period} />
           ) : (
             <HoursWorkedChart timeRange={period} />
           )}
+          {/* chartView === "mood" ? <MoodTrackerChart timeRange={period} /> : ... */}
         </div>
       </div>
     </Modal>

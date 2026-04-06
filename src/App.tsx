@@ -8,6 +8,7 @@ import Logout from "./components/Logout";
 import RatingMethod from "./components/setter/RatingMethod";
 import Setter from "./components/setter/Setter";
 import Chartdisplay from "./components/chart/Chartdisplay";
+// import MoodInputModal from "./components/mood/MoodInputModal";
 import Navbar from "./components/sidebar/Navbar";
 import Sidebar from "./components/sidebar/Sidebar";
 import Synopsis from "./components/sidebar/Synopsis";
@@ -31,6 +32,7 @@ function App() {
   const openThemePage = useSessionStore((s) => s.openThemePage);
   const openHowTo = useSessionStore((s) => s.openHowTo);
   const logout = useSessionStore((s) => s.logout);
+  // const openMoodInput = useSessionStore((s) => s.openMoodInput);
 
   useEffect(() => {
     localStorage.removeItem("Theme");
@@ -90,6 +92,7 @@ function App() {
         )}
         <AuthModal isOpen={authModalOpen} onRequestClose={() => setAuthModalOpen(false)} />
         {data && <Chartdisplay />}
+        {/* {openMoodInput && <MoodInputModal />} */}
         {synopsis && <Synopsis />}
         {openThemePage && <Theme />}
         {openHowTo && <Howtorate />}
