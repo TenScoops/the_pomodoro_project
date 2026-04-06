@@ -57,11 +57,11 @@ export function playTimerPhaseCompleteSound(phaseThatEnded: Phase): void {
     const secondBeepStart =
       now + BEEP_DURATION_SEC + GAP_BETWEEN_BEEPS_SEC;
     if (phaseThatEnded === "work") {
-      scheduleBeep(context, now, 880, 0.13);
-      scheduleBeep(context, secondBeepStart, 1108, 0.12);
+      scheduleBeep(context, now, 880, 0.22);
+      scheduleBeep(context, secondBeepStart, 1108, 0.2);
     } else {
-      scheduleBeep(context, now, 659, 0.1);
-      scheduleBeep(context, secondBeepStart, 784, 0.095);
+      scheduleBeep(context, now, 659, 0.17);
+      scheduleBeep(context, secondBeepStart, 784, 0.16);
     }
   };
 
