@@ -1,0 +1,102 @@
+.data-logging-error-overlay {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10060;
+  display: flex;
+  justify-content: center;
+  width: min(440px, calc(100vw - 32px));
+  pointer-events: auto;
+}
+
+.data-logging-error-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px 14px 18px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(40, 25, 28, 0.98), rgba(24, 18, 22, 0.99));
+  border: 1px solid rgba(239, 68, 68, 0.55);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  animation: dataLoggingErrorIn 0.45s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+@keyframes dataLoggingErrorIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.data-logging-error-icon-wrap {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.data-logging-error-x {
+  color: #ef4444;
+  font-size: 26px;
+  filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.45));
+}
+
+.data-logging-error-text-wrap {
+  flex: 1;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.data-logging-error-title {
+  margin: 0;
+  font-family: "Kalam", cursive, sans-serif;
+  font-size: 17px;
+  line-height: 1.25;
+  color: #fecaca;
+  text-align: left;
+}
+
+.data-logging-error-body {
+  margin: 6px 0 0;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: rgba(254, 242, 242, 0.92);
+  text-align: left;
+  word-break: break-word;
+}
+
+.data-logging-error-dismiss {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 6px 10px;
+  align-self: flex-start;
+  border: 1px solid rgba(248, 113, 113, 0.5);
+  border-radius: 10px;
+  background: rgba(127, 29, 29, 0.35);
+  color: #fecaca;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+}
+
+.data-logging-error-dismiss:hover {
+  background: rgba(153, 27, 27, 0.55);
+}
+
+.data-logging-error-dismiss:focus-visible {
+  outline: 2px solid #fca5a5;
+  outline-offset: 2px;
+}

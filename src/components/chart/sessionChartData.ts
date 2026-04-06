@@ -5,6 +5,11 @@ import { getMonthDayMetas, getYearMonthMetas } from "./chartLabels";
 
 const NO_DATA_BAR_COLOR = "rgb(90, 90, 90)";
 
+/** Charts only count fully finished pomodoros — not draft rows still in progress. */
+function completedSessionsOnly(sessions: SessionWithRatings[]): SessionWithRatings[] {
+  return sessions.filter((session) => session.sessions_completed === 1);
+}
+
 function collectRatingsFromSessions(sessions: SessionWithRatings[]): number[] {
   const ratings: number[] = [];
   for (const session of sessions) {
@@ -33,13 +38,14 @@ function groupSessionsByDate(sessions: SessionWithRatings[]): Map<string, Sessio
   return map;
 }
 
-/** Per-calendar-day hours (sum of `total_time_worked` / 3600); x labels use `getMonthDayMetas(..., "full")` like Productivity month bars. */
+/** Per-calendar-day hours (sum of `total_time_worked` / 3600); only **completed** sessions. */
 export function buildMonthHoursLineSeriesFromSessions(
   sessions: SessionWithRatings[],
   year: number,
   monthIndex0: number
 ): { labels: string[]; hoursSeries: number[] } {
-  const byDate = groupSessionsByDate(sessions);
+  const done = completedSessionsOnly(sessions);
+  const byDate = groupSessionsByDate(done);
   const dayMetas = getMonthDayMetas(year, monthIndex0, "full");
   const labels: string[] = [];
   const hoursSeries: number[] = [];
@@ -52,17 +58,18 @@ export function buildMonthHoursLineSeriesFromSessions(
   return { labels, hoursSeries };
 }
 
-/** Per-calendar-month hours for a year (sum of `total_time_worked` / 3600); labels match `getYearMonthMetas`. */
+/** Per-calendar-month hours for a year; only **completed** sessions. */
 export function buildYearHoursLineSeriesFromSessions(
   sessions: SessionWithRatings[],
   year: number
 ): { labels: string[]; hoursSeries: number[] } {
+  const done = completedSessionsOnly(sessions);
   const monthMetas = getYearMonthMetas(year);
   const labels: string[] = [];
   const hoursSeries: number[] = [];
   for (const { label, startDate, endDate } of monthMetas) {
     labels.push(label);
-    const monthSessions = sessions.filter(
+    const monthSessions = done.filter(
       (session) => session.date >= startDate && session.date <= endDate
     );
     const totalSeconds = monthSessions.reduce((sum, session) => sum + session.total_time_worked, 0);
@@ -76,14 +83,14 @@ export function buildMonthBarDatasetFromSessions(
   year: number,
   monthIndex0: number
 ): DummyBarDataset {
-  const byDate = groupSessionsByDate(sessions);
+  const done = completedSessionsOnly(sessions);
+  const byDate = groupSessionsByDate(done);
   const dayMetas = getMonthDayMetas(year, monthIndex0);
 
   const monthData: ChartPoint[] = dayMetas.map(({ iso, label }) => {
     const daySessions = byDate.get(iso) ?? [];
     const ratings = collectRatingsFromSessions(daySessions);
     const productivityAvg = averageRatings(ratings);
-    /** `total_time_worked` increases each rated block; completed sessions hold the full session total. */
     const totalSeconds = daySessions.reduce((sum, session) => sum + session.total_time_worked, 0);
     const lengthHours = Number((totalSeconds / 3600).toFixed(1));
     const sessionCount = daySessions.length;
@@ -111,10 +118,11 @@ export function buildMonthBarDatasetFromSessions(
 }
 
 export function buildYearBarDatasetFromSessions(sessions: SessionWithRatings[], year: number): DummyBarDataset {
+  const done = completedSessionsOnly(sessions);
   const monthMetas = getYearMonthMetas(year);
 
   const yearData: ChartPoint[] = monthMetas.map(({ label, startDate, endDate }) => {
-    const monthSessions = sessions.filter(
+    const monthSessions = done.filter(
       (session) => session.date >= startDate && session.date <= endDate
     );
     const ratings = collectRatingsFromSessions(monthSessions);

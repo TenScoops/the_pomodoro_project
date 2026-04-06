@@ -1,4 +1,4 @@
-import { formatLocalISODate } from "../../lib/calendarDates";
+import { formatLocalISODate, getAppNow } from "../../lib/calendarDates";
 
 /** Single-line label for a calendar day (matches dummy chart / locale). */
 export function formatChartDayLabel(date: Date): string {
@@ -53,13 +53,13 @@ export function getMonthDayMetas(
  * (`formatChartDayLabel`: weekday + month + day, e.g. Wed, Apr 3).
  */
 export function getCurrentMonthDayMetasLineCharts(): { iso: string; label: string }[] {
-  const now = new Date();
+  const now = getAppNow();
   return getMonthDayMetas(now.getFullYear(), now.getMonth(), "full");
 }
 
 /** Twelve month labels for the current calendar year (matches productivity year bars). */
 export function getCurrentYearMonthLabels(): string[] {
-  const year = new Date().getFullYear();
+  const year = getAppNow().getFullYear();
   return getYearMonthMetas(year).map((meta) => meta.label);
 }
 

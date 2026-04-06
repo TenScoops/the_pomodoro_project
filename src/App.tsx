@@ -14,6 +14,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import Synopsis from "./components/sidebar/Synopsis";
 import Theme from "./components/sidebar/Theme";
 import Timer from "./components/timer/Timer";
+import DataLoggingErrorToast from "./components/notifications/DataLoggingErrorToast";
 import { useAuth } from "./hooks/useAuth";
 import { useSessionStore } from "./store/sessionStore";
 
@@ -32,6 +33,7 @@ function App() {
   const openThemePage = useSessionStore((s) => s.openThemePage);
   const openHowTo = useSessionStore((s) => s.openHowTo);
   const logout = useSessionStore((s) => s.logout);
+  const dataLoggingAlert = useSessionStore((s) => s.dataLoggingAlert);
   // const openMoodInput = useSessionStore((s) => s.openMoodInput);
 
   useEffect(() => {
@@ -98,6 +100,11 @@ function App() {
         {openHowTo && <Howtorate />}
 
         {logout && <Logout />}
+        <DataLoggingErrorToast
+          show={Boolean(dataLoggingAlert)}
+          title={dataLoggingAlert?.title ?? ""}
+          body={dataLoggingAlert?.body ?? ""}
+        />
       </div>
     </div>
   );

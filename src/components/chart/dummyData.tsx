@@ -3,10 +3,13 @@
  * BarChart imports these builders; swap in real Supabase-backed data when ready.
  */
 
+import { getAppNow } from "../../lib/calendarDates";
+
 export type ChartPoint = {
   x: string;
   y: string | number;
   length: number;
+  /** Completed sessions in the bucket (draft sessions are excluded from live charts). */
   sessions: number;
   backgroundColor: string;
   /** Set for Supabase-backed charts; tooltip shows total blocks completed in the bucket. */
@@ -32,7 +35,7 @@ function formatMonthLabel(date: Date): string {
 }
 
 function monthDayLabelsForCurrentMonth(): string[] {
-  const currentDate = new Date();
+  const currentDate = getAppNow();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
   const datesInMonth: string[] = [];
@@ -48,7 +51,7 @@ function monthDayLabelsForCurrentMonth(): string[] {
 }
 
 function yearMonthLabels(): string[] {
-  const currentDate = new Date();
+  const currentDate = getAppNow();
   const currentYear = currentDate.getFullYear();
   const monthsInYear: string[] = [];
 

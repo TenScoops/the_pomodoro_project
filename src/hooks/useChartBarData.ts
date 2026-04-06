@@ -9,6 +9,7 @@ import {
   getSessionsWithRatingsForMonth,
   getSessionsWithRatingsForYear,
 } from "../services/pomoprogressService";
+import { getAppNow } from "../lib/calendarDates";
 import { useSessionStore } from "../store/sessionStore";
 import { useAuth } from "./useAuth";
 
@@ -31,7 +32,7 @@ export function useChartBarData(theTime: ChartPeriodRange) {
     setLoading(true);
     setErrorMessage(null);
 
-    const now = new Date();
+    const now = getAppNow();
     const year = now.getFullYear();
     const monthIndex0 = now.getMonth();
     const monthOneThroughTwelve = monthIndex0 + 1;

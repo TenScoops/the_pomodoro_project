@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { AiOutlineArrowRight, AiOutlineQuestionCircle } from "react-icons/ai";
 import { clearPersistedTimer } from "../lib/timerPersistence";
 import { useSessionStore } from "../store/sessionStore";
 
@@ -27,13 +27,15 @@ const Contents = () => {
             <button
               className="startSession-button"
               type="button"
+              aria-label="Start a session"
               onClick={() => {
                 clearPersistedTimer();
                 setShowSetterPage(true);
                 setShowParagraph(false);
               }}
             >
-              Start a session{" "}
+              Start
+              <AiOutlineArrowRight className="startSession-button-arrowIcon" aria-hidden />
             </button>
             {/* Mood picker removed from nav — keep store fields for a future return if needed.
             <button

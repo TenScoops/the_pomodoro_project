@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import PerformanceRatedToast from "../notifications/PerformanceRatedToast";
 import "./Rating.css";
-import { logBlockRatingForCurrentSession } from "../../services/pomoprogressService";
+import { finalizeActivePomodoroSession, logBlockRatingForCurrentSession } from "../../services/pomoprogressService";
 import { useSessionStore } from "../../store/sessionStore";
 
 const Rating = () => {
@@ -56,7 +56,23 @@ const Rating = () => {
     void logBlockRatingForCurrentSession(blockNum, score).then((result) => {
       if (result.error) {
         console.error("Failed to log block rating", result.error);
+        return;
       }
+      const store = useSessionStore.getState();
+      const totalBlocks = store.numOfBreaks + 1;
+      if (blockNum !== totalBlocks) {
+        return;
+      }
+      void finalizeActivePomodoroSession().then((finalizeResult) => {
+        if (finalizeResult.error) {
+          console.error("Failed to finalize pomodoro run on the server", finalizeResult.error);
+          return;
+        }
+        const after = useSessionStore.getState();
+        after.setSessionComplete(true);
+        after.setBlockNum(0);
+        after.setHasUserRated(false);
+      });
     });
   };
 

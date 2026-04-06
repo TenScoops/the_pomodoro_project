@@ -14,7 +14,6 @@ import {
   remainingDisplaySeconds,
   timerTickIntervalMs,
 } from "../../lib/timerSpeed";
-import { finalizeActivePomodoroSession } from "../../services/pomoprogressService";
 import { useSessionStore } from "../../store/sessionStore";
 
 type TimerMode = "work" | "break";
@@ -353,6 +352,10 @@ const Timer = () => {
     pauseFromClock();
   }, [mode, hasUserRated, isPaused, pauseFromClock]);
 
+  /**
+   * After a break rating, advance block when returning to work. Finalization runs after the last rating
+   * from `Rating` (after `logBlockRatingForCurrentSession` succeeds) so it cannot race the draft update.
+   */
   useEffect(() => {
     const store = useSessionStore.getState();
 
@@ -363,30 +366,6 @@ const Timer = () => {
       const next = store.blockNum + blockRef.current;
       store.setBlockNum(next);
       blockRef.current = 0;
-    }
-
-    const latest = useSessionStore.getState();
-    /**
-     * Last work block → `break` is the rating window for that block. We must NOT finalize here
-     * until `hasUserRated` is true; otherwise we complete the session before the rating modal can run.
-     */
-    const isFinalRatingBreak =
-      latest.blockNum === numOfblocks &&
-      mode === "break" &&
-      latest.hasUserRated &&
-      !latest.sessionComplete;
-
-    if (isFinalRatingBreak) {
-      void finalizeActivePomodoroSession().then((result) => {
-        if (result.error) {
-          console.error("Failed to finalize session on the server", result.error);
-          return;
-        }
-        const storeAfter = useSessionStore.getState();
-        storeAfter.setSessionComplete(true);
-        storeAfter.setBlockNum(0);
-        storeAfter.setHasUserRated(false);
-      });
     }
   }, [mode, numOfblocks, hasUserRated]);
 

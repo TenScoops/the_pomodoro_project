@@ -43,6 +43,8 @@ export type SessionState = {
   activeSupabaseSessionId: string | null;
   /** Bumped after block/session DB writes so charts refetch live data. */
   chartDataRevision: number;
+  /** Persistent error toast (manual dismiss) when logging to Supabase fails or looks wrong. */
+  dataLoggingAlert: { title: string; body: string } | null;
   /** Mood picker modal (frontend; persistence can come later). */
   openMoodInput: boolean;
   /** Display label for the mood the user chose (e.g. "Happy"). */
@@ -79,6 +81,7 @@ export type SessionActions = {
   setOption: (value: string | undefined) => void;
   setTheme: (value: string) => void;
   setActiveSupabaseSessionId: (value: string | null) => void;
+  setDataLoggingAlert: (value: { title: string; body: string } | null) => void;
   bumpChartDataRevision: () => void;
   setOpenMoodInput: (value: boolean) => void;
   setMoodSelection: (value: string | null) => void;
@@ -115,6 +118,7 @@ const initialSessionState: SessionState = {
   theme: THEME_STREETS,
   activeSupabaseSessionId: null,
   chartDataRevision: 0,
+  dataLoggingAlert: null,
   openMoodInput: false,
   moodSelection: null,
 };
@@ -189,6 +193,7 @@ export const useSessionStore = create<SessionState & SessionActions>()(
           /* ignore quota / private mode */
         }
       },
+      setDataLoggingAlert: (value) => set({ dataLoggingAlert: value }),
       bumpChartDataRevision: () =>
         set((state) => ({ chartDataRevision: state.chartDataRevision + 1 })),
       setOpenMoodInput: (value) => set({ openMoodInput: value }),

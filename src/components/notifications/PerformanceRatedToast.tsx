@@ -36,7 +36,7 @@ const PerformanceRatedToast = ({ show, blockNumber, onDismiss }: PerformanceRate
         </div>
         <div>
           <p className="block-complete-toast-text">Performance rated!</p>
-          <p className="block-complete-toast-sub">Block #{blockNumber} saved — nice work</p>
+          <p className="block-complete-toast-sub">Block #{blockNumber} saved, nice work!</p>
         </div>
       </div>
     </div>,
