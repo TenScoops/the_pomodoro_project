@@ -123,7 +123,7 @@ const BarChart = ({ timeRange }: BarChartProps) => {
         <>
           {hasUser && errorMessage ? <p className="chart-status chart-status--error">{errorMessage}</p> : null}
           {showEmptyHint ? (
-            <p className="chart-status chart-status--empty">No completed sessions for this period yet. Finish a full pomodoro while signed in to see real bars.</p>
+            <p className="chart-status chart-status--empty">No ratings for this period yet. Rate a block while signed in to see real bars.</p>
           ) : null}
 
           {barData && chartPayload ? <Bar style={{ marginTop: "0px" }} data={barData} options={chartPayload.options} /> : null}

@@ -170,7 +170,7 @@ const HoursWorkedChart = ({ timeRange }: HoursWorkedChartProps) => {
   const emptyHintText =
     timeRange === "Month"
       ? "No time logged for this month yet. Complete work blocks while signed in to see the line fill in."
-      : "No time logged for this year yet. Complete full sessions while signed in to see the line fill in.";
+      : "No time logged for this year yet. Complete work blocks while signed in to see the line fill in.";
 
   return (
     <div

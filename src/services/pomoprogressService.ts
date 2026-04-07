@@ -171,10 +171,18 @@ export async function insertSession(
   };
 }
 
-export async function insertBlockRating(
+/**
+ * Inserts or replaces the rating for `(session_id, block_number)` so a repeat tap on the same block
+ * updates the row instead of failing on the unique constraint.
+ */
+export async function upsertBlockRating(
   payload: BlockRatingInsert
 ): Promise<{ data: BlockRatingRow | null; error: PostgrestError | null }> {
-  const response = await supabase.from("block_ratings").insert(payload).select().single();
+  const response = await supabase
+    .from("block_ratings")
+    .upsert(payload, { onConflict: "session_id,block_number" })
+    .select()
+    .single();
 
   return {
     data: response.data as BlockRatingRow | null,
@@ -251,7 +259,7 @@ export async function logBlockRatingForCurrentSession(
     store.setActiveSupabaseSessionId(sessionId);
   }
 
-  const { error: ratingError } = await insertBlockRating({
+  const { error: ratingError } = await upsertBlockRating({
     session_id: sessionId,
     block_number: blockNumber,
     rating,
@@ -537,7 +545,7 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
   }
 
   for (const { blockNumber, rating } of ratings) {
-    const { error: ratingError } = await insertBlockRating({
+    const { error: ratingError } = await upsertBlockRating({
       session_id: sessionRow.id,
       block_number: blockNumber,
       rating,
