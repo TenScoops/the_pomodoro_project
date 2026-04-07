@@ -90,10 +90,10 @@ export function getProductivityBarColor(productivityAvg: number): string {
     return "rgb(184, 255, 18)";
   }
   if (productivityAvg >= 8.3 && productivityAvg < 9) {
-    return "rgb(2, 188, 5)";
+    return "rgb(0, 228, 4)";
   }
   if (productivityAvg >= 9 && productivityAvg <= 10) {
-    return "rgb(0, 228, 4)";
+    return "rgb(2, 188, 5)";
   }
   return "";
 }
