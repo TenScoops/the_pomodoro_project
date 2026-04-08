@@ -383,6 +383,43 @@ export async function getSessionsWithRatingsForYear(
   };
 }
 
+/** Sessions for one specific local calendar date (YYYY-MM-DD). */
+export async function getSessionsWithRatingsForDate(
+  date: string
+): Promise<{ data: SessionWithRatings[]; error: PostgrestError | null }> {
+  const response = await supabase
+    .from("sessions")
+    .select(sessionSelectWithRatings)
+    .eq("date", date)
+    .order("date", { ascending: true });
+
+  return {
+    data: (response.data ?? []) as SessionWithRatings[],
+    error: response.error,
+  };
+}
+
+/** Latest calendar date before `beforeDate` where the signed-in user has at least one rated block. */
+export async function getLatestRatedSessionDateBefore(beforeDate: string): Promise<{
+  date: string | null;
+  error: PostgrestError | null;
+}> {
+  const response = await supabase
+    .from("sessions")
+    .select("date")
+    .gt("blocks_completed", 0)
+    .lt("date", beforeDate)
+    .order("date", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const row = response.data as { date: string } | null;
+  return {
+    date: row?.date ?? null,
+    error: response.error,
+  };
+}
+
 /**
  * After the last block is rated: set final `total_time_worked` and `sessions_completed` on the draft row.
  * Block ratings were already inserted per tap via `logBlockRatingForCurrentSession`.

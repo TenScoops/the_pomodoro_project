@@ -1,0 +1,8 @@
+- [x] Review rules and current chart/toast flow
+- [x] Add logic to detect if yesterday was the user's last active day with avg >= 8.3
+- [x] Show a green-check notification only when opening the graph modal
+- [x] Make the notification persistent until dismissed with X
+- [x] Prevent repeat popups on the same day
+- [x] Review
+  - Implemented with minimal-impact changes in chart modal + new toast component.
+  - Verified with `npm run build` (passes; one unrelated existing warning in `Finished.tsx`).
