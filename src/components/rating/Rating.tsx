@@ -23,20 +23,22 @@ const Rating = () => {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      backgroundColor: "#181a24",
-      width: "70vmin",
+      backgroundColor: "#1e212dcd",
+      width: "min(70vmin, 96vw)",
       height: "70vh",
-      borderRadius: "20px",
+      maxHeight: "90vh",
+      borderRadius: "0",
+      border: "1px solid #000",
+      padding: "clamp(16px, 3vmin, 28px)",
+      outline: "none",
+      overflow: "auto",
+      boxShadow: "7px 8px 5px 0px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
     },
   };
 
   const questionMark = () => {
     return (
-      <button
-        type="button"
-        onClick={() => setOpenHowTo(true)}
-        style={{ backgroundColor: "transparent", width: "42px", marginRight: "0", borderRadius: "20%" }}
-      >
+      <button type="button" className="rating-help-btn" onClick={() => setOpenHowTo(true)} aria-label="How to rate your performance">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
           <path
             strokeLinecap="round"
@@ -80,7 +82,7 @@ const Rating = () => {
     return (
       <div className="scores">
         <div className="scoreText">
-          <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", marginTop: "20px" }}>
+          <div className="rating-title-row">
             <h3>Rate your performance for block</h3>
             <p className="theBlockNum"> #{blockNum}</p>
           </div>
@@ -88,39 +90,39 @@ const Rating = () => {
             How to rate your performance
             {questionMark()}
           </p>
-          <hr style={{ width: "400px", margin: "0" }} />
+          <hr className="rating-score-divider" />
         </div>
 
-        <div className="score" id="score10" onClick={() => handleRatingClick(10)}>
+        <button type="button" className="rating-score-btn" id="score10" onClick={() => handleRatingClick(10)}>
           10 - Fantastic
-        </div>
-        <div className="score" id="score9" onClick={() => handleRatingClick(9)}>
+        </button>
+        <button type="button" className="rating-score-btn" id="score9" onClick={() => handleRatingClick(9)}>
           9 - Great
-        </div>
-        <div className="score" id="score8" onClick={() => handleRatingClick(8)}>
+        </button>
+        <button type="button" className="rating-score-btn" id="score8" onClick={() => handleRatingClick(8)}>
           8 - Good
-        </div>
-        <div className="score" id="score7" onClick={() => handleRatingClick(7)}>
+        </button>
+        <button type="button" className="rating-score-btn" id="score7" onClick={() => handleRatingClick(7)}>
           7 - Decent
-        </div>
-        <div className="score" id="score6" onClick={() => handleRatingClick(6)}>
+        </button>
+        <button type="button" className="rating-score-btn" id="score6" onClick={() => handleRatingClick(6)}>
           6 - Ok
-        </div>
-        <div className="score" id="score5" onClick={() => handleRatingClick(5)}>
+        </button>
+        <button type="button" className="rating-score-btn" id="score5" onClick={() => handleRatingClick(5)}>
           5 - Not good
-        </div>
-        <div className="score" id="score4" onClick={() => handleRatingClick(4)}>
+        </button>
+        <button type="button" className="rating-score-btn" id="score4" onClick={() => handleRatingClick(4)}>
           4 - Bad
-        </div>
-        <div className="score" id="score3" onClick={() => handleRatingClick(3)}>
+        </button>
+        <button type="button" className="rating-score-btn" id="score3" onClick={() => handleRatingClick(3)}>
           3 - Very bad
-        </div>
-        <div className="score" id="score2" onClick={() => handleRatingClick(2)}>
+        </button>
+        <button type="button" className="rating-score-btn" id="score2" onClick={() => handleRatingClick(2)}>
           2 - Really bad
-        </div>
-        <div className="score" id="score1" onClick={() => handleRatingClick(1)}>
+        </button>
+        <button type="button" className="rating-score-btn" id="score1" onClick={() => handleRatingClick(1)}>
           1 - Terrible
-        </div>
+        </button>
       </div>
     );
   };

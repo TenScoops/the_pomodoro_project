@@ -1,115 +1,223 @@
-.headerating{
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-style: italic;
+.headerating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: "Kalam", cursive, sans-serif;
+  font-style: normal;
 }
 
-.scores{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.scores {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
 }
 
-.ratingdiv{
-    display:flex;
-    align-items: center;
-    justify-content: center;
+.ratingdiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.headerating h1{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin:0;
-    background-color: #1e212d;
-    
-}
-.headerating p{
-    margin:0;
-    font-size: 15px;
-    background-color: #1e212d;
-}
-.score{
-    margin-top: 20px;
-    height: 45px;
-    background-color: #181a24;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
-    width: 50vmin;
-    border-radius: 10px;
-    transition: 0.2s ease-in;
-}
-.scoreText{
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.scoreText h3{
-    display:flex;
-    margin-bottom: 0;
-    margin-top: 0;
-    letter-spacing: 1px;
+.headerating h1 {
+  font-family: "Kalam", cursive, sans-serif;
+  margin: 0;
+  background-color: transparent;
 }
 
-.theBlockNum{
-    font-size:35px; 
-    background-color:white; 
-    color:black; 
-    border-radius:40px;
-    margin-bottom:2px;
-}
-.ratePerformance{
-    font-size:18px;  
-    margin-bottom:10px;
-    display:flex; 
-    justify-content:center;
-}
-.score:hover{
-    cursor: pointer;
-    width: 55vmin;
-    
-}
-.scoreText p{
-    margin: 0;
+.headerating p {
+  margin: 0;
+  font-size: 15px;
+  background-color: transparent;
 }
 
-.how-to-rate p{
-    margin:0;
+/* Plain list rows — Kalam + per-score hover colors only (no panel chrome) */
+.rating-score-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  margin: 0;
+  margin-right: 0;
+  width: min(50vmin, 100%);
+  min-height: 0;
+  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  font-family: "Kalam", cursive, sans-serif;
+  font-size: 20px;
+  color: rgba(248, 250, 252, 0.96);
+  background-color: transparent;
+  box-shadow: none;
+  transition: background-color 0.15s ease;
 }
 
-#score10:hover{
-    background-color: rgb(0, 197, 3);
+.rating-score-btn:hover {
+  border-radius: 0;
 }
-#score9:hover{
-    background-color: rgb(2, 188, 5);
+
+.rating-score-btn::-moz-focus-inner {
+  border: 0;
 }
-#score8:hover{
-    background-color: rgb(184, 255, 18);
+
+.rating-score-btn:focus:not(:focus-visible) {
+  outline: none;
 }
-#score7:hover{
-    background-color: yellow;
+
+.rating-score-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.28);
+  outline-offset: 2px;
 }
-#score6:hover{
-    background-color: rgb(255, 191, 0);
+
+.scoreText {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
-#score5:hover{
-    background-color: rgb(255, 136, 0);
+
+.rating-title-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  gap: 6px;
 }
-#score4:hover{
-    background-color: orangered;
+
+.scoreText h3 {
+  display: flex;
+  margin-bottom: 0;
+  margin-top: 0;
+  letter-spacing: 1px;
+  font-family: "Kalam", cursive, sans-serif;
 }
-#score3:hover{
-    background-color: rgb(255, 34, 0);
+
+.theBlockNum {
+  font-size: 35px;
+  background-color: white;
+  color: black;
+  border-radius: 40px;
+  margin-bottom: 2px;
 }
-#score2:hover{
-    background-color: rgb(205, 0, 0);
+
+.ratePerformance {
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
-#score1:hover{
-    background-color: rgb(170, 0, 0);
-   /* background-color: rgba(255, 0, 0, 0.733); */
+
+.scoreText p {
+  margin: 0;
+}
+
+.rating-score-divider {
+  width: min(400px, 90%);
+  margin: 0 0 8px;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.rating-help-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  margin: 0;
+  flex-shrink: 0;
+  width: 42px;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  color: rgba(248, 250, 252, 0.96);
+  background-color: #1e212dcd;
+  box-shadow:
+    7px 10px 5px 0px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition:
+    background-color 0.12s ease,
+    filter 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.rating-help-btn:hover {
+  background-color: rgba(48, 48, 52, 0.94);
+  filter: brightness(1.05);
+}
+
+.rating-help-btn:active {
+  filter: brightness(0.96);
+}
+
+.rating-help-btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.rating-help-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.28);
+  outline-offset: 2px;
+}
+
+.rating-help-btn svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.how-to-rate p {
+  margin: 0;
+}
+
+#score10:hover {
+  background-color: rgb(0, 197, 3);
+  filter: none;
+}
+#score9:hover {
+  background-color: rgb(2, 188, 5);
+  filter: none;
+}
+#score8:hover {
+  background-color: rgb(184, 255, 18);
+  filter: none;
+}
+#score7:hover {
+  background-color: yellow;
+  filter: none;
+}
+#score6:hover {
+  background-color: rgb(255, 191, 0);
+  filter: none;
+}
+#score5:hover {
+  background-color: rgb(255, 136, 0);
+  filter: none;
+}
+#score4:hover {
+  background-color: orangered;
+  filter: none;
+}
+#score3:hover {
+  background-color: rgb(255, 34, 0);
+  filter: none;
+}
+#score2:hover {
+  background-color: rgb(205, 0, 0);
+  filter: none;
+}
+#score1:hover {
+  background-color: rgb(170, 0, 0);
+  filter: none;
 }

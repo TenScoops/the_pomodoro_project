@@ -79,7 +79,7 @@ function App() {
     <div className="App" style={{ backgroundImage: `url(${theme})` }}>
       <div className="theApp">
         <div className="mainStage mainStage--hubWireframe">
-          {!showSetterPage && !showTimerPage && (
+          {!showSetterPage && !showTimerPage && !sessionComplete && (
             <>
               <MainHubHeader user={session?.user ?? null} />
               <CenterQuadStage
