@@ -94,28 +94,25 @@ body{
   position: relative;
 }
 
-/* No z-index here: a higher z-index was painting the whole column over the fixed sidebar.
-   DOM order (mainStage then Sidebar) keeps the sidebar on top where they overlap; padding keeps them apart. */
 .mainStage {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: clamp(13px, 2.2vmin, 26px);
   flex: 1;
   min-width: 0;
+  width: 100%;
+  padding: clamp(9px, 2.2vmin, 22px);
+  box-sizing: border-box;
 }
 
-/* Reserve space for the fixed sidebar so centered UI is not underneath it (clicks were hitting the sidebar). */
-.theApp--withSidebar {
-  padding-left: 280px;
+.mainStage--hubWireframe {
+  justify-content: flex-start;
+  padding-top: clamp(13px, 3.3vmin, 31px);
 }
 
-@media only screen and (max-width: 1400px) {
-  .theApp--withSidebar {
-    padding-left: 0;
-    padding-bottom: 47px;
-  }
-}
 .h1-text{
   font-size: 21px;
   display: none;
@@ -257,6 +254,16 @@ p, h1, h2,h3{
   display: flex;
 }
 
+/* Theme + Data icon strip to the left of the timer during a session */
+.theTimerContents.theTimerContents--timerHub {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(15px, 2.75vmin, 31px);
+  width: 100%;
+}
+
 .divsession-buttons{
   display: flex;
   flex-wrap: wrap;
@@ -305,7 +312,7 @@ p, h1, h2,h3{
   .fullscreen-button{
     display: none;
   }
-  .theTimerContents{
+  .theTimerContents:not(.theTimerContents--timerHub){
     flex-direction: column;
   }
   .content-text{

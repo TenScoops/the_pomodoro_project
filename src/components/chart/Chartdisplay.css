@@ -31,7 +31,7 @@
 .chart-period-toggle {
   display: inline-flex;
   border: solid 2px #000;
-  border-radius: 7px;
+  border-radius: 0;
   overflow: hidden;
 }
 
@@ -44,6 +44,10 @@
   color: #111;
   cursor: pointer;
   line-height: 1.2;
+  /* Override global `button` (App.css): margin-right / width would gap & clip the toggle */
+  margin: 0;
+  width: auto;
+  min-width: 0;
 }
 
 .chart-period-button + .chart-period-button {
@@ -75,7 +79,7 @@
   font-size: 14px;
   padding: 6px 28px 6px 10px;
   border: solid 2px #000;
-  border-radius: 8px;
+  border-radius: 0;
   background-color: #fff;
   color: #111;
   cursor: pointer;
@@ -110,7 +114,7 @@
     line-height: 20px;
     right: -14px;
     top: 8px;
-    border-radius: 30%;
+    border-radius: 0;
     background-color: #1e212d;;
     width: 21px;
     padding: 0;

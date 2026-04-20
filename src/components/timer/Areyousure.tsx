@@ -45,7 +45,7 @@ const Areyousure = () => {
       height: "180px",
       width: "330px",
       borderColor: "gray",
-      borderRadius: "20px",
+      borderRadius: "0",
     },
   };
 

@@ -84,32 +84,32 @@ const Setter = () => {
           min={1}
           max={60}
         />
+      </div>
 
-        <div className="nextbackbuttons">
-          <button className="backbutton" title="Back" type="button" onClick={() => goBack()}>
-            <BsArrowLeft style={{ fontSize: "42px" }} />
+      <div className="nextbackbuttons nextbackbuttons--belowSetter">
+        <button className="backbutton" title="Back" type="button" onClick={() => goBack()}>
+          <BsArrowLeft style={{ fontSize: "42px" }} />
+        </button>
+
+        {clicked ? null : (
+          <button
+            className="nextbutton"
+            title="Next"
+            type="button"
+            onClick={() => {
+              setClicked(true);
+              showTimerPage ? setShowTimerPage(false) : setShowTimerPage(true);
+            }}
+          >
+            <BsArrowRight style={{ fontSize: "42px", marginLeft: "4px" }} />
           </button>
+        )}
 
-          {clicked ? null : (
-            <button
-              className="nextbutton"
-              title="Next"
-              type="button"
-              onClick={() => {
-                setClicked(true);
-                showTimerPage ? setShowTimerPage(false) : setShowTimerPage(true);
-              }}
-            >
-              <BsArrowRight style={{ fontSize: "42px", marginLeft: "4px" }} />
-            </button>
-          )}
-
-          {clicked ? (
-            <button className="checkbutton" title="Next" type="button" onClick={() => goForward()}>
-              <BsArrowRight style={{ fontSize: "42px", marginLeft: "4px" }} />
-            </button>
-          ) : null}
-        </div>
+        {clicked ? (
+          <button className="checkbutton" title="Next" type="button" onClick={() => goForward()}>
+            <BsArrowRight style={{ fontSize: "42px", marginLeft: "4px" }} />
+          </button>
+        ) : null}
       </div>
     </div>
   );

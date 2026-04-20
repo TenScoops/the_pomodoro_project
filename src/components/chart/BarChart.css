@@ -60,9 +60,9 @@
     color: black;
 }
 .timeChart-button:hover{
-    box-shadow: 0px 0px 0px 0px rgba(127,218,247,0.75);
-    -webkit-box-shadow: 0px 0px 0px 0px rgba(127,218,247,0.75);
-    -moz-box-shadow: 0px 0px 0px 0px rgba(127,218,247,0.75);
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+    -webkit-box-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+    -moz-box-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
     background-color: black;
     color:white;
 }

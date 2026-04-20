@@ -56,9 +56,11 @@ const Chartdisplay = () => {
       backgroundColor: "rgba(255, 255, 255)",
       height: "78vh",
       width: "101vmin",
-      borderRadius: "20px",
+      borderRadius: "0",
       padding: "0",
-      border: "solid 3px black",
+      border: "1px solid #000",
+      outline: "none",
+      boxShadow: "0 12px 40px rgba(0, 0, 0, 0.12)",
     },
   };
 

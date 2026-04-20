@@ -28,8 +28,6 @@ export type SessionState = {
   blockNum: number;
   sessionComplete: boolean;
   openTask: boolean;
-  sideBar: boolean;
-  hideButton: boolean;
   synopsis: boolean;
   data: boolean;
   logout: boolean;
@@ -49,6 +47,8 @@ export type SessionState = {
   openMoodInput: boolean;
   /** Display label for the mood the user chose (e.g. "Happy"). */
   moodSelection: string | null;
+  /** Which center hub tile is highlighted (sidebar + main grid). */
+  centerFocus: "session" | "data" | "theme" | "rating" | "account" | null;
 };
 
 export type SessionActions = {
@@ -69,8 +69,6 @@ export type SessionActions = {
   setBlockNum: (value: number | ((previous: number) => number)) => void;
   setSessionComplete: (value: boolean) => void;
   setOpenTask: (value: boolean) => void;
-  setSideBar: (value: boolean) => void;
-  setHideButton: (value: boolean) => void;
   setSynopsis: (value: boolean) => void;
   setData: (value: boolean) => void;
   setLogout: (value: boolean) => void;
@@ -85,6 +83,7 @@ export type SessionActions = {
   bumpChartDataRevision: () => void;
   setOpenMoodInput: (value: boolean) => void;
   setMoodSelection: (value: string | null) => void;
+  setCenterFocus: (value: "session" | "data" | "theme" | "rating" | "account" | null) => void;
 };
 
 const initialSessionState: SessionState = {
@@ -105,8 +104,6 @@ const initialSessionState: SessionState = {
   blockNum: 1,
   sessionComplete: false,
   openTask: false,
-  sideBar: true,
-  hideButton: true,
   synopsis: false,
   data: false,
   logout: false,
@@ -121,32 +118,13 @@ const initialSessionState: SessionState = {
   dataLoggingAlert: null,
   openMoodInput: false,
   moodSelection: null,
+  centerFocus: null,
 };
-
-/** Best-effort read of legacy `use-local-storage` key so users keep their background image. */
-function readLegacyTheme(): string {
-  try {
-    const raw = localStorage.getItem("Themes");
-    if (!raw) return THEME_STREETS;
-    try {
-      const parsed = JSON.parse(raw) as unknown;
-      if (typeof parsed === "string") return parsed;
-    } catch {
-      if (raw.startsWith("http") || raw.startsWith("/") || raw.includes(".webp")) {
-        return raw;
-      }
-    }
-  } catch {
-    /* ignore */
-  }
-  return THEME_STREETS;
-}
 
 export const useSessionStore = create<SessionState & SessionActions>()(
   persist(
     (set) => ({
       ...initialSessionState,
-      theme: typeof window !== "undefined" ? readLegacyTheme() : THEME_STREETS,
 
       setCloseRatingModal: (value) => set({ closeRatingModal: value }),
       setWorkMinutes: (value) => set({ workMinutes: value }),
@@ -168,8 +146,6 @@ export const useSessionStore = create<SessionState & SessionActions>()(
         })),
       setSessionComplete: (value) => set({ sessionComplete: value }),
       setOpenTask: (value) => set({ openTask: value }),
-      setSideBar: (value) => set({ sideBar: value }),
-      setHideButton: (value) => set({ hideButton: value }),
       setSynopsis: (value) => set({ synopsis: value }),
       setData: (value) => set({ data: value }),
       setLogout: (value) => set({ logout: value }),
@@ -198,6 +174,7 @@ export const useSessionStore = create<SessionState & SessionActions>()(
         set((state) => ({ chartDataRevision: state.chartDataRevision + 1 })),
       setOpenMoodInput: (value) => set({ openMoodInput: value }),
       setMoodSelection: (value) => set({ moodSelection: value }),
+      setCenterFocus: (value) => set({ centerFocus: value }),
     }),
     {
       name: "pomoprogress-session",

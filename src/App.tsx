@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import AuthModal from "./components/auth/AuthModal";
-import Contents from "./components/Contents";
 import Finished from "./components/Finished";
 import Howtorate from "./components/Howtorate";
 import Logout from "./components/Logout";
@@ -9,8 +8,7 @@ import RatingMethod from "./components/setter/RatingMethod";
 import Setter from "./components/setter/Setter";
 import Chartdisplay from "./components/chart/Chartdisplay";
 // import MoodInputModal from "./components/mood/MoodInputModal";
-import Navbar from "./components/sidebar/Navbar";
-import Sidebar from "./components/sidebar/Sidebar";
+import { CenterQuadStage, MainHubHeader, TimerHubIconBar } from "./components/sidebar/Sidebar";
 import Synopsis from "./components/sidebar/Synopsis";
 import Theme from "./components/sidebar/Theme";
 import Timer from "./components/timer/Timer";
@@ -27,13 +25,13 @@ function App() {
   const showTimerPage = useSessionStore((s) => s.showTimerPage);
   const openMethod = useSessionStore((s) => s.openMethod);
   const sessionComplete = useSessionStore((s) => s.sessionComplete);
-  const sideBar = useSessionStore((s) => s.sideBar);
   const data = useSessionStore((s) => s.data);
   const synopsis = useSessionStore((s) => s.synopsis);
   const openThemePage = useSessionStore((s) => s.openThemePage);
   const openHowTo = useSessionStore((s) => s.openHowTo);
   const logout = useSessionStore((s) => s.logout);
   const dataLoggingAlert = useSessionStore((s) => s.dataLoggingAlert);
+  const setCenterFocus = useSessionStore((s) => s.setCenterFocus);
   // const openMoodInput = useSessionStore((s) => s.openMoodInput);
 
   useEffect(() => {
@@ -45,6 +43,12 @@ function App() {
       setAuthModalOpen(false);
     }
   }, [session]);
+
+  useEffect(() => {
+    if (showParagraph) {
+      setCenterFocus("session");
+    }
+  }, [showParagraph, setCenterFocus]);
 
   useEffect(() => {
     const bodyClass = "auth-modal-open";
@@ -73,11 +77,20 @@ function App() {
 
   return (
     <div className="App" style={{ backgroundImage: `url(${theme})` }}>
-      <div className={`theApp${sideBar ? " theApp--withSidebar" : ""}`}>
-        <div className="mainStage">
-          <Navbar />
-          {showParagraph && <Contents />}
-          <div className="theTimerContents">
+      <div className="theApp">
+        <div className="mainStage mainStage--hubWireframe">
+          {!showSetterPage && !showTimerPage && (
+            <>
+              <MainHubHeader user={session?.user ?? null} />
+              <CenterQuadStage
+                user={session?.user ?? null}
+                onOpenSignIn={() => setAuthModalOpen(true)}
+                isAuthModalOpen={authModalOpen}
+              />
+            </>
+          )}
+          <div className={`theTimerContents${showTimerPage ? " theTimerContents--timerHub" : ""}`}>
+            {showTimerPage && <TimerHubIconBar />}
             {openMethod && <RatingMethod />}
             {showSetterPage && <Setter />}
             {showTimerPage && <Timer />}
@@ -85,13 +98,6 @@ function App() {
           {sessionComplete && <Finished />}
         </div>
 
-        {sideBar && (
-          <Sidebar
-            user={session?.user ?? null}
-            onOpenSignIn={() => setAuthModalOpen(true)}
-            isAuthModalOpen={authModalOpen}
-          />
-        )}
         <AuthModal isOpen={authModalOpen} onRequestClose={() => setAuthModalOpen(false)} />
         {data && <Chartdisplay />}
         {/* {openMoodInput && <MoodInputModal />} */}

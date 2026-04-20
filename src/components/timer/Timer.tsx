@@ -455,7 +455,7 @@ const Timer = () => {
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <button
               className="cancel"
-              style={{ width: "150px", height: "25px", marginLeft: "55px", borderRadius: "12px" }}
+              style={{ width: "150px", height: "25px", marginLeft: "55px" }}
               type="button"
               onClick={() => {
                 setClicked(false);
@@ -512,14 +512,14 @@ const Timer = () => {
 
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         {showClock && (
-          <div style={{ borderRadius: "10px" }} className="blockdiv2">
+          <div className="blockdiv2">
             <p>&nbsp;You are currently: {mode === "break" ? "on break." : "working.."}&nbsp;</p>
           </div>
         )}
       </div>
 
       {mode === "work" && (
-        <div style={{ borderRadius: "10px", marginBottom: "20px" }} className="blockdiv2">
+        <div style={{ marginBottom: "20px" }} className="blockdiv2">
           <p>
             &nbsp;Block #{currentWorkBlockIndex}/{numOfblocks}&nbsp;
           </p>
@@ -541,7 +541,7 @@ const Timer = () => {
       )}
 
       {showClock && effectiveMultiplier > 1 && (
-        <div style={{ borderRadius: "10px", marginTop: "8px" }} className="blockdiv2">
+        <div style={{ marginTop: "8px" }} className="blockdiv2">
           <p style={{ fontSize: "15px" }}>&nbsp;Speed ×{effectiveMultiplier}&nbsp;</p>
         </div>
       )}

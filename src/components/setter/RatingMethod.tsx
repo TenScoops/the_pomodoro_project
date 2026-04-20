@@ -1,4 +1,5 @@
 import "./RatingMethod.css";
+import "./Setter.css";
 import React, { useState } from "react";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 import { AiOutlineCheck } from "react-icons/ai";

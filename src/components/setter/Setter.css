@@ -1,133 +1,195 @@
-
-.divsetter{
-  /* animation: fadeInAnimation 0.31s;
-  -webkit-animation: fadeInAnimation 0.31s;
-  -moz-animation: fadeInAnimation 0.31s;
-  -o-animation: fadeInAnimation 0.31s;
-  -ms-animation: fadeInAnimation 0.31s; */
-  margin:0;
+.divsetter {
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: clamp(16px, 2.5vmin, 24px);
+  box-sizing: border-box;
 }
 
-.setter{
-    width:395px;
-    height:430px;
-    background-color: #1e212df4;
-    border: 1px solid black;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    /* font-size: 18px; */
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    -webkit-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
--moz-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
-box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
-    
-  }
+/* Panel only — matches timer “card” (dark glass + depth, no border) */
+.setter {
+  width: min(395px, 92vw);
+  box-sizing: border-box;
+  min-height: 0;
+  height: auto;
+  padding: clamp(20px, 3.2vmin, 28px) clamp(20px, 3vmin, 26px);
+  background-color: #1e212dcd;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: rgba(248, 250, 252, 0.96);
+  box-shadow:
+    7px 8px 5px 0px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
 
-  
-
-.header{
+.header {
   font-size: 27.5px;
-  font-family: 'Kalam', cursive;
-  margin:9px;
+  font-family: "Kalam", cursive;
+  margin: 0 0 4px 0;
   letter-spacing: 1px;
+  color: inherit;
+  font-weight: 600;
 }
-.setter p{
-  margin-top: 20px;
-  margin-bottom: 10px;
+
+.setter p {
+  margin-top: 18px;
+  margin-bottom: 8px;
 }
-.values{
+
+.session-label {
+  font-family: "Kalam", cursive;
+  color: rgba(248, 250, 252, 0.94);
+}
+
+.values {
   margin-top: 5px;
   display: flex;
   justify-content: center;
 }
 
-.slider{
-    height:27px;
-    border:2px solid white;
-    border-radius: 20px;
-    width:325px;
+.slider {
+  height: 27px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 0;
+  width: min(325px, 82vw);
+  box-sizing: border-box;
 }
 
-.thumb{
-    background-color: rgb(255, 255, 255);
-    cursor:pointer;
-    width:27px;
-    height:27px;
-    border-radius: 40px;
-
+.thumb {
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  outline: none;
 }
 
-/*buttons*/
-.backbutton{
-    border-color: rgb(0, 0, 0);
-    background-color: rgb(30, 33, 45, 0.5);
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    height: 45px;
-    width: 65px;
-    display: inline-flex;
-    border-radius: 10px;
-    margin-right: 25px;
-    margin-left: 20px;
-    align-items: center;
-}
-.nextbutton{
-  border-color: rgba(255, 255, 255, 0.5);
-  background-color:#3584cdde; 
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  height: 45px;
-  width: 65px;
+/* Nav buttons — match timer controls. Row below setter panel (Create session). */
+.nextbackbuttons {
   display: inline-flex;
-  border-radius: 10px;
-  margin-right: 20px;
   align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
-.checkbutton{
-    border-color: rgba(255, 255, 255, 0.71);
-    background-color: rgba(0, 248, 8, 0.733);
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    height: 45px;
+
+/* RatingMethod still has buttons inside its card */
+.theRatingMethod .nextbackbuttons {
+  margin-top: 28px;
+}
+
+.nextbackbuttons--belowSetter {
+  flex-shrink: 0;
+}
+
+.nextbackbuttons button {
+    -webkit-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+    margin: 0;
     width: 65px;
+    min-height: 45px;
     display: inline-flex;
-    border-radius: 10px;
     align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    cursor: pointer;
+    font-family: "Kalam", cursive, sans-serif;
+    color: rgba(248, 250, 252, 0.96);
+    border: none;
+    box-shadow:
+        7px 10px 5px 0px rgba(0, 0, 0, 0.75),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transition:
+        background-color 0.12s ease,
+        filter 0.12s ease,
+        box-shadow 0.12s ease;
 }
 
-.nextbackbuttons{
-    display: inline-flex;
-    margin-top: 30px;
-    margin-bottom: 0;
-    
+.nextbackbuttons button::-moz-focus-inner {
+    border: 0;
 }
 
-.backbutton:hover{
-    background-color: rgb(25, 24, 33);
-}
-.nextbutton:hover{
-  background-color: rgb(25, 24, 33);
-}
-.clockbutton:hover{
-  background-color: rgb(25, 24, 33);
+.nextbackbuttons button:focus:not(:focus-visible) {
+    outline: none;
 }
 
+.nextbackbuttons button:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.28);
+    outline-offset: 2px;
+}
+
+.nextbackbuttons button.backbutton {
+    background-color: #1e212dcd;
+}
+
+.backbutton:hover {
+    background-color: rgba(48, 48, 52, 0.94);
+    filter: brightness(1.05);
+}
+
+.backbutton:active {
+    filter: brightness(0.96);
+}
+
+.nextbackbuttons button.nextbutton {
+    background-color: rgba(53, 132, 205, 0.92);
+    border: 2px solid rgba(127, 218, 247, 0.75);
+    box-shadow:
+        7px 10px 5px 0px rgba(0, 0, 0, 0.75),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.nextbutton:hover {
+    background-color: rgba(62, 142, 215, 0.96);
+    filter: brightness(1.05);
+}
+
+.nextbutton:active {
+    filter: brightness(0.96);
+}
+
+.nextbackbuttons button.checkbutton {
+    background-color: rgba(22, 120, 45, 0.88);
+    border: 2px solid rgba(134, 239, 172, 0.45);
+    box-shadow:
+        7px 10px 5px 0px rgba(0, 0, 0, 0.75),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.checkbutton:hover {
+    background-color: rgba(28, 135, 55, 0.92);
+    filter: brightness(1.05);
+}
+
+.checkbutton:active {
+    filter: brightness(0.96);
+}
+
+@supports (background-color: color-mix(in srgb, #1e212d, white)) {
+    .backbutton:hover {
+        background-color: color-mix(in srgb, #1e212dcd 74%, rgb(255, 255, 255));
+    }
+}
 
 @media only screen and (max-width:1000px) {
-  .nextbackbuttons{
-    margin-top:35px;
-    margin-bottom: 10px;
+  .theRatingMethod .nextbackbuttons {
+    margin-top: 32px;
   }
-  .slider{
-    height:23px;
-    border:2px solid white;
-    border-radius: 20px;
-    width:325px;
+  .slider {
+    height: 23px;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 0;
+    width: 325px;
   }
 }
 
@@ -136,14 +198,13 @@ box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
   .header{
     font-size: 20px;
   }
-  .nextbackbuttons{
-    margin-top:35px;
-    margin-bottom: 10px;
+  .theRatingMethod .nextbackbuttons {
+    margin-top: 32px;
   }
   .slider{
     height:23px;
-    border:2px solid white;
-    border-radius: 20px;
+    border:2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 0;
     width:325px;
   }
 
@@ -152,7 +213,7 @@ box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
       cursor:pointer;
       width:22.5px;
       height:22.5px;
-      border-radius: 40px;
+      border-radius: 50%;
 
   }
   .backbutton{
@@ -171,18 +232,15 @@ box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
     font-size: 20px;
   }
   .setter{
-    width:380px;
-    height:390px;
-    /* margin-top: 80px; */
+    width: min(380px, 94vw);
   }
-  .nextbackbuttons{
-    margin-top:35px;
-    margin-bottom: 10px;
+  .theRatingMethod .nextbackbuttons {
+    margin-top: 28px;
   }
   .slider{
     height:23px;
-    border:2px solid white;
-    border-radius: 20px;
+    border:2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 0;
     width:325px;
   }
 
@@ -191,7 +249,7 @@ box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.75);
       cursor:pointer;
       width:20px;
       height:20px;
-      border-radius: 40px;
+      border-radius: 50%;
 
   }
   .backbutton{
