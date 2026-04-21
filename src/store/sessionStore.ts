@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { THEME_STREETS } from "../theme/backgrounds";
+import { THEME_LANDSCAPE } from "../theme/backgrounds";
 
 /**
  * Pomodoro session UI state (replaces the previous React context).
@@ -112,7 +112,7 @@ const initialSessionState: SessionState = {
   openMethod: false,
   showClock: false,
   option: undefined,
-  theme: THEME_STREETS,
+  theme: THEME_LANDSCAPE,
   activeSupabaseSessionId: null,
   chartDataRevision: 0,
   dataLoggingAlert: null,

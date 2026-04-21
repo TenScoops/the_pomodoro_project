@@ -1,21 +1,49 @@
-.theme{
-    margin-top: 20px;
-    width: 300px;
-    height: 55px;
-    background-color: #181a24;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    font-size: 15px;
-    border-radius: 10px;
-    transition: 0.2s ease-in;
+.theme-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.theme:hover{
-    cursor: pointer;
-    width:45vmin;
-    background-color: #0404047a;
+
+.theme-screen__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.extracss{
-    background-color: black;
-    width:45vmin
-  }
+
+.theme-modal-inner {
+  position: relative;
+  width: 100%;
+}
+
+.theme-modal-close {
+  position: absolute;
+  top: clamp(-8px, -1vmin, 0px);
+  right: clamp(-8px, -1vmin, 0px);
+  z-index: 1;
+}
+
+.theme-modal-close svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.theme-modal-inner .rating-help-btn.theme-modal-close {
+  background-color: #1b1e29cd;
+}
+
+.theme-modal-inner .rating-help-btn.theme-modal-close:hover {
+  background-color: rgba(43, 43, 47, 0.94);
+}
+
+.theme-select-btn:hover {
+  background-color: rgba(43, 43, 47, 0.4);
+}
+
+/* ~15% lighter than pure black, then ~10% darker for selection chrome */
+.theme-selected {
+  background-color: #222;
+}
+
+.theme-selected:hover {
+  background-color: #222;
+}
