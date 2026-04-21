@@ -39,11 +39,10 @@
   background-color: rgba(43, 43, 47, 0.4);
 }
 
-/* ~15% lighter than pure black, then ~10% darker for selection chrome */
 .theme-selected {
-  background-color: #222;
+  background-color: #000;
 }
 
 .theme-selected:hover {
-  background-color: #222;
+  background-color: #000;
 }

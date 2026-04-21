@@ -111,6 +111,7 @@
 
 .centerQuad.centerQuad--wireframe {
     position: relative;
+    isolation: isolate;
     box-sizing: border-box;
     border-radius: 0;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -129,6 +130,44 @@
     width: 100%;
     aspect-ratio: 1 / 1;
     max-height: min(22.75vmin, 206px);
+}
+
+/* Light white shine sweep — sits behind tile content */
+.centerQuad.centerQuad--wireframe > * {
+    position: relative;
+    z-index: 1;
+}
+
+.centerQuad.centerQuad--wireframe::after {
+    content: "";
+    position: absolute;
+    top: -25%;
+    left: -40%;
+    width: 55%;
+    height: 150%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 42%,
+        rgba(255, 255, 255, 0.28) 50%,
+        rgba(255, 255, 255, 0.1) 58%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: translateX(-130%) rotate(11deg);
+    transition: opacity 0.22s ease;
+}
+
+.centerQuad.centerQuad--wireframe.centerQuad--signingIn::after {
+    display: none;
+}
+
+/* Start tile: idle shine — sweep 30% slower than the old 1.62s full sweep, with a short gap before repeat (hover unchanged) */
+.centerQuad.centerQuad--wireframe.centerQuad--session::after {
+    opacity: 1;
+    animation: mainHubSessionIdleShine 4.204531s linear infinite;
 }
 
 .centerQuad.centerQuad--wireframe.centerQuad--focused {
@@ -163,6 +202,52 @@ button.centerQuad.centerQuad--wireframe:hover,
     filter: brightness(1.05);
 }
 
+button.centerQuad.centerQuad--wireframe:hover::after,
+button.centerQuad.centerQuad--wireframe:focus-visible::after,
+.centerQuad.centerQuad--wireframe.centerQuad--session:hover::after,
+.centerQuad.centerQuad--wireframe.centerQuad--session:focus-visible::after {
+    opacity: 1;
+    animation: mainHubBtnShineSweep calc(1.35s / 1.15 / 1.15) ease-in-out 0s 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    button.centerQuad.centerQuad--wireframe:hover::after,
+    button.centerQuad.centerQuad--wireframe:focus-visible::after,
+    .centerQuad.centerQuad--wireframe.centerQuad--session::after,
+    .centerQuad.centerQuad--wireframe.centerQuad--session:hover::after,
+    .centerQuad.centerQuad--wireframe.centerQuad--session:focus-visible::after,
+    .centerQuad.centerQuad--wireframe.centerQuad--focused:hover::after,
+    .centerQuad.centerQuad--wireframe.centerQuad--focused:focus-visible::after,
+    button.timerHubIconBtn:hover::after,
+    button.timerHubIconBtn:focus-visible::after {
+        animation: none;
+        opacity: 0.85;
+        transform: translateX(0) rotate(11deg);
+    }
+}
+
+@keyframes mainHubBtnShineSweep {
+    0% {
+        transform: translateX(-130%) rotate(11deg);
+    }
+    100% {
+        transform: translateX(260%) rotate(11deg);
+    }
+}
+
+/* Idle Start tile: same sweep duration; 3.5s wait between sweeps (hover unchanged) */
+@keyframes mainHubSessionIdleShine {
+    0% {
+        transform: translateX(-130%) rotate(11deg);
+    }
+    16.756% {
+        transform: translateX(260%) rotate(11deg);
+    }
+    100% {
+        transform: translateX(260%) rotate(11deg);
+    }
+}
+
 button.centerQuad.centerQuad--wireframe:active,
 .centerQuad--session.centerQuad--wireframe:active {
     filter: brightness(0.96);
@@ -179,6 +264,12 @@ button.centerQuad.centerQuad--wireframe:active,
         0 0 0 2px rgba(255, 255, 255, 0.14),
         3px 5px 14px rgba(0, 0, 0, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.centerQuad.centerQuad--wireframe.centerQuad--focused:hover::after,
+.centerQuad.centerQuad--wireframe.centerQuad--focused:focus-visible::after {
+    opacity: 1;
+    animation: mainHubBtnShineSweep calc(1.35s / 1.15 / 1.15) ease-in-out 0s 1 forwards;
 }
 
 .centerQuad--session.centerQuad--wireframe {
@@ -250,6 +341,9 @@ button.centerQuad.centerQuad--wireframe:active,
 }
 
 button.timerHubIconBtn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     box-sizing: border-box;
     width: 42px;
     height: 42px;
@@ -274,10 +368,43 @@ button.timerHubIconBtn {
         filter 0.18s ease;
 }
 
+button.timerHubIconBtn > * {
+    position: relative;
+    z-index: 1;
+}
+
+button.timerHubIconBtn::after {
+    content: "";
+    position: absolute;
+    top: -30%;
+    left: -45%;
+    width: 70%;
+    height: 160%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 42%,
+        rgba(255, 255, 255, 0.26) 50%,
+        rgba(255, 255, 255, 0.1) 58%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: translateX(-130%) rotate(11deg);
+    transition: opacity 0.22s ease;
+}
+
 button.timerHubIconBtn:hover {
     border-color: rgba(255, 255, 255, 0.24);
     background: linear-gradient(180deg, rgba(52, 52, 56, 0.92) 0%, rgba(42, 42, 46, 0.94) 100%);
     filter: brightness(1.05);
+}
+
+button.timerHubIconBtn:hover::after,
+button.timerHubIconBtn:focus-visible::after {
+    opacity: 1;
+    animation: mainHubBtnShineSweep calc(1.35s / 1.15 / 1.15) ease-in-out 0s 1 forwards;
 }
 
 button.timerHubIconBtn:active {

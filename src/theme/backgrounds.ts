@@ -1,5 +1,5 @@
 import castle from "../assets/images/castle.webp";
-import landscape from "../assets/images/landscape.png";
+import landscape from "../assets/images/landscape.webp";
 import streets from "../assets/images/pxfuel.webp";
 
 export const THEME_CASTLE = castle;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import { waitForImage } from "./lib/waitForImage";
 import AuthModal from "./components/auth/AuthModal";
 import Finished from "./components/Finished";
 import Howtorate from "./components/Howtorate";
@@ -19,6 +20,10 @@ import { useSessionStore } from "./store/sessionStore";
 function App() {
   const { session, loading: authLoading, authError } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  /** Background URL to paint; stays on the previous theme until the next image has loaded. */
+  const [displayedBackgroundUrl, setDisplayedBackgroundUrl] = useState<string | null>(null);
+  /** Centered box while switching themes (min 1s + until decode). */
+  const [themeSwitchLoading, setThemeSwitchLoading] = useState(false);
   const theme = useSessionStore((s) => s.theme);
   const showParagraph = useSessionStore((s) => s.showParagraph);
   const showSetterPage = useSessionStore((s) => s.showSetterPage);
@@ -37,6 +42,46 @@ function App() {
   useEffect(() => {
     localStorage.removeItem("Theme");
   }, []);
+
+  useEffect(() => {
+    if (displayedBackgroundUrl === theme) {
+      setThemeSwitchLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+    const url = theme;
+
+    const run = async () => {
+      if (displayedBackgroundUrl === null) {
+        await waitForImage(url);
+        if (!cancelled) {
+          setDisplayedBackgroundUrl(url);
+        }
+        return;
+      }
+
+      setThemeSwitchLoading(true);
+      const startedAt = Date.now();
+      await waitForImage(url);
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < 1000) {
+        await new Promise<void>((resolve) => {
+          window.setTimeout(resolve, 1000 - elapsed);
+        });
+      }
+      if (!cancelled) {
+        setDisplayedBackgroundUrl(url);
+        setThemeSwitchLoading(false);
+      }
+    };
+
+    void run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [theme, displayedBackgroundUrl]);
 
   useEffect(() => {
     if (session) {
@@ -75,8 +120,12 @@ function App() {
     );
   }
 
+  if (displayedBackgroundUrl === null) {
+    return <div className="app-auth-loading">Loading…</div>;
+  }
+
   return (
-    <div className="App" style={{ backgroundImage: `url(${theme})` }}>
+    <div className="App" style={{ backgroundImage: `url(${displayedBackgroundUrl})` }}>
       <div className="theApp">
         <div className="mainStage mainStage--hubWireframe">
           {!showSetterPage && !showTimerPage && !sessionComplete && (
@@ -111,6 +160,11 @@ function App() {
           title={dataLoggingAlert?.title ?? ""}
           body={dataLoggingAlert?.body ?? ""}
         />
+        {themeSwitchLoading && (
+          <div className="app-theme-switch-overlay" role="status" aria-live="polite" aria-busy="true">
+            <div className="app-theme-switch-box">Loading…</div>
+          </div>
+        )}
       </div>
     </div>
   );

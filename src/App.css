@@ -16,6 +16,31 @@ body.auth-modal-open #root {
   background-color: #12141c;
 }
 
+.app-theme-switch-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  cursor: wait;
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+.app-theme-switch-box {
+  padding: 14px 26px;
+  background-color: rgba(18, 20, 28, 0.94);
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  color: rgba(248, 250, 252, 0.96);
+  font-family: "Kalam", sans-serif;
+  font-size: 17px;
+  letter-spacing: 0.02em;
+}
+
 .app-auth-error {
   min-height: 100vh;
   display: flex;
