@@ -23,7 +23,7 @@ const Theme = () => {
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
       backgroundColor: "#1b1e29cd",
-      width: "min(70vmin, 96vw)",
+      width: "min(56vmin, 88vw)",
       height: "auto",
       maxHeight: "90vh",
       borderRadius: "0",
@@ -51,14 +51,8 @@ const Theme = () => {
       <div className="theme-screen__inner">
         <Modal isOpen={modalOpen} onRequestClose={() => closeModal()} style={customStyles}>
           <div className="theme-modal-inner">
-            <button type="button" onClick={() => closeModal()} className="rating-help-btn theme-modal-close" aria-label="Close theme selection">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                <path
-                  fillRule="evenodd"
-                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
+            <button type="button" onClick={() => closeModal()} className="theme-modal-close" aria-label="Close theme selection">
+              x
             </button>
             <div className="scores">
               <div className="scoreText">
