@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import "./BarChart.css";
 import "chartjs-plugin-datalabels";
 
@@ -63,6 +63,10 @@ export type BarChartProps = {
 
 const BarChart = ({ timeRange }: BarChartProps) => {
   const { loading, errorMessage, liveDataset, hasUser } = useChartBarData(timeRange);
+  const chartRef = useRef<ChartJS<"bar"> | null>(null);
+  const shineStartedAtRef = useRef<number>(0);
+  const shineActiveRef = useRef<boolean>(false);
+  const shineDurationMs = 1200;
 
   const barDataset = useMemo(() => {
     if (!hasUser) {
@@ -93,13 +97,112 @@ const BarChart = ({ timeRange }: BarChartProps) => {
     };
   }, [barDataset, chartOptions]);
 
-  const barData = chartPayload
-    ? ({
-        datasets: chartPayload.datasets,
-      } as unknown as ChartData<"bar">)
-    : null;
+  const barData = useMemo(
+    () =>
+      chartPayload
+        ? ({
+            datasets: chartPayload.datasets,
+          } as unknown as ChartData<"bar">)
+        : null,
+    [chartPayload]
+  );
 
   const showLoadingOnly = hasUser && loading;
+
+  const highScoreBarShinePlugin = useMemo(
+    () => ({
+      id: "highScoreBarShine",
+      afterDatasetsDraw(chart: ChartJS<"bar">) {
+        if (!shineActiveRef.current) {
+          return;
+        }
+
+        const elapsed = performance.now() - shineStartedAtRef.current;
+        const progress = Math.min(1, elapsed / shineDurationMs);
+        if (progress >= 1) {
+          return;
+        }
+
+        const dataset = chart.data.datasets[0];
+        const meta = chart.getDatasetMeta(0);
+        if (!dataset || !meta?.data?.length) {
+          return;
+        }
+
+        const { ctx } = chart;
+        meta.data.forEach((barElement, index) => {
+          const row = dataset.data[index] as unknown as ChartPoint | undefined;
+          const score = Number(row?.y);
+          if (!Number.isFinite(score) || score < 9 || score > 10) {
+            return;
+          }
+
+          const { x, y, base, width } = barElement.getProps(["x", "y", "base", "width"], true);
+          const left = x - width / 2;
+          const top = Math.min(y, base);
+          const height = Math.abs(base - y);
+
+          if (height <= 0 || width <= 0) {
+            return;
+          }
+
+          const travel = height * 1.9;
+          const shineCenterY = top - height * 0.85 + progress * (height + travel);
+          const shineHalfHeight = height * 0.1;
+          const shineTop = shineCenterY - shineHalfHeight;
+          const shineBottom = shineCenterY + shineHalfHeight;
+
+          ctx.save();
+          ctx.globalCompositeOperation = "screen";
+          ctx.beginPath();
+          ctx.rect(left, top, width, height);
+          ctx.clip();
+
+          const sweepGradient = ctx.createLinearGradient(left, shineTop, left, shineBottom);
+          sweepGradient.addColorStop(0, "rgba(255, 255, 255, 0)");
+          sweepGradient.addColorStop(0.5, "rgba(255, 255, 255, 0.58)");
+          sweepGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+          ctx.fillStyle = sweepGradient;
+          ctx.fillRect(left, shineTop, width, shineBottom - shineTop);
+          ctx.restore();
+        });
+      },
+    }),
+    []
+  );
+
+  useEffect(() => {
+    let frameId = 0;
+    if (!barData) {
+      return;
+    }
+
+    shineStartedAtRef.current = performance.now();
+    shineActiveRef.current = true;
+
+    const animate = () => {
+      if (!shineActiveRef.current) {
+        return;
+      }
+
+      const elapsed = performance.now() - shineStartedAtRef.current;
+      if (elapsed >= shineDurationMs) {
+        shineActiveRef.current = false;
+        chartRef.current?.draw();
+        return;
+      }
+
+      chartRef.current?.draw();
+      frameId = window.requestAnimationFrame(animate);
+    };
+
+    frameId = window.requestAnimationFrame(animate);
+    return () => {
+      shineActiveRef.current = false;
+      window.cancelAnimationFrame(frameId);
+    };
+  }, [barData]);
 
   return (
     <div
@@ -126,7 +229,15 @@ const BarChart = ({ timeRange }: BarChartProps) => {
             <p className="chart-status chart-status--empty">No ratings for this period yet. Rate a block while signed in to see real bars.</p>
           ) : null}
 
-          {barData && chartPayload ? <Bar style={{ marginTop: "0px" }} data={barData} options={chartPayload.options} /> : null}
+          {barData && chartPayload ? (
+            <Bar
+              ref={chartRef}
+              style={{ marginTop: "0px" }}
+              data={barData}
+              options={chartPayload.options}
+              plugins={[highScoreBarShinePlugin]}
+            />
+          ) : null}
         </>
       )}
     </div>
