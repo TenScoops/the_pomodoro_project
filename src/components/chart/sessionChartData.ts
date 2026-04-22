@@ -85,7 +85,7 @@ export function buildMonthBarDatasetFromSessions(
     const productivityAvg = averageRatings(ratings);
     const totalSeconds = daySessions.reduce((sum, session) => sum + session.total_time_worked, 0);
     const lengthHours = Number((totalSeconds / 3600).toFixed(1));
-    const sessionCount = daySessions.length;
+    const sessionCount = daySessions.filter((session) => session.sessions_completed === 1).length;
     const blocksCompleted = daySessions.reduce((sum, session) => sum + session.blocks_completed, 0);
     const backgroundColor =
       ratings.length === 0 ? NO_DATA_BAR_COLOR : getProductivityBarColor(productivityAvg);
@@ -120,7 +120,7 @@ export function buildYearBarDatasetFromSessions(sessions: SessionWithRatings[], 
     const productivityAvg = averageRatings(ratings);
     const totalSeconds = monthSessions.reduce((sum, session) => sum + session.total_time_worked, 0);
     const lengthHours = Number((totalSeconds / 3600).toFixed(1));
-    const sessionCount = monthSessions.length;
+    const sessionCount = monthSessions.filter((session) => session.sessions_completed === 1).length;
     const blocksCompleted = monthSessions.reduce((sum, session) => sum + session.blocks_completed, 0);
     const backgroundColor =
       ratings.length === 0 ? NO_DATA_BAR_COLOR : getProductivityBarColor(productivityAvg);
