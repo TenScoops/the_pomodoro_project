@@ -61,16 +61,19 @@ const Theme = () => {
                 </div>
                 <hr className="rating-score-divider" />
               </div>
-              {themeChoices.map((choice) => (
-                <button
-                  key={choice.id}
-                  type="button"
-                  className={`rating-score-btn theme-select-btn${theme === choice.value ? " theme-selected" : ""}`}
-                  onClick={() => setTheme(choice.value)}
-                >
-                  {choice.label}
-                </button>
-              ))}
+              <div className="theme-option-grid">
+                {themeChoices.map((choice) => (
+                  <button
+                    key={choice.id}
+                    type="button"
+                    className={`theme-option-btn${theme === choice.value ? " theme-selected" : ""}`}
+                    onClick={() => setTheme(choice.value)}
+                  >
+                    <span className="theme-option-preview" style={{ backgroundImage: `url(${choice.value})` }} aria-hidden="true" />
+                    <span className="theme-option-label">{choice.label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </Modal>
