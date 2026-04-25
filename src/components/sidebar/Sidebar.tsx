@@ -124,30 +124,38 @@ export function TimerHubIconBar() {
   const btnClass = (panel: "theme" | "data") =>
     `timerHubIconBtn${centerFocus === panel ? " timerHubIconBtn--focused" : ""}`;
 
+  const themeShortcutButton = (
+    <button
+      type="button"
+      className={btnClass("theme")}
+      aria-label="Theme"
+      onClick={() => {
+        setCenterFocus("theme");
+        setOpenThemePage(true);
+      }}
+    >
+      {themeIcon}
+    </button>
+  );
+
+  const dataShortcutButton = (
+    <button
+      type="button"
+      className={btnClass("data")}
+      aria-label="My data"
+      onClick={() => {
+        setCenterFocus("data");
+        setData(true);
+      }}
+    >
+      {dataIcon}
+    </button>
+  );
+
   return (
     <div className="timerHubIconBar" role="navigation" aria-label="Session shortcuts">
-      <button
-        type="button"
-        className={btnClass("theme")}
-        aria-label="Theme"
-        onClick={() => {
-          setCenterFocus("theme");
-          setOpenThemePage(true);
-        }}
-      >
-        {themeIcon}
-      </button>
-      <button
-        type="button"
-        className={btnClass("data")}
-        aria-label="My data"
-        onClick={() => {
-          setCenterFocus("data");
-          setData(true);
-        }}
-      >
-        {dataIcon}
-      </button>
+      {dataShortcutButton}
+      {themeShortcutButton}
     </div>
   );
 }
@@ -177,81 +185,89 @@ export function CenterQuadStage({ user, onOpenSignIn, isAuthModalOpen = false }:
   const quadClass = (panel: CenterFocus) =>
     `centerQuad centerQuad--wireframe centerQuad--${panel}${centerFocus === panel ? " centerQuad--focused" : ""}`;
 
+  const themeButton = (
+    <button
+      type="button"
+      className={quadClass("theme")}
+      onClick={() => {
+        setCenterFocus("theme");
+        setOpenThemePage(true);
+      }}
+    >
+      {themeIcon}
+      <span className="centerQuad__title centerQuad__title--wire">Theme</span>
+    </button>
+  );
+
+  const dataButton = (
+    <button
+      type="button"
+      className={quadClass("data")}
+      onClick={() => {
+        setCenterFocus("data");
+        setData(true);
+      }}
+    >
+      {dataIcon}
+      <span className="centerQuad__title centerQuad__title--wire">My data</span>
+    </button>
+  );
+
   return (
     <div className="centerQuadGrid centerQuadGrid--wireframe" role="navigation" aria-label="Main hub">
-      <button
-        type="button"
-        className={quadClass("theme")}
-        onClick={() => {
-          setCenterFocus("theme");
-          setOpenThemePage(true);
-        }}
-      >
-        {themeIcon}
-        <span className="centerQuad__title centerQuad__title--wire">Theme</span>
-      </button>
+        {dataButton}
 
-      <div
-        className={quadClass("session")}
-        role="button"
-        tabIndex={0}
-        aria-label="Start a session"
-        onClick={handleStartTileActivate}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            handleStartTileActivate();
-          }
-        }}
-      >
-        <div className="centerQuad__wireframeStartRow">
-          <AiOutlineArrowRight className="centerQuad__startArrowIcon" aria-hidden />
-          <span className="centerQuad__title centerQuad__title--wire">Start</span>
-        </div>
-      </div>
-
-      <button
-        type="button"
-        className={quadClass("data")}
-        onClick={() => {
-          setCenterFocus("data");
-          setData(true);
-        }}
-      >
-        {dataIcon}
-        <span className="centerQuad__title centerQuad__title--wire">My data</span>
-      </button>
-
-      {user ? (
-        <button
-          type="button"
-          className={quadClass("account")}
-          onClick={() => {
-            setCenterFocus("account");
-            void handleLogout();
+        <div
+          className={quadClass("session")}
+          role="button"
+          tabIndex={0}
+          aria-label="Start a session"
+          onClick={handleStartTileActivate}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              handleStartTileActivate();
+            }
           }}
         >
-          <BsDoorOpen className="centerQuad__glyph" aria-hidden />
-          <span className="centerQuad__title centerQuad__title--wire">Logout</span>
-        </button>
-      ) : isAuthModalOpen ? (
-        <div className={`${quadClass("account")} centerQuad--signingIn`} aria-live="polite">
-          <BsBoxArrowInRight className="centerQuad__glyph" aria-hidden />
-          <span className="centerQuad__title centerQuad__title--wire">Signing in…</span>
+          <div className="centerQuad__wireframeStartRow">
+            <AiOutlineArrowRight className="centerQuad__startArrowIcon" aria-hidden />
+            <span className="centerQuad__title centerQuad__title--wire">Start</span>
+          </div>
         </div>
-      ) : (
-        <button
-          type="button"
-          className={quadClass("account")}
-          onClick={() => {
-            setCenterFocus("account");
-            onOpenSignIn();
-          }}
-        >
-          <BsBoxArrowInRight className="centerQuad__glyph" aria-hidden />
-          <span className="centerQuad__title centerQuad__title--wire">Sign in</span>
-        </button>
-      )}
+
+        {themeButton}
+
+        {user ? (
+          <button
+            type="button"
+            className={quadClass("account")}
+            onClick={() => {
+              setCenterFocus("account");
+              void handleLogout();
+            }}
+          >
+            <BsDoorOpen className="centerQuad__glyph" aria-hidden />
+            <span className="centerQuad__title centerQuad__title--wire">Logout</span>
+          </button>
+        ) : isAuthModalOpen ? (
+          <div className={`${quadClass("account")} centerQuad--signingIn`} aria-live="polite">
+            <BsBoxArrowInRight className="centerQuad__glyph" aria-hidden />
+            <span className="centerQuad__title centerQuad__title--wire">Signing in…</span>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className={quadClass("account")}
+            onClick={() => {
+              setCenterFocus("account");
+              onOpenSignIn();
+            }}
+          >
+            <BsBoxArrowInRight className="centerQuad__glyph" aria-hidden />
+            <span className="centerQuad__title centerQuad__title--wire">Sign in</span>
+          </button>
+        )}
     </div>
   );
 }

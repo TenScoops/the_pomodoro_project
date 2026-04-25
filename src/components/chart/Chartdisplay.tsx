@@ -8,6 +8,7 @@ import HoursWorkedChart from "./HoursWorkedChart";
 import { formatLocalISODate, getAppNow } from "../../lib/calendarDates";
 import {
   getLatestRatedSessionDateBefore,
+  getSessionsWithRatingsForYear,
   getSessionsWithRatingsForDate,
 } from "../../services/pomoprogressService";
 import HighProductivityToast from "../notifications/HighProductivityToast";
@@ -39,8 +40,12 @@ const Chartdisplay = () => {
   const [chartView, setChartView] = useState<ChartView>("productivity");
   const [period, setPeriod] = useState<ChartPeriodRange>("Month");
   const [showHighProductivityToast, setShowHighProductivityToast] = useState(false);
+  const [monthsWithData, setMonthsWithData] = useState<Set<number>>(new Set());
   const setData = useSessionStore((s) => s.setData);
   const { user } = useAuth();
+  const now = getAppNow();
+  const selectedYear = now.getFullYear();
+  const [selectedMonthIndex0, setSelectedMonthIndex0] = useState<number>(now.getMonth());
 
   const customStyles = {
     overlay: {
@@ -108,6 +113,60 @@ const Chartdisplay = () => {
     };
   }, [modalOpen, user]);
 
+  useEffect(() => {
+    if (!modalOpen || !user) {
+      setMonthsWithData(new Set());
+      return;
+    }
+
+    let cancelled = false;
+    void (async () => {
+      const { data, error } = await getSessionsWithRatingsForYear(selectedYear);
+      if (cancelled || error) {
+        return;
+      }
+      const next = new Set<number>();
+      for (const session of data ?? []) {
+        if ((session.block_ratings?.length ?? 0) <= 0) {
+          continue;
+        }
+        const [yearText, monthText] = session.date.split("-");
+        const sessionYear = Number(yearText);
+        const monthOneThroughTwelve = Number(monthText);
+        if (sessionYear === selectedYear && Number.isInteger(monthOneThroughTwelve)) {
+          next.add(monthOneThroughTwelve - 1);
+        }
+      }
+      setMonthsWithData(next);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [modalOpen, user, selectedYear]);
+
+  const selectableMonthIndexes = Array.from(
+    new Set<number>([selectedMonthIndex0, ...Array.from(monthsWithData)])
+  ).sort((a, b) => a - b);
+
+  const prevMonthWithData = (() => {
+    for (let month = selectedMonthIndex0 - 1; month >= 0; month -= 1) {
+      if (monthsWithData.has(month)) {
+        return month;
+      }
+    }
+    return null;
+  })();
+
+  const nextMonthWithData = (() => {
+    for (let month = selectedMonthIndex0 + 1; month < 12; month += 1) {
+      if (monthsWithData.has(month)) {
+        return month;
+      }
+    }
+    return null;
+  })();
+
   const dismissHighProductivityToast = () => {
     window.localStorage.setItem(
       PRODUCTIVITY_TOAST_LAST_DISMISSED_KEY,
@@ -172,13 +231,68 @@ const Chartdisplay = () => {
                 </button>
               </div>
             </div>
+
+            {period === "Month" && (
+              <div className="chart-toolbar-cluster chart-toolbar-cluster--monthNav" aria-label="Month navigator">
+                <span className="chart-view-label" id="chart-period-label">
+                  Month
+                </span>
+                <select
+                  className="chart-month-nav-select"
+                  value={selectedMonthIndex0}
+                  onChange={(event) => setSelectedMonthIndex0(Number(event.target.value))}
+                  aria-label="Select month"
+                >
+                  {selectableMonthIndexes.map((monthIndex0) => (
+                    <option key={monthIndex0} value={monthIndex0}>
+                      {new Date(selectedYear, monthIndex0, 1).toLocaleDateString(undefined, {
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  className="chart-month-nav-button"
+                  onClick={() => {
+                    if (prevMonthWithData !== null) {
+                      setSelectedMonthIndex0(prevMonthWithData);
+                    }
+                  }}
+                  aria-label="Previous month with data"
+                >
+                  &#x2039;
+                </button>
+                <button
+                  type="button"
+                  className="chart-month-nav-button"
+                  onClick={() => {
+                    if (nextMonthWithData !== null) {
+                      setSelectedMonthIndex0(nextMonthWithData);
+                    }
+                  }}
+                  aria-label="Next month with data"
+                >
+                  &#x203A;
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="chart-view-area">
             {chartView === "productivity" ? (
-              <BarChart timeRange={period} />
+              <BarChart
+                timeRange={period}
+                year={selectedYear}
+                monthIndex0={selectedMonthIndex0}
+              />
             ) : (
-              <HoursWorkedChart timeRange={period} />
+              <HoursWorkedChart
+                timeRange={period}
+                year={selectedYear}
+                monthIndex0={selectedMonthIndex0}
+              />
             )}
             {/* chartView === "mood" ? <MoodTrackerChart timeRange={period} /> : ... */}
           </div>

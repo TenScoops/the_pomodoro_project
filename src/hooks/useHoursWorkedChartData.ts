@@ -8,7 +8,6 @@ import {
   getSessionsWithRatingsForMonth,
   getSessionsWithRatingsForYear,
 } from "../services/pomoprogressService";
-import { getAppNow } from "../lib/calendarDates";
 import { useSessionStore } from "../store/sessionStore";
 import { useAuth } from "./useAuth";
 
@@ -22,7 +21,7 @@ const emptySeries: HoursWorkedSeriesState = { labels: [], hoursSeries: [] };
 /**
  * Hours worked line chart: current calendar month (per day) or year (per month), from Supabase.
  */
-export function useHoursWorkedChartData(timeRange: ChartPeriodRange) {
+export function useHoursWorkedChartData(timeRange: ChartPeriodRange, year: number, monthIndex0: number) {
   const { user } = useAuth();
   const chartDataRevision = useSessionStore((state) => state.chartDataRevision);
   const [loading, setLoading] = useState(false);
@@ -41,9 +40,6 @@ export function useHoursWorkedChartData(timeRange: ChartPeriodRange) {
     setLoading(true);
     setErrorMessage(null);
 
-    const now = getAppNow();
-    const year = now.getFullYear();
-    const monthIndex0 = now.getMonth();
     const monthOneThroughTwelve = monthIndex0 + 1;
 
     void (async () => {
@@ -80,7 +76,7 @@ export function useHoursWorkedChartData(timeRange: ChartPeriodRange) {
     return () => {
       cancelled = true;
     };
-  }, [user, timeRange, chartDataRevision]);
+  }, [user, timeRange, year, monthIndex0, chartDataRevision]);
 
   return {
     loading,

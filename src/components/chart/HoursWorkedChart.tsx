@@ -16,7 +16,7 @@ import {
 import { Line } from "react-chartjs-2";
 import type { ChartPeriodRange } from "./chartLabels";
 import {
-  getCurrentMonthDayMetasLineCharts,
+  getMonthDayMetas,
   getCurrentYearMonthLabels,
   monthLineChartShowAllDaysTicks,
   monthLineChartXAxisGrid,
@@ -39,12 +39,16 @@ ChartJS.register(
 const HOURS_WORKED_LINE_STROKE = "#1e212d";
 const HOURS_WORKED_AREA_FILL = "rgba(186, 230, 253, 0.55)";
 
-function buildGuestPlaceholderSeries(timeRange: ChartPeriodRange): {
+function buildGuestPlaceholderSeries(
+  timeRange: ChartPeriodRange,
+  year: number,
+  monthIndex0: number
+): {
   labels: string[];
   hoursSeries: number[];
 } {
   if (timeRange === "Month") {
-    const dayMetas = getCurrentMonthDayMetasLineCharts();
+    const dayMetas = getMonthDayMetas(year, monthIndex0, "full");
     return {
       labels: dayMetas.map((meta) => meta.label),
       hoursSeries: dayMetas.map(() => 0),
@@ -117,11 +121,16 @@ function buildHoursWorkedLineOptions(
 
 export type HoursWorkedChartProps = {
   timeRange: ChartPeriodRange;
+  year: number;
+  monthIndex0: number;
 };
 
-const HoursWorkedChart = ({ timeRange }: HoursWorkedChartProps) => {
-  const { loading, errorMessage, series, hasUser } = useHoursWorkedChartData(timeRange);
-  const guestSeries = useMemo(() => buildGuestPlaceholderSeries(timeRange), [timeRange]);
+const HoursWorkedChart = ({ timeRange, year, monthIndex0 }: HoursWorkedChartProps) => {
+  const { loading, errorMessage, series, hasUser } = useHoursWorkedChartData(timeRange, year, monthIndex0);
+  const guestSeries = useMemo(
+    () => buildGuestPlaceholderSeries(timeRange, year, monthIndex0),
+    [timeRange, year, monthIndex0]
+  );
 
   const displaySeries = hasUser ? series : guestSeries;
   const { labels, hoursSeries } = displaySeries;

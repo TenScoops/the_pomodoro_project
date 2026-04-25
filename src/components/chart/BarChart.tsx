@@ -59,10 +59,12 @@ function buildBarChartOptions(): ChartOptions<"bar"> {
 
 export type BarChartProps = {
   timeRange: ChartPeriodRange;
+  year: number;
+  monthIndex0: number;
 };
 
-const BarChart = ({ timeRange }: BarChartProps) => {
-  const { loading, errorMessage, liveDataset, hasUser } = useChartBarData(timeRange);
+const BarChart = ({ timeRange, year, monthIndex0 }: BarChartProps) => {
+  const { loading, errorMessage, liveDataset, hasUser } = useChartBarData(timeRange, year, monthIndex0);
   const chartRef = useRef<ChartJS<"bar"> | null>(null);
   const shineStartedAtRef = useRef<number>(0);
   const shineActiveRef = useRef<boolean>(false);

@@ -9,11 +9,10 @@ import {
   getSessionsWithRatingsForMonth,
   getSessionsWithRatingsForYear,
 } from "../services/pomoprogressService";
-import { getAppNow } from "../lib/calendarDates";
 import { useSessionStore } from "../store/sessionStore";
 import { useAuth } from "./useAuth";
 
-export function useChartBarData(theTime: ChartPeriodRange) {
+export function useChartBarData(theTime: ChartPeriodRange, year: number, monthIndex0: number) {
   const { user } = useAuth();
   const chartDataRevision = useSessionStore((state) => state.chartDataRevision);
   const [loading, setLoading] = useState(false);
@@ -32,9 +31,6 @@ export function useChartBarData(theTime: ChartPeriodRange) {
     setLoading(true);
     setErrorMessage(null);
 
-    const now = getAppNow();
-    const year = now.getFullYear();
-    const monthIndex0 = now.getMonth();
     const monthOneThroughTwelve = monthIndex0 + 1;
 
     void (async () => {
@@ -71,7 +67,7 @@ export function useChartBarData(theTime: ChartPeriodRange) {
     return () => {
       cancelled = true;
     };
-  }, [user, theTime, chartDataRevision]);
+  }, [user, theTime, year, monthIndex0, chartDataRevision]);
 
   return {
     loading,
