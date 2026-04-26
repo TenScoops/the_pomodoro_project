@@ -148,6 +148,7 @@ const Chartdisplay = () => {
   const selectableMonthIndexes = Array.from(
     new Set<number>([selectedMonthIndex0, ...Array.from(monthsWithData)])
   ).sort((a, b) => a - b);
+  const showMonthNavigator = period === "Month" && monthsWithData.size >= 2;
 
   const prevMonthWithData = (() => {
     for (let month = selectedMonthIndex0 - 1; month >= 0; month -= 1) {
@@ -232,7 +233,7 @@ const Chartdisplay = () => {
               </div>
             </div>
 
-            {period === "Month" && (
+            {showMonthNavigator && (
               <div className="chart-toolbar-cluster chart-toolbar-cluster--monthNav" aria-label="Month navigator">
                 <span className="chart-view-label" id="chart-period-label">
                   Month
