@@ -38,28 +38,32 @@ export function buildMonthHoursLineSeriesFromSessions(
   sessions: SessionWithRatings[],
   year: number,
   monthIndex0: number
-): { labels: string[]; hoursSeries: number[] } {
+): { labels: string[]; hoursSeries: number[]; daysWorkedSeries: number[] } {
   const byDate = groupSessionsByDate(sessions);
   const dayMetas = getMonthDayMetas(year, monthIndex0, "full");
   const labels: string[] = [];
   const hoursSeries: number[] = [];
+  const daysWorkedSeries: number[] = [];
   for (const { iso, label } of dayMetas) {
     labels.push(label);
     const daySessions = byDate.get(iso) ?? [];
     const totalSeconds = daySessions.reduce((sum, session) => sum + session.total_time_worked, 0);
-    hoursSeries.push(Number((totalSeconds / 3600).toFixed(3)));
+    const dayHours = Number((totalSeconds / 3600).toFixed(3));
+    hoursSeries.push(dayHours);
+    daysWorkedSeries.push(dayHours > 0 ? 1 : 0);
   }
-  return { labels, hoursSeries };
+  return { labels, hoursSeries, daysWorkedSeries };
 }
 
 /** Per-calendar-month hours for a year; updates after each rated block. */
 export function buildYearHoursLineSeriesFromSessions(
   sessions: SessionWithRatings[],
   year: number
-): { labels: string[]; hoursSeries: number[] } {
+): { labels: string[]; hoursSeries: number[]; daysWorkedSeries: number[] } {
   const monthMetas = getYearMonthMetas(year);
   const labels: string[] = [];
   const hoursSeries: number[] = [];
+  const daysWorkedSeries: number[] = [];
   for (const { label, startDate, endDate } of monthMetas) {
     labels.push(label);
     const monthSessions = sessions.filter(
@@ -67,8 +71,17 @@ export function buildYearHoursLineSeriesFromSessions(
     );
     const totalSeconds = monthSessions.reduce((sum, session) => sum + session.total_time_worked, 0);
     hoursSeries.push(Number((totalSeconds / 3600).toFixed(3)));
+    const totalSecondsByDate = new Map<string, number>();
+    for (const session of monthSessions) {
+      const existingSeconds = totalSecondsByDate.get(session.date) ?? 0;
+      totalSecondsByDate.set(session.date, existingSeconds + session.total_time_worked);
+    }
+    const daysOverOneHour = Array.from(totalSecondsByDate.values()).filter(
+      (secondsWorked) => secondsWorked / 3600 > 1
+    ).length;
+    daysWorkedSeries.push(daysOverOneHour);
   }
-  return { labels, hoursSeries };
+  return { labels, hoursSeries, daysWorkedSeries };
 }
 
 export function buildMonthBarDatasetFromSessions(

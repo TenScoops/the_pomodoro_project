@@ -14,9 +14,10 @@ import { useAuth } from "./useAuth";
 export type HoursWorkedSeriesState = {
   labels: string[];
   hoursSeries: number[];
+  daysWorkedSeries: number[];
 };
 
-const emptySeries: HoursWorkedSeriesState = { labels: [], hoursSeries: [] };
+const emptySeries: HoursWorkedSeriesState = { labels: [], hoursSeries: [], daysWorkedSeries: [] };
 
 /**
  * Hours worked line chart: current calendar month (per day) or year (per month), from Supabase.

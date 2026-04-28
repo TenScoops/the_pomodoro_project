@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { THEME_CASTLE as castle, THEME_LANDSCAPE as landscape, THEME_STREETS as streets } from "../../theme/backgrounds";
+import {
+  THEME_CASTLE as castle,
+  THEME_LANDSCAPE as landscape,
+  THEME_RETRO_SPACE_TRAVEL as retroSpaceTravel,
+  THEME_STREETS as streets,
+} from "../../theme/backgrounds";
 import { useSessionStore } from "../../store/sessionStore";
 import "../rating/Rating.css";
 import "./Theme.css";
@@ -44,6 +49,7 @@ const Theme = () => {
     { id: "castle", label: "Howl's Moving Castle", value: castle },
     { id: "streets", label: "Streets", value: streets },
     { id: "landscape", label: "Landscape", value: landscape },
+    { id: "retro-space", label: "Retro Space Travel", value: retroSpaceTravel },
   ];
 
   return (

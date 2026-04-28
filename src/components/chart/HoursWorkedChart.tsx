@@ -46,24 +46,28 @@ function buildGuestPlaceholderSeries(
 ): {
   labels: string[];
   hoursSeries: number[];
+  daysWorkedSeries: number[];
 } {
   if (timeRange === "Month") {
     const dayMetas = getMonthDayMetas(year, monthIndex0, "full");
     return {
       labels: dayMetas.map((meta) => meta.label),
       hoursSeries: dayMetas.map(() => 0),
+      daysWorkedSeries: dayMetas.map(() => 0),
     };
   }
   const labels = getCurrentYearMonthLabels();
   return {
     labels,
     hoursSeries: labels.map(() => 0),
+    daysWorkedSeries: labels.map(() => 0),
   };
 }
 
 function buildHoursWorkedLineOptions(
   timeRange: ChartPeriodRange,
-  maxHours: number
+  maxHours: number,
+  yearAverageHoursPerDaySeries: number[]
 ): ChartOptions<"line"> {
   const paddedMax = Math.max(1, maxHours * 1.15);
   const isMonth = timeRange === "Month";
@@ -77,7 +81,11 @@ function buildHoursWorkedLineOptions(
         callbacks: {
           label: (context) => {
             const value = typeof context.parsed.y === "number" ? context.parsed.y : 0;
-            return `Hours worked: ${value.toFixed(2)}`;
+            if (isMonth) {
+              return `Hours worked: ${value.toFixed(2)}`;
+            }
+            const avgHoursPerDay = yearAverageHoursPerDaySeries[context.dataIndex] ?? 0;
+            return [`Hours worked: ${value.toFixed(2)}`, `Avg hours worked: ${avgHoursPerDay.toFixed(2)}`];
           },
         },
         titleFont: { family: "Roboto", size: 13 },
@@ -133,7 +141,7 @@ const HoursWorkedChart = ({ timeRange, year, monthIndex0 }: HoursWorkedChartProp
   );
 
   const displaySeries = hasUser ? series : guestSeries;
-  const { labels, hoursSeries } = displaySeries;
+  const { labels, hoursSeries, daysWorkedSeries } = displaySeries;
 
   const maxHours = useMemo(() => {
     if (hoursSeries.length === 0) {
@@ -142,9 +150,19 @@ const HoursWorkedChart = ({ timeRange, year, monthIndex0 }: HoursWorkedChartProp
     return Math.max(...hoursSeries, 0);
   }, [hoursSeries]);
 
+  const yearAverageHoursPerDaySeries = useMemo(() => {
+    return hoursSeries.map((hours, monthIndex0) => {
+      const workedDays = daysWorkedSeries[monthIndex0] ?? 0;
+      if (workedDays <= 0) {
+        return 0;
+      }
+      return hours / workedDays;
+    });
+  }, [hoursSeries, daysWorkedSeries]);
+
   const options = useMemo(
-    () => buildHoursWorkedLineOptions(timeRange, maxHours),
-    [timeRange, maxHours]
+    () => buildHoursWorkedLineOptions(timeRange, maxHours, yearAverageHoursPerDaySeries),
+    [timeRange, maxHours, yearAverageHoursPerDaySeries]
   );
 
   const lineData = useMemo(
