@@ -39,6 +39,7 @@ const Chartdisplay = () => {
   const [modalOpen, setModalOpen] = useState(true);
   const [chartView, setChartView] = useState<ChartView>("productivity");
   const [period, setPeriod] = useState<ChartPeriodRange>("Month");
+  const [blackAndWhiteToggleOn, setBlackAndWhiteToggleOn] = useState(false);
   const [showHighProductivityToast, setShowHighProductivityToast] = useState(false);
   const [monthsWithData, setMonthsWithData] = useState<Set<number>>(new Set());
   const setData = useSessionStore((s) => s.setData);
@@ -233,6 +234,7 @@ const Chartdisplay = () => {
               </div>
             </div>
 
+            
             {showMonthNavigator && (
               <div className="chart-toolbar-cluster chart-toolbar-cluster--monthNav" aria-label="Month navigator">
                 <span className="chart-view-label" id="chart-period-label">
@@ -279,7 +281,39 @@ const Chartdisplay = () => {
                 </button>
               </div>
             )}
+            <div className="chart-toolbar-cluster">
+              <button
+                type="button"
+                className={`chart-theme-switch${blackAndWhiteToggleOn ? " chart-theme-switch--active" : ""}`}
+                aria-label="Black and White theme toggle"
+                aria-pressed={blackAndWhiteToggleOn}
+                title={blackAndWhiteToggleOn ? "Night mode" : "Light mode"}
+                onClick={() => setBlackAndWhiteToggleOn((current) => !current)}
+              >
+                <span className="chart-theme-switch-thumb" aria-hidden="true">
+                  {blackAndWhiteToggleOn ? (
+                    <svg viewBox="0 0 24 24" className="chart-theme-switch-icon">
+                      <path
+                        d="M15.2 2.2a8.9 8.9 0 1 0 6.6 14.4 8 8 0 1 1-6.6-14.4z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" className="chart-theme-switch-icon">
+                      <circle cx="12" cy="12" r="4.2" fill="currentColor" />
+                      <path
+                        d="M12 1.9v3M12 19.1v3M4.7 4.7l2.1 2.1M17.2 17.2l2.1 2.1M1.9 12h3M19.1 12h3M4.7 19.3l2.1-2.1M17.2 6.8l2.1-2.1"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  )}
+                </span>
+              </button>
+            </div>
           </div>
+
 
           <div className="chart-view-area">
             {chartView === "productivity" ? (

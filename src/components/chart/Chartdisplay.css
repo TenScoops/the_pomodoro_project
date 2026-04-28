@@ -158,6 +158,61 @@
   outline-offset: 2px;
 }
 
+.chart-theme-switch {
+  width: 56px;
+  height: 30px;
+  border: 2px solid #000;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.chart-theme-switch:hover {
+  background: #1f1f1f;
+}
+
+.chart-theme-switch--active {
+  background: #111;
+  color: #fff;
+}
+
+.chart-theme-switch-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  transition: left 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+}
+
+.chart-theme-switch--active .chart-theme-switch-thumb {
+  left: 28px;
+  background: #fff;
+  color: #111;
+}
+
+.chart-theme-switch-icon {
+  width: 13px;
+  height: 13px;
+}
+
+.chart-theme-switch:focus-visible {
+  outline: 2px solid #1e212d;
+  outline-offset: 2px;
+}
+
 .chart-view-area {
   flex: 1;
   min-height: 0;
