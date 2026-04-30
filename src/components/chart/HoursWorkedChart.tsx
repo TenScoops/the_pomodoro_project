@@ -67,7 +67,8 @@ function buildGuestPlaceholderSeries(
 function buildHoursWorkedLineOptions(
   timeRange: ChartPeriodRange,
   maxHours: number,
-  yearAverageHoursPerDaySeries: number[]
+  yearAverageHoursPerDaySeries: number[],
+  yearTotalWorkingDaysSeries: number[]
 ): ChartOptions<"line"> {
   const paddedMax = Math.max(1, maxHours * 1.15);
   const isMonth = timeRange === "Month";
@@ -81,11 +82,17 @@ function buildHoursWorkedLineOptions(
         callbacks: {
           label: (context) => {
             const value = typeof context.parsed.y === "number" ? context.parsed.y : 0;
+            const isWorkingDay = value >= 1;
             if (isMonth) {
-              return `Hours worked: ${value.toFixed(2)}`;
+              return [`Hours worked: ${value.toFixed(2)}`, `Working day: ${isWorkingDay}`];
             }
             const avgHoursPerDay = yearAverageHoursPerDaySeries[context.dataIndex] ?? 0;
-            return [`Hours worked: ${value.toFixed(2)}`, `Avg hours worked: ${avgHoursPerDay.toFixed(2)}`];
+            const totalWorkingDays = yearTotalWorkingDaysSeries[context.dataIndex] ?? 0;
+            return [
+              `Hours worked: ${value.toFixed(2)}`,
+              `Avg hours worked: ${avgHoursPerDay.toFixed(2)}`,
+              `Total working days: ${totalWorkingDays}`,
+            ];
           },
         },
         titleFont: { family: "Roboto", size: 13 },
@@ -160,9 +167,19 @@ const HoursWorkedChart = ({ timeRange, year, monthIndex0 }: HoursWorkedChartProp
     });
   }, [hoursSeries, daysWorkedSeries]);
 
+  const yearTotalWorkingDaysSeries = useMemo(() => {
+    return daysWorkedSeries.map((workedDays) => Math.max(0, Math.floor(workedDays)));
+  }, [daysWorkedSeries]);
+
   const options = useMemo(
-    () => buildHoursWorkedLineOptions(timeRange, maxHours, yearAverageHoursPerDaySeries),
-    [timeRange, maxHours, yearAverageHoursPerDaySeries]
+    () =>
+      buildHoursWorkedLineOptions(
+        timeRange,
+        maxHours,
+        yearAverageHoursPerDaySeries,
+        yearTotalWorkingDaysSeries
+      ),
+    [timeRange, maxHours, yearAverageHoursPerDaySeries, yearTotalWorkingDaysSeries]
   );
 
   const lineData = useMemo(

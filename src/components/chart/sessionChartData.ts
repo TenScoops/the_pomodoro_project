@@ -77,7 +77,7 @@ export function buildYearHoursLineSeriesFromSessions(
       totalSecondsByDate.set(session.date, existingSeconds + session.total_time_worked);
     }
     const daysOverOneHour = Array.from(totalSecondsByDate.values()).filter(
-      (secondsWorked) => secondsWorked / 3600 > 1
+      (secondsWorked) => secondsWorked / 3600 >= 1
     ).length;
     daysWorkedSeries.push(daysOverOneHour);
   }
