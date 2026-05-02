@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import "./Chartdisplay.css";
-import type { ChartPeriodRange } from "./chartLabels";
-import { useSessionStore } from "../../store/sessionStore";
-import BarChart from "./BarChart";
-import HoursWorkedChart from "./HoursWorkedChart";
-import { formatLocalISODate, getAppNow } from "../../lib/calendarDates";
+import type { ChartPeriodRange } from "../chartLabels";
+import { useSessionStore } from "../../../store/sessionStore";
+import BarChart from "../BarChart";
+import HoursWorkedChart from "../HoursWorkedChart";
+import { formatLocalISODate, getAppNow } from "../../../lib/calendarDates";
 import {
   getLatestRatedSessionDateBefore,
   getSessionsWithRatingsForYear,
   getSessionsWithRatingsForDate,
-} from "../../services/pomoprogressService";
-import HighProductivityToast from "../notifications/HighProductivityToast";
-import { useAuth } from "../../hooks/useAuth";
-// import MoodTrackerChart from "./MoodTrackerChart";
+} from "../../../services/pomoprogressService";
+import HighProductivityToast from "../../notifications/HighProductivityToast";
+import { useAuth } from "../../../hooks/useAuth";
+// import MoodTrackerChart from "../MoodTrackerChart";
 
 type ChartView = "productivity" | "hoursWorked";
 const PRODUCTIVITY_TOAST_LAST_DISMISSED_KEY = "pomoprogress_high_productivity_toast_last_dismissed_date";
@@ -145,10 +145,11 @@ const Chartdisplay = () => {
     };
   }, [modalOpen, user, selectedYear]);
 
+  const currentMonthIndex0 = selectedYear === now.getFullYear() ? now.getMonth() : 11;
   const selectableMonthIndexes = Array.from(
-    new Set<number>([selectedMonthIndex0, ...Array.from(monthsWithData)])
+    new Set<number>([selectedMonthIndex0, currentMonthIndex0, ...Array.from(monthsWithData)])
   ).sort((a, b) => a - b);
-  const showMonthNavigator = period === "Month" && monthsWithData.size >= 2;
+  const showMonthNavigator = period === "Month" && monthsWithData.size >= 1;
 
   const prevMonthWithData = (() => {
     for (let month = selectedMonthIndex0 - 1; month >= 0; month -= 1) {
@@ -159,7 +160,11 @@ const Chartdisplay = () => {
     return null;
   })();
 
-  const nextMonthWithData = (() => {
+  /** Jump back to the current month (even if empty), otherwise next month that has ratings. */
+  const nextNavigableMonth = (() => {
+    if (selectedMonthIndex0 < currentMonthIndex0) {
+      return currentMonthIndex0;
+    }
     for (let month = selectedMonthIndex0 + 1; month < 12; month += 1) {
       if (monthsWithData.has(month)) {
         return month;
@@ -233,7 +238,6 @@ const Chartdisplay = () => {
               </div>
             </div>
 
-            
             {showMonthNavigator && (
               <div className="chart-toolbar-cluster chart-toolbar-cluster--monthNav" aria-label="Month navigator">
                 <span className="chart-view-label" id="chart-period-label">
@@ -270,18 +274,17 @@ const Chartdisplay = () => {
                   type="button"
                   className="chart-month-nav-button"
                   onClick={() => {
-                    if (nextMonthWithData !== null) {
-                      setSelectedMonthIndex0(nextMonthWithData);
+                    if (nextNavigableMonth !== null) {
+                      setSelectedMonthIndex0(nextNavigableMonth);
                     }
                   }}
-                  aria-label="Next month with data"
+                  aria-label="Next month"
                 >
                   &#x203A;
                 </button>
               </div>
             )}
           </div>
-
 
           <div className="chart-view-area">
             {chartView === "productivity" ? (

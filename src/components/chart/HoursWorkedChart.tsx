@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import "./BarChart.css";
+import "./BarChart/BarChart.css";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -202,19 +202,7 @@ const HoursWorkedChart = ({ timeRange, year, monthIndex0 }: HoursWorkedChartProp
     [labels, hoursSeries]
   );
 
-  const showEmptyHint =
-    hasUser &&
-    !loading &&
-    !errorMessage &&
-    hoursSeries.length > 0 &&
-    hoursSeries.every((hours) => hours === 0);
-
   const showLoadingOnly = hasUser && loading;
-
-  const emptyHintText =
-    timeRange === "Month"
-      ? "No time logged for this month yet. Complete work blocks while signed in to see the line fill in."
-      : "No time logged for this year yet. Complete work blocks while signed in to see the line fill in.";
 
   return (
     <div
@@ -239,7 +227,6 @@ const HoursWorkedChart = ({ timeRange, year, monthIndex0 }: HoursWorkedChartProp
           {hasUser && errorMessage ? (
             <p className="chart-status chart-status--error">{errorMessage}</p>
           ) : null}
-          {showEmptyHint ? <p className="chart-status chart-status--empty">{emptyHintText}</p> : null}
 
           <div style={{ flex: 1, width: "100%", minHeight: "48vh", position: "relative", marginTop: "8px" }}>
             {labels.length > 0 ? <Line data={lineData} options={options} /> : null}

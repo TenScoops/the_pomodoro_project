@@ -4,9 +4,9 @@ import "chartjs-plugin-datalabels";
 
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip, type ChartData, type ChartOptions } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import type { ChartPeriodRange } from "./chartLabels";
-import { buildDummyMonthBarDataset, buildDummyYearBarDataset, type ChartPoint } from "./dummyData";
-import { useChartBarData } from "../../hooks/useChartBarData";
+import type { ChartPeriodRange } from "../chartLabels";
+import { buildDummyMonthBarDataset, buildDummyYearBarDataset, type ChartPoint } from "../dummyData";
+import { useChartBarData } from "../../../hooks/useChartBarData";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -79,13 +79,6 @@ const BarChart = ({ timeRange, year, monthIndex0 }: BarChartProps) => {
     }
     return liveDataset;
   }, [hasUser, timeRange, loading, errorMessage, liveDataset]);
-
-  const showEmptyHint =
-    hasUser &&
-    Boolean(liveDataset) &&
-    !loading &&
-    !errorMessage &&
-    (liveDataset?.data.every((point) => Number(point.y) === 0) ?? false);
 
   const chartOptions = useMemo(() => buildBarChartOptions(), []);
 
@@ -227,9 +220,6 @@ const BarChart = ({ timeRange, year, monthIndex0 }: BarChartProps) => {
       ) : (
         <>
           {hasUser && errorMessage ? <p className="chart-status chart-status--error">{errorMessage}</p> : null}
-          {showEmptyHint ? (
-            <p className="chart-status chart-status--empty">No ratings for this period yet. Rate a block while signed in to see real bars.</p>
-          ) : null}
 
           {barData && chartPayload ? (
             <Bar

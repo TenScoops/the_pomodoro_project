@@ -3,6 +3,25 @@
 - [x] Show a green-check notification only when opening the graph modal
 - [x] Make the notification persistent until dismissed with X
 - [x] Prevent repeat popups on the same day
+- [ ] Split `Timer.tsx` into smaller components (<= ~200 lines)
+  - [x] Extract session summary UI
+  - [x] Extract clock/status UI
+  - [x] Extract control buttons UI
+  - [x] Move timer logic into `usePomodoroTimer`
+  - [x] Verify production build compiles
+  - [x] Run lints for edited files
 - [x] Review
   - Implemented with minimal-impact changes in chart modal + new toast component.
   - Verified with `npm run build` (passes; one unrelated existing warning in `Finished.tsx`).
+
+- [x] Review
+  - `Timer.tsx` reduced to ~122 lines; extracted UI into `src/components/timer/components/` and logic into `src/components/timer/hooks/usePomodoroTimer.ts`.
+  - `npm run build` passes after refactor; no linter issues in touched files.
+
+- [ ] Split `usePomodoroTimer.ts` into smaller files (<= ~200 lines each)
+  - [x] Extract types + constants
+  - [x] Extract persistence/restore helpers
+  - [x] Extract ticking/visibility/pagehide effects
+  - [x] Extract document-title effect
+  - [x] Shrink `usePomodoroTimer.ts` to orchestrator
+  - [x] Run lints + `npm run build`

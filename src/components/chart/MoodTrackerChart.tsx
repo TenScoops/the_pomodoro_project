@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import "./BarChart.css";
+import "./BarChart/BarChart.css";
 import {
   CategoryScale,
   Chart as ChartJS,
