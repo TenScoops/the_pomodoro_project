@@ -1,7 +1,7 @@
 import React from "react";
 import type { User } from "@supabase/supabase-js";
 import { BsBoxArrowInRight, BsDoorOpen } from "react-icons/bs";
-import { AiOutlineArrowRight, AiOutlineQuestionCircle } from "react-icons/ai";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { clearPersistedTimer } from "../../lib/timerPersistence";
 import { signOut } from "../../lib/auth";
 import { useSessionStore } from "../../store/sessionStore";
