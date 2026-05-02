@@ -129,38 +129,18 @@
 }
 
 .rating-help-btn {
-  -webkit-appearance: none;
-  appearance: none;
-  box-sizing: border-box;
-  margin: 0;
-  flex-shrink: 0;
-  width: 42px;
-  min-height: 42px;
+  all: unset;
+  cursor: pointer;
+  margin-left: 6px;
+  color: rgba(248, 250, 252, 0.92);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  cursor: pointer;
-  color: rgba(248, 250, 252, 0.96);
-  background-color: #1e212dcd;
-  box-shadow:
-    7px 10px 5px 0px rgba(0, 0, 0, 0.75),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  transition:
-    background-color 0.12s ease,
-    filter 0.12s ease,
-    box-shadow 0.12s ease;
+  line-height: 1;
 }
 
 .rating-help-btn:hover {
-  background-color: rgba(48, 48, 52, 0.94);
-  filter: brightness(1.05);
-}
-
-.rating-help-btn:active {
-  filter: brightness(0.96);
+  color: #fff;
 }
 
 .rating-help-btn:focus:not(:focus-visible) {
@@ -173,8 +153,8 @@
 }
 
 .rating-help-btn svg {
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 1.25em;
+  height: 1.25em;
 }
 
 .how-to-rate p {
