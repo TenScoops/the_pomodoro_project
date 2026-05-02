@@ -33,7 +33,6 @@ export type SessionState = {
   logout: boolean;
   openThemePage: boolean;
   openHowTo: boolean;
-  openMethod: boolean;
   showClock: boolean;
   option: string | undefined;
   theme: string;
@@ -47,7 +46,7 @@ export type SessionState = {
   openMoodInput: boolean;
   /** Display label for the mood the user chose (e.g. "Happy"). */
   moodSelection: string | null;
-  /** Which center hub tile is highlighted (sidebar + main grid). */
+  /** Which center hub tile is highlighted (main buttons + hub grid). */
   centerFocus: "session" | "data" | "theme" | "rating" | "account" | null;
 };
 
@@ -74,7 +73,6 @@ export type SessionActions = {
   setLogout: (value: boolean) => void;
   setOpenThemePage: (value: boolean) => void;
   setOpenHowTo: (value: boolean) => void;
-  setOpenMethod: (value: boolean) => void;
   setShowClock: (value: boolean) => void;
   setOption: (value: string | undefined) => void;
   setTheme: (value: string) => void;
@@ -109,7 +107,6 @@ const initialSessionState: SessionState = {
   logout: false,
   openThemePage: false,
   openHowTo: false,
-  openMethod: false,
   showClock: false,
   option: undefined,
   theme: THEME_LANDSCAPE,
@@ -151,7 +148,6 @@ export const useSessionStore = create<SessionState & SessionActions>()(
       setLogout: (value) => set({ logout: value }),
       setOpenThemePage: (value) => set({ openThemePage: value }),
       setOpenHowTo: (value) => set({ openHowTo: value }),
-      setOpenMethod: (value) => set({ openMethod: value }),
       setShowClock: (value) => set({ showClock: value }),
       setOption: (value) => set({ option: value }),
       setTheme: (value) => set({ theme: value }),

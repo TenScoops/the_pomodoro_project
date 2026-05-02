@@ -5,13 +5,12 @@ import AuthModal from "./components/auth/AuthModal";
 import Finished from "./components/Finished";
 import Howtorate from "./components/Howtorate";
 import Logout from "./components/Logout";
-import RatingMethod from "./components/setter/RatingMethod";
 import Setter from "./components/setter/Setter";
 import Chartdisplay from "./components/chart/Chartdisplay";
 // import MoodInputModal from "./components/mood/MoodInputModal";
-import { CenterQuadStage, MainHubHeader, TimerHubIconBar } from "./components/sidebar/Sidebar";
-import Synopsis from "./components/sidebar/Synopsis";
-import Theme from "./components/sidebar/Theme";
+import { CenterQuadStage, MainHubHeader, TimerHubIconBar } from "./components/mainbuttons/MainButtons";
+import Synopsis from "./components/mainbuttons/Synopsis";
+import Theme from "./components/mainbuttons/Theme";
 import Timer from "./components/timer/Timer";
 import DataLoggingErrorToast from "./components/notifications/DataLoggingErrorToast";
 import { useAuth } from "./hooks/useAuth";
@@ -28,7 +27,6 @@ function App() {
   const showParagraph = useSessionStore((s) => s.showParagraph);
   const showSetterPage = useSessionStore((s) => s.showSetterPage);
   const showTimerPage = useSessionStore((s) => s.showTimerPage);
-  const openMethod = useSessionStore((s) => s.openMethod);
   const sessionComplete = useSessionStore((s) => s.sessionComplete);
   const data = useSessionStore((s) => s.data);
   const synopsis = useSessionStore((s) => s.synopsis);
@@ -140,7 +138,6 @@ function App() {
           )}
           <div className={`theTimerContents${showTimerPage ? " theTimerContents--timerHub" : ""}`}>
             {showTimerPage && <TimerHubIconBar />}
-            {openMethod && <RatingMethod />}
             {showSetterPage && <Setter />}
             {showTimerPage && <Timer />}
           </div>

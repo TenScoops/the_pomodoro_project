@@ -11,7 +11,7 @@ type UseAuthResult = {
 };
 
 /**
- * Single subscription to Supabase auth so the shell and sidebar stay in sync
+ * Single subscription to Supabase auth so the shell and main hub stay in sync
  * without duplicate listeners or a separate backend session check.
  */
 export function useAuth(): UseAuthResult {

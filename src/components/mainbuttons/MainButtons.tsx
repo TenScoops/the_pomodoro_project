@@ -5,7 +5,7 @@ import { AiOutlineArrowRight, AiOutlineQuestionCircle } from "react-icons/ai";
 import { clearPersistedTimer } from "../../lib/timerPersistence";
 import { signOut } from "../../lib/auth";
 import { useSessionStore } from "../../store/sessionStore";
-import "./Sidebar.css";
+import "./MainButtons.css";
 
 type CenterFocus = "session" | "data" | "theme" | "rating" | "account";
 
@@ -53,18 +53,19 @@ type MainHubHeaderProps = {
 function hubDisplayLabel(user: User | null): string {
   if (!user) return "Guest";
   const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
-  const str = (k: string) => {
-    const v = meta[k];
-    return typeof v === "string" && v.trim() ? v.trim() : "";
+  const readMetaString = (key: string) => {
+    const value = meta[key];
+    return typeof value === "string" && value.trim() ? value.trim() : "";
   };
-  const first = str("first_name") || str("given_name");
+  const first = readMetaString("first_name") || readMetaString("given_name");
   if (first) return first;
-  const full = str("full_name") || str("name");
+  const full = readMetaString("full_name") || readMetaString("name");
   if (full) {
     const token = full.split(/\s+/)[0];
     if (token) return token;
   }
-  const handle = str("preferred_username") || str("user_name") || str("username");
+  const handle =
+    readMetaString("preferred_username") || readMetaString("user_name") || readMetaString("username");
   if (handle) return handle;
   const email = user.email?.trim();
   if (email) {
@@ -76,8 +77,8 @@ function hubDisplayLabel(user: User | null): string {
 
 /** Top bar: help (?) far left; display name + avatar on the right. Not mounted while the timer is visible. */
 export function MainHubHeader({ user }: MainHubHeaderProps) {
-  const setSynopsis = useSessionStore((s) => s.setSynopsis);
   const setCenterFocus = useSessionStore((s) => s.setCenterFocus);
+  const setOpenHowTo = useSessionStore((s) => s.setOpenHowTo);
 
   const label = hubDisplayLabel(user);
   const initial = label[0]?.toLocaleUpperCase() ?? "?";
@@ -88,14 +89,14 @@ export function MainHubHeader({ user }: MainHubHeaderProps) {
       <div className="mainHubHeader__user">
         <button
           type="button"
-          className="mainHubHeader__helpIcon"
+          className="mainHubHeader__helpPlain"
           aria-label="About the rating system"
           onClick={() => {
             setCenterFocus("rating");
-            setSynopsis(true);
+            setOpenHowTo(true);
           }}
         >
-          <AiOutlineQuestionCircle aria-hidden />
+          ?
         </button>
         <div className="mainHubHeader__userEnd">
           <span className="mainHubHeader__label">{label}</span>
@@ -215,59 +216,59 @@ export function CenterQuadStage({ user, onOpenSignIn, isAuthModalOpen = false }:
 
   return (
     <div className="centerQuadGrid centerQuadGrid--wireframe" role="navigation" aria-label="Main hub">
-        {dataButton}
+      {dataButton}
 
-        <div
-          className={quadClass("session")}
-          role="button"
-          tabIndex={0}
-          aria-label="Start a session"
-          onClick={handleStartTileActivate}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              handleStartTileActivate();
-            }
+      <div
+        className={quadClass("session")}
+        role="button"
+        tabIndex={0}
+        aria-label="Start a session"
+        onClick={handleStartTileActivate}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            handleStartTileActivate();
+          }
+        }}
+      >
+        <div className="centerQuad__wireframeStartRow">
+          <AiOutlineArrowRight className="centerQuad__startArrowIcon" aria-hidden />
+          <span className="centerQuad__title centerQuad__title--wire">Start</span>
+        </div>
+      </div>
+
+      {themeButton}
+
+      {user ? (
+        <button
+          type="button"
+          className={quadClass("account")}
+          onClick={() => {
+            setCenterFocus("account");
+            void handleLogout();
           }}
         >
-          <div className="centerQuad__wireframeStartRow">
-            <AiOutlineArrowRight className="centerQuad__startArrowIcon" aria-hidden />
-            <span className="centerQuad__title centerQuad__title--wire">Start</span>
-          </div>
+          <BsDoorOpen className="centerQuad__glyph" aria-hidden />
+          <span className="centerQuad__title centerQuad__title--wire">Logout</span>
+        </button>
+      ) : isAuthModalOpen ? (
+        <div className={`${quadClass("account")} centerQuad--signingIn`} aria-live="polite">
+          <BsBoxArrowInRight className="centerQuad__glyph" aria-hidden />
+          <span className="centerQuad__title centerQuad__title--wire">Signing in…</span>
         </div>
-
-        {themeButton}
-
-        {user ? (
-          <button
-            type="button"
-            className={quadClass("account")}
-            onClick={() => {
-              setCenterFocus("account");
-              void handleLogout();
-            }}
-          >
-            <BsDoorOpen className="centerQuad__glyph" aria-hidden />
-            <span className="centerQuad__title centerQuad__title--wire">Logout</span>
-          </button>
-        ) : isAuthModalOpen ? (
-          <div className={`${quadClass("account")} centerQuad--signingIn`} aria-live="polite">
-            <BsBoxArrowInRight className="centerQuad__glyph" aria-hidden />
-            <span className="centerQuad__title centerQuad__title--wire">Signing in…</span>
-          </div>
-        ) : (
-          <button
-            type="button"
-            className={quadClass("account")}
-            onClick={() => {
-              setCenterFocus("account");
-              onOpenSignIn();
-            }}
-          >
-            <BsBoxArrowInRight className="centerQuad__glyph" aria-hidden />
-            <span className="centerQuad__title centerQuad__title--wire">Sign in</span>
-          </button>
-        )}
+      ) : (
+        <button
+          type="button"
+          className={quadClass("account")}
+          onClick={() => {
+            setCenterFocus("account");
+            onOpenSignIn();
+          }}
+        >
+          <BsBoxArrowInRight className="centerQuad__glyph" aria-hidden />
+          <span className="centerQuad__title centerQuad__title--wire">Sign in</span>
+        </button>
+      )}
     </div>
   );
 }

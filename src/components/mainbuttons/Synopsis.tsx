@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Modal, { type Styles } from "react-modal";
-import { useSessionStore } from "../store/sessionStore";
-import "./mainbuttons/Synopsis.css";
+import { useSessionStore } from "../../store/sessionStore";
+import "./Synopsis.css";
 
-const Howtorate = () => {
-  const setOpenHowTo = useSessionStore((s) => s.setOpenHowTo);
+const Synopsis = () => {
+  const setSynopsis = useSessionStore((s) => s.setSynopsis);
   const [modalOpen, setModalOpen] = useState(true);
 
-  /* Match Synopsis modal positioning + chrome exactly. */
+  /* Flex centering resets react-modal defaults (absolute + 40px insets) that fight translate centering. */
   const customStyles: Styles = {
     overlay: {
       backgroundColor: "#08080b97",
@@ -42,7 +42,7 @@ const Howtorate = () => {
 
   const closeModal = () => {
     setModalOpen(false);
-    setOpenHowTo(false);
+    setSynopsis(false);
   };
 
   return (
@@ -74,4 +74,4 @@ const Howtorate = () => {
   );
 };
 
-export default Howtorate;
+export default Synopsis;

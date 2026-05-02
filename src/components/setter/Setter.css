@@ -82,11 +82,6 @@
   margin-bottom: 0;
 }
 
-/* RatingMethod still has buttons inside its card */
-.theRatingMethod .nextbackbuttons {
-  margin-top: 28px;
-}
-
 .nextbackbuttons--belowSetter {
   flex-shrink: 0;
 }
@@ -182,9 +177,6 @@
 }
 
 @media only screen and (max-width:1000px) {
-  .theRatingMethod .nextbackbuttons {
-    margin-top: 32px;
-  }
   .slider {
     height: 23px;
     border: 2px solid rgba(255, 255, 255, 0.85);
@@ -197,9 +189,6 @@
                    and (max-height: 800px) {
   .header{
     font-size: 20px;
-  }
-  .theRatingMethod .nextbackbuttons {
-    margin-top: 32px;
   }
   .slider{
     height:23px;
@@ -233,9 +222,6 @@
   }
   .setter{
     width: min(380px, 94vw);
-  }
-  .theRatingMethod .nextbackbuttons {
-    margin-top: 28px;
   }
   .slider{
     height:23px;
