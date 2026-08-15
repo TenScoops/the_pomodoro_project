@@ -6,7 +6,7 @@ import Sidebar, { type SidebarItemId } from "./components/sidebar/Sidebar";
 import Finished from "./components/Finished";
 import Howtorate from "./components/Howtorate";
 import Logout from "./components/Logout";
-import Setter from "./components/setter/Setter";
+import SessionSetupModal from "./components/sessionSetup/SessionSetupModal";
 import Chartdisplay from "./components/chart/Chartdisplay";
 // import MoodInputModal from "./components/mood/MoodInputModal";
 import Theme from "./components/mainbuttons/Theme";
@@ -28,8 +28,8 @@ function App() {
   /** Centered box while switching themes (min 1s + until decode). */
   const [themeSwitchLoading, setThemeSwitchLoading] = useState(false);
   const theme = useSessionStore((s) => s.theme);
-  const showSetterPage = useSessionStore((s) => s.showSetterPage);
   const showTimerPage = useSessionStore((s) => s.showTimerPage);
+  const showSessionSetupModal = useSessionStore((s) => s.showSessionSetupModal);
   const sessionComplete = useSessionStore((s) => s.sessionComplete);
   const data = useSessionStore((s) => s.data);
   const openThemePage = useSessionStore((s) => s.openThemePage);
@@ -38,7 +38,7 @@ function App() {
   const dataLoggingAlert = useSessionStore((s) => s.dataLoggingAlert);
   const setData = useSessionStore((s) => s.setData);
   const setOpenThemePage = useSessionStore((s) => s.setOpenThemePage);
-  const setShowSetterPage = useSessionStore((s) => s.setShowSetterPage);
+  const setShowSessionSetupModal = useSessionStore((s) => s.setShowSessionSetupModal);
   const setShowTimerPage = useSessionStore((s) => s.setShowTimerPage);
   const openDefaultFocusTimer = useSessionStore((s) => s.openDefaultFocusTimer);
   // const openMoodInput = useSessionStore((s) => s.openMoodInput);
@@ -51,12 +51,13 @@ function App() {
         break;
       case "stats":
       case "energy":
-        setShowSetterPage(false);
+        setShowSessionSetupModal(false);
         setShowTimerPage(false);
         setOpenThemePage(false);
         setData(false);
         break;
       case "settings":
+        setShowSessionSetupModal(false);
         setOpenThemePage(true);
         break;
       default:
@@ -165,7 +166,6 @@ function App() {
           {sidebarActiveItem === "energy" && <EnergyPage />}
           {sidebarActiveItem !== "stats" && sidebarActiveItem !== "energy" && (
             <div className={`theTimerContents${showTimerPage ? " theTimerContents--timerHub" : ""}`}>
-              {showSetterPage && <Setter />}
               {showTimerPage && <Timer />}
               {showTimerPage && <RecentDays />}
             </div>
@@ -174,6 +174,10 @@ function App() {
         </div>
 
         <AuthModal isOpen={authModalOpen} onRequestClose={() => setAuthModalOpen(false)} />
+        <SessionSetupModal
+          isOpen={showSessionSetupModal}
+          onRequestClose={() => setShowSessionSetupModal(false)}
+        />
         {data && <Chartdisplay />}
         {/* {openMoodInput && <MoodInputModal />} */}
         {openThemePage && <Theme />}

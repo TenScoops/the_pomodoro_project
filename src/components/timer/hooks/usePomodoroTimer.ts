@@ -11,7 +11,7 @@ import useTimerInitialization from "./useTimerInitialization";
 import useTimerPersistence from "./useTimerPersistence";
 import useTimerTicking from "./useTimerTicking";
 import { TimerMode, UsePomodoroTimerResult } from "../types/timerTypes";
-import { computeWorkBlockSeconds } from "../utils/timerMath";
+import { computeCompletedWorkSeconds, computeWorkBlockSeconds } from "../utils/timerMath";
 
 export default function usePomodoroTimer(): UsePomodoroTimerResult {
   const { numOfBreaks, breakMinutes, workMinutes, sessionComplete, setShowTimerPage, setIsWorkGreater, blockNum, hasUserRated } =
@@ -135,13 +135,20 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
   const safeTimeLeftSeconds = Math.max(0, timeLeft);
   const minutes = Math.floor(safeTimeLeftSeconds / 60);
   const seconds = Math.floor(safeTimeLeftSeconds % 60);
-  const phaseDurationSeconds =
-    mode === "break"
-      ? breakMinutes * 60
-      : computeWorkBlockSeconds({ workMinutes, totalBreakTimeMinutes, totalBlocks });
+  const workBlockSeconds = computeWorkBlockSeconds({ workMinutes, totalBreakTimeMinutes, totalBlocks });
+  const phaseDurationSeconds = mode === "break" ? breakMinutes * 60 : workBlockSeconds;
   const phaseProgressRatio =
     phaseDurationSeconds > 0 ? Math.min(1, Math.max(0, 1 - safeTimeLeftSeconds / phaseDurationSeconds)) : 0;
   const currentWorkBlockIndex = Math.min(totalBlocks, Math.max(1, blockNum));
+  const completedWorkSeconds = computeCompletedWorkSeconds({
+    mode,
+    currentWorkBlockIndex,
+    timeLeftSeconds: safeTimeLeftSeconds,
+    workBlockSeconds,
+  });
+  const completedWorkMinutes = Math.min(totalWorkTimeMinutes, completedWorkSeconds / 60);
+  const remainingWorkMinutes = Math.max(0, totalWorkTimeMinutes - completedWorkMinutes);
+  const completedBlocks = mode === "break" ? currentWorkBlockIndex : Math.max(0, currentWorkBlockIndex - 1);
 
   useTimerDocumentTitle({
     sessionComplete,
@@ -169,6 +176,10 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
     totalWorkTimeMinutes,
     totalBlocks,
     currentWorkBlockIndex,
+    completedWorkMinutes,
+    remainingWorkMinutes,
+    completedBlocks,
+    breakLengthMinutes: breakMinutes,
     effectiveMultiplier,
     speedBoostEnabled,
     speedBoostTitle,

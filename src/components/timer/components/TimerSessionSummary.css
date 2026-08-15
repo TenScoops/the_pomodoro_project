@@ -1,0 +1,95 @@
+.timerSessionCard {
+  box-sizing: border-box;
+  width: min(100%, 322px);
+  padding: 18px 21px 16px;
+  background-color: #1e212dcd;
+  color: rgba(248, 250, 252, 0.96);
+  font-family: "Kalam", "Roboto", sans-serif;
+}
+
+.timerSessionCard__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.timerSessionCard__title {
+  margin: 0;
+  font-size: 0.94rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.92);
+}
+
+.timer button.timerSessionCard__edit {
+  -webkit-appearance: none;
+  appearance: none;
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1.01rem;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.88);
+}
+
+.timer button.timerSessionCard__edit svg {
+  width: 16px;
+  height: 16px;
+  color: #c4b5fd;
+}
+
+.timer button.timerSessionCard__edit:hover {
+  color: #fff;
+}
+
+.timer button.timerSessionCard__edit:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.timer button.timerSessionCard__edit:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.28);
+  outline-offset: 3px;
+}
+
+.timerSessionCard__rows {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timerSessionCard__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.timerSessionCard__row dt {
+  margin: 0;
+  font-size: 0.99rem;
+  font-weight: 500;
+  color: rgba(248, 250, 252, 0.58);
+}
+
+.timerSessionCard__row dd {
+  margin: 0;
+  font-size: 1.06rem;
+  font-weight: 700;
+  color: rgba(248, 250, 252, 0.98);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.timerSessionCard__divider {
+  margin: 12px 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

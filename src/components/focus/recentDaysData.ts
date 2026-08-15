@@ -17,10 +17,10 @@ export type RecentDayRow = {
   notes: string;
 };
 
-// Hours and productivity values are filled from today's sessions; load is still a placeholder.
+// Hours and productivity come from today's sessions; load stays 0 until it is recorded.
 export const RECENT_DAY_SUMMARY_CARDS: RecentDaySummaryCard[] = [
   { id: "hours", label: "Total Work Hours", value: "0" },
-  { id: "load", label: "Average Load", value: "3.2 / 5" },
+  { id: "load", label: "Average Load", value: "0" },
   { id: "productivity", label: "Productivity Avg.", value: "0" },
 ];
 

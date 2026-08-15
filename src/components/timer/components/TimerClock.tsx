@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { HiOutlineArrowRight, HiOutlineChevronDown, HiPlus } from "react-icons/hi2";
+import { useSessionStore } from "../../../store/sessionStore";
+import type { SessionWorkType } from "../../sessionSetup/sessionSetupMath";
 import TimerProgressRing from "./TimerProgressRing";
-
-type WorkMode = "Deep Work" | "Routine";
 
 type TimerClockProps = {
   showClock: boolean;
@@ -43,7 +43,8 @@ export default function TimerClock({
   totalBreakTimeMinutes,
   phaseProgressRatio,
 }: TimerClockProps) {
-  const [workMode, setWorkMode] = useState<WorkMode>("Deep Work");
+  const workType = useSessionStore((state) => state.workType);
+  const setWorkType = useSessionStore((state) => state.setWorkType);
 
   if (!showClock) {
     return null;
@@ -53,8 +54,8 @@ export default function TimerClock({
   const displaySeconds = workLessThanBreak ? "00" : secondsLabel;
   const ringProgress = workLessThanBreak ? 0 : phaseProgressRatio;
 
-  const nextWorkMode: WorkMode = workMode === "Deep Work" ? "Routine" : "Deep Work";
-  const isRoutine = workMode === "Routine";
+  const nextWorkType: SessionWorkType = workType === "Deep Work" ? "Routine" : "Deep Work";
+  const isRoutine = workType === "Routine";
 
   return (
     <div className="timerHero">
@@ -82,8 +83,8 @@ export default function TimerClock({
           <button
             type="button"
             className="timerHero__workSwitch"
-            aria-label={`Switch to ${nextWorkMode}`}
-            onClick={() => setWorkMode(nextWorkMode)}
+            aria-label={`Switch to ${nextWorkType}`}
+            onClick={() => setWorkType(nextWorkType)}
           >
             <HiOutlineArrowRight aria-hidden />
           </button>

@@ -1,14 +1,34 @@
 .timer {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  column-gap: clamp(12px, 2vw, 28px);
   font-family: "Kalam", cursive;
   box-sizing: border-box;
   padding: 0;
   background: transparent;
   border: none;
   box-shadow: none;
+  width: 100%;
+}
+
+.timer__clockColumn {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer .timerSessionCard {
+  grid-column: 3;
+  justify-self: start;
+  align-self: center;
+  margin-left: clamp(18px, 3.2vw, 40px);
+}
+
+.timer > :not(.timer__clockColumn):not(.timerSessionCard) {
+  grid-column: 1 / -1;
+  justify-self: center;
 }
 
 .timerHero {
@@ -381,6 +401,23 @@
   background-color: rgb(0, 0, 0);
   margin-top: 10px;
   font-size: 17px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .timer {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 18px;
+  }
+
+  .timer__clockColumn,
+  .timer .timerSessionCard {
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  .timer .timerSessionCard {
+    margin-left: 0;
+  }
 }
 
 @media only screen and (max-width: 1000px) and (max-height: 800px) {

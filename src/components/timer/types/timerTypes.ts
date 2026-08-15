@@ -14,6 +14,10 @@ export type UsePomodoroTimerResult = {
   totalWorkTimeMinutes: number;
   totalBlocks: number;
   currentWorkBlockIndex: number;
+  completedWorkMinutes: number;
+  remainingWorkMinutes: number;
+  completedBlocks: number;
+  breakLengthMinutes: number;
   effectiveMultiplier: number;
   speedBoostEnabled: boolean;
   speedBoostTitle: string;

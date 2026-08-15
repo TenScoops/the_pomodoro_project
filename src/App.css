@@ -1,6 +1,7 @@
 
 /* While auth modal is open, block clicks on the main shell (portaled modal sits outside #root). */
-body.auth-modal-open #root {
+body.auth-modal-open #root,
+body.session-setup-open #root {
   pointer-events: none;
   user-select: none;
 }
@@ -337,7 +338,8 @@ p, h1, h2,h3{
 
 .theTimerContents--timerHub .timer {
   grid-area: clock;
-  justify-self: center;
+  justify-self: stretch;
+  width: 100%;
 }
 
 .theTimerContents--timerHub .recentDays {
