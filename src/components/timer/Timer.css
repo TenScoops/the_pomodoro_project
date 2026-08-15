@@ -33,7 +33,7 @@
 }
 
 .timer button.timerHero__date,
-.timer button.timerHero__edit,
+.timer button.timerHero__workSwitch,
 .timer button.timerRoundBtn,
 .timer button.timerSpeedBoost,
 .timer button.timerAddNote {
@@ -45,7 +45,7 @@
 }
 
 .timer button.timerHero__date:focus:not(:focus-visible),
-.timer button.timerHero__edit:focus:not(:focus-visible),
+.timer button.timerHero__workSwitch:focus:not(:focus-visible),
 .timer button.timerRoundBtn:focus:not(:focus-visible),
 .timer button.timerSpeedBoost:focus:not(:focus-visible),
 .timer button.timerAddNote:focus:not(:focus-visible) {
@@ -53,7 +53,7 @@
 }
 
 .timer button.timerHero__date:focus-visible,
-.timer button.timerHero__edit:focus-visible,
+.timer button.timerHero__workSwitch:focus-visible,
 .timer button.timerRoundBtn:focus-visible,
 .timer button.timerSpeedBoost:focus-visible,
 .timer button.timerAddNote:focus-visible {
@@ -107,15 +107,35 @@
   margin-bottom: 0;
 }
 
-.timerHero__title {
-  margin: 0;
+.timerHero__titleViewport {
+  overflow: hidden;
+  width: 6.9em;
   font-size: 1.35rem;
-  font-weight: 700;
-  color: rgba(248, 250, 252, 0.98);
   line-height: 1.2;
 }
 
-.timerHero__edit {
+.timerHero__titleTrack {
+  display: flex;
+  width: 200%;
+  transform: translate3d(0, 0, 0);
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timerHero__titleTrack--routine {
+  transform: translate3d(-50%, 0, 0);
+}
+
+.timerHero__title {
+  flex: 0 0 50%;
+  margin: 0;
+  font-size: 1em;
+  font-weight: 700;
+  color: rgba(248, 250, 252, 0.98);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.timerHero__workSwitch {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -129,14 +149,26 @@
   color: rgba(248, 250, 252, 0.96);
 }
 
-.timerHero__edit:hover {
+.timerHero__workSwitch:hover {
   background: transparent;
   color: #fff;
 }
 
-.timerHero__edit svg {
+.timerHero__workSwitch svg {
   width: 15px;
   height: 15px;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timerHero__workSwitch:active svg {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timerHero__titleTrack,
+  .timerHero__workSwitch svg {
+    transition: none;
+  }
 }
 
 .timerRing {

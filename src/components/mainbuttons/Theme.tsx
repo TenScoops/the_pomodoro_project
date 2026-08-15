@@ -19,6 +19,7 @@ const Theme = () => {
   const customStyles = {
     overlay: {
       backgroundColor: "#07070a97",
+      zIndex: 1000,
     },
     content: {
       top: "50%",

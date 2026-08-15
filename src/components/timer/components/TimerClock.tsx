@@ -1,6 +1,8 @@
-import React from "react";
-import { HiOutlineChevronDown, HiOutlinePencil, HiPlus } from "react-icons/hi2";
+import React, { useState } from "react";
+import { HiOutlineArrowRight, HiOutlineChevronDown, HiPlus } from "react-icons/hi2";
 import TimerProgressRing from "./TimerProgressRing";
+
+type WorkMode = "Deep Work" | "Routine";
 
 type TimerClockProps = {
   showClock: boolean;
@@ -41,14 +43,18 @@ export default function TimerClock({
   totalBreakTimeMinutes,
   phaseProgressRatio,
 }: TimerClockProps) {
+  const [workMode, setWorkMode] = useState<WorkMode>("Deep Work");
+
   if (!showClock) {
     return null;
   }
-
   const workLessThanBreak = totalWorkTimeMinutes < totalBreakTimeMinutes;
   const displayMinutes = workLessThanBreak ? "00" : minutesLabel;
   const displaySeconds = workLessThanBreak ? "00" : secondsLabel;
   const ringProgress = workLessThanBreak ? 0 : phaseProgressRatio;
+
+  const nextWorkMode: WorkMode = workMode === "Deep Work" ? "Routine" : "Deep Work";
+  const isRoutine = workMode === "Routine";
 
   return (
     <div className="timerHero">
@@ -61,9 +67,25 @@ export default function TimerClock({
         <div className="timerHero__target">{targetIcon}</div>
 
         <div className="timerHero__titleRow">
-          <h2 className="timerHero__title">Deep Work</h2>
-          <button type="button" className="timerHero__edit" aria-label="Edit task">
-            <HiOutlinePencil aria-hidden />
+          <div className="timerHero__titleViewport">
+            <div
+              className={`timerHero__titleTrack${isRoutine ? " timerHero__titleTrack--routine" : ""}`}
+            >
+              <h2 className="timerHero__title" aria-hidden={isRoutine}>
+                Deep Work
+              </h2>
+              <h2 className="timerHero__title" aria-hidden={!isRoutine}>
+                Routine
+              </h2>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="timerHero__workSwitch"
+            aria-label={`Switch to ${nextWorkMode}`}
+            onClick={() => setWorkMode(nextWorkMode)}
+          >
+            <HiOutlineArrowRight aria-hidden />
           </button>
         </div>
       </div>
