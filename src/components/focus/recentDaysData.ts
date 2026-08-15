@@ -59,6 +59,33 @@ export function formatFocusWorkHours(totalSeconds: number): string {
   return `${hours}h ${minutes}m`;
 }
 
+/** `Deep Work (1h 15m)`, or `Deep Work (1h 15m) | Routine (30m)`. No time in parens when that type has 0 seconds. */
+export function formatWorkTypeWithHours(
+  workType: WorkTypeLabel | null,
+  deepWorkSeconds: number,
+  routineSeconds: number
+): string | null {
+  if (!workType) {
+    return null;
+  }
+  const deepPart = workTypeHoursPart("Deep Work", deepWorkSeconds);
+  const routinePart = workTypeHoursPart("Routine", routineSeconds);
+  if (workType === "Deep Work") {
+    return deepPart;
+  }
+  if (workType === "Routine") {
+    return routinePart;
+  }
+  return `${deepPart} | ${routinePart}`;
+}
+
+function workTypeHoursPart(label: string, seconds: number): string {
+  if (seconds <= 0) {
+    return label;
+  }
+  return `${label} (${formatFocusWorkHours(seconds)})`;
+}
+
 /** Format mean rating as `8.7 / 10`; no ratings or a zero average stays `"0"`. */
 export function formatFocusProductivityAvg(productivityAvg: number, ratingCount: number): string {
   if (ratingCount === 0 || productivityAvg === 0) {

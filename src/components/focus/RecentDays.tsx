@@ -8,10 +8,10 @@ import { MdSpeed } from "react-icons/md";
 import { useTodayFocusSummary } from "../../hooks/useTodayFocusSummary";
 import {
   RECENT_DAY_SUMMARY_CARDS,
+  formatWorkTypeWithHours,
   type LoadScore,
   type RecentDayRow,
   type RecentDaySummaryCard,
-  type WorkTypeLabel,
 } from "./recentDaysData";
 import "./RecentDays.css";
 
@@ -21,9 +21,14 @@ function SummaryIcon({ cardId }: { cardId: RecentDaySummaryCard["id"] }) {
   return <HiOutlineArrowTrendingUp aria-hidden />;
 }
 
-function WorkTypeCell({ workType }: { workType: WorkTypeLabel }) {
-  const showDeep = workType === "Deep Work" || workType === "Deep Work/Routine";
-  const showRoutine = workType === "Routine" || workType === "Deep Work/Routine";
+function WorkTypeCell({ row }: { row: RecentDayRow }) {
+  const label = formatWorkTypeWithHours(row.workType, row.deepWorkSeconds, row.routineSeconds);
+  if (!row.workType || !label) {
+    return <span className="recentDays__muted">—</span>;
+  }
+
+  const showDeep = row.workType === "Deep Work" || row.workType === "Deep Work/Routine";
+  const showRoutine = row.workType === "Routine" || row.workType === "Deep Work/Routine";
 
   return (
     <span className="recentDays__workType">
@@ -31,7 +36,7 @@ function WorkTypeCell({ workType }: { workType: WorkTypeLabel }) {
         {showDeep ? <span className="recentDays__workDot recentDays__workDot--deep" /> : null}
         {showRoutine ? <span className="recentDays__workDot recentDays__workDot--routine" /> : null}
       </span>
-      {workType}
+      {label}
     </span>
   );
 }
@@ -124,7 +129,7 @@ export default function RecentDays() {
                     </td>
                     <td>
                       {row.workType ? (
-                        <WorkTypeCell workType={row.workType} />
+                        <WorkTypeCell row={row} />
                       ) : (
                         <span className="recentDays__muted">—</span>
                       )}
