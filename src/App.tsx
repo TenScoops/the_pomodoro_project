@@ -9,12 +9,10 @@ import Logout from "./components/Logout";
 import Setter from "./components/setter/Setter";
 import Chartdisplay from "./components/chart/Chartdisplay";
 // import MoodInputModal from "./components/mood/MoodInputModal";
-import { CenterQuadStage, MainHubHeader, TimerHubIconBar } from "./components/mainbuttons/MainButtons";
-import HubTodayDashboard from "./components/mainbuttons/HubTodayDashboard";
-import Synopsis from "./components/mainbuttons/Synopsis";
 import Theme from "./components/mainbuttons/Theme";
 import Timer from "./components/timer/Timer";
 import RecentDays from "./components/focus/RecentDays";
+import EnergyPage from "./components/energy/EnergyPage";
 import StatsPage from "./components/stats/StatsPage";
 import DataLoggingErrorToast from "./components/notifications/DataLoggingErrorToast";
 import { useAuth } from "./hooks/useAuth";
@@ -29,17 +27,14 @@ function App() {
   /** Centered box while switching themes (min 1s + until decode). */
   const [themeSwitchLoading, setThemeSwitchLoading] = useState(false);
   const theme = useSessionStore((s) => s.theme);
-  const showParagraph = useSessionStore((s) => s.showParagraph);
   const showSetterPage = useSessionStore((s) => s.showSetterPage);
   const showTimerPage = useSessionStore((s) => s.showTimerPage);
   const sessionComplete = useSessionStore((s) => s.sessionComplete);
   const data = useSessionStore((s) => s.data);
-  const synopsis = useSessionStore((s) => s.synopsis);
   const openThemePage = useSessionStore((s) => s.openThemePage);
   const openHowTo = useSessionStore((s) => s.openHowTo);
   const logout = useSessionStore((s) => s.logout);
   const dataLoggingAlert = useSessionStore((s) => s.dataLoggingAlert);
-  const setCenterFocus = useSessionStore((s) => s.setCenterFocus);
   const setData = useSessionStore((s) => s.setData);
   const setOpenThemePage = useSessionStore((s) => s.setOpenThemePage);
   const setShowSetterPage = useSessionStore((s) => s.setShowSetterPage);
@@ -54,18 +49,13 @@ function App() {
         openDefaultFocusTimer();
         break;
       case "stats":
+      case "energy":
         setShowSetterPage(false);
         setShowTimerPage(false);
         setOpenThemePage(false);
         setData(false);
-        setCenterFocus("data");
-        break;
-      case "energy":
-        setShowTimerPage(false);
-        setCenterFocus(null);
         break;
       case "settings":
-        setCenterFocus("theme");
         setOpenThemePage(true);
         break;
       default:
@@ -124,12 +114,6 @@ function App() {
   }, [session]);
 
   useEffect(() => {
-    if (showParagraph) {
-      setCenterFocus("session");
-    }
-  }, [showParagraph, setCenterFocus]);
-
-  useEffect(() => {
     const bodyClass = "auth-modal-open";
     if (authModalOpen) {
       document.body.classList.add(bodyClass);
@@ -169,32 +153,20 @@ function App() {
       <div className="theApp">
         <div className="mainStage mainStage--hubWireframe">
           {sidebarActiveItem === "stats" && <StatsPage />}
-          {sidebarActiveItem !== "stats" && !showSetterPage && !showTimerPage && !sessionComplete && (
-            <>
-              <MainHubHeader user={session?.user ?? null} />
-              <CenterQuadStage
-                user={session?.user ?? null}
-                onOpenSignIn={() => setAuthModalOpen(true)}
-                isAuthModalOpen={authModalOpen}
-              />
-              <HubTodayDashboard />
-            </>
-          )}
-          {sidebarActiveItem !== "stats" && (
+          {sidebarActiveItem === "energy" && <EnergyPage />}
+          {sidebarActiveItem !== "stats" && sidebarActiveItem !== "energy" && (
             <div className={`theTimerContents${showTimerPage ? " theTimerContents--timerHub" : ""}`}>
-              {showTimerPage && <TimerHubIconBar />}
               {showSetterPage && <Setter />}
               {showTimerPage && <Timer />}
               {showTimerPage && <RecentDays />}
             </div>
           )}
-          {sidebarActiveItem !== "stats" && sessionComplete && <Finished />}
+          {sidebarActiveItem !== "stats" && sidebarActiveItem !== "energy" && sessionComplete && <Finished />}
         </div>
 
         <AuthModal isOpen={authModalOpen} onRequestClose={() => setAuthModalOpen(false)} />
         {data && <Chartdisplay />}
         {/* {openMoodInput && <MoodInputModal />} */}
-        {synopsis && <Synopsis />}
         {openThemePage && <Theme />}
         {openHowTo && <Howtorate />}
 

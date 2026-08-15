@@ -10,11 +10,12 @@ import usePomodoroTimer from "./hooks/usePomodoroTimer";
 import { useSessionStore } from "../../store/sessionStore";
 
 const Timer = () => {
-  const { showButtons, showClock, cancelTheSession } = useSessionStore(
+  const { showButtons, showClock, cancelTheSession, setCancelTheSession } = useSessionStore(
     useShallow((s) => ({
       showButtons: s.showButtons,
       showClock: s.showClock,
       cancelTheSession: s.cancelTheSession,
+      setCancelTheSession: s.setCancelTheSession,
     }))
   );
 
@@ -28,6 +29,7 @@ const Timer = () => {
     mode,
     minutes,
     seconds,
+    phaseProgressRatio,
     totalBreakTimeMinutes,
     totalWorkTimeMinutes,
     totalBlocks,
@@ -49,6 +51,7 @@ const Timer = () => {
         secondsLabel={addZero(seconds)}
         totalWorkTimeMinutes={totalWorkTimeMinutes}
         totalBreakTimeMinutes={totalBreakTimeMinutes}
+        phaseProgressRatio={phaseProgressRatio}
       />
 
       {showClock && (
@@ -59,6 +62,7 @@ const Timer = () => {
           speedBoostTitle={speedBoostTitle}
           onStart={resumeTimer}
           onPause={pauseFromClock}
+          onEnd={() => setCancelTheSession(true)}
           onToggleSpeedBoost={toggleSpeedBoost}
         />
       )}

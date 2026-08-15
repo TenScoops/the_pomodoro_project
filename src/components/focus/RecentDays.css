@@ -2,10 +2,11 @@
 .recentDays {
   display: flex;
   flex-direction: column;
-  gap: clamp(12px, 2.2vmin, 18px);
-  width: 100%;
+  gap: clamp(8px, 1.4vmin, 12px);
+  width: 84%;
   max-width: none;
-  margin: 0;
+  margin: 0 auto;
+  min-height: 0;
   font-family: "Inter", "Roboto", sans-serif;
 }
 
@@ -18,22 +19,22 @@
 .recentDays__summaryCard {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   background-color: #1e212dcd;
   border-radius: 0;
   box-shadow: 7px 8px 5px 0 rgba(0, 0, 0, 0.75);
-  padding: 14px 16px;
+  padding: clamp(8px, 1.3vmin, 12px) clamp(12px, 1.6vmin, 16px);
   box-sizing: border-box;
 }
 
 .recentDays__summaryIcon {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
 }
 
 .recentDays__summaryIcon--hours {
@@ -65,7 +66,7 @@
 }
 
 .recentDays__summaryValue {
-  font-size: clamp(1.05rem, 2.4vmin, 1.35rem);
+  font-size: clamp(0.95rem, 2vmin, 1.15rem);
   font-weight: 700;
   color: rgba(248, 250, 252, 0.98);
   line-height: 1.2;
@@ -74,7 +75,7 @@
 .recentDays__tableCard {
   background-color: #1e212dcd;
   box-shadow: 7px 8px 5px 0 rgba(0, 0, 0, 0.75);
-  padding: clamp(14px, 2.4vmin, 20px) clamp(14px, 2.4vmin, 22px) 12px;
+  padding: clamp(8px, 1.5vmin, 14px) clamp(12px, 2vmin, 18px) 8px;
   box-sizing: border-box;
   color: rgba(248, 250, 252, 0.96);
 }
@@ -84,7 +85,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .recentDays__heading {
@@ -116,8 +117,8 @@
 }
 
 .recentDays__table th {
-  padding: 8px 10px 10px 0;
-  font-size: 0.68rem;
+  padding: 6px 10px 6px 0;
+  font-size: 0.64rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -127,8 +128,8 @@
 }
 
 .recentDays__table td {
-  padding: 12px 10px 12px 0;
-  font-size: 0.86rem;
+  padding: 6px 10px 6px 0;
+  font-size: 0.8rem;
   color: rgba(248, 250, 252, 0.92);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   vertical-align: middle;
@@ -180,9 +181,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  font-size: 0.82rem;
+  width: 24px;
+  height: 24px;
+  font-size: 0.76rem;
   font-weight: 700;
 }
 
@@ -210,7 +211,7 @@
 .recentDays__footer {
   display: flex;
   justify-content: center;
-  padding-top: 8px;
+  padding-top: 4px;
 }
 
 .recentDays__srOnly {

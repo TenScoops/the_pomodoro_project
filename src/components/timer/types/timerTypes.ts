@@ -8,6 +8,8 @@ export type UsePomodoroTimerResult = {
   mode: TimerMode;
   minutes: number;
   seconds: number;
+  /** How much of the current work/break block has elapsed (0 empty ring, 1 full). */
+  phaseProgressRatio: number;
   totalBreakTimeMinutes: number;
   totalWorkTimeMinutes: number;
   totalBlocks: number;

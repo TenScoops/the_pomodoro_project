@@ -1,21 +1,27 @@
-# Stats page — work type + load breakdowns
+# Timer hero layout (circular ring)
 
-- [x] Add hardcoded work-type hours/percents and load-level hours/percents
-- [x] Build Breakdown by Work Type donut + legend
-- [x] Build By Load horizontal bars
-- [x] Place both cards in a row under Daily Overview
-- [x] Empty states if a series is empty
+Match the reference layout: date → target/title → circular progress clock (time, tagline, Add note inside) → Pause/End. Keep existing dark theme, Kalam, and Source Code Pro.
+
+- [x] Write plan and list files
+- [x] Add SVG progress ring around the clock
+- [x] Move Add note inside the ring
+- [x] Restyle controls as circular Pause/Start + End (keep speed boost)
+- [x] Wire End to existing cancel confirmation
 - [x] Verify with `npm run build`
 
 ## Files
 
-- `src/components/stats/statsBreakdownData.ts`
-- `src/components/stats/StatsWorkTypeBreakdown.tsx`
-- `src/components/stats/StatsLoadBreakdown.tsx`
-- `src/components/stats/StatsBreakdowns.css`
-- `src/components/stats/StatsPage.tsx`
+- `src/components/timer/components/TimerProgressRing.tsx` (new)
+- `src/components/timer/components/TimerClock.tsx`
+- `src/components/timer/components/TimerControls.tsx`
+- `src/components/timer/Timer.css`
+- `src/components/timer/Timer.tsx`
+- `src/components/timer/hooks/usePomodoroTimer.ts`
+- `src/components/timer/types/timerTypes.ts`
 
 ## Review
 
-- Under Daily Overview: donut (Deep Work 41.2h / 61%, Routine 26.9h / 39%, center 68.1) and By Load bars (5 Very Heavy through 1 Very Light).
-- Dark panels match the rest of Stats. Values are hardcoded. `npm run build` compiles successfully.
+- Clock is a circular progress ring; elapsed time of the current work/break block fills it clockwise with a knob.
+- Tagline and Add note sit inside the ring. Pause/Start is a filled circle; End is outlined and opens the existing cancel dialog.
+- Speed boost stays as a small extra control. Fonts remain Kalam + Source Code Pro; dark cards/shadows kept on date and buttons.
+- `npm run build` succeeded.

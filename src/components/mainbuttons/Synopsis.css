@@ -1,4 +1,4 @@
-/* Synopsis modal: hub wireframe tile chrome (see MainButtons.css `.centerQuad--wireframe`, `timerHubIconBtn`). */
+/* Shared modal chrome for How to rate. */
 
 .synopsis-modal-shell {
   position: relative;
@@ -29,7 +29,7 @@
   padding: clamp(18px, 3vmin, 26px) clamp(16px, 2.8vmin, 22px) clamp(20px, 3vmin, 26px);
 }
 
-/* Icon-only close — matches `timerHubIconBtn` */
+/* Icon-only close */
 .synopsis-close-btn {
   position: absolute;
   top: 12px;

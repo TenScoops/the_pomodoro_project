@@ -34,3 +34,7 @@
 - **Reset `hasUserRated` at session boundaries:** If it stays `true` after the last block’s rating, the next run’s first `mode === "work"` tick can hit `mode === "work" && hasUserRated` and **increment `blockNum` early** (e.g. 1→2). Clear it in **Setter `goForward`**, **Finished `startNewSession`**, **cancel / logout** resets, and when **finalizing** the session in `Timer`.
 - **No “unset” timer mode:** Initial state `""` made the status line use `mode === "work" ? … : …`, so **empty string looked like “on break.”** and `switchMode` treated `""` as not-work, flipping the first transition wrong. Use **`"work" | "break"` only** and default to **`"work"`** on mount; label with **`mode === "break" ? "on break." : "working.."`** so only real breaks read as break.
 - **Keep timer code split early:** When `Timer.tsx` grows past ~200 lines, pull pure UI into small components and move interval/persistence/title side effects into a typed hook (e.g. `usePomodoroTimer`) so the main component stays readable and change-safe.
+
+### Sidebar / Energy tab
+
+- **Do not reuse an old home hub as a tab fallback.** Energy used to only hide the timer (`setShowTimerPage(false)`). `App` then showed the hub whenever the sidebar was not Stats, so Energy opened Theme / Start / My data / Logout plus Today and Recent sessions. Each sidebar item needs its own page (or a shared empty shell), not “whatever is left when the timer is off.”

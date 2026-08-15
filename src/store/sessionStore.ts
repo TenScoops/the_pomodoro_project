@@ -36,7 +36,6 @@ export type SessionState = {
   blockNum: number;
   sessionComplete: boolean;
   openTask: boolean;
-  synopsis: boolean;
   data: boolean;
   logout: boolean;
   openThemePage: boolean;
@@ -54,8 +53,6 @@ export type SessionState = {
   openMoodInput: boolean;
   /** Display label for the mood the user chose (e.g. "Happy"). */
   moodSelection: string | null;
-  /** Which center hub tile is highlighted (main buttons + hub grid). */
-  centerFocus: "session" | "data" | "theme" | "rating" | "account" | null;
 };
 
 export type SessionActions = {
@@ -76,7 +73,6 @@ export type SessionActions = {
   setBlockNum: (value: number | ((previous: number) => number)) => void;
   setSessionComplete: (value: boolean) => void;
   setOpenTask: (value: boolean) => void;
-  setSynopsis: (value: boolean) => void;
   setData: (value: boolean) => void;
   setLogout: (value: boolean) => void;
   setOpenThemePage: (value: boolean) => void;
@@ -89,7 +85,6 @@ export type SessionActions = {
   bumpChartDataRevision: () => void;
   setOpenMoodInput: (value: boolean) => void;
   setMoodSelection: (value: string | null) => void;
-  setCenterFocus: (value: "session" | "data" | "theme" | "rating" | "account" | null) => void;
   /** Skip the setter and show the timer with the default 25 / 10 session. */
   openDefaultFocusTimer: () => void;
 };
@@ -112,7 +107,6 @@ const initialSessionState: SessionState = {
   blockNum: 1,
   sessionComplete: false,
   openTask: false,
-  synopsis: false,
   data: false,
   logout: false,
   openThemePage: false,
@@ -125,7 +119,6 @@ const initialSessionState: SessionState = {
   dataLoggingAlert: null,
   openMoodInput: false,
   moodSelection: null,
-  centerFocus: "session",
 };
 
 export const useSessionStore = create<SessionState & SessionActions>()(
@@ -153,7 +146,6 @@ export const useSessionStore = create<SessionState & SessionActions>()(
         })),
       setSessionComplete: (value) => set({ sessionComplete: value }),
       setOpenTask: (value) => set({ openTask: value }),
-      setSynopsis: (value) => set({ synopsis: value }),
       setData: (value) => set({ data: value }),
       setLogout: (value) => set({ logout: value }),
       setOpenThemePage: (value) => set({ openThemePage: value }),
@@ -180,7 +172,6 @@ export const useSessionStore = create<SessionState & SessionActions>()(
         set((state) => ({ chartDataRevision: state.chartDataRevision + 1 })),
       setOpenMoodInput: (value) => set({ openMoodInput: value }),
       setMoodSelection: (value) => set({ moodSelection: value }),
-      setCenterFocus: (value) => set({ centerFocus: value }),
       openDefaultFocusTimer: () =>
         set({
           workMinutes: DEFAULT_SESSION_HOURS,
@@ -194,7 +185,6 @@ export const useSessionStore = create<SessionState & SessionActions>()(
           showData: false,
           clicked: true,
           sessionComplete: false,
-          centerFocus: "session",
           data: false,
           openThemePage: false,
         }),

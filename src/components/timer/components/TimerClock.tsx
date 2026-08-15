@@ -1,5 +1,6 @@
 import React from "react";
-import { HiOutlineChevronDown, HiOutlinePencil } from "react-icons/hi2";
+import { HiOutlineChevronDown, HiOutlinePencil, HiPlus } from "react-icons/hi2";
+import TimerProgressRing from "./TimerProgressRing";
 
 type TimerClockProps = {
   showClock: boolean;
@@ -7,6 +8,7 @@ type TimerClockProps = {
   secondsLabel: string;
   totalWorkTimeMinutes: number;
   totalBreakTimeMinutes: number;
+  phaseProgressRatio: number;
 };
 
 function formatHeroDate(date: Date) {
@@ -37,6 +39,7 @@ export default function TimerClock({
   secondsLabel,
   totalWorkTimeMinutes,
   totalBreakTimeMinutes,
+  phaseProgressRatio,
 }: TimerClockProps) {
   if (!showClock) {
     return null;
@@ -45,6 +48,7 @@ export default function TimerClock({
   const workLessThanBreak = totalWorkTimeMinutes < totalBreakTimeMinutes;
   const displayMinutes = workLessThanBreak ? "00" : minutesLabel;
   const displaySeconds = workLessThanBreak ? "00" : secondsLabel;
+  const ringProgress = workLessThanBreak ? 0 : phaseProgressRatio;
 
   return (
     <div className="timerHero">
@@ -53,20 +57,27 @@ export default function TimerClock({
         <HiOutlineChevronDown className="timerHero__dateChevron" aria-hidden />
       </button>
 
-      <div className="timerHero__target">{targetIcon}</div>
+      <div className="timerHero__task">
+        <div className="timerHero__target">{targetIcon}</div>
 
-      <div className="timerHero__titleRow">
-        <h2 className="timerHero__title">Deep Work</h2>
-        <button type="button" className="timerHero__edit" aria-label="Edit task">
-          <HiOutlinePencil aria-hidden />
-        </button>
+        <div className="timerHero__titleRow">
+          <h2 className="timerHero__title">Deep Work</h2>
+          <button type="button" className="timerHero__edit" aria-label="Edit task">
+            <HiOutlinePencil aria-hidden />
+          </button>
+        </div>
       </div>
 
-      <p className="timerHero__time" aria-label={`${displayMinutes} minutes ${displaySeconds} seconds`}>
-        {displayMinutes}:{displaySeconds}
-      </p>
-
-      <p className="timerHero__tagline">Focus on what matters.</p>
+      <TimerProgressRing progressRatio={ringProgress}>
+        <p className="timerHero__time" aria-label={`${displayMinutes} minutes ${displaySeconds} seconds`}>
+          {displayMinutes}:{displaySeconds}
+        </p>
+        <p className="timerHero__tagline">Focus on what matters.</p>
+        <button className="timerAddNote" type="button">
+          <HiPlus aria-hidden />
+          Add note
+        </button>
+      </TimerProgressRing>
     </div>
   );
 }

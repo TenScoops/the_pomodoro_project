@@ -11,6 +11,7 @@ import useTimerInitialization from "./useTimerInitialization";
 import useTimerPersistence from "./useTimerPersistence";
 import useTimerTicking from "./useTimerTicking";
 import { TimerMode, UsePomodoroTimerResult } from "../types/timerTypes";
+import { computeWorkBlockSeconds } from "../utils/timerMath";
 
 export default function usePomodoroTimer(): UsePomodoroTimerResult {
   const { numOfBreaks, breakMinutes, workMinutes, sessionComplete, setShowTimerPage, setIsWorkGreater, blockNum, hasUserRated } =
@@ -125,6 +126,12 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
   const safeTimeLeftSeconds = Math.max(0, timeLeft);
   const minutes = Math.floor(safeTimeLeftSeconds / 60);
   const seconds = Math.floor(safeTimeLeftSeconds % 60);
+  const phaseDurationSeconds =
+    mode === "break"
+      ? breakMinutes * 60
+      : computeWorkBlockSeconds({ workMinutes, totalBreakTimeMinutes, totalBlocks });
+  const phaseProgressRatio =
+    phaseDurationSeconds > 0 ? Math.min(1, Math.max(0, 1 - safeTimeLeftSeconds / phaseDurationSeconds)) : 0;
   const currentWorkBlockIndex = Math.min(totalBlocks, Math.max(1, blockNum));
 
   useTimerDocumentTitle({
@@ -148,6 +155,7 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
     mode,
     minutes,
     seconds,
+    phaseProgressRatio,
     totalBreakTimeMinutes,
     totalWorkTimeMinutes,
     totalBlocks,

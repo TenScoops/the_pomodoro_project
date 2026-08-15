@@ -1,4 +1,5 @@
 import React from "react";
+import { HiPause, HiPlay, HiStop } from "react-icons/hi2";
 
 type TimerControlsProps = {
   showButtons: boolean;
@@ -7,6 +8,7 @@ type TimerControlsProps = {
   speedBoostTitle: string;
   onStart: () => void;
   onPause: () => void;
+  onEnd: () => void;
   onToggleSpeedBoost: () => void;
 };
 
@@ -17,6 +19,7 @@ export default function TimerControls({
   speedBoostTitle,
   onStart,
   onPause,
+  onEnd,
   onToggleSpeedBoost,
 }: TimerControlsProps) {
   if (!showButtons) {
@@ -27,14 +30,27 @@ export default function TimerControls({
     <div className="timerHeroControls">
       <div className="timerHeroStartRow">
         {isPaused ? (
-          <button className="timerStart" type="button" onClick={onStart}>
-            START
+          <button className="timerRoundBtn timerRoundBtn--primary" type="button" onClick={onStart}>
+            <span className="timerRoundBtn__face">
+              <HiPlay className="timerRoundBtn__icon timerRoundBtn__icon--play" aria-hidden />
+            </span>
+            <span className="timerRoundBtn__label">Start</span>
           </button>
         ) : (
-          <button className="timerStart" type="button" onClick={onPause}>
-            PAUSE
+          <button className="timerRoundBtn timerRoundBtn--primary" type="button" onClick={onPause}>
+            <span className="timerRoundBtn__face">
+              <HiPause className="timerRoundBtn__icon" aria-hidden />
+            </span>
+            <span className="timerRoundBtn__label">Pause</span>
           </button>
         )}
+
+        <button className="timerRoundBtn timerRoundBtn--ghost" type="button" onClick={onEnd}>
+          <span className="timerRoundBtn__face">
+            <HiStop className="timerRoundBtn__icon" aria-hidden />
+          </span>
+          <span className="timerRoundBtn__label">End</span>
+        </button>
 
         <button
           className="timerSpeedBoost"
@@ -45,10 +61,6 @@ export default function TimerControls({
           {speedBoostLabel}
         </button>
       </div>
-
-      <button className="timerAddNote" type="button">
-        + Add note
-      </button>
     </div>
   );
 }
