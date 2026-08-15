@@ -323,11 +323,6 @@ p, h1, h2,h3{
   display: flex;
 }
 
-/* Stay mounted while other tabs are open so a running session is not reset. */
-.theTimerContents.theTimerContents--offstage {
-  display: none;
-}
-
 /* Equal side columns keep the clock centered; icons sit in the left column against the clock. */
 .theTimerContents.theTimerContents--timerHub {
   display: grid;
@@ -340,6 +335,12 @@ p, h1, h2,h3{
   row-gap: clamp(16px, 2.5vmin, 24px);
   width: 100%;
   max-width: 100%;
+}
+
+/* Stay mounted while other tabs are open so a running session is not reset.
+   Must beat --timerHub `display: grid` (same specificity; later rule wins). */
+.theTimerContents.theTimerContents--offstage {
+  display: none;
 }
 
 .theTimerContents--timerHub .timer {

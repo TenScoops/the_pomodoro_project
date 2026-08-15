@@ -55,3 +55,12 @@
 
 - **Every block must be rated.** The rating modal has no Skip, close, overlay click, or Esc dismiss. Hours still come from saved `block_ratings.duration_seconds` only.
 - **Closing the page restarts the timer.** Restoring a persisted countdown caused desyncs. On load we clear the timer snapshot, reset to block 1, and detach the previous draft session id so the next rated block starts a new row. Already-saved ratings stay in the database.
+
+### Energy page
+
+- **UI first when that is what was asked.** Log your energy is layout + CSS in the existing Stats card style. Do not add tables, save/load, or toasts until asked.
+
+### Focus hub vs other tabs
+
+- **Offstage must win over the hub grid.** `.theTimerContents--timerHub { display: grid }` and `--offstage { display: none }` had the same specificity; the grid rule came last, so Stats/Energy still showed Timer + Recent days. Put the offstage `display: none` after the hub grid rule.
+

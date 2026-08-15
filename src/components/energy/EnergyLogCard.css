@@ -1,0 +1,165 @@
+.energyLogCard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #1e212dcd;
+  box-shadow: 7px 8px 5px 0 rgba(0, 0, 0, 0.75);
+  padding: clamp(16px, 2.6vmin, 22px) clamp(16px, 2.6vmin, 24px) 16px;
+  color: rgba(248, 250, 252, 0.96);
+  font-family: "Kalam", "Roboto", sans-serif;
+}
+
+.energyLogCard button {
+  width: auto;
+  min-width: 0;
+  margin-right: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.energyLogCard__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(248, 250, 252, 0.92);
+}
+
+.energyLogCard__subtitle {
+  margin: 6px 0 0;
+  font-size: 0.92rem;
+  color: rgba(248, 250, 252, 0.62);
+}
+
+.energyLogCard__scale {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 22px;
+  padding: 0 4px;
+}
+
+.energyLogCard__rail {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 42px;
+  border-top: 2px dashed rgba(248, 250, 252, 0.22);
+  pointer-events: none;
+}
+
+.energyLogCard__step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+}
+
+.energyLogCard__number {
+  font-family: "Roboto", "Kalam", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(248, 250, 252, 0.45);
+  line-height: 1;
+}
+
+.energyLogCard__step--selected .energyLogCard__number {
+  font-weight: 700;
+  color: var(--energy-color);
+}
+
+.energyLogCard__face {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background-color: rgba(18, 20, 28, 0.72);
+}
+
+.energyLogCard__step--selected .energyLogCard__face {
+  border-color: var(--energy-color);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+}
+
+.energyLogCard__icon {
+  width: 26px;
+  height: 26px;
+  color: var(--energy-color);
+}
+
+.energyLogCard__caption {
+  min-height: 1.1em;
+  font-size: 0.78rem;
+  color: rgba(248, 250, 252, 0.5);
+}
+
+.energyLogCard__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.energyLogCard__label {
+  font-size: 0.82rem;
+  color: rgba(248, 250, 252, 0.55);
+}
+
+.energyLogCard__textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 112px;
+  padding: 12px 14px;
+  resize: vertical;
+  border: 1px solid rgba(196, 181, 253, 0.42);
+  background-color: rgba(18, 20, 28, 0.72);
+  color: rgba(248, 250, 252, 0.96);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.energyLogCard__textarea::placeholder {
+  color: rgba(248, 250, 252, 0.42);
+}
+
+.energyLogCard__textarea:focus {
+  outline: none;
+  border-color: #c4b5fd;
+  background-color: rgba(18, 20, 28, 0.88);
+}
+
+.energyLogCard__footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.energyLogCard button.energyLogCard__save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 8px 16px;
+  font-weight: 700;
+  border: none;
+  background-color: #1e212dcd;
+  color: #fff;
+}
+
+.energyLogCard__save:hover {
+  background-color: rgba(48, 48, 52, 0.94);
+}
