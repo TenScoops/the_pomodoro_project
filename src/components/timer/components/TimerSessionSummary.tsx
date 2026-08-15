@@ -3,12 +3,12 @@ import { HiPencil } from "react-icons/hi2";
 import { formatFocusDuration } from "../utils/timerMath";
 import "./TimerSessionSummary.css";
 
-type SessionStatRow = {
+interface SessionStatRow {
   label: string;
   value: string;
-};
+}
 
-type TimerSessionSummaryProps = {
+interface TimerSessionSummaryProps {
   plannedFocusMinutes: number;
   completedFocusMinutes: number;
   remainingFocusMinutes: number;
@@ -16,7 +16,7 @@ type TimerSessionSummaryProps = {
   currentWorkBlockIndex: number;
   breakLengthMinutes: number;
   onEdit: () => void;
-};
+}
 
 function SessionRows({ rows }: { rows: SessionStatRow[] }) {
   return (

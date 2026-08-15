@@ -62,7 +62,7 @@ export async function updateSession(
   return { error: null, data: response.data as SessionRow };
 }
 
-/** Hours and block count come only from saved ratings, so skipped blocks are not counted. */
+/** Hours and block count come only from saved ratings. */
 export async function syncSessionTotalsFromBlockRatings(
   sessionId: string
 ): Promise<{ error: PostgrestError | null; totalSeconds: number; blockCount: number }> {

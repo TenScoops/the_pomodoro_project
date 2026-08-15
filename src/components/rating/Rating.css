@@ -102,28 +102,6 @@
   color: rgba(248, 250, 252, 0.62);
 }
 
-.rateSession__close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: rgba(248, 250, 252, 0.88);
-}
-
-.rateSession__close svg {
-  width: 22px;
-  height: 22px;
-}
-
-.rateSession__close:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-}
-
 .rateSession__body {
   overflow: auto;
   padding: 4px 24px 8px;
@@ -384,7 +362,6 @@
   padding: 12px 24px 20px;
 }
 
-.rateSession button.rateSession__skip,
 .rateSession button.rateSession__save {
   display: inline-flex;
   align-items: center;
@@ -394,16 +371,6 @@
   min-height: 42px;
   padding: 8px 16px;
   font-weight: 700;
-}
-
-.rateSession__skip {
-  border: 1px solid rgba(248, 250, 252, 0.28);
-  background: transparent;
-  color: rgba(248, 250, 252, 0.92);
-}
-
-.rateSession__skip:hover {
-  background: rgba(255, 255, 255, 0.08);
 }
 
 .rateSession__save {

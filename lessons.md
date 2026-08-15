@@ -1,5 +1,9 @@
 # Pomoprogress — lessons learned
 
+## TypeScript shape vs alias
+
+- **Object contracts use `interface`, not `type`.** Props, row records, and option objects (`TimerSessionSummaryProps`, `SessionStatRow`) should be `interface`. Reserve `type` for unions (`"work" | "break"`), intersections, and aliases of primitives.
+
 ## Authentication (Supabase, 2026)
 
 - **Gate the app on `session`, not a custom backend cookie.** `useAuth` uses `getSession` once plus `onAuthStateChange` so the UI and sidebar stay aligned without duplicate `fetch('/auth/status')` calls.
@@ -49,5 +53,5 @@
 
 ### Ratings, hours, and reloads
 
-- **Skip (no productivity + load) must not add hours.** Finalize used to write the full planned session time. Hours now come from the sum of rated `duration_seconds` only. Skip records the block as skipped and does not insert a `block_ratings` row.
+- **Every block must be rated.** The rating modal has no Skip, close, overlay click, or Esc dismiss. Hours still come from saved `block_ratings.duration_seconds` only.
 - **Closing the page restarts the timer.** Restoring a persisted countdown caused desyncs. On load we clear the timer snapshot, reset to block 1, and detach the previous draft session id so the next rated block starts a new row. Already-saved ratings stay in the database.

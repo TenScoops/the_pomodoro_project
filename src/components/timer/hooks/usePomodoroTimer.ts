@@ -14,18 +14,17 @@ import { TimerMode, UsePomodoroTimerResult } from "../types/timerTypes";
 import { computeCompletedWorkSeconds, computeWorkBlockSeconds } from "../utils/timerMath";
 
 export default function usePomodoroTimer(): UsePomodoroTimerResult {
-  const { numOfBreaks, breakMinutes, workMinutes, sessionComplete, setShowTimerPage, setIsWorkGreater, blockNum, hasUserRated, skippedBlockNumbers } =
+  const { numOfBreaks, breakMinutes, workMinutes, sessionComplete, setShowTimerPage, setIsWorkGreater, blockNum, hasUserRated } =
     useSessionStore(
-      useShallow((s) => ({
-        numOfBreaks: s.numOfBreaks,
-        breakMinutes: s.breakMinutes,
-        workMinutes: s.workMinutes,
-        sessionComplete: s.sessionComplete,
-        setShowTimerPage: s.setShowTimerPage,
-        setIsWorkGreater: s.setIsWorkGreater,
-        blockNum: s.blockNum,
-        hasUserRated: s.hasUserRated,
-        skippedBlockNumbers: s.skippedBlockNumbers,
+      useShallow((state) => ({
+        numOfBreaks: state.numOfBreaks,
+        breakMinutes: state.breakMinutes,
+        workMinutes: state.workMinutes,
+        sessionComplete: state.sessionComplete,
+        setShowTimerPage: state.setShowTimerPage,
+        setIsWorkGreater: state.setIsWorkGreater,
+        blockNum: state.blockNum,
+        hasUserRated: state.hasUserRated,
       }))
     );
 
@@ -125,22 +124,14 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
   const phaseProgressRatio =
     phaseDurationSeconds > 0 ? Math.min(1, Math.max(0, 1 - safeTimeLeftSeconds / phaseDurationSeconds)) : 0;
   const currentWorkBlockIndex = Math.min(totalBlocks, Math.max(1, blockNum));
-  const elapsedWorkSeconds = computeCompletedWorkSeconds({
-    mode,
-    currentWorkBlockIndex,
-    timeLeftSeconds: safeTimeLeftSeconds,
-    workBlockSeconds,
-    skippedBlockNumbers: [],
-  });
   const completedWorkSeconds = computeCompletedWorkSeconds({
     mode,
     currentWorkBlockIndex,
     timeLeftSeconds: safeTimeLeftSeconds,
     workBlockSeconds,
-    skippedBlockNumbers,
   });
   const completedWorkMinutes = Math.min(totalWorkTimeMinutes, completedWorkSeconds / 60);
-  const remainingWorkMinutes = Math.max(0, totalWorkTimeMinutes - elapsedWorkSeconds / 60);
+  const remainingWorkMinutes = Math.max(0, totalWorkTimeMinutes - completedWorkSeconds / 60);
   const completedBlocks = mode === "break" ? currentWorkBlockIndex : Math.max(0, currentWorkBlockIndex - 1);
 
   useTimerDocumentTitle({

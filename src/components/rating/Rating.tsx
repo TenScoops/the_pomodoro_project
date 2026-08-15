@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Modal, { type Styles } from "react-modal";
-import { HiCheck, HiChevronDown, HiOutlineClock, HiXMark } from "react-icons/hi2";
+import { HiCheck, HiChevronDown, HiOutlineClock } from "react-icons/hi2";
 import PerformanceRatedToast from "../notifications/PerformanceRatedToast";
 import RatingScaleSlider from "./RatingScaleSlider";
 import "./Rating.css";
@@ -100,14 +100,6 @@ const Rating = () => {
     });
   };
 
-  const handleSkip = () => {
-    const store = useSessionStore.getState();
-    store.addSkippedBlockNumber(blockNum);
-    setHasUserRated(true);
-    setModalOpen(false);
-    completeLastBlockIfNeeded();
-  };
-
   const handleSave = () => {
     setHasUserRated(true);
     setModalOpen(false);
@@ -129,10 +121,10 @@ const Rating = () => {
       <div className="ratingdiv">
         <Modal
           isOpen={modalOpen}
-          onRequestClose={handleSkip}
           style={modalStyles}
           contentLabel="Rate your session"
           shouldCloseOnOverlayClick={false}
+          shouldCloseOnEsc={false}
         >
           <div className="rateSession">
             <header className="rateSession__header">
@@ -140,9 +132,6 @@ const Rating = () => {
                 <h2 className="rateSession__title">How was this block?</h2>
                 <p className="rateSession__subtitle">Your feedback helps you understand your patterns and improve.</p>
               </div>
-              <button type="button" className="rateSession__close" onClick={handleSkip} aria-label="Skip rating">
-                <HiXMark aria-hidden />
-              </button>
             </header>
 
             <div className="rateSession__body">
@@ -234,9 +223,6 @@ const Rating = () => {
             </div>
 
             <footer className="rateSession__footer">
-              <button type="button" className="rateSession__skip" onClick={handleSkip}>
-                Skip
-              </button>
               <button type="button" className="rateSession__save" onClick={handleSave}>
                 Save & Continue
               </button>

@@ -12,7 +12,7 @@ import { findLatestDraftSessionIdForUser } from "./sessionQueries";
 import { syncSessionTotalsFromBlockRatings, updateSession } from "./sessionMutations";
 
 /**
- * After the last block is saved or skipped: hours come from rated blocks only, then mark complete.
+ * After the last block is saved: hours come from rated blocks, then mark complete.
  * If no draft id is found (recovery), falls back to `persistCompletedPomodoroSessionBulkInsert`.
  */
 export async function finalizeActivePomodoroSession(): Promise<{

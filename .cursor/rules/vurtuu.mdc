@@ -64,3 +64,15 @@ These rules apply to every session. Follow them before starting any task.
 - Add a review section to `todo.md` when done
 - Document lessons learned in `lessons.md` after corrections
 
+## Specific Rules
+
+- Typography: Lora for post body/content, Inter for buttons, usernames, modals, UI
+- Bottom sheets use `sheetPosition` for animation, not `panY`
+- Always handle RLS when writing Supabase queries
+- Optimistic UI must always have a revert on failure
+- Every bottom sheet needs: loading skeleton, error state, empty state, data state
+- Font files live in `assets/fonts/`
+- Components over 200 lines should be evaluated for splitting
+- Use TypeScript types wherever they keep the codebase robust and maintainable
+- `interface` for object shapes (props, records, options); `type` for unions, intersections, and primitive aliases
+

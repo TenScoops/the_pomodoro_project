@@ -5,7 +5,7 @@ import type { SessionWorkType } from "../../sessionSetup/sessionSetupMath";
 import AddNoteModal from "./AddNoteModal";
 import TimerProgressRing from "./TimerProgressRing";
 
-type TimerClockProps = {
+interface TimerClockProps{
   showClock: boolean;
   minutesLabel: string;
   secondsLabel: string;

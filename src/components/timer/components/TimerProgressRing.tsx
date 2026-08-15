@@ -1,10 +1,10 @@
 import React from "react";
 
-type TimerProgressRingProps = {
+interface TimerProgressRingProps {
   /** 0 = empty ring at the top; 1 = fully filled clockwise. */
   progressRatio: number;
   children: React.ReactNode;
-};
+}
 
 const RING_SIZE = 240;
 const CENTER = 120;

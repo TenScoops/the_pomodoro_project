@@ -7,7 +7,7 @@ import "./AddNoteModal.css";
 
 const NOTE_MAX_LENGTH = 500;
 
-type AddNoteModalProps = {
+interface AddNoteModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { HiArrowPath, HiPause, HiPlay, HiStop } from "react-icons/hi2";
 
-type TimerControlsProps = {
+interface TimerControlsProps {
   showButtons: boolean;
   isPaused: boolean;
   speedBoostLabel: string;
@@ -11,7 +11,7 @@ type TimerControlsProps = {
   onReset: () => void;
   onEnd: () => void;
   onToggleSpeedBoost: () => void;
-};
+}
 
 export default function TimerControls({
   showButtons,
