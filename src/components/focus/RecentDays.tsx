@@ -8,8 +8,8 @@ import { MdSpeed } from "react-icons/md";
 import { useTodayFocusSummary } from "../../hooks/useTodayFocusSummary";
 import {
   RECENT_DAY_SUMMARY_CARDS,
+  formatFocusLoadNumber,
   formatWorkTypeWithHours,
-  type LoadScore,
   type RecentDayRow,
   type RecentDaySummaryCard,
 } from "./recentDaysData";
@@ -41,7 +41,7 @@ function WorkTypeCell({ row }: { row: RecentDayRow }) {
   );
 }
 
-function loadBadgeClass(load: LoadScore): string {
+function loadBadgeClass(load: number): string {
   return load <= 2 ? "recentDays__load recentDays__load--low" : "recentDays__load recentDays__load--mid";
 }
 
@@ -136,7 +136,7 @@ export default function RecentDays() {
                     </td>
                     <td>
                       {row.load != null ? (
-                        <span className={loadBadgeClass(row.load)}>{row.load}</span>
+                        <span className={loadBadgeClass(row.load)}>{formatFocusLoadNumber(row.load)}</span>
                       ) : (
                         <span className="recentDays__muted">—</span>
                       )}

@@ -4,7 +4,6 @@ import type { SessionWithRatings } from "../../types/pomoprogress";
 
 export type WorkType = "Deep Work" | "Routine";
 export type WorkTypeLabel = WorkType | "Deep Work/Routine";
-export type LoadScore = 1 | 2 | 3 | 4 | 5;
 
 export type RecentDaySummaryCard = {
   id: "hours" | "load" | "productivity";
@@ -19,7 +18,7 @@ export type RecentDayRow = {
   workType: WorkTypeLabel | null;
   deepWorkSeconds: number;
   routineSeconds: number;
-  load: LoadScore | null;
+  load: number | null;
   /** Mean block rating 1–10; null when the day has no productivity ratings. */
   productivity: number | null;
   hours: string;
@@ -94,12 +93,17 @@ export function formatFocusProductivityAvg(productivityAvg: number, ratingCount:
   return `${productivityAvg.toFixed(1)} / 10`;
 }
 
-/** Format mean load as `3.2 / 5`; no loads or a zero average stays `"0"`. */
+/** Format a 0.25-step load so 3.25 stays 3.25 and 3 stays 3. */
+export function formatFocusLoadNumber(load: number): string {
+  return Number(load.toFixed(2)).toString();
+}
+
+/** Format mean load as `3.25 / 5`; no loads or a zero average stays `"0"`. */
 export function formatFocusLoadAvg(loadAvg: number, loadCount: number): string {
   if (loadCount === 0 || loadAvg === 0) {
     return "0";
   }
-  return `${loadAvg.toFixed(1)} / 5`;
+  return `${formatFocusLoadNumber(loadAvg)} / 5`;
 }
 
 function formatDayHeading(isoDate: string): string {
@@ -126,13 +130,6 @@ function dateLabelsForIso(
     return { dateLabel: "Yesterday", dateDetail: heading };
   }
   return { dateLabel: heading, dateDetail: null };
-}
-
-function toLoadScore(loadAvg: number): LoadScore {
-  const rounded = Math.round(loadAvg);
-  if (rounded <= 1) return 1;
-  if (rounded >= 5) return 5;
-  return rounded as LoadScore;
 }
 
 function workTypeTotalsFromSessions(sessions: SessionWithRatings[]): {
@@ -210,7 +207,7 @@ export function buildRecentDayRows(
       workType: workTypeTotals.workType,
       deepWorkSeconds: workTypeTotals.deepWorkSeconds,
       routineSeconds: workTypeTotals.routineSeconds,
-      load: summary.loadCount === 0 ? null : toLoadScore(summary.loadAvg),
+      load: summary.loadCount === 0 ? null : summary.loadAvg,
       productivity: summary.ratingCount === 0 ? null : summary.productivityAvg,
       hours: formatFocusWorkHours(summary.totalSeconds),
       notes: notesByDate[isoDate] || null,
