@@ -18,7 +18,14 @@ export default function StatsLoadBreakdown() {
             return (
               <li key={bar.id} className="statsBreakdown__loadRow">
                 <span className="statsBreakdown__loadLabel">
-                  {bar.level} ({bar.label})
+                  <span
+                    className="statsBreakdown__legendDot"
+                    style={{ backgroundColor: bar.barColor }}
+                    aria-hidden
+                  />
+                  <span className="statsBreakdown__loadTitle">
+                    {bar.titleRange} {bar.label}
+                  </span>
                 </span>
                 <div className="statsBreakdown__loadTrack">
                   <div

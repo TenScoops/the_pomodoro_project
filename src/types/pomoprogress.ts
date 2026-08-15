@@ -36,8 +36,9 @@ export type BlockRatingRow = {
   id: string;
   session_id: string;
   block_number: number;
+  /** Productivity 1–10 in 0.25 steps. */
   rating: number;
-  /** Load / difficulty 1–5; null on rows saved before load was recorded. */
+  /** Load / difficulty 1–5 in 0.25 steps; null on rows saved before load was recorded. */
   load: number | null;
   /** Null on rows saved before work type was recorded. */
   work_type: BlockWorkType | null;

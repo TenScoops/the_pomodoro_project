@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Modal, { type Styles } from "react-modal";
 import { HiCheck, HiChevronDown, HiOutlineClock, HiXMark } from "react-icons/hi2";
 import PerformanceRatedToast from "../notifications/PerformanceRatedToast";
+import RatingScaleSlider from "./RatingScaleSlider";
 import "./Rating.css";
 import { finalizeActivePomodoroSession, logBlockRatingForCurrentSession } from "../../services/pomoprogressService";
 import { localBlockLoadKey, localBlockWorkTypeKey } from "../../services/pomoprogressService/sessionClientHelpers";
@@ -42,8 +43,8 @@ function formatBlockMinutes(minutes: number): string {
 const Rating = () => {
   const [modalOpen, setModalOpen] = useState(true);
   const [showRatedToast, setShowRatedToast] = useState(false);
-  const [productivity, setProductivity] = useState<number | null>(null);
-  const [load, setLoad] = useState<number | null>(null);
+  const [productivity, setProductivity] = useState(7);
+  const [load, setLoad] = useState(3);
   const [workTypeOpen, setWorkTypeOpen] = useState(false);
   const workTypeWrapRef = useRef<HTMLDivElement | null>(null);
 
@@ -58,7 +59,6 @@ const Rating = () => {
   const totalBlocks = numOfBreaks + 1;
   const focusMinutes = workMinutes * 60 - numOfBreaks * breakMinutes;
   const blockMinutes = minutesPerFocusBlock(focusMinutes, totalBlocks);
-  const canSave = productivity !== null && load !== null;
 
   useEffect(() => {
     const bodyClass = "rate-session-open";
@@ -109,9 +109,6 @@ const Rating = () => {
   };
 
   const handleSave = () => {
-    if (productivity === null || load === null) {
-      return;
-    }
     setHasUserRated(true);
     setModalOpen(false);
     setShowRatedToast(true);
@@ -209,70 +206,38 @@ const Rating = () => {
               </div>
               </div>
 
-              <section className="rateSession__scale" aria-labelledby="rate-productivity-title">
-                <h3 className="rateSession__scaleTitle" id="rate-productivity-title">
-                  1. Productivity (1-10)
-                </h3>
-                <p className="rateSession__scaleHint">How productive was this block?</p>
-                <div className="rateSession__pills" role="radiogroup" aria-labelledby="rate-productivity-title">
-                  {Array.from({ length: 10 }, (_, index) => {
-                    const value = index + 1;
-                    const selected = productivity === value;
-                    return (
-                      <button
-                        key={value}
-                        type="button"
-                        role="radio"
-                        aria-checked={selected}
-                        className={`rateSession__pill${selected ? " rateSession__pill--selected" : ""}`}
-                        onClick={() => setProductivity(value)}
-                      >
-                        {value}
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className="rateSession__scaleEnds">
-                  <span>Low</span>
-                  <span>Excellent</span>
-                </div>
-              </section>
+              <RatingScaleSlider
+                titleId="rate-productivity-title"
+                title="1. Productivity (1-10)"
+                hint="How productive was this block?"
+                min={1}
+                max={10}
+                step={0.25}
+                value={productivity}
+                onChange={setProductivity}
+                lowLabel="Low"
+                highLabel="Excellent"
+              />
 
-              <section className="rateSession__scale" aria-labelledby="rate-load-title">
-                <h3 className="rateSession__scaleTitle" id="rate-load-title">
-                  2. Load / Difficulty (1-5)
-                </h3>
-                <p className="rateSession__scaleHint">How mentally demanding or taxing was this block?</p>
-                <div className="rateSession__pills rateSession__pills--five" role="radiogroup" aria-labelledby="rate-load-title">
-                  {Array.from({ length: 5 }, (_, index) => {
-                    const value = index + 1;
-                    const selected = load === value;
-                    return (
-                      <button
-                        key={value}
-                        type="button"
-                        role="radio"
-                        aria-checked={selected}
-                        className={`rateSession__pill${selected ? " rateSession__pill--selected" : ""}`}
-                        onClick={() => setLoad(value)}
-                      >
-                        {value}
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className="rateSession__scaleEnds">
-                  <span>Very light</span>
-                  <span>Very heavy</span>
-                </div>
-              </section>
+              <RatingScaleSlider
+                titleId="rate-load-title"
+                title="2. Load / Difficulty (1-5)"
+                hint="How mentally demanding or taxing was this block?"
+                min={1}
+                max={5}
+                step={0.25}
+                value={load}
+                onChange={setLoad}
+                lowLabel="Very light"
+                highLabel="Very heavy"
+              />
             </div>
 
             <footer className="rateSession__footer">
               <button type="button" className="rateSession__skip" onClick={handleSkip}>
                 Skip
               </button>
-              <button type="button" className="rateSession__save" onClick={handleSave} disabled={!canSave}>
+              <button type="button" className="rateSession__save" onClick={handleSave}>
                 Save & Continue
               </button>
             </footer>

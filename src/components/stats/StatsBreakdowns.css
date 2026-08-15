@@ -119,25 +119,36 @@
 
 .statsBreakdown__loadRow {
   display: grid;
-  grid-template-columns: minmax(108px, 0.9fr) minmax(0, 1.6fr) auto auto;
+  grid-template-columns: minmax(148px, 1.05fr) minmax(0, 1.6fr) auto auto;
   align-items: center;
   gap: 10px;
 }
 
 .statsBreakdown__loadLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
   font-size: 0.82rem;
-  color: rgba(248, 250, 252, 0.72);
-  white-space: nowrap;
+  color: rgba(248, 250, 252, 0.88);
+}
+
+.statsBreakdown__loadTitle {
+  font-weight: 700;
+  line-height: 1.2;
+  color: rgba(248, 250, 252, 0.94);
 }
 
 .statsBreakdown__loadTrack {
   height: 10px;
   background-color: rgba(255, 255, 255, 0.08);
   overflow: hidden;
+  border-radius: 999px;
 }
 
 .statsBreakdown__loadFill {
   height: 100%;
+  border-radius: 999px;
 }
 
 @media only screen and (max-width: 640px) {
