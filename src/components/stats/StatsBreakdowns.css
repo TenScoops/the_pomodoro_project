@@ -1,0 +1,167 @@
+.statsBreakdown {
+  min-width: 0;
+  background-color: #1e212dcd;
+  box-shadow: 7px 8px 5px 0 rgba(0, 0, 0, 0.75);
+  padding: 16px 18px 18px;
+  box-sizing: border-box;
+  font-family: "Kalam", "Roboto", sans-serif;
+}
+
+.statsBreakdown__heading {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(248, 250, 252, 0.92);
+}
+
+.statsBreakdown__empty {
+  margin: 24px 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(248, 250, 252, 0.55);
+}
+
+.statsBreakdown__workTypeBody {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vmin, 28px);
+  min-width: 0;
+}
+
+.statsBreakdown__donutWrap {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(140px, 18vmin, 180px);
+  height: clamp(140px, 18vmin, 180px);
+}
+
+.statsBreakdown__donutCenter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.statsBreakdown__donutTotal {
+  font-family: "Roboto", "Kalam", sans-serif;
+  font-size: clamp(1.35rem, 2.8vmin, 1.7rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: rgba(248, 250, 252, 0.98);
+}
+
+.statsBreakdown__donutCaption {
+  font-size: 0.72rem;
+  color: rgba(248, 250, 252, 0.5);
+}
+
+.statsBreakdown__legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.statsBreakdown__legendRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.statsBreakdown__legendLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 0.86rem;
+  color: rgba(248, 250, 252, 0.88);
+}
+
+.statsBreakdown__legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statsBreakdown__legendHours {
+  font-family: "Roboto", "Kalam", sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: rgba(248, 250, 252, 0.92);
+  white-space: nowrap;
+}
+
+.statsBreakdown__legendPercent {
+  font-size: 0.82rem;
+  color: rgba(248, 250, 252, 0.5);
+  min-width: 2.4em;
+  text-align: right;
+}
+
+.statsBreakdown__loadList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.statsBreakdown__loadRow {
+  display: grid;
+  grid-template-columns: minmax(108px, 0.9fr) minmax(0, 1.6fr) auto auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.statsBreakdown__loadLabel {
+  font-size: 0.82rem;
+  color: rgba(248, 250, 252, 0.72);
+  white-space: nowrap;
+}
+
+.statsBreakdown__loadTrack {
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.statsBreakdown__loadFill {
+  height: 100%;
+}
+
+@media only screen and (max-width: 640px) {
+  .statsBreakdown__workTypeBody {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .statsBreakdown__donutWrap {
+    align-self: center;
+  }
+
+  .statsBreakdown__loadRow {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "label hours percent"
+      "track track track";
+  }
+
+  .statsBreakdown__loadLabel {
+    grid-area: label;
+  }
+
+  .statsBreakdown__loadTrack {
+    grid-area: track;
+  }
+}

@@ -15,6 +15,7 @@ import Synopsis from "./components/mainbuttons/Synopsis";
 import Theme from "./components/mainbuttons/Theme";
 import Timer from "./components/timer/Timer";
 import RecentDays from "./components/focus/RecentDays";
+import StatsPage from "./components/stats/StatsPage";
 import DataLoggingErrorToast from "./components/notifications/DataLoggingErrorToast";
 import { useAuth } from "./hooks/useAuth";
 import { useSessionStore } from "./store/sessionStore";
@@ -41,6 +42,7 @@ function App() {
   const setCenterFocus = useSessionStore((s) => s.setCenterFocus);
   const setData = useSessionStore((s) => s.setData);
   const setOpenThemePage = useSessionStore((s) => s.setOpenThemePage);
+  const setShowSetterPage = useSessionStore((s) => s.setShowSetterPage);
   const setShowTimerPage = useSessionStore((s) => s.setShowTimerPage);
   const openDefaultFocusTimer = useSessionStore((s) => s.openDefaultFocusTimer);
   // const openMoodInput = useSessionStore((s) => s.openMoodInput);
@@ -52,8 +54,11 @@ function App() {
         openDefaultFocusTimer();
         break;
       case "stats":
+        setShowSetterPage(false);
+        setShowTimerPage(false);
+        setOpenThemePage(false);
+        setData(false);
         setCenterFocus("data");
-        setData(true);
         break;
       case "energy":
         setShowTimerPage(false);
@@ -163,7 +168,8 @@ function App() {
       />
       <div className="theApp">
         <div className="mainStage mainStage--hubWireframe">
-          {!showSetterPage && !showTimerPage && !sessionComplete && (
+          {sidebarActiveItem === "stats" && <StatsPage />}
+          {sidebarActiveItem !== "stats" && !showSetterPage && !showTimerPage && !sessionComplete && (
             <>
               <MainHubHeader user={session?.user ?? null} />
               <CenterQuadStage
@@ -174,13 +180,15 @@ function App() {
               <HubTodayDashboard />
             </>
           )}
-          <div className={`theTimerContents${showTimerPage ? " theTimerContents--timerHub" : ""}`}>
-            {showTimerPage && <TimerHubIconBar />}
-            {showSetterPage && <Setter />}
-            {showTimerPage && <Timer />}
-            {showTimerPage && <RecentDays />}
-          </div>
-          {sessionComplete && <Finished />}
+          {sidebarActiveItem !== "stats" && (
+            <div className={`theTimerContents${showTimerPage ? " theTimerContents--timerHub" : ""}`}>
+              {showTimerPage && <TimerHubIconBar />}
+              {showSetterPage && <Setter />}
+              {showTimerPage && <Timer />}
+              {showTimerPage && <RecentDays />}
+            </div>
+          )}
+          {sidebarActiveItem !== "stats" && sessionComplete && <Finished />}
         </div>
 
         <AuthModal isOpen={authModalOpen} onRequestClose={() => setAuthModalOpen(false)} />

@@ -115,10 +115,11 @@ body{
   justify-content: center;
   flex: 1;
   min-width: 0;
-  max-width: 1400px;
+  max-width: none;
   box-sizing: border-box;
-  width: 100%;
+  width: auto;
   margin-left: 220px;
+  padding-left: clamp(12px, 2vw, 28px);
   padding-right: clamp(12px, 2vw, 28px);
   position: relative;
   overflow-y: auto;
@@ -290,28 +291,30 @@ p, h1, h2,h3{
   display: flex;
 }
 
-/* Icons sit beside the clock; Recent days shares the clock column so both have the same width. */
+/* Equal side columns keep the clock centered; icons sit in the left column against the clock. */
 .theTimerContents.theTimerContents--timerHub {
   display: grid;
-  grid-template-columns: auto max-content;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   grid-template-areas:
-    "icons clock"
-    ". recent";
-  justify-content: center;
+    "icons clock ."
+    "recent recent recent";
+  justify-content: stretch;
   align-items: start;
   column-gap: clamp(15px, 2.75vmin, 31px);
   row-gap: clamp(16px, 2.5vmin, 24px);
-  width: max-content;
+  width: 100%;
   max-width: 100%;
 }
 
 .theTimerContents--timerHub .timerHubIconBar {
   grid-area: icons;
+  justify-self: end;
   align-self: center;
 }
 
 .theTimerContents--timerHub .timer {
   grid-area: clock;
+  justify-self: center;
 }
 
 .theTimerContents--timerHub .recentDays {
@@ -373,16 +376,19 @@ p, h1, h2,h3{
     flex-direction: column;
   }
   .theTimerContents.theTimerContents--timerHub {
-    grid-template-columns: minmax(0, max-content);
+    grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "icons"
       "clock"
       "recent";
-    justify-items: stretch;
+    justify-items: center;
   }
   .theTimerContents--timerHub .timerHubIconBar {
     flex-direction: row;
     justify-self: center;
+  }
+  .theTimerContents--timerHub .recentDays {
+    justify-self: stretch;
   }
   .content-text{
     font-size: 13.5px;

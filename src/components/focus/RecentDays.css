@@ -4,8 +4,8 @@
   flex-direction: column;
   gap: clamp(12px, 2.2vmin, 18px);
   width: 100%;
-  max-width: min(860px, 96%);
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
   font-family: "Inter", "Roboto", sans-serif;
 }
 
@@ -198,10 +198,7 @@
 
 .recentDays__notes {
   color: rgba(248, 250, 252, 0.62);
-  max-width: 180px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  width: 40%;
 }
 
 .recentDays__rowMenu {

@@ -6,25 +6,14 @@ import BlockCompleteToast from "../notifications/BlockCompleteToast";
 import Rating from "../rating/Rating";
 import TimerClock from "./components/TimerClock";
 import TimerControls from "./components/TimerControls";
-import TimerSessionSummary from "./components/TimerSessionSummary";
 import usePomodoroTimer from "./hooks/usePomodoroTimer";
 import { useSessionStore } from "../../store/sessionStore";
 
 const Timer = () => {
-  const {
-    showData,
-    showButtons,
-    showClock,
-    setClicked,
-    setCancelTheSession,
-    cancelTheSession,
-  } = useSessionStore(
+  const { showButtons, showClock, cancelTheSession } = useSessionStore(
     useShallow((s) => ({
-      showData: s.showData,
       showButtons: s.showButtons,
       showClock: s.showClock,
-      setClicked: s.setClicked,
-      setCancelTheSession: s.setCancelTheSession,
       cancelTheSession: s.cancelTheSession,
     }))
   );
@@ -42,9 +31,6 @@ const Timer = () => {
     totalBreakTimeMinutes,
     totalWorkTimeMinutes,
     totalBlocks,
-    currentWorkBlockIndex,
-    effectiveMultiplier,
-    speedBoostEnabled,
     speedBoostTitle,
     speedBoostLabel,
     showBlockCompleteToast,
@@ -53,51 +39,28 @@ const Timer = () => {
     pauseFromClock,
     resumeTimer,
     toggleSpeedBoost,
-    skipBreak,
   } = usePomodoroTimer();
 
   return (
     <div className="timer">
-      <TimerSessionSummary
-        showData={showData}
-        totalWorkTimeMinutes={totalWorkTimeMinutes}
-        totalBreakTimeMinutes={totalBreakTimeMinutes}
-        totalBlocks={totalBlocks}
-        perBlockTimeLabel={`${addZero(minutes)}:${addZero(seconds)}`}
-      />
-
       <TimerClock
         showClock={showClock}
-        showButtons={showButtons}
-        mode={mode}
-        currentWorkBlockIndex={currentWorkBlockIndex}
-        totalBlocks={totalBlocks}
         minutesLabel={addZero(minutes)}
         secondsLabel={addZero(seconds)}
         totalWorkTimeMinutes={totalWorkTimeMinutes}
         totalBreakTimeMinutes={totalBreakTimeMinutes}
-        effectiveMultiplier={effectiveMultiplier}
       />
 
       {showClock && (
-        <div className="timerbuttons">
-          <TimerControls
-            showButtons={showButtons}
-            isPaused={isPaused}
-            speedBoostEnabled={speedBoostEnabled}
-            speedBoostLabel={speedBoostLabel}
-            speedBoostTitle={speedBoostTitle}
-            mode={mode}
-            onStart={resumeTimer}
-            onPause={pauseFromClock}
-            onToggleSpeedBoost={toggleSpeedBoost}
-            onSkipBreak={mode === "break" ? skipBreak : undefined}
-            onCancelSession={() => {
-              setClicked(false);
-              setCancelTheSession(true);
-            }}
-          />
-        </div>
+        <TimerControls
+          showButtons={showButtons}
+          isPaused={isPaused}
+          speedBoostLabel={speedBoostLabel}
+          speedBoostTitle={speedBoostTitle}
+          onStart={resumeTimer}
+          onPause={pauseFromClock}
+          onToggleSpeedBoost={toggleSpeedBoost}
+        />
       )}
 
       {totalWorkTimeMinutes < totalBreakTimeMinutes && (

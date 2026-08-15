@@ -1,0 +1,135 @@
+.statsDailyOverview {
+  width: 100%;
+  background-color: #1e212dcd;
+  box-shadow: 7px 8px 5px 0 rgba(0, 0, 0, 0.75);
+  padding: clamp(14px, 2.4vmin, 20px) clamp(14px, 2.4vmin, 22px) 12px;
+  box-sizing: border-box;
+  color: rgba(248, 250, 252, 0.96);
+  font-family: "Kalam", "Roboto", sans-serif;
+}
+
+.statsDailyOverview__heading {
+  margin: 0 0 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(248, 250, 252, 0.92);
+}
+
+.statsDailyOverview__tableWrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.statsDailyOverview__table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.statsDailyOverview__table th {
+  padding: 8px 10px 10px 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.48);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+}
+
+.statsDailyOverview__table td {
+  padding: 12px 10px 12px 0;
+  font-size: 0.86rem;
+  color: rgba(248, 250, 252, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  vertical-align: middle;
+}
+
+.statsDailyOverview__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.statsDailyOverview__colCenter {
+  text-align: center;
+}
+
+.statsDailyOverview__date {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.statsDailyOverview__workType {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.statsDailyOverview__workDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statsDailyOverview__workDot--deep {
+  background-color: #a855f7;
+}
+
+.statsDailyOverview__workDot--routine {
+  background-color: #3b82f6;
+}
+
+.statsDailyOverview__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-family: "Roboto", "Kalam", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.statsDailyOverview__badge--green {
+  background-color: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+}
+
+.statsDailyOverview__badge--yellow {
+  background-color: rgba(234, 179, 8, 0.22);
+  color: #fde68a;
+}
+
+.statsDailyOverview__badge--orange {
+  background-color: rgba(249, 115, 22, 0.22);
+  color: #fdba74;
+}
+
+.statsDailyOverview__notes {
+  color: rgba(248, 250, 252, 0.62);
+}
+
+.statsDailyOverview__empty {
+  margin: 16px 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(248, 250, 252, 0.55);
+}
+
+.statsDailyOverview__footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.statsDailyOverview__viewMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(248, 250, 252, 0.55);
+  cursor: default;
+}
