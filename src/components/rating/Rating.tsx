@@ -62,9 +62,13 @@ const Rating = () => {
 
   useEffect(() => {
     const bodyClass = "rate-session-open";
-    document.body.classList.add(bodyClass);
+    if (modalOpen) {
+      document.body.classList.add(bodyClass);
+    } else {
+      document.body.classList.remove(bodyClass);
+    }
     return () => document.body.classList.remove(bodyClass);
-  }, []);
+  }, [modalOpen]);
 
   useEffect(() => {
     if (!workTypeOpen) {
