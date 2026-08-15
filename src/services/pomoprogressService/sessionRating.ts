@@ -11,13 +11,14 @@ import { cumulativeWorkSecondsAfterRatedBlocks } from "./sessionClientHelpers";
 import { insertSession, updateSession, upsertBlockRating } from "./sessionMutations";
 
 /**
- * Signed-in: on each score tap, insert `block_ratings` and update the draft `sessions` row (create draft on
+ * Signed-in: on each save, insert `block_ratings` (productivity + load) and update the draft `sessions` row (create draft on
  * first rating). Never sets `sessions_completed` here — completion only in finalize.
  * Guests only use `localStorage` (`Rating` writes keys before this runs).
  */
 export async function logBlockRatingForCurrentSession(
   blockNumber: number,
-  rating: number
+  rating: number,
+  load: number
 ): Promise<{ error: PostgrestError | null }> {
   const {
     data: { user },
@@ -53,6 +54,7 @@ export async function logBlockRatingForCurrentSession(
     session_id: sessionId,
     block_number: blockNumber,
     rating,
+    load,
   });
   if (ratingError) {
     alertBlockFailure(ratingError.message);

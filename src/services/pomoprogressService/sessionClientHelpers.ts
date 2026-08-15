@@ -14,6 +14,35 @@ export function resolveActiveSessionIdFromStorage(): string | null {
 /** Guest ratings use `localStorage` keys `"1"`…`"N"` with no date — cap how many we strip when clearing. */
 export const LOCAL_BLOCK_RATING_KEY_MAX = 48;
 
+export function localBlockLoadKey(blockNumber: number): string {
+  return `pomoprogress_load_${blockNumber}`;
+}
+
+export function readLocalBlockLoad(blockNumber: number): number | null {
+  if (typeof window === "undefined" || !window.localStorage) {
+    return null;
+  }
+  const raw = window.localStorage.getItem(localBlockLoadKey(blockNumber));
+  if (raw === null) {
+    return null;
+  }
+  const value = Number(raw);
+  if (!Number.isInteger(value) || value < 1 || value > 5) {
+    return null;
+  }
+  return value;
+}
+
+export function clearLocalBlockKeysForSession(numOfBlocks: number): void {
+  if (typeof window === "undefined" || !window.localStorage) {
+    return;
+  }
+  for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
+    window.localStorage.removeItem(String(blockIndex));
+    window.localStorage.removeItem(localBlockLoadKey(blockIndex));
+  }
+}
+
 /**
  * Removes guest block rating keys from `localStorage` (`"1"`…`"N"`). Keys are not date-stamped, so this clears all guest scores in that range, not only “today”.
  */
@@ -26,6 +55,11 @@ export function clearGuestBlockRatingLocalStorage(): number {
     const key = String(blockIndex);
     if (window.localStorage.getItem(key) !== null) {
       window.localStorage.removeItem(key);
+      cleared += 1;
+    }
+    const loadKey = localBlockLoadKey(blockIndex);
+    if (window.localStorage.getItem(loadKey) !== null) {
+      window.localStorage.removeItem(loadKey);
       cleared += 1;
     }
   }

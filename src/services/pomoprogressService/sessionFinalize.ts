@@ -6,7 +6,7 @@ import {
   alertSessionFinalizeFailure,
   alertSessionTooEarly,
 } from "./alerts";
-import { resolveActiveSessionIdFromStorage } from "./sessionClientHelpers";
+import { clearLocalBlockKeysForSession, resolveActiveSessionIdFromStorage } from "./sessionClientHelpers";
 import { persistCompletedPomodoroSessionBulkInsert } from "./sessionFinalizeBulk";
 import { findLatestDraftSessionIdForUser } from "./sessionQueries";
 import { updateSession } from "./sessionMutations";
@@ -37,9 +37,7 @@ export async function finalizeActivePomodoroSession(): Promise<{
   }
 
   if (!user) {
-    for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
-      window.localStorage.removeItem(String(blockIndex));
-    }
+    clearLocalBlockKeysForSession(numOfBlocks);
     return { error: null, skipped: true };
   }
 
@@ -93,9 +91,7 @@ export async function finalizeActivePomodoroSession(): Promise<{
     }
 
     store.setActiveSupabaseSessionId(null);
-    for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
-      window.localStorage.removeItem(String(blockIndex));
-    }
+    clearLocalBlockKeysForSession(numOfBlocks);
     store.bumpChartDataRevision();
     return { error: null, skipped: false };
   }

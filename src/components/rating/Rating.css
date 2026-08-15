@@ -34,47 +34,6 @@
   background-color: transparent;
 }
 
-/* Plain list rows — Kalam + per-score hover colors only (no panel chrome) */
-.rating-score-btn {
-  -webkit-appearance: none;
-  appearance: none;
-  box-sizing: border-box;
-  margin: 0;
-  margin-right: 0;
-  width: min(50vmin, 100%);
-  min-height: 0;
-  padding: 4px 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 0;
-  cursor: pointer;
-  font-family: "Kalam", cursive, sans-serif;
-  font-size: 20px;
-  color: rgba(248, 250, 252, 0.96);
-  background-color: transparent;
-  box-shadow: none;
-  transition: background-color 0.15s ease;
-}
-
-.rating-score-btn:hover {
-  border-radius: 0;
-}
-
-.rating-score-btn::-moz-focus-inner {
-  border: 0;
-}
-
-.rating-score-btn:focus:not(:focus-visible) {
-  outline: none;
-}
-
-.rating-score-btn:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.28);
-  outline-offset: 2px;
-}
-
 .scoreText {
   justify-content: center;
   display: flex;
@@ -99,28 +58,6 @@
   font-family: "Kalam", cursive, sans-serif;
 }
 
-.theBlockNum {
-  font-size: 35px;
-  background-color: white;
-  color: black;
-  border-radius: 40px;
-  margin-bottom: 2px;
-}
-
-.ratePerformance {
-  font-size: 18px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.scoreText p {
-  margin: 0;
-}
-
 .rating-score-divider {
   width: min(400px, 90%);
   margin: 0 0 8px;
@@ -128,76 +65,302 @@
   border-top: 1px solid rgba(255, 255, 255, 0.35);
 }
 
-.rating-help-btn {
-  all: unset;
+.rateSession {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  background-color: rgba(30, 33, 45, 0.8);
+  color: rgba(248, 250, 252, 0.96);
+  font-family: "Kalam", "Roboto", sans-serif;
+}
+
+.rateSession button {
+  width: auto;
+  min-width: 0;
+  margin-right: 0;
+  font-family: inherit;
   cursor: pointer;
-  margin-left: 6px;
-  color: rgba(248, 250, 252, 0.92);
+}
+
+.rateSession__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px 12px;
+}
+
+.rateSession__title {
+  margin: 0 0 6px;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.rateSession__subtitle {
+  margin: 0;
+  font-size: 0.92rem;
+  color: rgba(248, 250, 252, 0.62);
+}
+
+.rateSession__close {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: rgba(248, 250, 252, 0.88);
 }
 
-.rating-help-btn:hover {
+.rateSession__close svg {
+  width: 22px;
+  height: 22px;
+}
+
+.rateSession__close:hover {
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
 }
 
-.rating-help-btn:focus:not(:focus-visible) {
-  outline: none;
+.rateSession__body {
+  overflow: auto;
+  padding: 4px 24px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.rating-help-btn:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.28);
-  outline-offset: 2px;
+.rateSession__topRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
 }
 
-.rating-help-btn svg {
-  width: 1.25em;
-  height: 1.25em;
-}
-
-.how-to-rate p {
+.rateSession__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 12px;
+  background-color: rgba(18, 20, 28, 0.72);
+  color: rgba(248, 250, 252, 0.78);
+  font-size: 0.9rem;
 }
 
-#score10:hover {
-  background-color: rgb(0, 197, 3);
-  filter: none;
+.rateSession__meta svg {
+  width: 16px;
+  height: 16px;
+  color: #c4b5fd;
+  flex-shrink: 0;
 }
-#score9:hover {
-  background-color: rgb(2, 188, 5);
-  filter: none;
+
+.rateSession__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
 }
-#score8:hover {
-  background-color: rgb(184, 255, 18);
-  filter: none;
+
+@media only screen and (max-width: 480px) {
+  .rateSession__topRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
-#score7:hover {
-  background-color: yellow;
-  filter: none;
+
+.rateSession__label {
+  font-size: 0.82rem;
+  color: rgba(248, 250, 252, 0.55);
 }
-#score6:hover {
-  background-color: rgb(255, 191, 0);
-  filter: none;
+
+.rateSession__label--spacer {
+  visibility: hidden;
 }
-#score5:hover {
-  background-color: rgb(255, 136, 0);
-  filter: none;
+
+.rateSession__dropdownWrap {
+  position: relative;
+  width: 100%;
 }
-#score4:hover {
-  background-color: orangered;
-  filter: none;
+
+.rateSession button.rateSession__dropdown {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid rgba(248, 250, 252, 0.16);
+  background: rgba(18, 20, 28, 0.55);
+  color: inherit;
+  text-align: left;
 }
-#score3:hover {
-  background-color: rgb(255, 34, 0);
-  filter: none;
+
+.rateSession__dropdown:hover {
+  background: rgba(255, 255, 255, 0.06);
 }
-#score2:hover {
-  background-color: rgb(205, 0, 0);
-  filter: none;
+
+.rateSession__chevron {
+  margin-left: auto;
+  width: 16px;
+  height: 16px;
+  color: rgba(248, 250, 252, 0.62);
 }
-#score1:hover {
-  background-color: rgb(170, 0, 0);
-  filter: none;
+
+.rateSession__chevron--open {
+  transform: rotate(180deg);
+}
+
+.rateSession__typeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.rateSession__typeDot--deep {
+  background: #a855f7;
+}
+
+.rateSession__typeDot--routine {
+  background: #3b82f6;
+}
+
+.rateSession__menu {
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid rgba(248, 250, 252, 0.16);
+  background: rgba(18, 20, 28, 0.96);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+}
+
+.rateSession__menuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 38px;
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+.rateSession__menuItem:hover,
+.rateSession__menuItem--selected {
+  background: rgba(139, 92, 246, 0.18);
+}
+
+.rateSession__check {
+  margin-left: auto;
+  width: 16px;
+  height: 16px;
+  color: #c4b5fd;
+}
+
+.rateSession__scaleTitle {
+  margin: 0 0 2px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.rateSession__scaleHint {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  color: rgba(248, 250, 252, 0.55);
+}
+
+.rateSession__pills {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.rateSession__pills--five {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.rateSession__pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 6px 0;
+  border: 1px solid rgba(248, 250, 252, 0.16);
+  background: rgba(18, 20, 28, 0.55);
+  color: inherit;
+  font-weight: 700;
+}
+
+.rateSession__pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.rateSession__pill--selected {
+  border-color: #c4b5fd;
+  background: rgba(139, 92, 246, 0.18);
+}
+
+.rateSession__scaleEnds {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: rgba(248, 250, 252, 0.5);
+}
+
+.rateSession__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px 24px 20px;
+}
+
+.rateSession button.rateSession__skip,
+.rateSession button.rateSession__save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 0;
+  min-height: 42px;
+  padding: 8px 16px;
+  font-weight: 700;
+}
+
+.rateSession__skip {
+  border: 1px solid rgba(248, 250, 252, 0.28);
+  background: transparent;
+  color: rgba(248, 250, 252, 0.92);
+}
+
+.rateSession__skip:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.rateSession__save {
+  border: none;
+  background-color: #1e212dcd;
+  color: #fff;
+}
+
+.rateSession__save:hover:not(:disabled) {
+  background-color: rgba(48, 48, 52, 0.94);
+}
+
+.rateSession__save:disabled {
+  opacity: 0.45;
+  cursor: default;
 }

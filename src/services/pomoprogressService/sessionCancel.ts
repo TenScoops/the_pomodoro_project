@@ -1,7 +1,7 @@
 import { supabase } from "../../lib/supabaseClient";
 import { useSessionStore } from "../../store/sessionStore";
 import { findLatestDraftSessionIdForUser } from "./sessionQueries";
-import { resolveActiveSessionIdFromStorage } from "./sessionClientHelpers";
+import { clearLocalBlockKeysForSession, resolveActiveSessionIdFromStorage } from "./sessionClientHelpers";
 
 /**
  * Clears `localStorage` rating keys and clears the active draft session id from the client.
@@ -35,9 +35,7 @@ export async function cancelActivePomodoroSession(): Promise<void> {
     store.setActiveSupabaseSessionId(null);
   }
 
-  for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
-    window.localStorage.removeItem(String(blockIndex));
-  }
+  clearLocalBlockKeysForSession(numOfBlocks);
 
   store.bumpChartDataRevision();
 }

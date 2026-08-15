@@ -34,6 +34,8 @@ export type BlockRatingRow = {
   session_id: string;
   block_number: number;
   rating: number;
+  /** Load / difficulty 1–5; null on rows saved before load was recorded. */
+  load: number | null;
   created_at: string;
 };
 
@@ -41,12 +43,14 @@ export type BlockRatingInsert = {
   session_id: string;
   block_number: number;
   rating: number;
+  load?: number | null;
 };
 
 /** Nested row returned by Supabase when selecting `block_ratings (...)` on sessions. */
 export type BlockRatingNested = {
   block_number: number;
   rating: number;
+  load: number | null;
 };
 
 export type SessionWithRatings = SessionRow & {

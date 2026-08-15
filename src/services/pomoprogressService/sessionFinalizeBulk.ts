@@ -4,6 +4,7 @@ import { supabase } from "../../lib/supabaseClient";
 import { todayLocalISODate } from "../../lib/calendarDates";
 import { useSessionStore } from "../../store/sessionStore";
 import { alertBlockFailure, alertHoursFailure, alertSessionFinalizeFailure } from "./alerts";
+import { clearLocalBlockKeysForSession, readLocalBlockLoad } from "./sessionClientHelpers";
 import { insertSession, upsertBlockRating } from "./sessionMutations";
 
 /**
@@ -35,7 +36,7 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
 
   const sessionDate = todayLocalISODate();
 
-  const ratings: { blockNumber: number; rating: number }[] = [];
+  const ratings: { blockNumber: number; rating: number; load: number | null }[] = [];
   for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
     const raw = window.localStorage.getItem(String(blockIndex));
     if (raw === null) {
@@ -55,7 +56,7 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
         skipped: false,
       };
     }
-    ratings.push({ blockNumber: blockIndex, rating });
+    ratings.push({ blockNumber: blockIndex, rating, load: readLocalBlockLoad(blockIndex) });
   }
 
   const sessionPayload: SessionInsert = {
@@ -75,11 +76,12 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
     return { error: sessionInsertError, skipped: false };
   }
 
-  for (const { blockNumber, rating } of ratings) {
+  for (const { blockNumber, rating, load } of ratings) {
     const { error: ratingError } = await upsertBlockRating({
       session_id: sessionRow.id,
       block_number: blockNumber,
       rating,
+      load,
     });
 
     if (ratingError) {
@@ -92,9 +94,7 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
     alertHoursFailure("Total focus time was saved as zero. Check work and break length settings.");
   }
 
-  for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
-    window.localStorage.removeItem(String(blockIndex));
-  }
+  clearLocalBlockKeysForSession(numOfBlocks);
 
   store.setActiveSupabaseSessionId(null);
   store.bumpChartDataRevision();
