@@ -25,9 +25,7 @@ type AppThemeCssVars = React.CSSProperties & {
 };
 
 type SidebarNavigateActions = {
-  openDefaultFocusTimer: () => void;
   setShowSessionSetupModal: (open: boolean) => void;
-  setShowTimerPage: (open: boolean) => void;
   setOpenThemePage: (open: boolean) => void;
   setShowChartDisplay: (open: boolean) => void;
 };
@@ -46,12 +44,9 @@ function themeCssVariables(displayedBackgroundUrl: string): AppThemeCssVars {
 function navigateFromSidebar(itemId: SidebarItemId, actions: SidebarNavigateActions) {
   switch (itemId) {
     case "focus":
-      actions.openDefaultFocusTimer();
-      break;
     case "stats":
     case "energy":
       actions.setShowSessionSetupModal(false);
-      actions.setShowTimerPage(false);
       actions.setOpenThemePage(false);
       actions.setShowChartDisplay(false);
       break;
@@ -96,17 +91,13 @@ function App() {
   const setShowChartDisplay = useSessionStore((state) => state.setData);
   const setOpenThemePage = useSessionStore((state) => state.setOpenThemePage);
   const setShowSessionSetupModal = useSessionStore((state) => state.setShowSessionSetupModal);
-  const setShowTimerPage = useSessionStore((state) => state.setShowTimerPage);
-  const openDefaultFocusTimer = useSessionStore((state) => state.openDefaultFocusTimer);
 
   const { displayedBackgroundUrl, themeSwitchLoading } = useThemeBackground(theme);
 
   const handleSidebarNavigate = (itemId: SidebarItemId) => {
     setSidebarActiveItem(itemId);
     navigateFromSidebar(itemId, {
-      openDefaultFocusTimer,
       setShowSessionSetupModal,
-      setShowTimerPage,
       setOpenThemePage,
       setShowChartDisplay,
     });
@@ -160,10 +151,16 @@ function App() {
         <div className="mainStage mainStage--hubWireframe">
           {sidebarActiveItem === "stats" && <StatsPage />}
           {sidebarActiveItem === "energy" && <EnergyPage />}
-          {showFocusHub && (
-            <div className={`theTimerContents${showTimerPage ? " theTimerContents--timerHub" : ""}`}>
-              {showTimerPage && <Timer />}
-              {showTimerPage && <RecentDays />}
+          {/* Keep Timer mounted off-stage on other tabs so a running session is not reset. */}
+          {showTimerPage && (
+            <div
+              className={`theTimerContents theTimerContents--timerHub${
+                showFocusHub ? "" : " theTimerContents--offstage"
+              }`}
+              aria-hidden={!showFocusHub}
+            >
+              <Timer />
+              <RecentDays />
             </div>
           )}
           {showFocusHub && sessionComplete && <Finished />}
