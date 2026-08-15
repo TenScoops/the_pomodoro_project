@@ -6,6 +6,7 @@
 export {
   clearGuestBlockRatingLocalStorage,
   cumulativeWorkSecondsAfterRatedBlocks,
+  workSecondsForRatedBlock,
 } from "./sessionClientHelpers";
 
 export { insertSession, updateSession, upsertBlockRating } from "./sessionMutations";

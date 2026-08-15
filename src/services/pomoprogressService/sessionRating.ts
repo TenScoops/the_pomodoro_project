@@ -7,11 +7,11 @@ import {
   alertBlockFailure,
   alertSessionUpdateFailure,
 } from "./alerts";
-import { cumulativeWorkSecondsAfterRatedBlocks } from "./sessionClientHelpers";
+import { cumulativeWorkSecondsAfterRatedBlocks, workSecondsForRatedBlock } from "./sessionClientHelpers";
 import { insertSession, updateSession, upsertBlockRating } from "./sessionMutations";
 
 /**
- * Signed-in: on each save, insert `block_ratings` (productivity + load) and update the draft `sessions` row (create draft on
+ * Signed-in: on each save, insert `block_ratings` (productivity, load, work type, duration) and update the draft `sessions` row (create draft on
  * first rating). Never sets `sessions_completed` here — completion only in finalize.
  * Guests only use `localStorage` (`Rating` writes keys before this runs).
  */
@@ -55,6 +55,13 @@ export async function logBlockRatingForCurrentSession(
     block_number: blockNumber,
     rating,
     load,
+    work_type: store.workType,
+    duration_seconds: workSecondsForRatedBlock(
+      store.workMinutes,
+      store.numOfBreaks,
+      store.breakMinutes,
+      blockNumber
+    ),
   });
   if (ratingError) {
     alertBlockFailure(ratingError.message);

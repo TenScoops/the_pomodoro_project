@@ -4,6 +4,7 @@ import { HiCheck, HiChevronDown, HiOutlineClock, HiXMark } from "react-icons/hi2
 import PerformanceRatedToast from "../notifications/PerformanceRatedToast";
 import "./Rating.css";
 import { finalizeActivePomodoroSession, logBlockRatingForCurrentSession } from "../../services/pomoprogressService";
+import { localBlockLoadKey, localBlockWorkTypeKey } from "../../services/pomoprogressService/sessionClientHelpers";
 import { useSessionStore } from "../../store/sessionStore";
 import { minutesPerFocusBlock, type SessionWorkType } from "../sessionSetup/sessionSetupMath";
 
@@ -109,7 +110,8 @@ const Rating = () => {
     setModalOpen(false);
     setShowRatedToast(true);
     window.localStorage.setItem(String(blockNum), String(productivity));
-    window.localStorage.setItem(`pomoprogress_load_${blockNum}`, String(load));
+    window.localStorage.setItem(localBlockLoadKey(blockNum), String(load));
+    window.localStorage.setItem(localBlockWorkTypeKey(blockNum), workType);
     void logBlockRatingForCurrentSession(blockNum, productivity, load).then((result) => {
       if (result.error) {
         console.error("Failed to log block rating", result.error);

@@ -29,6 +29,9 @@ export type SessionUpdate = {
   blocks_completed?: number;
 };
 
+/** Matches `block_ratings.work_type`. */
+export type BlockWorkType = "Deep Work" | "Routine";
+
 export type BlockRatingRow = {
   id: string;
   session_id: string;
@@ -36,6 +39,10 @@ export type BlockRatingRow = {
   rating: number;
   /** Load / difficulty 1–5; null on rows saved before load was recorded. */
   load: number | null;
+  /** Null on rows saved before work type was recorded. */
+  work_type: BlockWorkType | null;
+  /** Focus seconds for this block; null on rows saved before duration was recorded. */
+  duration_seconds: number | null;
   created_at: string;
 };
 
@@ -44,6 +51,8 @@ export type BlockRatingInsert = {
   block_number: number;
   rating: number;
   load?: number | null;
+  work_type?: BlockWorkType | null;
+  duration_seconds?: number | null;
 };
 
 /** Nested row returned by Supabase when selecting `block_ratings (...)` on sessions. */
@@ -51,6 +60,8 @@ export type BlockRatingNested = {
   block_number: number;
   rating: number;
   load: number | null;
+  work_type: BlockWorkType | null;
+  duration_seconds: number | null;
 };
 
 export type SessionWithRatings = SessionRow & {

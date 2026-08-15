@@ -11,7 +11,7 @@ import {
   type LoadScore,
   type RecentDayRow,
   type RecentDaySummaryCard,
-  type WorkType,
+  type WorkTypeLabel,
 } from "./recentDaysData";
 import "./RecentDays.css";
 
@@ -21,10 +21,19 @@ function SummaryIcon({ cardId }: { cardId: RecentDaySummaryCard["id"] }) {
   return <HiOutlineArrowTrendingUp aria-hidden />;
 }
 
-function workTypeDotClass(workType: WorkType): string {
-  return workType === "Deep Work"
-    ? "recentDays__workDot recentDays__workDot--deep"
-    : "recentDays__workDot recentDays__workDot--routine";
+function WorkTypeCell({ workType }: { workType: WorkTypeLabel }) {
+  const showDeep = workType === "Deep Work" || workType === "Deep Work/Routine";
+  const showRoutine = workType === "Routine" || workType === "Deep Work/Routine";
+
+  return (
+    <span className="recentDays__workType">
+      <span className="recentDays__workDots" aria-hidden>
+        {showDeep ? <span className="recentDays__workDot recentDays__workDot--deep" /> : null}
+        {showRoutine ? <span className="recentDays__workDot recentDays__workDot--routine" /> : null}
+      </span>
+      {workType}
+    </span>
+  );
 }
 
 function loadBadgeClass(load: LoadScore): string {
@@ -115,10 +124,7 @@ export default function RecentDays() {
                     </td>
                     <td>
                       {row.workType ? (
-                        <span className="recentDays__workType">
-                          <span className={workTypeDotClass(row.workType)} aria-hidden />
-                          {row.workType}
-                        </span>
+                        <WorkTypeCell workType={row.workType} />
                       ) : (
                         <span className="recentDays__muted">—</span>
                       )}

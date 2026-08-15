@@ -1,10 +1,10 @@
 import type { PostgrestError } from "@supabase/supabase-js";
-import type { SessionInsert } from "../../types/pomoprogress";
+import type { BlockWorkType, SessionInsert } from "../../types/pomoprogress";
 import { supabase } from "../../lib/supabaseClient";
 import { todayLocalISODate } from "../../lib/calendarDates";
 import { useSessionStore } from "../../store/sessionStore";
 import { alertBlockFailure, alertHoursFailure, alertSessionFinalizeFailure } from "./alerts";
-import { clearLocalBlockKeysForSession, readLocalBlockLoad } from "./sessionClientHelpers";
+import { clearLocalBlockKeysForSession, readLocalBlockLoad, readLocalBlockWorkType, workSecondsForRatedBlock } from "./sessionClientHelpers";
 import { insertSession, upsertBlockRating } from "./sessionMutations";
 
 /**
@@ -36,7 +36,12 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
 
   const sessionDate = todayLocalISODate();
 
-  const ratings: { blockNumber: number; rating: number; load: number | null }[] = [];
+  const ratings: {
+    blockNumber: number;
+    rating: number;
+    load: number | null;
+    workType: BlockWorkType | null;
+  }[] = [];
   for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
     const raw = window.localStorage.getItem(String(blockIndex));
     if (raw === null) {
@@ -56,7 +61,12 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
         skipped: false,
       };
     }
-    ratings.push({ blockNumber: blockIndex, rating, load: readLocalBlockLoad(blockIndex) });
+    ratings.push({
+      blockNumber: blockIndex,
+      rating,
+      load: readLocalBlockLoad(blockIndex),
+      workType: readLocalBlockWorkType(blockIndex),
+    });
   }
 
   const sessionPayload: SessionInsert = {
@@ -76,12 +86,19 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
     return { error: sessionInsertError, skipped: false };
   }
 
-  for (const { blockNumber, rating, load } of ratings) {
+  for (const { blockNumber, rating, load, workType } of ratings) {
     const { error: ratingError } = await upsertBlockRating({
       session_id: sessionRow.id,
       block_number: blockNumber,
       rating,
       load,
+      work_type: workType,
+      duration_seconds: workSecondsForRatedBlock(
+        store.workMinutes,
+        store.numOfBreaks,
+        store.breakMinutes,
+        blockNumber
+      ),
     });
 
     if (ratingError) {

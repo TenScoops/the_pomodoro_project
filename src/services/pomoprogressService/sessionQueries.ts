@@ -53,7 +53,7 @@ export const sessionSelectWithRatings = `
   sessions_completed,
   blocks_completed,
   created_at,
-  block_ratings ( block_number, rating, load )
+  block_ratings ( block_number, rating, load, work_type, duration_seconds )
 `;
 
 /**

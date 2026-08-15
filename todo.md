@@ -1,24 +1,29 @@
-# Replace Create a session with setup modal
+# Persist work type on blocks + Recent days
 
-Remove the old setter page. Open a setup modal from Session → Edit, using existing dark styling and the current timer store (hours / breaks / break length).
+Work type was only in the client store, so Recent days always showed "—". Save each rated block’s type and focus seconds, then label the day from those totals.
 
 - [x] Write plan and list files
-- [x] Add setup math, stepper, fields, preview, modal
-- [x] Wire store + Edit; drop Setter
-- [x] Sync work type with the timer title
+- [x] Migration: `work_type` + `duration_seconds` on `block_ratings`
+- [x] Types, insert payload, nested select
+- [x] Save type + duration on rate (and bulk fallback / localStorage)
+- [x] Recent days: Deep Work, Routine, or Deep Work/Routine from stored seconds
 - [x] Verify with `npm run build`
-
-## Files
-
-- deleted `src/components/setter/Setter.tsx`, `Setter.css`
-- added `src/components/sessionSetup/*`
-- `src/store/sessionStore.ts`
-- `src/App.tsx`
-- `src/components/timer/Timer.tsx`
-- `src/components/timer/components/TimerClock.tsx`
 
 ## Review
 
-- Create a session sliders are gone. Session → Edit opens **Set Up Your Focus Session**.
-- Start Session maps focus time / blocks / break length onto the existing timer store and resets the current run.
-- Work type is shared with the timer title. `npm run build` succeeded.
+- Work type was only in the timer store, so Recent days always showed "—".
+- Each rated block now saves `work_type` and `duration_seconds` on `block_ratings`.
+- Mixed days show **Deep Work/Routine**. Deep Work seconds and Routine seconds are stored per block.
+- Apply `supabase/migrations/20260815190000_block_ratings_work_type.sql` before new ratings will save.
+
+## Files
+
+- `supabase/migrations/20260815183000_block_ratings_work_type.sql` (timestamp after daily notes)
+- `src/types/pomoprogress.ts`
+- `src/services/pomoprogressService/sessionClientHelpers.ts`
+- `src/services/pomoprogressService/sessionRating.ts`
+- `src/services/pomoprogressService/sessionFinalizeBulk.ts`
+- `src/services/pomoprogressService/sessionQueries.ts`
+- `src/components/rating/Rating.tsx`
+- `src/components/focus/recentDaysData.ts`
+- `src/components/focus/RecentDays.tsx`

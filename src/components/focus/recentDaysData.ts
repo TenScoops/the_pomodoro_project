@@ -3,6 +3,7 @@ import { shiftLocalISODate } from "../../lib/calendarDates";
 import type { SessionWithRatings } from "../../types/pomoprogress";
 
 export type WorkType = "Deep Work" | "Routine";
+export type WorkTypeLabel = WorkType | "Deep Work/Routine";
 export type LoadScore = 1 | 2 | 3 | 4 | 5;
 
 export type RecentDaySummaryCard = {
@@ -15,7 +16,9 @@ export type RecentDayRow = {
   id: string;
   dateLabel: string;
   dateDetail: string | null;
-  workType: WorkType | null;
+  workType: WorkTypeLabel | null;
+  deepWorkSeconds: number;
+  routineSeconds: number;
   load: LoadScore | null;
   /** Mean block rating 1–10; null when the day has no productivity ratings. */
   productivity: number | null;
@@ -105,9 +108,43 @@ function toLoadScore(loadAvg: number): LoadScore {
   return rounded as LoadScore;
 }
 
+function workTypeTotalsFromSessions(sessions: SessionWithRatings[]): {
+  deepWorkSeconds: number;
+  routineSeconds: number;
+  workType: WorkTypeLabel | null;
+} {
+  let deepWorkSeconds = 0;
+  let routineSeconds = 0;
+  let hasDeepWork = false;
+  let hasRoutine = false;
+
+  for (const session of sessions) {
+    for (const rating of session.block_ratings ?? []) {
+      if (rating.work_type === "Deep Work") {
+        hasDeepWork = true;
+        deepWorkSeconds += rating.duration_seconds ?? 0;
+      } else if (rating.work_type === "Routine") {
+        hasRoutine = true;
+        routineSeconds += rating.duration_seconds ?? 0;
+      }
+    }
+  }
+
+  let workType: WorkTypeLabel | null = null;
+  if (hasDeepWork && hasRoutine) {
+    workType = "Deep Work/Routine";
+  } else if (hasDeepWork) {
+    workType = "Deep Work";
+  } else if (hasRoutine) {
+    workType = "Routine";
+  }
+
+  return { deepWorkSeconds, routineSeconds, workType };
+}
+
 /**
  * Newest days with logged work first, never more than `MAX_RECENT_DAY_ROWS`.
- * Work type is not stored on sessions yet, so that cell stays empty.
+ * Work type comes from each rated block; mixed days show Deep Work/Routine.
  */
 export function buildRecentDayRows(
   sessions: SessionWithRatings[],
@@ -138,11 +175,14 @@ export function buildRecentDayRows(
       continue;
     }
     const labels = dateLabelsForIso(isoDate, todayIso);
+    const workTypeTotals = workTypeTotalsFromSessions(daySessions);
     rows.push({
       id: isoDate,
       dateLabel: labels.dateLabel,
       dateDetail: labels.dateDetail,
-      workType: null,
+      workType: workTypeTotals.workType,
+      deepWorkSeconds: workTypeTotals.deepWorkSeconds,
+      routineSeconds: workTypeTotals.routineSeconds,
       load: summary.loadCount === 0 ? null : toLoadScore(summary.loadAvg),
       productivity: summary.ratingCount === 0 ? null : summary.productivityAvg,
       hours: formatFocusWorkHours(summary.totalSeconds),

@@ -1,4 +1,5 @@
 import { ACTIVE_SESSION_ID_STORAGE_KEY } from "../../store/sessionStore";
+import type { BlockWorkType } from "../../types/pomoprogress";
 
 export function resolveActiveSessionIdFromStorage(): string | null {
   if (typeof window === "undefined") {
@@ -16,6 +17,21 @@ export const LOCAL_BLOCK_RATING_KEY_MAX = 48;
 
 export function localBlockLoadKey(blockNumber: number): string {
   return `pomoprogress_load_${blockNumber}`;
+}
+
+export function localBlockWorkTypeKey(blockNumber: number): string {
+  return `pomoprogress_work_type_${blockNumber}`;
+}
+
+export function readLocalBlockWorkType(blockNumber: number): BlockWorkType | null {
+  if (typeof window === "undefined" || !window.localStorage) {
+    return null;
+  }
+  const raw = window.localStorage.getItem(localBlockWorkTypeKey(blockNumber));
+  if (raw === "Deep Work" || raw === "Routine") {
+    return raw;
+  }
+  return null;
 }
 
 export function readLocalBlockLoad(blockNumber: number): number | null {
@@ -40,6 +56,7 @@ export function clearLocalBlockKeysForSession(numOfBlocks: number): void {
   for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
     window.localStorage.removeItem(String(blockIndex));
     window.localStorage.removeItem(localBlockLoadKey(blockIndex));
+    window.localStorage.removeItem(localBlockWorkTypeKey(blockIndex));
   }
 }
 
@@ -60,6 +77,11 @@ export function clearGuestBlockRatingLocalStorage(): number {
     const loadKey = localBlockLoadKey(blockIndex);
     if (window.localStorage.getItem(loadKey) !== null) {
       window.localStorage.removeItem(loadKey);
+      cleared += 1;
+    }
+    const workTypeKey = localBlockWorkTypeKey(blockIndex);
+    if (window.localStorage.getItem(workTypeKey) !== null) {
+      window.localStorage.removeItem(workTypeKey);
       cleared += 1;
     }
   }
@@ -85,4 +107,26 @@ export function cumulativeWorkSecondsAfterRatedBlocks(
   }
   const cappedBlocks = Math.min(blockNumber, numOfBlocks);
   return Math.round((totalSeconds * cappedBlocks) / numOfBlocks);
+}
+
+/** Focus seconds for one rated block (this block minus the previous cumulative total). */
+export function workSecondsForRatedBlock(
+  workMinutes: number,
+  numOfBreaks: number,
+  breakMinutes: number,
+  blockNumber: number
+): number {
+  const afterThisBlock = cumulativeWorkSecondsAfterRatedBlocks(
+    workMinutes,
+    numOfBreaks,
+    breakMinutes,
+    blockNumber
+  );
+  const afterPreviousBlock = cumulativeWorkSecondsAfterRatedBlocks(
+    workMinutes,
+    numOfBreaks,
+    breakMinutes,
+    blockNumber - 1
+  );
+  return Math.max(0, afterThisBlock - afterPreviousBlock);
 }

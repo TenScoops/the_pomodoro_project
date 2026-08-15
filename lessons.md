@@ -38,3 +38,11 @@
 ### Sidebar / Energy tab
 
 - **Do not reuse an old home hub as a tab fallback.** Energy used to only hide the timer (`setShowTimerPage(false)`). `App` then showed the hub whenever the sidebar was not Stats, so Energy opened Theme / Start / My data / Logout plus Today and Recent sessions. Each sidebar item needs its own page (or a shared empty shell), not “whatever is left when the timer is off.”
+
+### Work type on Recent days
+
+- **Work type must live on the block, not only in the timer store.** Setup / rating can change Deep Work vs Routine per block; Recent days stayed "—" until `block_ratings.work_type` and `duration_seconds` were saved. Day label is Deep Work, Routine, or Deep Work/Routine from those rows; each block’s seconds go into that type’s total.
+
+### Session card copy
+
+- **"Remove blocks" means the Blocks 0/2 row, not Current block.** Current block still answers "where am I in this session"; the completed/total Blocks line was the redundant one.

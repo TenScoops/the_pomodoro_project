@@ -41,7 +41,6 @@ const Timer = () => {
     currentWorkBlockIndex,
     completedWorkMinutes,
     remainingWorkMinutes,
-    completedBlocks,
     breakLengthMinutes,
     speedBoostTitle,
     speedBoostLabel,
@@ -85,7 +84,6 @@ const Timer = () => {
         plannedFocusMinutes={totalWorkTimeMinutes}
         completedFocusMinutes={completedWorkMinutes}
         remainingFocusMinutes={remainingWorkMinutes}
-        completedBlocks={completedBlocks}
         totalBlocks={totalBlocks}
         currentWorkBlockIndex={currentWorkBlockIndex}
         breakLengthMinutes={breakLengthMinutes}

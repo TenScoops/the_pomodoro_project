@@ -12,7 +12,6 @@ type TimerSessionSummaryProps = {
   plannedFocusMinutes: number;
   completedFocusMinutes: number;
   remainingFocusMinutes: number;
-  completedBlocks: number;
   totalBlocks: number;
   currentWorkBlockIndex: number;
   breakLengthMinutes: number;
@@ -32,12 +31,11 @@ function SessionRows({ rows }: { rows: SessionStatRow[] }) {
   );
 }
 
-/** Live snapshot of the current pomodoro: planned vs done, plus how the blocks are split. */
+/** Live snapshot of planned vs done focus time, current block, and break length. */
 export default function TimerSessionSummary({
   plannedFocusMinutes,
   completedFocusMinutes,
   remainingFocusMinutes,
-  completedBlocks,
   totalBlocks,
   currentWorkBlockIndex,
   breakLengthMinutes,
@@ -49,8 +47,7 @@ export default function TimerSessionSummary({
     { label: "Remaining", value: formatFocusDuration(remainingFocusMinutes) },
   ];
 
-  const blockRows: SessionStatRow[] = [
-    { label: "Blocks", value: `${completedBlocks} / ${totalBlocks}` },
+  const extraRows: SessionStatRow[] = [
     { label: "Current block", value: `${currentWorkBlockIndex} of ${totalBlocks}` },
     { label: "Break length", value: `${breakLengthMinutes} min` },
   ];
@@ -67,7 +64,7 @@ export default function TimerSessionSummary({
 
       <SessionRows rows={focusRows} />
       <hr className="timerSessionCard__divider" />
-      <SessionRows rows={blockRows} />
+      <SessionRows rows={extraRows} />
     </aside>
   );
 }
