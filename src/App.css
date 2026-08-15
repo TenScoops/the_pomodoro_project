@@ -95,7 +95,7 @@ body{
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   /* animation: fadeInAnimation 1.5s;
   -webkit-animation: fadeInAnimation 1.5s;
@@ -103,8 +103,8 @@ body{
   -o-animation: fadeInAnimation 1.5s;
   -ms-animation: fadeInAnimation 1.5s; */
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: flex-start;
   margin:0;
   /* background-image: url("/public/Images/plains.webp"); */
 }
@@ -113,10 +113,21 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 1;
+  min-width: 0;
   max-width: 1400px;
   box-sizing: border-box;
   width: 100%;
+  margin-left: 220px;
+  padding-right: clamp(12px, 2vw, 28px);
   position: relative;
+  overflow-y: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  .theApp {
+    margin-left: 72px;
+  }
 }
 
 .mainStage {
@@ -279,14 +290,35 @@ p, h1, h2,h3{
   display: flex;
 }
 
-/* Theme + Data icon strip to the left of the timer during a session */
+/* Icons sit beside the clock; Recent days shares the clock column so both have the same width. */
 .theTimerContents.theTimerContents--timerHub {
-  flex-direction: row;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto max-content;
+  grid-template-areas:
+    "icons clock"
+    ". recent";
   justify-content: center;
-  flex-wrap: wrap;
-  gap: clamp(15px, 2.75vmin, 31px);
+  align-items: start;
+  column-gap: clamp(15px, 2.75vmin, 31px);
+  row-gap: clamp(16px, 2.5vmin, 24px);
+  width: max-content;
+  max-width: 100%;
+}
+
+.theTimerContents--timerHub .timerHubIconBar {
+  grid-area: icons;
+  align-self: center;
+}
+
+.theTimerContents--timerHub .timer {
+  grid-area: clock;
+}
+
+.theTimerContents--timerHub .recentDays {
+  grid-area: recent;
   width: 100%;
+  max-width: none;
+  margin: 0;
 }
 
 .divsession-buttons{
@@ -339,6 +371,18 @@ p, h1, h2,h3{
   }
   .theTimerContents:not(.theTimerContents--timerHub){
     flex-direction: column;
+  }
+  .theTimerContents.theTimerContents--timerHub {
+    grid-template-columns: minmax(0, max-content);
+    grid-template-areas:
+      "icons"
+      "clock"
+      "recent";
+    justify-items: stretch;
+  }
+  .theTimerContents--timerHub .timerHubIconBar {
+    flex-direction: row;
+    justify-self: center;
   }
   .content-text{
     font-size: 13.5px;

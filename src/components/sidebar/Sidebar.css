@@ -1,0 +1,257 @@
+.appSidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 22px 12px 18px;
+  background: linear-gradient(180deg, rgba(22, 24, 33, 0.736) 0%, rgba(18, 20, 28, 0.752) 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.28);
+  font-family: "Kalam", cursive, sans-serif;
+  color: rgba(248, 250, 252, 0.96);
+}
+
+.appSidebar__brand {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 6px 12px 28px;
+}
+
+.appSidebar__brandIcon {
+  width: 28px;
+  height: 28px;
+  color: rgba(248, 250, 252, 0.95);
+  stroke-width: 1.5;
+}
+
+.appSidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.appSidebar__navItem {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: rgba(248, 250, 252, 0.72);
+  font-family: "Kalam", cursive, sans-serif;
+  font-size: 0.94rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.appSidebar__navItem:hover:not(.appSidebar__navItem--disabled) {
+  color: rgba(248, 250, 252, 0.96);
+}
+
+.appSidebar__navItem:focus {
+  outline: none;
+}
+
+.appSidebar__navItem:focus-visible {
+  outline: none;
+  color: rgba(248, 250, 252, 0.96);
+}
+
+.appSidebar__navItem--active {
+  color: rgba(248, 250, 252, 0.96);
+}
+
+.appSidebar__navItem--disabled {
+  opacity: 0.55;
+  cursor: default;
+  pointer-events: none;
+}
+
+.appSidebar__navIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  font-size: 20px;
+  color: inherit;
+}
+
+.appSidebar__navIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.appSidebar__navLabel {
+  white-space: nowrap;
+}
+
+.appSidebar__footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.appSidebar__profileWrap {
+  position: relative;
+  padding-top: 8px;
+}
+
+.appSidebar__profile {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.appSidebar__profile:hover .appSidebar__profileName,
+.appSidebar__profile:hover .appSidebar__profileChevron {
+  color: rgba(248, 250, 252, 0.96);
+}
+
+.appSidebar__profile:focus,
+.appSidebar__profile:focus-visible {
+  outline: none;
+}
+
+.appSidebar__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(30, 33, 45, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.112);
+}
+
+.appSidebar__avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.appSidebar__avatarInitial {
+  color: rgba(248, 250, 252, 0.95);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.appSidebar__profileName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(248, 250, 252, 0.92);
+  font-size: 0.944rem;
+  font-weight: 500;
+}
+
+.appSidebar__profileChevron {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: rgba(248, 250, 252, 0.72);
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.appSidebar__profileChevron--open {
+  transform: rotate(180deg);
+}
+
+.appSidebar__profileMenu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 6px);
+  padding: 6px;
+  background: linear-gradient(180deg, rgba(22, 24, 33, 0.94) 0%, rgba(18, 20, 28, 0.96) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  box-shadow:
+    4px 5px 12px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.048);
+}
+
+.appSidebar__profileMenuItem {
+  all: unset;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  color: rgba(248, 250, 252, 0.96);
+  font-family: "Kalam", cursive, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.appSidebar__profileMenuItem:hover {
+  color: #fff;
+}
+
+.appSidebar__profileMenuItem:focus,
+.appSidebar__profileMenuItem:focus-visible {
+  outline: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .appSidebar {
+    width: 72px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .appSidebar__brand {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .appSidebar__navLabel,
+  .appSidebar__profileName,
+  .appSidebar__profileChevron {
+    display: none;
+  }
+
+  .appSidebar__navItem {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .appSidebar__profile {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

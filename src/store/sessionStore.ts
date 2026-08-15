@@ -10,6 +10,14 @@ import { THEME_LANDSCAPE } from "../theme/backgrounds";
 /** Mirrors `activeSupabaseSessionId` so finalize can find the draft after refresh / remount. */
 export const ACTIVE_SESSION_ID_STORAGE_KEY = "pomoprogress_active_session_id";
 
+/**
+ * Default Focus session: 1 hour total with one 10-minute break.
+ * Work time is split across (breaks + 1) blocks, so that is two 25-minute work blocks.
+ */
+export const DEFAULT_SESSION_HOURS = 1;
+export const DEFAULT_BREAK_MINUTES = 10;
+export const DEFAULT_NUM_OF_BREAKS = 1;
+
 export type SessionState = {
   closeRatingModal: boolean;
   workMinutes: number;
@@ -82,18 +90,20 @@ export type SessionActions = {
   setOpenMoodInput: (value: boolean) => void;
   setMoodSelection: (value: string | null) => void;
   setCenterFocus: (value: "session" | "data" | "theme" | "rating" | "account" | null) => void;
+  /** Skip the setter and show the timer with the default 25 / 10 session. */
+  openDefaultFocusTimer: () => void;
 };
 
 const initialSessionState: SessionState = {
   closeRatingModal: false,
-  workMinutes: 1,
-  breakMinutes: 10,
+  workMinutes: DEFAULT_SESSION_HOURS,
+  breakMinutes: DEFAULT_BREAK_MINUTES,
   showSetterPage: false,
-  showTimerPage: false,
-  numOfBreaks: 1,
-  showParagraph: true,
-  showButtons: false,
-  showData: true,
+  showTimerPage: true,
+  numOfBreaks: DEFAULT_NUM_OF_BREAKS,
+  showParagraph: false,
+  showButtons: true,
+  showData: false,
   isWorkGreater: false,
   modalOpen: true,
   clicked: false,
@@ -107,7 +117,7 @@ const initialSessionState: SessionState = {
   logout: false,
   openThemePage: false,
   openHowTo: false,
-  showClock: false,
+  showClock: true,
   option: undefined,
   theme: THEME_LANDSCAPE,
   activeSupabaseSessionId: null,
@@ -115,7 +125,7 @@ const initialSessionState: SessionState = {
   dataLoggingAlert: null,
   openMoodInput: false,
   moodSelection: null,
-  centerFocus: null,
+  centerFocus: "session",
 };
 
 export const useSessionStore = create<SessionState & SessionActions>()(
@@ -171,6 +181,23 @@ export const useSessionStore = create<SessionState & SessionActions>()(
       setOpenMoodInput: (value) => set({ openMoodInput: value }),
       setMoodSelection: (value) => set({ moodSelection: value }),
       setCenterFocus: (value) => set({ centerFocus: value }),
+      openDefaultFocusTimer: () =>
+        set({
+          workMinutes: DEFAULT_SESSION_HOURS,
+          breakMinutes: DEFAULT_BREAK_MINUTES,
+          numOfBreaks: DEFAULT_NUM_OF_BREAKS,
+          showSetterPage: false,
+          showTimerPage: true,
+          showParagraph: false,
+          showButtons: true,
+          showClock: true,
+          showData: false,
+          clicked: true,
+          sessionComplete: false,
+          centerFocus: "session",
+          data: false,
+          openThemePage: false,
+        }),
     }),
     {
       name: "pomoprogress-session",

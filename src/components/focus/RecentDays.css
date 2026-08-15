@@ -1,0 +1,235 @@
+/* Same dark panel as the timer / hub cards so this sits on the themed background. */
+.recentDays {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2.2vmin, 18px);
+  width: 100%;
+  max-width: min(860px, 96%);
+  margin: 0 auto;
+  font-family: "Inter", "Roboto", sans-serif;
+}
+
+.recentDays__summaryRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 1.8vmin, 16px);
+}
+
+.recentDays__summaryCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #1e212dcd;
+  border-radius: 0;
+  box-shadow: 7px 8px 5px 0 rgba(0, 0, 0, 0.75);
+  padding: 14px 16px;
+  box-sizing: border-box;
+}
+
+.recentDays__summaryIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.recentDays__summaryIcon--hours {
+  background-color: rgba(59, 130, 246, 0.18);
+  color: #93c5fd;
+}
+
+.recentDays__summaryIcon--load {
+  background-color: rgba(249, 115, 22, 0.18);
+  color: #fdba74;
+}
+
+.recentDays__summaryIcon--productivity {
+  background-color: rgba(34, 197, 94, 0.18);
+  color: #86efac;
+}
+
+.recentDays__summaryCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.recentDays__summaryLabel {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(248, 250, 252, 0.55);
+}
+
+.recentDays__summaryValue {
+  font-size: clamp(1.05rem, 2.4vmin, 1.35rem);
+  font-weight: 700;
+  color: rgba(248, 250, 252, 0.98);
+  line-height: 1.2;
+}
+
+.recentDays__tableCard {
+  background-color: #1e212dcd;
+  box-shadow: 7px 8px 5px 0 rgba(0, 0, 0, 0.75);
+  padding: clamp(14px, 2.4vmin, 20px) clamp(14px, 2.4vmin, 22px) 12px;
+  box-sizing: border-box;
+  color: rgba(248, 250, 252, 0.96);
+}
+
+.recentDays__tableHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.recentDays__heading {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.88);
+}
+
+.recentDays__headerAction,
+.recentDays__footerAction {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(248, 250, 252, 0.55);
+  cursor: default;
+}
+
+.recentDays__tableWrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.recentDays__table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.recentDays__table th {
+  padding: 8px 10px 10px 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.48);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+}
+
+.recentDays__table td {
+  padding: 12px 10px 12px 0;
+  font-size: 0.86rem;
+  color: rgba(248, 250, 252, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  vertical-align: middle;
+}
+
+.recentDays__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.recentDays__dateStack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.recentDays__datePrimary {
+  font-weight: 700;
+}
+
+.recentDays__dateDetail {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: rgba(248, 250, 252, 0.5);
+}
+
+.recentDays__workType {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.recentDays__workDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.recentDays__workDot--deep {
+  background-color: #a855f7;
+}
+
+.recentDays__workDot--routine {
+  background-color: #3b82f6;
+}
+
+.recentDays__load {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.recentDays__load--mid {
+  background-color: rgba(249, 115, 22, 0.22);
+  color: #fdba74;
+}
+
+.recentDays__load--low {
+  background-color: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+}
+
+.recentDays__notes {
+  color: rgba(248, 250, 252, 0.62);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recentDays__rowMenu {
+  display: inline-flex;
+  color: rgba(248, 250, 252, 0.45);
+  font-size: 1.2rem;
+}
+
+.recentDays__footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.recentDays__srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media only screen and (max-width: 720px) {
+  .recentDays__summaryRow {
+    grid-template-columns: 1fr;
+  }
+}

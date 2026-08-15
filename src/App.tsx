@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { waitForImage } from "./lib/waitForImage";
 import AuthModal from "./components/auth/AuthModal";
+import Sidebar, { type SidebarItemId } from "./components/sidebar/Sidebar";
 import Finished from "./components/Finished";
 import Howtorate from "./components/Howtorate";
 import Logout from "./components/Logout";
@@ -9,9 +10,11 @@ import Setter from "./components/setter/Setter";
 import Chartdisplay from "./components/chart/Chartdisplay";
 // import MoodInputModal from "./components/mood/MoodInputModal";
 import { CenterQuadStage, MainHubHeader, TimerHubIconBar } from "./components/mainbuttons/MainButtons";
+import HubTodayDashboard from "./components/mainbuttons/HubTodayDashboard";
 import Synopsis from "./components/mainbuttons/Synopsis";
 import Theme from "./components/mainbuttons/Theme";
 import Timer from "./components/timer/Timer";
+import RecentDays from "./components/focus/RecentDays";
 import DataLoggingErrorToast from "./components/notifications/DataLoggingErrorToast";
 import { useAuth } from "./hooks/useAuth";
 import { useSessionStore } from "./store/sessionStore";
@@ -19,6 +22,7 @@ import { useSessionStore } from "./store/sessionStore";
 function App() {
   const { session, loading: authLoading, authError } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [sidebarActiveItem, setSidebarActiveItem] = useState<SidebarItemId>("focus");
   /** Background URL to paint; stays on the previous theme until the next image has loaded. */
   const [displayedBackgroundUrl, setDisplayedBackgroundUrl] = useState<string | null>(null);
   /** Centered box while switching themes (min 1s + until decode). */
@@ -35,7 +39,34 @@ function App() {
   const logout = useSessionStore((s) => s.logout);
   const dataLoggingAlert = useSessionStore((s) => s.dataLoggingAlert);
   const setCenterFocus = useSessionStore((s) => s.setCenterFocus);
+  const setData = useSessionStore((s) => s.setData);
+  const setOpenThemePage = useSessionStore((s) => s.setOpenThemePage);
+  const setShowTimerPage = useSessionStore((s) => s.setShowTimerPage);
+  const openDefaultFocusTimer = useSessionStore((s) => s.openDefaultFocusTimer);
   // const openMoodInput = useSessionStore((s) => s.openMoodInput);
+
+  const handleSidebarNavigate = (item: SidebarItemId) => {
+    setSidebarActiveItem(item);
+    switch (item) {
+      case "focus":
+        openDefaultFocusTimer();
+        break;
+      case "stats":
+        setCenterFocus("data");
+        setData(true);
+        break;
+      case "energy":
+        setShowTimerPage(false);
+        setCenterFocus(null);
+        break;
+      case "settings":
+        setCenterFocus("theme");
+        setOpenThemePage(true);
+        break;
+      default:
+        break;
+    }
+  };
 
   useEffect(() => {
     localStorage.removeItem("Theme");
@@ -124,6 +155,12 @@ function App() {
 
   return (
     <div className="App" style={{ backgroundImage: `url(${displayedBackgroundUrl})` }}>
+      <Sidebar
+        user={session?.user ?? null}
+        activeItem={sidebarActiveItem}
+        onNavigate={handleSidebarNavigate}
+        onOpenSignIn={() => setAuthModalOpen(true)}
+      />
       <div className="theApp">
         <div className="mainStage mainStage--hubWireframe">
           {!showSetterPage && !showTimerPage && !sessionComplete && (
@@ -134,12 +171,14 @@ function App() {
                 onOpenSignIn={() => setAuthModalOpen(true)}
                 isAuthModalOpen={authModalOpen}
               />
+              <HubTodayDashboard />
             </>
           )}
           <div className={`theTimerContents${showTimerPage ? " theTimerContents--timerHub" : ""}`}>
             {showTimerPage && <TimerHubIconBar />}
             {showSetterPage && <Setter />}
             {showTimerPage && <Timer />}
+            {showTimerPage && <RecentDays />}
           </div>
           {sessionComplete && <Finished />}
         </div>

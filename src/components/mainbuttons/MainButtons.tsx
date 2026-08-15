@@ -172,14 +172,11 @@ export function CenterQuadStage({ user, onOpenSignIn, isAuthModalOpen = false }:
   const setCenterFocus = useSessionStore((s) => s.setCenterFocus);
   const setData = useSessionStore((s) => s.setData);
   const setOpenThemePage = useSessionStore((s) => s.setOpenThemePage);
-  const setShowSetterPage = useSessionStore((s) => s.setShowSetterPage);
-  const setShowParagraph = useSessionStore((s) => s.setShowParagraph);
+  const openDefaultFocusTimer = useSessionStore((s) => s.openDefaultFocusTimer);
 
   const handleStartTileActivate = () => {
     clearPersistedTimer();
-    setCenterFocus(null);
-    setShowSetterPage(true);
-    setShowParagraph(false);
+    openDefaultFocusTimer();
   };
 
   const handleLogout = async () => {

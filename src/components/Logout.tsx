@@ -6,28 +6,18 @@ import { signOut } from "../lib/auth";
 
 const Logout = () => {
   const [modalOpen, setModalOpen] = useState(true);
-  const setShowParagraph = useSessionStore((s) => s.setShowParagraph);
-  const setShowTimerPage = useSessionStore((s) => s.setShowTimerPage);
-  const setShowButtons = useSessionStore((s) => s.setShowButtons);
-  const setShowData = useSessionStore((s) => s.setShowData);
-  const setShowSetterPage = useSessionStore((s) => s.setShowSetterPage);
-  const setClicked = useSessionStore((s) => s.setClicked);
   const setCancelTheSession = useSessionStore((s) => s.setCancelTheSession);
   const setBlockNum = useSessionStore((s) => s.setBlockNum);
   const setHasUserRated = useSessionStore((s) => s.setHasUserRated);
   const setLogout = useSessionStore((s) => s.setLogout);
+  const openDefaultFocusTimer = useSessionStore((s) => s.openDefaultFocusTimer);
 
   const cancelSession = () => {
     clearPersistedTimer();
     setHasUserRated(false);
-    setShowParagraph(true);
-    setShowTimerPage(false);
-    setShowButtons(false);
-    setShowData(true);
-    setShowSetterPage(false);
-    setClicked(false);
-    setCancelTheSession(false);
     setBlockNum(1);
+    setCancelTheSession(false);
+    openDefaultFocusTimer();
   };
 
   const handleSignOut = async () => {

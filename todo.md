@@ -1,27 +1,12 @@
-- [x] Review rules and current chart/toast flow
-- [x] Add logic to detect if yesterday was the user's last active day with avg >= 8.3
-- [x] Show a green-check notification only when opening the graph modal
-- [x] Make the notification persistent until dismissed with X
-- [x] Prevent repeat popups on the same day
-- [ ] Split `Timer.tsx` into smaller components (<= ~200 lines)
-  - [x] Extract session summary UI
-  - [x] Extract clock/status UI
-  - [x] Extract control buttons UI
-  - [x] Move timer logic into `usePomodoroTimer`
-  - [x] Verify production build compiles
-  - [x] Run lints for edited files
-- [x] Review
-  - Implemented with minimal-impact changes in chart modal + new toast component.
-  - Verified with `npm run build` (passes; one unrelated existing warning in `Finished.tsx`).
+# Focus → hardcoded Recent Days under timer
 
+- [x] Add static data + types for summary cards and recent-day rows
+- [x] Build Recent Days UI (3 cards + table) with no fetching or timer logic
+- [x] Place it under the Focus timer in App
+- [x] Style to match existing hub panels (dark timer-panel look)
+- [x] Verify with `npm run build`
 - [x] Review
-  - `Timer.tsx` reduced to ~122 lines; extracted UI into `src/components/timer/components/` and logic into `src/components/timer/hooks/usePomodoroTimer.ts`.
-  - `npm run build` passes after refactor; no linter issues in touched files.
-
-- [ ] Split `usePomodoroTimer.ts` into smaller files (<= ~200 lines each)
-  - [x] Extract types + constants
-  - [x] Extract persistence/restore helpers
-  - [x] Extract ticking/visibility/pagehide effects
-  - [x] Extract document-title effect
-  - [x] Shrink `usePomodoroTimer.ts` to orchestrator
-  - [x] Run lints + `npm run build`
+  - Focus timer page now shows hardcoded summary cards + a Recent days table below the clock.
+  - Values match the mockup (hours, load, productivity, seven day rows). View all / View more / row menus are display-only.
+  - Styled like HubTodayDashboard (`#1e212dcd`) so it sits on the themed background.
+  - `npm run build` compiles successfully.

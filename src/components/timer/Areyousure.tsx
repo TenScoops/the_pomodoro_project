@@ -6,28 +6,18 @@ import { useSessionStore } from "../../store/sessionStore";
 
 const Areyousure = () => {
   const [modalOpen, setModalOpen] = useState(true);
-  const setShowParagraph = useSessionStore((s) => s.setShowParagraph);
-  const setShowTimerPage = useSessionStore((s) => s.setShowTimerPage);
-  const setShowButtons = useSessionStore((s) => s.setShowButtons);
-  const setShowData = useSessionStore((s) => s.setShowData);
-  const setShowSetterPage = useSessionStore((s) => s.setShowSetterPage);
   const setCancelTheSession = useSessionStore((s) => s.setCancelTheSession);
   const setBlockNum = useSessionStore((s) => s.setBlockNum);
-  const setShowClock = useSessionStore((s) => s.setShowClock);
   const setHasUserRated = useSessionStore((s) => s.setHasUserRated);
+  const openDefaultFocusTimer = useSessionStore((s) => s.openDefaultFocusTimer);
 
   const cancelSession = () => {
     clearPersistedTimer();
     void cancelActivePomodoroSession();
     setHasUserRated(false);
-    setShowParagraph(true);
-    setShowTimerPage(false);
-    setShowButtons(false);
-    setShowData(true);
-    setShowSetterPage(false);
-    setCancelTheSession(false);
     setBlockNum(1);
-    setShowClock(false);
+    setCancelTheSession(false);
+    openDefaultFocusTimer();
   };
 
   const customStyles = {

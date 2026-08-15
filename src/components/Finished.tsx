@@ -4,26 +4,16 @@ import { useSessionStore } from "../store/sessionStore";
 import "./Finished.css";
 
 const Finished = () => {
-  const setShowButtons = useSessionStore((s) => s.setShowButtons);
-  const setShowData = useSessionStore((s) => s.setShowData);
-  const setShowSetterPage = useSessionStore((s) => s.setShowSetterPage);
-  const setSessionComplete = useSessionStore((s) => s.setSessionComplete);
-  const setClicked = useSessionStore((s) => s.setClicked);
-  const setShowClock = useSessionStore((s) => s.setShowClock);
   const setBlockNum = useSessionStore((s) => s.setBlockNum);
   const setHasUserRated = useSessionStore((s) => s.setHasUserRated);
+  const openDefaultFocusTimer = useSessionStore((s) => s.openDefaultFocusTimer);
 
   const startNewSession = () => {
     // Drop any saved timer phase so the next run cannot restore a break/rating snapshot from the prior session.
     clearPersistedTimer();
-    setShowButtons(false);
-    setShowData(true);
-    setShowSetterPage(true);
-    setSessionComplete(false);
-    setClicked(false);
-    setShowClock(false);
     setBlockNum(1);
     setHasUserRated(false);
+    openDefaultFocusTimer();
   };
 
   function statIcon() {
