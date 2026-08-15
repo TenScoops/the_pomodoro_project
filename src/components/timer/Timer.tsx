@@ -8,9 +8,11 @@ import TimerClock from "./components/TimerClock";
 import TimerControls from "./components/TimerControls";
 import TimerSessionSummary from "./components/TimerSessionSummary";
 import usePomodoroTimer from "./hooks/usePomodoroTimer";
+import { useHydrateTodayFocusNote } from "../../hooks/useHydrateTodayFocusNote";
 import { useSessionStore } from "../../store/sessionStore";
 
 const Timer = () => {
+  useHydrateTodayFocusNote();
   const { showButtons, showClock, cancelTheSession, setCancelTheSession, setShowSessionSetupModal } =
     useSessionStore(
       useShallow((s) => ({

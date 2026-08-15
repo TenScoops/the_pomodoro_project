@@ -19,3 +19,7 @@ export function alertHoursFailure(detail: string): void {
 export function alertSessionTooEarly(detail: string): void {
   showDataLoggingAlert("Session marked complete too early", detail);
 }
+
+export function alertNoteFailure(detail: string): void {
+  showDataLoggingAlert("Note not saved", detail);
+}

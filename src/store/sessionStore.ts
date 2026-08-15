@@ -55,6 +55,8 @@ export type SessionState = {
   /** Display label for the mood the user chose (e.g. "Happy"). */
   moodSelection: string | null;
   workType: SessionWorkType;
+  /** In-session note captured from the focus screen (not persisted yet). */
+  focusNote: string;
 };
 
 export type SessionActions = {
@@ -88,6 +90,7 @@ export type SessionActions = {
   setOpenMoodInput: (value: boolean) => void;
   setMoodSelection: (value: string | null) => void;
   setWorkType: (value: SessionWorkType) => void;
+  setFocusNote: (value: string) => void;
   applySessionSetup: (values: {
     workMinutesHours: number;
     numOfBreaks: number;
@@ -129,6 +132,7 @@ const initialSessionState: SessionState = {
   openMoodInput: false,
   moodSelection: null,
   workType: "Deep Work",
+  focusNote: "",
 };
 
 export const useSessionStore = create<SessionState & SessionActions>()(
@@ -183,6 +187,7 @@ export const useSessionStore = create<SessionState & SessionActions>()(
       setOpenMoodInput: (value) => set({ openMoodInput: value }),
       setMoodSelection: (value) => set({ moodSelection: value }),
       setWorkType: (value) => set({ workType: value }),
+      setFocusNote: (value) => set({ focusNote: value }),
       applySessionSetup: (values) =>
         set({
           workMinutes: values.workMinutesHours,

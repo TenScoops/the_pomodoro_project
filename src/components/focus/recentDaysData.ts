@@ -1,3 +1,7 @@
+import { summarizeDayFromSessions } from "../chart/sessionChartData";
+import { shiftLocalISODate } from "../../lib/calendarDates";
+import type { SessionWithRatings } from "../../types/pomoprogress";
+
 export type WorkType = "Deep Work" | "Routine";
 export type LoadScore = 1 | 2 | 3 | 4 | 5;
 
@@ -11,54 +15,139 @@ export type RecentDayRow = {
   id: string;
   dateLabel: string;
   dateDetail: string | null;
-  workType: WorkType;
-  load: LoadScore;
+  workType: WorkType | null;
+  load: LoadScore | null;
+  /** Mean block rating 1–10; null when the day has no productivity ratings. */
+  productivity: number | null;
   hours: string;
-  notes: string;
+  notes: string | null;
 };
 
-// Hours and productivity come from today's sessions; load stays 0 until it is recorded.
+/** Cap so the Focus table stays a short recap, not a full history. */
+export const MAX_RECENT_DAY_ROWS = 4;
+
+/** How far back to look when collecting the latest four days with work. */
+const RECENT_DAYS_LOOKBACK = 180;
+
 export const RECENT_DAY_SUMMARY_CARDS: RecentDaySummaryCard[] = [
   { id: "hours", label: "Total Work Hours", value: "0" },
   { id: "load", label: "Average Load", value: "0" },
   { id: "productivity", label: "Productivity Avg.", value: "0" },
 ];
 
-export const RECENT_DAY_ROWS: RecentDayRow[] = [
-  {
-    id: "may14",
-    dateLabel: "Today",
-    dateDetail: "May 14, 2024",
-    workType: "Deep Work",
-    load: 4,
-    hours: "2h 18m",
-    notes: "Focused on project...",
-  },
-  {
-    id: "may13",
-    dateLabel: "Yesterday",
-    dateDetail: "May 13, 2024",
-    workType: "Routine",
-    load: 3,
-    hours: "3h 42m",
-    notes: "Admin and emails",
-  },
-  {
-    id: "may12",
-    dateLabel: "May 12, 2024",
-    dateDetail: null,
-    workType: "Deep Work",
-    load: 4,
-    hours: "1h 55m",
-    notes: "Research and planning",
-  },
-  {
-    id: "may11",
-    dateLabel: "May 11, 2024",
-    dateDetail: null,
-    workType: "Routine",
-    load: 2,
-    hours: "2h 10m",
-    notes: "Light tasks",
-  },
-];
+export function recentDaysRangeStart(todayIso: string): string {
+  return shiftLocalISODate(todayIso, -RECENT_DAYS_LOOKBACK);
+}
+
+/** Format seconds as `2h 18m`; zero work time stays `"0"`. */
+export function formatFocusWorkHours(totalSeconds: number): string {
+  if (totalSeconds <= 0) {
+    return "0";
+  }
+  const totalMinutes = Math.round(totalSeconds / 60);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (hours === 0) {
+    return `${minutes}m`;
+  }
+  if (minutes === 0) {
+    return `${hours}h`;
+  }
+  return `${hours}h ${minutes}m`;
+}
+
+/** Format mean rating as `8.7 / 10`; no ratings or a zero average stays `"0"`. */
+export function formatFocusProductivityAvg(productivityAvg: number, ratingCount: number): string {
+  if (ratingCount === 0 || productivityAvg === 0) {
+    return "0";
+  }
+  return `${productivityAvg.toFixed(1)} / 10`;
+}
+
+/** Format mean load as `3.2 / 5`; no loads or a zero average stays `"0"`. */
+export function formatFocusLoadAvg(loadAvg: number, loadCount: number): string {
+  if (loadCount === 0 || loadAvg === 0) {
+    return "0";
+  }
+  return `${loadAvg.toFixed(1)} / 5`;
+}
+
+function formatDayHeading(isoDate: string): string {
+  const [yearText, monthText, dayText] = isoDate.split("-");
+  const year = Number(yearText);
+  const monthIndex0 = Number(monthText) - 1;
+  const day = Number(dayText);
+  return new Date(year, monthIndex0, day).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function dateLabelsForIso(
+  isoDate: string,
+  todayIso: string
+): { dateLabel: string; dateDetail: string | null } {
+  const heading = formatDayHeading(isoDate);
+  if (isoDate === todayIso) {
+    return { dateLabel: "Today", dateDetail: heading };
+  }
+  if (isoDate === shiftLocalISODate(todayIso, -1)) {
+    return { dateLabel: "Yesterday", dateDetail: heading };
+  }
+  return { dateLabel: heading, dateDetail: null };
+}
+
+function toLoadScore(loadAvg: number): LoadScore {
+  const rounded = Math.round(loadAvg);
+  if (rounded <= 1) return 1;
+  if (rounded >= 5) return 5;
+  return rounded as LoadScore;
+}
+
+/**
+ * Newest days with logged work first, never more than `MAX_RECENT_DAY_ROWS`.
+ * Work type is not stored on sessions yet, so that cell stays empty.
+ */
+export function buildRecentDayRows(
+  sessions: SessionWithRatings[],
+  todayIso: string,
+  notesByDate: Record<string, string> = {}
+): RecentDayRow[] {
+  const byDate = new Map<string, SessionWithRatings[]>();
+  for (const session of sessions) {
+    const existing = byDate.get(session.date) ?? [];
+    existing.push(session);
+    byDate.set(session.date, existing);
+  }
+
+  const newestFirst = Array.from(byDate.keys()).sort((left, right) => {
+    if (left < right) return 1;
+    if (left > right) return -1;
+    return 0;
+  });
+
+  const rows: RecentDayRow[] = [];
+  for (const isoDate of newestFirst) {
+    if (rows.length >= MAX_RECENT_DAY_ROWS) {
+      break;
+    }
+    const daySessions = byDate.get(isoDate) ?? [];
+    const summary = summarizeDayFromSessions(daySessions);
+    if (summary.totalSeconds <= 0 && summary.ratingCount === 0 && summary.loadCount === 0) {
+      continue;
+    }
+    const labels = dateLabelsForIso(isoDate, todayIso);
+    rows.push({
+      id: isoDate,
+      dateLabel: labels.dateLabel,
+      dateDetail: labels.dateDetail,
+      workType: null,
+      load: summary.loadCount === 0 ? null : toLoadScore(summary.loadAvg),
+      productivity: summary.ratingCount === 0 ? null : summary.productivityAvg,
+      hours: formatFocusWorkHours(summary.totalSeconds),
+      notes: notesByDate[isoDate] || null,
+    });
+  }
+  return rows;
+}

@@ -7,7 +7,6 @@ import {
 import { MdSpeed } from "react-icons/md";
 import { useTodayFocusSummary } from "../../hooks/useTodayFocusSummary";
 import {
-  RECENT_DAY_ROWS,
   RECENT_DAY_SUMMARY_CARDS,
   type LoadScore,
   type RecentDayRow,
@@ -32,6 +31,12 @@ function loadBadgeClass(load: LoadScore): string {
   return load <= 2 ? "recentDays__load recentDays__load--low" : "recentDays__load recentDays__load--mid";
 }
 
+function productivityBadgeClass(productivity: number): string {
+  if (productivity >= 7) return "recentDays__productivity recentDays__productivity--high";
+  if (productivity >= 4) return "recentDays__productivity recentDays__productivity--mid";
+  return "recentDays__productivity recentDays__productivity--low";
+}
+
 function DateCell({ row }: { row: RecentDayRow }) {
   if (!row.dateDetail) {
     return <span className="recentDays__datePrimary">{row.dateLabel}</span>;
@@ -48,16 +53,17 @@ function DateCell({ row }: { row: RecentDayRow }) {
 function summaryCardValue(
   card: RecentDaySummaryCard,
   hoursValue: string,
+  loadValue: string,
   productivityValue: string
 ): string {
   if (card.id === "hours") return hoursValue;
-  if (card.id === "productivity") return productivityValue;
-  return card.value;
+  if (card.id === "load") return loadValue;
+  return productivityValue;
 }
 
-/** Summary cards use today's session data; the recent-days table is still placeholder. */
+/** Today's summary cards and up to four recent days from logged sessions. */
 export default function RecentDays() {
-  const { hoursValue, productivityValue } = useTodayFocusSummary();
+  const { hoursValue, loadValue, productivityValue, recentRows } = useTodayFocusSummary();
 
   return (
     <section className="recentDays" aria-label="Recent days">
@@ -70,7 +76,7 @@ export default function RecentDays() {
             <div className="recentDays__summaryCopy">
               <span className="recentDays__summaryLabel">{card.label}</span>
               <span className="recentDays__summaryValue">
-                {summaryCardValue(card, hoursValue, productivityValue)}
+                {summaryCardValue(card, hoursValue, loadValue, productivityValue)}
               </span>
             </div>
           </article>
@@ -83,47 +89,69 @@ export default function RecentDays() {
           <span className="recentDays__headerAction">View all</span>
         </div>
 
-        <div className="recentDays__tableWrap">
-          <table className="recentDays__table">
-            <thead>
-              <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Work type</th>
-                <th scope="col">Load (1-5)</th>
-                <th scope="col">Hours</th>
-                <th scope="col">Notes</th>
-                <th scope="col">
-                  <span className="recentDays__srOnly">Row actions</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {RECENT_DAY_ROWS.map((row) => (
-                <tr key={row.id}>
-                  <td>
-                    <DateCell row={row} />
-                  </td>
-                  <td>
-                    <span className="recentDays__workType">
-                      <span className={workTypeDotClass(row.workType)} aria-hidden />
-                      {row.workType}
-                    </span>
-                  </td>
-                  <td>
-                    <span className={loadBadgeClass(row.load)}>{row.load}</span>
-                  </td>
-                  <td>{row.hours}</td>
-                  <td className="recentDays__notes">{row.notes}</td>
-                  <td>
-                    <span className="recentDays__rowMenu" aria-hidden>
-                      <HiOutlineEllipsisHorizontal />
-                    </span>
-                  </td>
+        {recentRows.length === 0 ? (
+          <p className="recentDays__empty">No recent days to show yet.</p>
+        ) : (
+          <div className="recentDays__tableWrap">
+            <table className="recentDays__table">
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Work type</th>
+                  <th scope="col">Load (1-5)</th>
+                  <th scope="col">Prod. (1-10)</th>
+                  <th scope="col">Hours</th>
+                  <th scope="col">Notes</th>
+                  <th scope="col">
+                    <span className="recentDays__srOnly">Row actions</span>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {recentRows.map((row) => (
+                  <tr key={row.id}>
+                    <td>
+                      <DateCell row={row} />
+                    </td>
+                    <td>
+                      {row.workType ? (
+                        <span className="recentDays__workType">
+                          <span className={workTypeDotClass(row.workType)} aria-hidden />
+                          {row.workType}
+                        </span>
+                      ) : (
+                        <span className="recentDays__muted">—</span>
+                      )}
+                    </td>
+                    <td>
+                      {row.load != null ? (
+                        <span className={loadBadgeClass(row.load)}>{row.load}</span>
+                      ) : (
+                        <span className="recentDays__muted">—</span>
+                      )}
+                    </td>
+                    <td>
+                      {row.productivity != null ? (
+                        <span className={productivityBadgeClass(row.productivity)}>
+                          {row.productivity.toFixed(1)}
+                        </span>
+                      ) : (
+                        <span className="recentDays__muted">—</span>
+                      )}
+                    </td>
+                    <td>{row.hours}</td>
+                    <td className="recentDays__notes">{row.notes ?? "—"}</td>
+                    <td>
+                      <span className="recentDays__rowMenu" aria-hidden>
+                        <HiOutlineEllipsisHorizontal />
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         <div className="recentDays__footer">
           <span className="recentDays__footerAction">View more</span>

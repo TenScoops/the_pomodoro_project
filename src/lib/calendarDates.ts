@@ -40,3 +40,13 @@ export function getAppNow(): Date {
 export function todayLocalISODate(): string {
   return formatLocalISODate(getAppNow());
 }
+
+/** Shift a local YYYY-MM-DD by whole calendar days (negative is earlier). */
+export function shiftLocalISODate(isoDate: string, dayDelta: number): string {
+  const parsed = parseLocalDateStringYYYYMMD(isoDate);
+  if (!parsed) {
+    throw new Error(`Invalid local date: ${isoDate}`);
+  }
+  parsed.setDate(parsed.getDate() + dayDelta);
+  return formatLocalISODate(parsed);
+}

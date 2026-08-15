@@ -9,11 +9,13 @@ export {
 } from "./sessionClientHelpers";
 
 export { insertSession, updateSession, upsertBlockRating } from "./sessionMutations";
+export { persistFocusNoteForToday, getDailyNoteForDate, getDailyNotesInRange } from "./dailyNotes";
 
 export {
   findLatestDraftSessionIdForUser,
   getLatestRatedSessionDateBefore,
   getSessionsWithRatingsForDate,
+  getSessionsWithRatingsInRange,
   getSessionsWithRatingsForMonth,
   getSessionsWithRatingsForYear,
 } from "./sessionQueries";

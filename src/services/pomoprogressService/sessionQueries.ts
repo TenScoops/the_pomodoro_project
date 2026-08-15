@@ -100,6 +100,24 @@ export async function getSessionsWithRatingsForYear(
   };
 }
 
+/** Sessions whose calendar date is between `startDate` and `endDate` inclusive. */
+export async function getSessionsWithRatingsInRange(
+  startDate: string,
+  endDate: string
+): Promise<{ data: SessionWithRatings[]; error: PostgrestError | null }> {
+  const response = await supabase
+    .from("sessions")
+    .select(sessionSelectWithRatings)
+    .gte("date", startDate)
+    .lte("date", endDate)
+    .order("date", { ascending: true });
+
+  return {
+    data: (response.data ?? []) as SessionWithRatings[],
+    error: response.error,
+  };
+}
+
 /** Sessions for one specific local calendar date (YYYY-MM-DD). */
 export async function getSessionsWithRatingsForDate(
   date: string

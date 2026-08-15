@@ -15,6 +15,19 @@ function collectRatingsFromSessions(sessions: SessionWithRatings[]): number[] {
   return ratings;
 }
 
+function collectLoadsFromSessions(sessions: SessionWithRatings[]): number[] {
+  const loads: number[] = [];
+  for (const session of sessions) {
+    for (const row of session.block_ratings ?? []) {
+      if (row.load == null) {
+        continue;
+      }
+      loads.push(row.load);
+    }
+  }
+  return loads;
+}
+
 function averageRatings(values: number[]): number {
   if (values.length === 0) {
     return 0;
@@ -23,18 +36,23 @@ function averageRatings(values: number[]): number {
   return Number((sum / values.length).toFixed(2));
 }
 
-/** Today's totals for Focus summary cards: work seconds + mean block rating (1–10). */
+/** Day totals for Focus cards: work seconds, mean rating (1–10), mean load (1–5). */
 export function summarizeDayFromSessions(sessions: SessionWithRatings[]): {
   totalSeconds: number;
   productivityAvg: number;
   ratingCount: number;
+  loadAvg: number;
+  loadCount: number;
 } {
   const ratings = collectRatingsFromSessions(sessions);
+  const loads = collectLoadsFromSessions(sessions);
   const totalSeconds = sessions.reduce((sum, session) => sum + session.total_time_worked, 0);
   return {
     totalSeconds,
     productivityAvg: averageRatings(ratings),
     ratingCount: ratings.length,
+    loadAvg: averageRatings(loads),
+    loadCount: loads.length,
   };
 }
 

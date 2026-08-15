@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { HiOutlineArrowRight, HiOutlineChevronDown, HiPlus } from "react-icons/hi2";
 import { useSessionStore } from "../../../store/sessionStore";
 import type { SessionWorkType } from "../../sessionSetup/sessionSetupMath";
+import AddNoteModal from "./AddNoteModal";
 import TimerProgressRing from "./TimerProgressRing";
 
 type TimerClockProps = {
@@ -45,6 +46,8 @@ export default function TimerClock({
 }: TimerClockProps) {
   const workType = useSessionStore((state) => state.workType);
   const setWorkType = useSessionStore((state) => state.setWorkType);
+  const focusNote = useSessionStore((state) => state.focusNote);
+  const [noteModalOpen, setNoteModalOpen] = useState(false);
 
   if (!showClock) {
     return null;
@@ -96,11 +99,13 @@ export default function TimerClock({
           {displayMinutes}:{displaySeconds}
         </p>
         <p className="timerHero__tagline">Focus on what matters.</p>
-        <button className="timerAddNote" type="button">
+        <button className="timerAddNote" type="button" onClick={() => setNoteModalOpen(true)}>
           <HiPlus aria-hidden />
-          Add note
+          {focusNote ? "Edit note" : "Add note"}
         </button>
       </TimerProgressRing>
+
+      <AddNoteModal isOpen={noteModalOpen} onRequestClose={() => setNoteModalOpen(false)} />
     </div>
   );
 }
