@@ -17,6 +17,7 @@ import StatsPage from "./components/stats/StatsPage";
 import DataLoggingErrorToast from "./components/notifications/DataLoggingErrorToast";
 import { useAuth } from "./hooks/useAuth";
 import { useSessionStore } from "./store/sessionStore";
+import { THEME_STREETS } from "./theme/backgrounds";
 
 function App() {
   const { session, loading: authLoading, authError } = useAuth();
@@ -143,7 +144,15 @@ function App() {
   }
 
   return (
-    <div className="App" style={{ backgroundImage: `url(${displayedBackgroundUrl})` }}>
+    <div
+      className="App"
+      style={
+        {
+          "--app-theme-image": `url(${displayedBackgroundUrl})`,
+          "--app-theme-dim": displayedBackgroundUrl === THEME_STREETS ? "0.35" : "0.2",
+        } as React.CSSProperties
+      }
+    >
       <Sidebar
         user={session?.user ?? null}
         activeItem={sidebarActiveItem}

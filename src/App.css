@@ -100,6 +100,11 @@ body{
 }
 
 .App{
+  background-image: linear-gradient(
+      rgba(0, 0, 0, var(--app-theme-dim, 0.2)),
+      rgba(0, 0, 0, var(--app-theme-dim, 0.2))
+    ),
+    var(--app-theme-image);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
