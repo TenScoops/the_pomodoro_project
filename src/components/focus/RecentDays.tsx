@@ -5,6 +5,7 @@ import {
   HiOutlineEllipsisHorizontal,
 } from "react-icons/hi2";
 import { MdSpeed } from "react-icons/md";
+import { useTodayFocusSummary } from "../../hooks/useTodayFocusSummary";
 import {
   RECENT_DAY_ROWS,
   RECENT_DAY_SUMMARY_CARDS,
@@ -44,8 +45,20 @@ function DateCell({ row }: { row: RecentDayRow }) {
   );
 }
 
-/** Static summary + recent-days table shown under the Focus timer. Buttons do nothing yet. */
+function summaryCardValue(
+  card: RecentDaySummaryCard,
+  hoursValue: string,
+  productivityValue: string
+): string {
+  if (card.id === "hours") return hoursValue;
+  if (card.id === "productivity") return productivityValue;
+  return card.value;
+}
+
+/** Summary cards use today's session data; the recent-days table is still placeholder. */
 export default function RecentDays() {
+  const { hoursValue, productivityValue } = useTodayFocusSummary();
+
   return (
     <section className="recentDays" aria-label="Recent days">
       <div className="recentDays__summaryRow">
@@ -56,7 +69,9 @@ export default function RecentDays() {
             </span>
             <div className="recentDays__summaryCopy">
               <span className="recentDays__summaryLabel">{card.label}</span>
-              <span className="recentDays__summaryValue">{card.value}</span>
+              <span className="recentDays__summaryValue">
+                {summaryCardValue(card, hoursValue, productivityValue)}
+              </span>
             </div>
           </article>
         ))}

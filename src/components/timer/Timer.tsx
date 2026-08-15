@@ -41,6 +41,7 @@ const Timer = () => {
     pauseFromClock,
     resumeTimer,
     toggleSpeedBoost,
+    resetCurrentPhase,
   } = usePomodoroTimer();
 
   return (
@@ -62,6 +63,7 @@ const Timer = () => {
           speedBoostTitle={speedBoostTitle}
           onStart={resumeTimer}
           onPause={pauseFromClock}
+          onReset={resetCurrentPhase}
           onEnd={() => setCancelTheSession(true)}
           onToggleSpeedBoost={toggleSpeedBoost}
         />

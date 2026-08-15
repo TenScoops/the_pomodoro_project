@@ -23,6 +23,21 @@ function averageRatings(values: number[]): number {
   return Number((sum / values.length).toFixed(2));
 }
 
+/** Today's totals for Focus summary cards: work seconds + mean block rating (1–10). */
+export function summarizeDayFromSessions(sessions: SessionWithRatings[]): {
+  totalSeconds: number;
+  productivityAvg: number;
+  ratingCount: number;
+} {
+  const ratings = collectRatingsFromSessions(sessions);
+  const totalSeconds = sessions.reduce((sum, session) => sum + session.total_time_worked, 0);
+  return {
+    totalSeconds,
+    productivityAvg: averageRatings(ratings),
+    ratingCount: ratings.length,
+  };
+}
+
 function groupSessionsByDate(sessions: SessionWithRatings[]): Map<string, SessionWithRatings[]> {
   const map = new Map<string, SessionWithRatings[]>();
   for (const session of sessions) {

@@ -17,11 +17,11 @@ export type RecentDayRow = {
   notes: string;
 };
 
-// Placeholder numbers so the Focus page has a filled table before real session data is wired up.
+// Hours and productivity values are filled from today's sessions; load is still a placeholder.
 export const RECENT_DAY_SUMMARY_CARDS: RecentDaySummaryCard[] = [
-  { id: "hours", label: "Total Work Hours", value: "2h 18m" },
+  { id: "hours", label: "Total Work Hours", value: "0" },
   { id: "load", label: "Average Load", value: "3.2 / 5" },
-  { id: "productivity", label: "Productivity Avg.", value: "8.7 / 10" },
+  { id: "productivity", label: "Productivity Avg.", value: "0" },
 ];
 
 export const RECENT_DAY_ROWS: RecentDayRow[] = [

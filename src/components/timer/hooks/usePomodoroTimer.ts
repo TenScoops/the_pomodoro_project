@@ -66,7 +66,16 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
     breakMinutes,
   });
 
-  const { applyTimeLeft, pauseFromClock, resumeTimer, switchMode, switchModeAfterRestore, toggleSpeedBoost, skipBreak } =
+  const {
+    applyTimeLeft,
+    pauseFromClock,
+    resumeTimer,
+    switchMode,
+    switchModeAfterRestore,
+    toggleSpeedBoost,
+    skipBreak,
+    resetCurrentPhase,
+  } =
     usePomodoroTimerActions({
       refs: { timeLeftRef, isPausedRef, modeRef, phaseEndAtMsRef, effectiveMultiplierRef },
       setters: {
@@ -171,6 +180,7 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
     resumeTimer,
     toggleSpeedBoost,
     skipBreak,
+    resetCurrentPhase,
   };
 }
 

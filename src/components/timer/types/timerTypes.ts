@@ -25,5 +25,6 @@ export type UsePomodoroTimerResult = {
   resumeTimer: () => void;
   toggleSpeedBoost: () => void;
   skipBreak: () => void;
+  resetCurrentPhase: () => void;
 };
 

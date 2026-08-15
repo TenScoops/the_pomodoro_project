@@ -139,6 +139,30 @@ export default function usePomodoroTimerActions(params: {
     applyTimeLeft(workBlockSeconds);
   }, [applyTimeLeft, inputs, refs, setters]);
 
-  return { applyTimeLeft, pauseFromClock, resumeTimer, switchMode, switchModeAfterRestore, toggleSpeedBoost, skipBreak };
+  /** Restore the current work/break countdown without changing block or session. */
+  const resetCurrentPhase = useCallback(() => {
+    const phaseSeconds =
+      refs.modeRef.current === "break"
+        ? inputs.breakMinutes * 60
+        : computeWorkBlockSeconds({
+            workMinutes: inputs.workMinutes,
+            totalBreakTimeMinutes: inputs.totalBreakTimeMinutes,
+            totalBlocks: inputs.totalBlocks,
+          });
+    refs.isPausedRef.current = true;
+    setters.setIsPaused(true);
+    applyTimeLeft(phaseSeconds);
+  }, [applyTimeLeft, inputs, refs, setters]);
+
+  return {
+    applyTimeLeft,
+    pauseFromClock,
+    resumeTimer,
+    switchMode,
+    switchModeAfterRestore,
+    toggleSpeedBoost,
+    skipBreak,
+    resetCurrentPhase,
+  };
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { HiPause, HiPlay, HiStop } from "react-icons/hi2";
+import { HiArrowPath, HiPause, HiPlay, HiStop } from "react-icons/hi2";
 
 type TimerControlsProps = {
   showButtons: boolean;
@@ -8,6 +8,7 @@ type TimerControlsProps = {
   speedBoostTitle: string;
   onStart: () => void;
   onPause: () => void;
+  onReset: () => void;
   onEnd: () => void;
   onToggleSpeedBoost: () => void;
 };
@@ -19,6 +20,7 @@ export default function TimerControls({
   speedBoostTitle,
   onStart,
   onPause,
+  onReset,
   onEnd,
   onToggleSpeedBoost,
 }: TimerControlsProps) {
@@ -45,7 +47,14 @@ export default function TimerControls({
           </button>
         )}
 
-        <button className="timerRoundBtn timerRoundBtn--ghost" type="button" onClick={onEnd}>
+        <button className="timerRoundBtn timerRoundBtn--primary" type="button" onClick={onReset}>
+          <span className="timerRoundBtn__face">
+            <HiArrowPath className="timerRoundBtn__icon" aria-hidden />
+          </span>
+          <span className="timerRoundBtn__label">Reset</span>
+        </button>
+
+        <button className="timerRoundBtn timerRoundBtn--primary" type="button" onClick={onEnd}>
           <span className="timerRoundBtn__face">
             <HiStop className="timerRoundBtn__icon" aria-hidden />
           </span>
