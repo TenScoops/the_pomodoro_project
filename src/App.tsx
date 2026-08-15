@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { waitForImage } from "./lib/waitForImage";
 import AuthModal from "./components/auth/AuthModal";
 import Sidebar, { type SidebarItemId } from "./components/sidebar/Sidebar";
 import Finished from "./components/Finished";
-import Howtorate from "./components/Howtorate";
 import Logout from "./components/Logout";
 import SessionSetupModal from "./components/sessionSetup/SessionSetupModal";
 import Chartdisplay from "./components/chart/Chartdisplay";
-// import MoodInputModal from "./components/mood/MoodInputModal";
 import Theme from "./components/mainbuttons/Theme";
 import Timer from "./components/timer/Timer";
 import RecentDays from "./components/focus/RecentDays";
@@ -16,54 +13,103 @@ import EnergyPage from "./components/energy/EnergyPage";
 import StatsPage from "./components/stats/StatsPage";
 import DataLoggingErrorToast from "./components/notifications/DataLoggingErrorToast";
 import { useAuth } from "./hooks/useAuth";
+import { useThemeBackground } from "./hooks/useThemeBackground";
 import { clearPersistedTimer } from "./lib/timerPersistence";
 import { useSessionStore } from "./store/sessionStore";
 import { THEME_STREETS } from "./theme/backgrounds";
 
+// Types
+type AppThemeCssVars = React.CSSProperties & {
+  "--app-theme-image": string;
+  "--app-theme-dim": string;
+};
+
+type SidebarNavigateActions = {
+  openDefaultFocusTimer: () => void;
+  setShowSessionSetupModal: (open: boolean) => void;
+  setShowTimerPage: (open: boolean) => void;
+  setOpenThemePage: (open: boolean) => void;
+  setShowChartDisplay: (open: boolean) => void;
+};
+
+// Constants
+const AUTH_MODAL_BODY_CLASS = "auth-modal-open";
+
+// Helpers
+function themeCssVariables(displayedBackgroundUrl: string): AppThemeCssVars {
+  return {
+    "--app-theme-image": `url(${displayedBackgroundUrl})`,
+    "--app-theme-dim": displayedBackgroundUrl === THEME_STREETS ? "0.35" : "0.2",
+  };
+}
+
+function navigateFromSidebar(itemId: SidebarItemId, actions: SidebarNavigateActions) {
+  switch (itemId) {
+    case "focus":
+      actions.openDefaultFocusTimer();
+      break;
+    case "stats":
+    case "energy":
+      actions.setShowSessionSetupModal(false);
+      actions.setShowTimerPage(false);
+      actions.setOpenThemePage(false);
+      actions.setShowChartDisplay(false);
+      break;
+    case "settings":
+      actions.setShowSessionSetupModal(false);
+      actions.setOpenThemePage(true);
+      break;
+    default:
+      break;
+  }
+}
+
+function AppAuthLoading() {
+  return <div className="app-auth-loading">Loading…</div>;
+}
+
+function AppAuthError({ message }: { message: string }) {
+  return (
+    <div className="app-auth-error">
+      <p className="app-auth-error-message">Could not restore your session: {message}</p>
+      <button type="button" className="app-auth-error-retry" onClick={() => window.location.reload()}>
+        Retry
+      </button>
+    </div>
+  );
+}
+
+// Component
 function App() {
   const { session, loading: authLoading, authError } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [sidebarActiveItem, setSidebarActiveItem] = useState<SidebarItemId>("focus");
-  /** Background URL to paint; stays on the previous theme until the next image has loaded. */
-  const [displayedBackgroundUrl, setDisplayedBackgroundUrl] = useState<string | null>(null);
-  /** Centered box while switching themes (min 1s + until decode). */
-  const [themeSwitchLoading, setThemeSwitchLoading] = useState(false);
-  const theme = useSessionStore((s) => s.theme);
-  const showTimerPage = useSessionStore((s) => s.showTimerPage);
-  const showSessionSetupModal = useSessionStore((s) => s.showSessionSetupModal);
-  const sessionComplete = useSessionStore((s) => s.sessionComplete);
-  const data = useSessionStore((s) => s.data);
-  const openThemePage = useSessionStore((s) => s.openThemePage);
-  const openHowTo = useSessionStore((s) => s.openHowTo);
-  const logout = useSessionStore((s) => s.logout);
-  const dataLoggingAlert = useSessionStore((s) => s.dataLoggingAlert);
-  const setData = useSessionStore((s) => s.setData);
-  const setOpenThemePage = useSessionStore((s) => s.setOpenThemePage);
-  const setShowSessionSetupModal = useSessionStore((s) => s.setShowSessionSetupModal);
-  const setShowTimerPage = useSessionStore((s) => s.setShowTimerPage);
-  const openDefaultFocusTimer = useSessionStore((s) => s.openDefaultFocusTimer);
-  // const openMoodInput = useSessionStore((s) => s.openMoodInput);
 
-  const handleSidebarNavigate = (item: SidebarItemId) => {
-    setSidebarActiveItem(item);
-    switch (item) {
-      case "focus":
-        openDefaultFocusTimer();
-        break;
-      case "stats":
-      case "energy":
-        setShowSessionSetupModal(false);
-        setShowTimerPage(false);
-        setOpenThemePage(false);
-        setData(false);
-        break;
-      case "settings":
-        setShowSessionSetupModal(false);
-        setOpenThemePage(true);
-        break;
-      default:
-        break;
-    }
+  const theme = useSessionStore((state) => state.theme);
+  const showTimerPage = useSessionStore((state) => state.showTimerPage);
+  const showSessionSetupModal = useSessionStore((state) => state.showSessionSetupModal);
+  const sessionComplete = useSessionStore((state) => state.sessionComplete);
+  const showChartDisplay = useSessionStore((state) => state.data);
+  const openThemePage = useSessionStore((state) => state.openThemePage);
+  const showLogout = useSessionStore((state) => state.logout);
+  const dataLoggingAlert = useSessionStore((state) => state.dataLoggingAlert);
+  const setShowChartDisplay = useSessionStore((state) => state.setData);
+  const setOpenThemePage = useSessionStore((state) => state.setOpenThemePage);
+  const setShowSessionSetupModal = useSessionStore((state) => state.setShowSessionSetupModal);
+  const setShowTimerPage = useSessionStore((state) => state.setShowTimerPage);
+  const openDefaultFocusTimer = useSessionStore((state) => state.openDefaultFocusTimer);
+
+  const { displayedBackgroundUrl, themeSwitchLoading } = useThemeBackground(theme);
+
+  const handleSidebarNavigate = (itemId: SidebarItemId) => {
+    setSidebarActiveItem(itemId);
+    navigateFromSidebar(itemId, {
+      openDefaultFocusTimer,
+      setShowSessionSetupModal,
+      setShowTimerPage,
+      setOpenThemePage,
+      setShowChartDisplay,
+    });
   };
 
   useEffect(() => {
@@ -73,90 +119,37 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (displayedBackgroundUrl === theme) {
-      setThemeSwitchLoading(false);
-      return;
-    }
-
-    let cancelled = false;
-    const url = theme;
-
-    const run = async () => {
-      if (displayedBackgroundUrl === null) {
-        await waitForImage(url);
-        if (!cancelled) {
-          setDisplayedBackgroundUrl(url);
-        }
-        return;
-      }
-
-      setThemeSwitchLoading(true);
-      const startedAt = Date.now();
-      await waitForImage(url);
-      const elapsed = Date.now() - startedAt;
-      if (elapsed < 1000) {
-        await new Promise<void>((resolve) => {
-          window.setTimeout(resolve, 1000 - elapsed);
-        });
-      }
-      if (!cancelled) {
-        setDisplayedBackgroundUrl(url);
-        setThemeSwitchLoading(false);
-      }
-    };
-
-    void run();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [theme, displayedBackgroundUrl]);
-
-  useEffect(() => {
     if (session) {
       setAuthModalOpen(false);
     }
   }, [session]);
 
   useEffect(() => {
-    const bodyClass = "auth-modal-open";
     if (authModalOpen) {
-      document.body.classList.add(bodyClass);
+      document.body.classList.add(AUTH_MODAL_BODY_CLASS);
     } else {
-      document.body.classList.remove(bodyClass);
+      document.body.classList.remove(AUTH_MODAL_BODY_CLASS);
     }
-    return () => document.body.classList.remove(bodyClass);
+    return () => document.body.classList.remove(AUTH_MODAL_BODY_CLASS);
   }, [authModalOpen]);
 
+  const showFocusHub = sidebarActiveItem !== "stats" && sidebarActiveItem !== "energy";
+
+  // Render
   if (authLoading) {
-    return <div className="app-auth-loading">Loading…</div>;
+    return <AppAuthLoading />;
   }
 
   if (authError) {
-    return (
-      <div className="app-auth-error">
-        <p className="app-auth-error-message">Could not restore your session: {authError}</p>
-        <button type="button" className="app-auth-error-retry" onClick={() => window.location.reload()}>
-          Retry
-        </button>
-      </div>
-    );
+    return <AppAuthError message={authError} />;
   }
 
   if (displayedBackgroundUrl === null) {
-    return <div className="app-auth-loading">Loading…</div>;
+    return <AppAuthLoading />;
   }
 
   return (
-    <div
-      className="App"
-      style={
-        {
-          "--app-theme-image": `url(${displayedBackgroundUrl})`,
-          "--app-theme-dim": displayedBackgroundUrl === THEME_STREETS ? "0.35" : "0.2",
-        } as React.CSSProperties
-      }
-    >
+    <div className="App" style={themeCssVariables(displayedBackgroundUrl)}>
       <Sidebar
         user={session?.user ?? null}
         activeItem={sidebarActiveItem}
@@ -167,13 +160,13 @@ function App() {
         <div className="mainStage mainStage--hubWireframe">
           {sidebarActiveItem === "stats" && <StatsPage />}
           {sidebarActiveItem === "energy" && <EnergyPage />}
-          {sidebarActiveItem !== "stats" && sidebarActiveItem !== "energy" && (
+          {showFocusHub && (
             <div className={`theTimerContents${showTimerPage ? " theTimerContents--timerHub" : ""}`}>
               {showTimerPage && <Timer />}
               {showTimerPage && <RecentDays />}
             </div>
           )}
-          {sidebarActiveItem !== "stats" && sidebarActiveItem !== "energy" && sessionComplete && <Finished />}
+          {showFocusHub && sessionComplete && <Finished />}
         </div>
 
         <AuthModal isOpen={authModalOpen} onRequestClose={() => setAuthModalOpen(false)} />
@@ -181,12 +174,9 @@ function App() {
           isOpen={showSessionSetupModal}
           onRequestClose={() => setShowSessionSetupModal(false)}
         />
-        {data && <Chartdisplay />}
-        {/* {openMoodInput && <MoodInputModal />} */}
+        {showChartDisplay && <Chartdisplay />}
         {openThemePage && <Theme />}
-        {openHowTo && <Howtorate />}
-
-        {logout && <Logout />}
+        {showLogout && <Logout />}
         <DataLoggingErrorToast
           show={Boolean(dataLoggingAlert)}
           title={dataLoggingAlert?.title ?? ""}
