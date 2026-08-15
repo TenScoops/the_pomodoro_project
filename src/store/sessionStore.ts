@@ -54,6 +54,8 @@ export type SessionState = {
   openMoodInput: boolean;
   /** Display label for the mood the user chose (e.g. "Happy"). */
   moodSelection: string | null;
+  /** Block numbers the user skipped (no productivity + load), so their time is not counted. */
+  skippedBlockNumbers: number[];
   workType: SessionWorkType;
   /** In-session note captured from the focus screen (not persisted yet). */
   focusNote: string;
@@ -89,6 +91,9 @@ export type SessionActions = {
   bumpChartDataRevision: () => void;
   setOpenMoodInput: (value: boolean) => void;
   setMoodSelection: (value: string | null) => void;
+  addSkippedBlockNumber: (blockNumber: number) => void;
+  /** Full page load: start the timer from block 1 and stop appending to the previous draft row. */
+  restartTimerAfterPageLoad: () => void;
   setWorkType: (value: SessionWorkType) => void;
   setFocusNote: (value: string) => void;
   applySessionSetup: (values: {
@@ -131,13 +136,14 @@ const initialSessionState: SessionState = {
   dataLoggingAlert: null,
   openMoodInput: false,
   moodSelection: null,
+  skippedBlockNumbers: [],
   workType: "Deep Work",
   focusNote: "",
 };
 
 export const useSessionStore = create<SessionState & SessionActions>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       ...initialSessionState,
 
       setCloseRatingModal: (value) => set({ closeRatingModal: value }),
@@ -186,6 +192,22 @@ export const useSessionStore = create<SessionState & SessionActions>()(
         set((state) => ({ chartDataRevision: state.chartDataRevision + 1 })),
       setOpenMoodInput: (value) => set({ openMoodInput: value }),
       setMoodSelection: (value) => set({ moodSelection: value }),
+      addSkippedBlockNumber: (blockNumber) =>
+        set((state) =>
+          state.skippedBlockNumbers.includes(blockNumber)
+            ? state
+            : { skippedBlockNumbers: [...state.skippedBlockNumbers, blockNumber] }
+        ),
+      restartTimerAfterPageLoad: () => {
+        set({
+          blockNum: 1,
+          hasUserRated: false,
+          skippedBlockNumbers: [],
+          sessionComplete: false,
+          cancelTheSession: false,
+        });
+        get().setActiveSupabaseSessionId(null);
+      },
       setWorkType: (value) => set({ workType: value }),
       setFocusNote: (value) => set({ focusNote: value }),
       applySessionSetup: (values) =>
@@ -202,8 +224,9 @@ export const useSessionStore = create<SessionState & SessionActions>()(
           sessionComplete: false,
           blockNum: 1,
           hasUserRated: false,
+          skippedBlockNumbers: [],
         }),
-      openDefaultFocusTimer: () =>
+      openDefaultFocusTimer: () => {
         set({
           workMinutes: DEFAULT_SESSION_HOURS,
           breakMinutes: DEFAULT_BREAK_MINUTES,
@@ -217,9 +240,14 @@ export const useSessionStore = create<SessionState & SessionActions>()(
           showData: false,
           clicked: true,
           sessionComplete: false,
+          blockNum: 1,
+          hasUserRated: false,
+          skippedBlockNumbers: [],
           data: false,
           openThemePage: false,
-        }),
+        });
+        get().setActiveSupabaseSessionId(null);
+      },
     }),
     {
       name: "pomoprogress-session",

@@ -9,7 +9,7 @@ export {
   workSecondsForRatedBlock,
 } from "./sessionClientHelpers";
 
-export { insertSession, updateSession, upsertBlockRating } from "./sessionMutations";
+export { insertSession, updateSession, upsertBlockRating, syncSessionTotalsFromBlockRatings } from "./sessionMutations";
 export { persistFocusNoteForToday, getDailyNoteForDate, getDailyNotesInRange } from "./dailyNotes";
 
 export {

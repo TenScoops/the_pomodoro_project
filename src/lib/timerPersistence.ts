@@ -1,6 +1,6 @@
 /**
- * Persists active timer state so a reload can resume the same countdown.
- * Wall-clock `phaseEndAtMs` is the source of truth while the timer is running.
+ * Legacy timer snapshot helpers. Closing the page restarts the run, so we only
+ * clear this key — we do not restore a countdown.
  */
 
 const STORAGE_KEY = "pomoprogress_timer_v1";

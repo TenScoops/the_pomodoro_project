@@ -46,3 +46,8 @@
 ### Session card copy
 
 - **"Remove blocks" means the Blocks 0/2 row, not Current block.** Current block still answers "where am I in this session"; the completed/total Blocks line was the redundant one.
+
+### Ratings, hours, and reloads
+
+- **Skip (no productivity + load) must not add hours.** Finalize used to write the full planned session time. Hours now come from the sum of rated `duration_seconds` only. Skip records the block as skipped and does not insert a `block_ratings` row.
+- **Closing the page restarts the timer.** Restoring a persisted countdown caused desyncs. On load we clear the timer snapshot, reset to block 1, and detach the previous draft session id so the next rated block starts a new row. Already-saved ratings stay in the database.

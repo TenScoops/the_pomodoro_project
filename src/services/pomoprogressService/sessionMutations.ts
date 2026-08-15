@@ -61,3 +61,26 @@ export async function updateSession(
   }
   return { error: null, data: response.data as SessionRow };
 }
+
+/** Hours and block count come only from saved ratings, so skipped blocks are not counted. */
+export async function syncSessionTotalsFromBlockRatings(
+  sessionId: string
+): Promise<{ error: PostgrestError | null; totalSeconds: number; blockCount: number }> {
+  const response = await supabase
+    .from("block_ratings")
+    .select("duration_seconds")
+    .eq("session_id", sessionId);
+
+  if (response.error) {
+    return { error: response.error, totalSeconds: 0, blockCount: 0 };
+  }
+
+  const rows = (response.data ?? []) as { duration_seconds: number | null }[];
+  const totalSeconds = rows.reduce((sum, row) => sum + (row.duration_seconds ?? 0), 0);
+  const { error } = await updateSession(sessionId, {
+    total_time_worked: totalSeconds,
+    blocks_completed: rows.length,
+  });
+
+  return { error, totalSeconds, blockCount: rows.length };
+}

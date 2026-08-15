@@ -30,27 +30,20 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
   const store = useSessionStore.getState();
 
   const numOfBlocks = store.numOfBreaks + 1;
-  const totalBreakTimeMinutes = store.numOfBreaks * store.breakMinutes;
-  const netWorkMinutes = store.workMinutes * 60 - totalBreakTimeMinutes;
-  const totalTimeWorkedSeconds = Math.max(0, Math.round(netWorkMinutes * 60));
-
   const sessionDate = todayLocalISODate();
 
   const ratings: {
     blockNumber: number;
     rating: number;
-    load: number | null;
+    load: number;
     workType: BlockWorkType | null;
+    durationSeconds: number;
   }[] = [];
   for (let blockIndex = 1; blockIndex <= numOfBlocks; blockIndex++) {
     const raw = window.localStorage.getItem(String(blockIndex));
-    if (raw === null) {
-      const message = `Missing rating for block ${blockIndex} of ${numOfBlocks}.`;
-      alertSessionFinalizeFailure(message);
-      return {
-        error: new Error(`Cannot save session: ${message}`),
-        skipped: false,
-      };
+    const load = readLocalBlockLoad(blockIndex);
+    if (raw === null || load === null) {
+      continue;
     }
     const rating = Number(raw);
     if (Number.isNaN(rating)) {
@@ -64,17 +57,31 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
     ratings.push({
       blockNumber: blockIndex,
       rating,
-      load: readLocalBlockLoad(blockIndex),
+      load,
       workType: readLocalBlockWorkType(blockIndex),
+      durationSeconds: workSecondsForRatedBlock(
+        store.workMinutes,
+        store.numOfBreaks,
+        store.breakMinutes,
+        blockIndex
+      ),
     });
   }
+
+  if (ratings.length === 0) {
+    clearLocalBlockKeysForSession(numOfBlocks);
+    store.setActiveSupabaseSessionId(null);
+    return { error: null, skipped: true };
+  }
+
+  const totalTimeWorkedSeconds = ratings.reduce((sum, row) => sum + row.durationSeconds, 0);
 
   const sessionPayload: SessionInsert = {
     user_id: user.id,
     date: sessionDate,
     total_time_worked: totalTimeWorkedSeconds,
     sessions_completed: 1,
-    blocks_completed: numOfBlocks,
+    blocks_completed: ratings.length,
   };
 
   const { data: sessionRow, error: sessionInsertError } = await insertSession(sessionPayload);
@@ -86,19 +93,14 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
     return { error: sessionInsertError, skipped: false };
   }
 
-  for (const { blockNumber, rating, load, workType } of ratings) {
+  for (const { blockNumber, rating, load, workType, durationSeconds } of ratings) {
     const { error: ratingError } = await upsertBlockRating({
       session_id: sessionRow.id,
       block_number: blockNumber,
       rating,
       load,
       work_type: workType,
-      duration_seconds: workSecondsForRatedBlock(
-        store.workMinutes,
-        store.numOfBreaks,
-        store.breakMinutes,
-        blockNumber
-      ),
+      duration_seconds: durationSeconds,
     });
 
     if (ratingError) {
@@ -107,7 +109,7 @@ export async function persistCompletedPomodoroSessionBulkInsert(): Promise<{
     }
   }
 
-  if (totalTimeWorkedSeconds === 0 && numOfBlocks > 0) {
+  if (totalTimeWorkedSeconds === 0 && ratings.length > 0) {
     alertHoursFailure("Total focus time was saved as zero. Check work and break length settings.");
   }
 

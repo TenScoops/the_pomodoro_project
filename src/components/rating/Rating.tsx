@@ -97,6 +97,8 @@ const Rating = () => {
   };
 
   const handleSkip = () => {
+    const store = useSessionStore.getState();
+    store.addSkippedBlockNumber(blockNum);
     setHasUserRated(true);
     setModalOpen(false);
     completeLastBlockIfNeeded();

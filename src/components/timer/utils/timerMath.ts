@@ -20,19 +20,27 @@ export function computeNextPhaseSeconds(params: {
   return 60 * (nextMode === "work" ? (60 * workMinutes - totalBreakTimeMinutes) / totalBlocks : breakMinutes);
 }
 
-/** Work already done this session: finished blocks plus elapsed time in the current work block. */
+/** Work already done this session: rated finished blocks plus elapsed time in the current work block. Skipped blocks add no time. */
 export function computeCompletedWorkSeconds(params: {
   mode: TimerMode;
   currentWorkBlockIndex: number;
   timeLeftSeconds: number;
   workBlockSeconds: number;
+  skippedBlockNumbers: number[];
 }): number {
-  const { mode, currentWorkBlockIndex, timeLeftSeconds, workBlockSeconds } = params;
+  const { mode, currentWorkBlockIndex, timeLeftSeconds, workBlockSeconds, skippedBlockNumbers } = params;
   const finishedWorkBlocks =
     mode === "break" ? currentWorkBlockIndex : Math.max(0, currentWorkBlockIndex - 1);
+  const skippedFinishedCount = skippedBlockNumbers.filter((blockNumber) => {
+    if (mode === "break") {
+      return blockNumber <= currentWorkBlockIndex;
+    }
+    return blockNumber < currentWorkBlockIndex;
+  }).length;
+  const ratedFinishedBlocks = Math.max(0, finishedWorkBlocks - skippedFinishedCount);
   const elapsedInCurrentWork =
     mode === "work" ? Math.max(0, workBlockSeconds - Math.max(0, timeLeftSeconds)) : 0;
-  return finishedWorkBlocks * workBlockSeconds + elapsedInCurrentWork;
+  return ratedFinishedBlocks * workBlockSeconds + elapsedInCurrentWork;
 }
 
 /** `50m` under an hour, `1h 00m` once hours are involved — matches the session card. */

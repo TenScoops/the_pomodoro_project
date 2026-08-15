@@ -111,10 +111,6 @@ export default function usePomodoroTimerActions(params: {
     [applyTimeLeft, inputs.breakMinutes, inputs.totalBlocks, inputs.totalBreakTimeMinutes, inputs.workMinutes, refs, setters]
   );
 
-  const switchModeAfterRestore = useCallback(() => {
-    switchMode({ silent: true });
-  }, [switchMode]);
-
   const toggleSpeedBoost = useCallback(() => {
     setters.setSpeedBoostEnabled((previous) => {
       const next = !previous;
@@ -159,7 +155,6 @@ export default function usePomodoroTimerActions(params: {
     pauseFromClock,
     resumeTimer,
     switchMode,
-    switchModeAfterRestore,
     toggleSpeedBoost,
     skipBreak,
     resetCurrentPhase,

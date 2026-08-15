@@ -16,6 +16,7 @@ import EnergyPage from "./components/energy/EnergyPage";
 import StatsPage from "./components/stats/StatsPage";
 import DataLoggingErrorToast from "./components/notifications/DataLoggingErrorToast";
 import { useAuth } from "./hooks/useAuth";
+import { clearPersistedTimer } from "./lib/timerPersistence";
 import { useSessionStore } from "./store/sessionStore";
 import { THEME_STREETS } from "./theme/backgrounds";
 
@@ -67,6 +68,8 @@ function App() {
 
   useEffect(() => {
     localStorage.removeItem("Theme");
+    clearPersistedTimer();
+    useSessionStore.getState().restartTimerAfterPageLoad();
   }, []);
 
   useEffect(() => {

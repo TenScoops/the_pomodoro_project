@@ -14,7 +14,7 @@ import { TimerMode, UsePomodoroTimerResult } from "../types/timerTypes";
 import { computeCompletedWorkSeconds, computeWorkBlockSeconds } from "../utils/timerMath";
 
 export default function usePomodoroTimer(): UsePomodoroTimerResult {
-  const { numOfBreaks, breakMinutes, workMinutes, sessionComplete, setShowTimerPage, setIsWorkGreater, blockNum, hasUserRated } =
+  const { numOfBreaks, breakMinutes, workMinutes, sessionComplete, setShowTimerPage, setIsWorkGreater, blockNum, hasUserRated, skippedBlockNumbers } =
     useSessionStore(
       useShallow((s) => ({
         numOfBreaks: s.numOfBreaks,
@@ -25,6 +25,7 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
         setIsWorkGreater: s.setIsWorkGreater,
         blockNum: s.blockNum,
         hasUserRated: s.hasUserRated,
+        skippedBlockNumbers: s.skippedBlockNumbers,
       }))
     );
 
@@ -36,7 +37,6 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
   const isPausedRef = useRef(isPaused);
   const modeRef = useRef<TimerMode>(mode);
   const phaseEndAtMsRef = useRef<number | null>(null);
-  const previousModeRef = useRef<TimerMode>(mode);
   const hasInitializedTimerRef = useRef(false);
 
   const [speedBoostEnabled, setSpeedBoostEnabled] = useState(false);
@@ -59,19 +59,13 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
     setShowTimerPage(false);
   }, [sessionComplete, setShowTimerPage]);
 
-  const persistence = useTimerPersistence({
-    snapshot: { phaseEndAtMsRef, timeLeftRef, modeRef, isPausedRef, effectiveMultiplierRef },
-    workMinutes,
-    numOfBreaks,
-    breakMinutes,
-  });
+  const persistence = useTimerPersistence();
 
   const {
     applyTimeLeft,
     pauseFromClock,
     resumeTimer,
     switchMode,
-    switchModeAfterRestore,
     toggleSpeedBoost,
     skipBreak,
     resetCurrentPhase,
@@ -101,17 +95,8 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
     totalBreakTimeMinutes,
     totalBlocks,
     mode,
-    setSpeedBoostEnabled,
-    setMode,
-    setIsPaused,
-    setTimeLeft,
     applyTimeLeft,
-    switchModeAfterRestore,
-    modeRef,
-    isPausedRef,
-    timeLeftRef,
     phaseEndAtMsRef,
-    previousModeRef,
     hasInitializedTimerRef,
     persistence,
   });
@@ -140,14 +125,22 @@ export default function usePomodoroTimer(): UsePomodoroTimerResult {
   const phaseProgressRatio =
     phaseDurationSeconds > 0 ? Math.min(1, Math.max(0, 1 - safeTimeLeftSeconds / phaseDurationSeconds)) : 0;
   const currentWorkBlockIndex = Math.min(totalBlocks, Math.max(1, blockNum));
+  const elapsedWorkSeconds = computeCompletedWorkSeconds({
+    mode,
+    currentWorkBlockIndex,
+    timeLeftSeconds: safeTimeLeftSeconds,
+    workBlockSeconds,
+    skippedBlockNumbers: [],
+  });
   const completedWorkSeconds = computeCompletedWorkSeconds({
     mode,
     currentWorkBlockIndex,
     timeLeftSeconds: safeTimeLeftSeconds,
     workBlockSeconds,
+    skippedBlockNumbers,
   });
   const completedWorkMinutes = Math.min(totalWorkTimeMinutes, completedWorkSeconds / 60);
-  const remainingWorkMinutes = Math.max(0, totalWorkTimeMinutes - completedWorkMinutes);
+  const remainingWorkMinutes = Math.max(0, totalWorkTimeMinutes - elapsedWorkSeconds / 60);
   const completedBlocks = mode === "break" ? currentWorkBlockIndex : Math.max(0, currentWorkBlockIndex - 1);
 
   useTimerDocumentTitle({

@@ -7,8 +7,8 @@ import {
   alertBlockFailure,
   alertSessionUpdateFailure,
 } from "./alerts";
-import { cumulativeWorkSecondsAfterRatedBlocks, workSecondsForRatedBlock } from "./sessionClientHelpers";
-import { insertSession, updateSession, upsertBlockRating } from "./sessionMutations";
+import { workSecondsForRatedBlock } from "./sessionClientHelpers";
+import { insertSession, syncSessionTotalsFromBlockRatings, upsertBlockRating } from "./sessionMutations";
 
 /**
  * Signed-in: on each save, insert `block_ratings` (productivity, load, work type, duration) and update the draft `sessions` row (create draft on
@@ -68,17 +68,7 @@ export async function logBlockRatingForCurrentSession(
     return { error: ratingError };
   }
 
-  const totalTimeWorked = cumulativeWorkSecondsAfterRatedBlocks(
-    store.workMinutes,
-    store.numOfBreaks,
-    store.breakMinutes,
-    blockNumber
-  );
-
-  const { error: updateError } = await updateSession(sessionId, {
-    blocks_completed: blockNumber,
-    total_time_worked: totalTimeWorked,
-  });
+  const { error: updateError } = await syncSessionTotalsFromBlockRatings(sessionId);
   if (updateError) {
     alertSessionUpdateFailure(updateError.message);
     return { error: updateError };
