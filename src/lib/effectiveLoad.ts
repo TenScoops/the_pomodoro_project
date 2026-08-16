@@ -1,9 +1,9 @@
 import type { BlockWorkType } from "../types/pomoprogress";
 
-/** Deep Work counts fully toward aggregate load. */
+/** Deep Work counts fully toward aggregate load and productivity. */
 export const DEEP_WORK_LOAD_WEIGHT = 1;
 
-/** Routine counts half as much as Deep Work when averaging the day. */
+/** Routine keeps its rated score; it only has half the pull on the average. */
 export const ROUTINE_LOAD_WEIGHT = 0.5;
 
 export interface LoadBlockInput {
@@ -32,7 +32,19 @@ export interface WeightedDailyLoad {
   blocks: BlockEffectiveWorkload[];
 }
 
-/** Influence of a work type on aggregate load. Unknown type is treated as Deep Work. */
+export interface ProductivityBlockInput {
+  rating: number | null;
+  workType: BlockWorkType | null;
+  durationSeconds: number | null;
+}
+
+export interface WeightedDailyProductivity {
+  /** Σ(Rating × Hours × Weight) ÷ Σ(Hours × Weight); 0 when nothing can be averaged. */
+  productivityAvg: number;
+  ratingCount: number;
+}
+
+/** Influence of a work type on aggregate load and productivity. Unknown type is treated as Deep Work. */
 export function workTypeLoadWeight(workType: BlockWorkType | null): number {
   if (workType === "Routine") {
     return ROUTINE_LOAD_WEIGHT;
@@ -104,5 +116,38 @@ export function weightedDailyLoad(blocks: LoadBlockInput[]): WeightedDailyLoad {
     loadAvg: Number((weightedLoadSum / weightedHoursSum).toFixed(2)),
     loadCount: effectiveBlocks.length,
     blocks: effectiveBlocks,
+  };
+}
+
+/**
+ * Day (or range) productivity. Ratings stay 1–10 as entered; Routine only
+ * halves how much that block pulls the average.
+ */
+export function weightedDailyProductivity(blocks: ProductivityBlockInput[]): WeightedDailyProductivity {
+  let weightedRatingSum = 0;
+  let weightedHoursSum = 0;
+  let ratingCount = 0;
+
+  for (const block of blocks) {
+    if (block.rating == null) {
+      continue;
+    }
+    const hours = hoursFromDuration(block.durationSeconds);
+    if (hours <= 0) {
+      continue;
+    }
+    const weight = workTypeLoadWeight(block.workType);
+    weightedRatingSum += block.rating * hours * weight;
+    weightedHoursSum += hours * weight;
+    ratingCount += 1;
+  }
+
+  if (ratingCount === 0 || weightedHoursSum <= 0) {
+    return { productivityAvg: 0, ratingCount };
+  }
+
+  return {
+    productivityAvg: Number((weightedRatingSum / weightedHoursSum).toFixed(2)),
+    ratingCount,
   };
 }

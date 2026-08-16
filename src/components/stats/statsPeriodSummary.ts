@@ -1,4 +1,9 @@
-import { weightedDailyLoad, type LoadBlockInput } from "../../lib/effectiveLoad";
+import {
+  weightedDailyLoad,
+  weightedDailyProductivity,
+  type LoadBlockInput,
+  type ProductivityBlockInput,
+} from "../../lib/effectiveLoad";
 import type { SessionWithRatings } from "../../types/pomoprogress";
 import type { EnergyLogRecord } from "../../services/pomoprogressService";
 import { formatFocusLoadNumber } from "../focus/recentDaysData";
@@ -27,25 +32,23 @@ export function periodLoadAvgFromSessions(sessions: SessionWithRatings[]): {
   return { loadAvg: summary.loadAvg, loadCount: summary.loadCount };
 }
 
+/** Range-level productivity from every rated block this period (Routine still half-weighted). */
 export function periodProductivityAvgFromSessions(sessions: SessionWithRatings[]): {
   productivityAvg: number;
   ratingCount: number;
 } {
-  let ratingSum = 0;
-  let ratingCount = 0;
+  const blocks: ProductivityBlockInput[] = [];
   for (const session of sessions) {
     for (const rating of session.block_ratings ?? []) {
-      ratingSum += rating.rating;
-      ratingCount += 1;
+      blocks.push({
+        rating: rating.rating,
+        workType: rating.work_type,
+        durationSeconds: rating.duration_seconds,
+      });
     }
   }
-  if (ratingCount === 0) {
-    return { productivityAvg: 0, ratingCount: 0 };
-  }
-  return {
-    productivityAvg: Number((ratingSum / ratingCount).toFixed(1)),
-    ratingCount,
-  };
+  const summary = weightedDailyProductivity(blocks);
+  return { productivityAvg: summary.productivityAvg, ratingCount: summary.ratingCount };
 }
 
 export function periodEnergyAvgFromLogs(

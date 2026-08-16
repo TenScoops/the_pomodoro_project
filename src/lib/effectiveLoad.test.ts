@@ -1,6 +1,7 @@
 import {
   blockEffectiveWorkload,
   weightedDailyLoad,
+  weightedDailyProductivity,
   workTypeLoadWeight,
 } from "./effectiveLoad";
 
@@ -56,6 +57,42 @@ describe("weightedDailyLoad", () => {
     expect(weightedDailyLoad([]).loadCount).toBe(0);
     expect(
       weightedDailyLoad([{ load: null, workType: "Deep Work", durationSeconds: 3600 }]).loadAvg
+    ).toBe(0);
+  });
+});
+
+describe("weightedDailyProductivity", () => {
+  it("matches the mixed Deep Work / Routine example", () => {
+    const result = weightedDailyProductivity([
+      { rating: 9, workType: "Deep Work", durationSeconds: 2 * 3600 },
+      { rating: 8, workType: "Deep Work", durationSeconds: 1 * 3600 },
+      { rating: 10, workType: "Routine", durationSeconds: 1 * 3600 },
+    ]);
+
+    expect(result.productivityAvg).toBe(8.86);
+    expect(result.ratingCount).toBe(3);
+  });
+
+  it("lets Deep Work out-influence the same hours of Routine", () => {
+    const result = weightedDailyProductivity([
+      { rating: 6, workType: "Deep Work", durationSeconds: 1 * 3600 },
+      { rating: 10, workType: "Routine", durationSeconds: 1 * 3600 },
+    ]);
+
+    expect(result.productivityAvg).toBe(7.33);
+  });
+
+  it("ignores null ratings, missing duration, and empty lists", () => {
+    expect(weightedDailyProductivity([]).ratingCount).toBe(0);
+    expect(
+      weightedDailyProductivity([
+        { rating: null, workType: "Deep Work", durationSeconds: 3600 },
+      ]).productivityAvg
+    ).toBe(0);
+    expect(
+      weightedDailyProductivity([
+        { rating: 9, workType: "Deep Work", durationSeconds: null },
+      ]).ratingCount
     ).toBe(0);
   });
 });

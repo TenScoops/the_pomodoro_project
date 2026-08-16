@@ -19,7 +19,7 @@ export interface RecentDayRow {
   deepWorkSeconds: number;
   routineSeconds: number;
   load: number | null;
-  /** Mean block rating 1–10; null when the day has no productivity ratings. */
+  /** Hours-and-work-type weighted rating 1–10; null when the day has no ratings. */
   productivity: number | null;
   hours: string;
   notes: string | null;
@@ -85,7 +85,7 @@ function workTypeHoursPart(label: string, seconds: number): string {
   return `${label} (${formatFocusWorkHours(seconds)})`;
 }
 
-/** Format mean rating as `8.7 / 10`; no ratings or a zero average stays `"0"`. */
+/** Format weighted productivity as `8.7 / 10`; no ratings or a zero average stays `"0"`. */
 export function formatFocusProductivityAvg(productivityAvg: number, ratingCount: number): string {
   if (ratingCount === 0 || productivityAvg === 0) {
     return "0";

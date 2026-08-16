@@ -36,7 +36,7 @@ export type BlockRatingRow = {
   id: string;
   session_id: string;
   block_number: number;
-  /** Productivity 1–10 in 0.25 steps. */
+  /** Productivity 1–10 in 0.25 steps; stored as entered. Day averages use work-type weights. */
   rating: number;
   /** Rated load 1–5 in 0.25 steps; stored as entered. Day averages use work-type weights. */
   load: number | null;

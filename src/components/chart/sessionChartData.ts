@@ -1,20 +1,15 @@
-import { weightedDailyLoad, type LoadBlockInput } from "../../lib/effectiveLoad";
+import {
+  weightedDailyLoad,
+  weightedDailyProductivity,
+  type LoadBlockInput,
+  type ProductivityBlockInput,
+} from "../../lib/effectiveLoad";
 import type { SessionWithRatings } from "../../types/pomoprogress";
 import type { ChartPoint, DummyBarDataset } from "./dummyData";
 import { getProductivityBarColor } from "./dummyData";
 import { getMonthDayMetas, getYearMonthMetas } from "./chartLabels";
 
 const NO_DATA_BAR_COLOR = "rgb(90, 90, 90)";
-
-function collectRatingsFromSessions(sessions: SessionWithRatings[]): number[] {
-  const ratings: number[] = [];
-  for (const session of sessions) {
-    for (const row of session.block_ratings ?? []) {
-      ratings.push(row.rating);
-    }
-  }
-  return ratings;
-}
 
 function collectLoadBlocksFromSessions(sessions: SessionWithRatings[]): LoadBlockInput[] {
   const blocks: LoadBlockInput[] = [];
@@ -30,15 +25,21 @@ function collectLoadBlocksFromSessions(sessions: SessionWithRatings[]): LoadBloc
   return blocks;
 }
 
-function averageRatings(values: number[]): number {
-  if (values.length === 0) {
-    return 0;
+function collectProductivityBlocksFromSessions(sessions: SessionWithRatings[]): ProductivityBlockInput[] {
+  const blocks: ProductivityBlockInput[] = [];
+  for (const session of sessions) {
+    for (const row of session.block_ratings ?? []) {
+      blocks.push({
+        rating: row.rating,
+        workType: row.work_type,
+        durationSeconds: row.duration_seconds,
+      });
+    }
   }
-  const sum = values.reduce((accumulator, value) => accumulator + value, 0);
-  return Number((sum / values.length).toFixed(2));
+  return blocks;
 }
 
-/** Day totals for Focus cards: work seconds, mean rating (1–10), effective load (1–5). */
+/** Day totals for Focus cards: work seconds, weighted productivity (1–10), effective load (1–5). */
 export function summarizeDayFromSessions(sessions: SessionWithRatings[]): {
   totalSeconds: number;
   productivityAvg: number;
@@ -46,13 +47,13 @@ export function summarizeDayFromSessions(sessions: SessionWithRatings[]): {
   loadAvg: number;
   loadCount: number;
 } {
-  const ratings = collectRatingsFromSessions(sessions);
+  const productivitySummary = weightedDailyProductivity(collectProductivityBlocksFromSessions(sessions));
   const loadSummary = weightedDailyLoad(collectLoadBlocksFromSessions(sessions));
   const totalSeconds = sessions.reduce((sum, session) => sum + session.total_time_worked, 0);
   return {
     totalSeconds,
-    productivityAvg: averageRatings(ratings),
-    ratingCount: ratings.length,
+    productivityAvg: productivitySummary.productivityAvg,
+    ratingCount: productivitySummary.ratingCount,
     loadAvg: loadSummary.loadAvg,
     loadCount: loadSummary.loadCount,
   };
@@ -129,14 +130,14 @@ export function buildMonthBarDatasetFromSessions(
 
   const monthData: ChartPoint[] = dayMetas.map(({ iso, label }) => {
     const daySessions = byDate.get(iso) ?? [];
-    const ratings = collectRatingsFromSessions(daySessions);
-    const productivityAvg = averageRatings(ratings);
+    const productivity = weightedDailyProductivity(collectProductivityBlocksFromSessions(daySessions));
+    const productivityAvg = productivity.productivityAvg;
     const totalSeconds = daySessions.reduce((sum, session) => sum + session.total_time_worked, 0);
     const lengthHours = Number((totalSeconds / 3600).toFixed(1));
     const sessionCount = daySessions.filter((session) => session.sessions_completed === 1).length;
     const blocksCompleted = daySessions.reduce((sum, session) => sum + session.blocks_completed, 0);
     const backgroundColor =
-      ratings.length === 0 ? NO_DATA_BAR_COLOR : getProductivityBarColor(productivityAvg);
+      productivity.ratingCount === 0 ? NO_DATA_BAR_COLOR : getProductivityBarColor(productivityAvg);
 
     return {
       x: label,
@@ -164,14 +165,14 @@ export function buildYearBarDatasetFromSessions(sessions: SessionWithRatings[], 
     const monthSessions = sessions.filter(
       (session) => session.date >= startDate && session.date <= endDate
     );
-    const ratings = collectRatingsFromSessions(monthSessions);
-    const productivityAvg = averageRatings(ratings);
+    const productivity = weightedDailyProductivity(collectProductivityBlocksFromSessions(monthSessions));
+    const productivityAvg = productivity.productivityAvg;
     const totalSeconds = monthSessions.reduce((sum, session) => sum + session.total_time_worked, 0);
     const lengthHours = Number((totalSeconds / 3600).toFixed(1));
     const sessionCount = monthSessions.filter((session) => session.sessions_completed === 1).length;
     const blocksCompleted = monthSessions.reduce((sum, session) => sum + session.blocks_completed, 0);
     const backgroundColor =
-      ratings.length === 0 ? NO_DATA_BAR_COLOR : getProductivityBarColor(productivityAvg);
+      productivity.ratingCount === 0 ? NO_DATA_BAR_COLOR : getProductivityBarColor(productivityAvg);
 
     return {
       x: label,

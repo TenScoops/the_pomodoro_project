@@ -11,6 +11,7 @@ import {
   getSessionsWithRatingsForYear,
   getSessionsWithRatingsForDate,
 } from "../../../services/pomoprogressService";
+import { summarizeDayFromSessions } from "../sessionChartData";
 import HighProductivityToast from "../../notifications/HighProductivityToast";
 import { useAuth } from "../../../hooks/useAuth";
 // import MoodTrackerChart from "../MoodTrackerChart";
@@ -18,22 +19,6 @@ import { useAuth } from "../../../hooks/useAuth";
 type ChartView = "productivity" | "hoursWorked";
 const PRODUCTIVITY_TOAST_LAST_DISMISSED_KEY = "pomoprogress_high_productivity_toast_last_dismissed_date";
 const HIGH_PRODUCTIVITY_THRESHOLD = 8.3;
-
-function averageRatingsForSessions(
-  sessions: Array<{ block_ratings: Array<{ rating: number }> | null }>
-): number {
-  const allRatings: number[] = [];
-  for (const session of sessions) {
-    for (const ratingRow of session.block_ratings ?? []) {
-      allRatings.push(ratingRow.rating);
-    }
-  }
-  if (allRatings.length === 0) {
-    return 0;
-  }
-  const total = allRatings.reduce((runningTotal, ratingValue) => runningTotal + ratingValue, 0);
-  return Number((total / allRatings.length).toFixed(2));
-}
 
 const Chartdisplay = () => {
   const [modalOpen, setModalOpen] = useState(true);
@@ -104,7 +89,7 @@ const Chartdisplay = () => {
         return;
       }
 
-      const lastActiveAverage = averageRatingsForSessions(lastActiveSessions ?? []);
+      const lastActiveAverage = summarizeDayFromSessions(lastActiveSessions ?? []).productivityAvg;
       setShowHighProductivityToast(lastActiveAverage >= HIGH_PRODUCTIVITY_THRESHOLD);
     })();
 
