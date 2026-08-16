@@ -144,11 +144,21 @@
 
 .energyLogCard__footer {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+  gap: 12px;
   margin-top: 16px;
 }
 
-.energyLogCard button.energyLogCard__save {
+.energyLogCard__saved {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #86efac;
+}
+
+.energyLogCard button.energyLogCard__save,
+.energyLogCard button.energyLogCard__retry {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -160,6 +170,42 @@
   color: #fff;
 }
 
-.energyLogCard__save:hover {
+.energyLogCard__save:hover:not(:disabled),
+.energyLogCard__retry:hover {
   background-color: rgba(48, 48, 52, 0.94);
+}
+
+.energyLogCard__save:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.energyLogCard__error {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.energyLogCard__error p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(248, 250, 252, 0.72);
+}
+
+.energyLogCard__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.energyLogCard__skeletonBar {
+  height: 48px;
+  background-color: rgba(18, 20, 28, 0.55);
+}
+
+.energyLogCard__skeletonBar--short {
+  height: 112px;
 }

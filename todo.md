@@ -1,11 +1,15 @@
-# Energy History (Energy page)
+# Energy logs persistence
 
-Presentational Energy History card in Stats styling. No persistence.
+Hook Log your energy and Energy History to `energy_logs` (one row per user per day, RLS).
 
-- [x] Static summary tiles + history table
-- [x] Wire into Energy page under Log your energy
+- [x] Migration + types + service
+- [x] Hook: load, optimistic save with revert
+- [x] Wire EnergyLogCard and EnergyHistory (loading / error / empty / data)
+- [x] Verify `npm run build`
 
 ## Review
 
-- Same dark card as Log your energy / Daily Overview.
-- Placeholder average, trend, days tracked, and five rows. View all and row menus do nothing.
+- `energy_logs`: one score + note per user per day, RLS on `auth.uid()`.
+- Save upserts today, updates history immediately, reverts if the write fails.
+- Guests get the existing data-logging toast and no row is kept.
+- Apply `supabase/migrations/20260815230000_energy_logs.sql` before saving in a live project.

@@ -85,3 +85,24 @@ export type DailyNoteUpsert = {
   note: string;
   updated_at: string;
 };
+
+export type EnergyLevelScore = 1 | 2 | 3 | 4 | 5;
+
+/** Matches public.energy_logs — one energy check-in per user per calendar day. */
+export interface EnergyLogRow {
+  id: string;
+  user_id: string;
+  date: string;
+  energy: EnergyLevelScore;
+  note: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface EnergyLogUpsert {
+  user_id: string;
+  date: string;
+  energy: EnergyLevelScore;
+  note: string;
+  updated_at: string;
+}

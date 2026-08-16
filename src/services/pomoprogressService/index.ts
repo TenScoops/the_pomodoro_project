@@ -11,6 +11,8 @@ export {
 
 export { insertSession, updateSession, upsertBlockRating, syncSessionTotalsFromBlockRatings } from "./sessionMutations";
 export { persistFocusNoteForToday, getDailyNoteForDate, getDailyNotesInRange } from "./dailyNotes";
+export { persistEnergyLogForToday, getEnergyLogs } from "./energyLogs";
+export type { EnergyLogRecord } from "./energyLogs";
 
 export {
   findLatestDraftSessionIdForUser,

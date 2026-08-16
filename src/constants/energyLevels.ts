@@ -20,5 +20,10 @@ export const ENERGY_LEVELS: readonly EnergyLevelOption[] = [
 ];
 
 export function energyLevelOption(value: EnergyLevel): EnergyLevelOption {
-  return ENERGY_LEVELS[value - 1];
+  const option = ENERGY_LEVELS.find((level) => level.value === value);
+  const fallback = ENERGY_LEVELS[0];
+  if (!fallback) {
+    throw new Error("ENERGY_LEVELS must not be empty.");
+  }
+  return option ?? fallback;
 }

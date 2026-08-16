@@ -97,6 +97,10 @@
   color: #86efac;
 }
 
+.energyHistory__statValue--down {
+  color: #fdba74;
+}
+
 .energyHistory__statSuffix {
   font-size: 0.72em;
   font-weight: 500;
@@ -121,7 +125,7 @@
 }
 
 .energyHistory__table th {
-  padding: 8px 10px 10px 0;
+  padding: 10px 36px 16px 0;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -132,11 +136,16 @@
 }
 
 .energyHistory__table td {
-  padding: 12px 10px 12px 0;
+  padding: 22px 36px 22px 0;
   font-size: 0.86rem;
   color: rgba(248, 250, 252, 0.92);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   vertical-align: middle;
+}
+
+.energyHistory__table th:last-child,
+.energyHistory__table td:last-child {
+  padding-right: 0;
 }
 
 .energyHistory__table tbody tr:last-child td {
@@ -146,14 +155,21 @@
 .energyHistory__date {
   font-weight: 700;
   white-space: nowrap;
+  min-width: 10.5rem;
+}
+
+.energyHistory__table th.energyHistory__energyCol,
+.energyHistory__table td.energyHistory__energyCol {
+  padding-right: 72px;
 }
 
 .energyHistory__score {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-family: "Roboto", "Kalam", sans-serif;
   font-weight: 700;
+  min-width: 3.5rem;
 }
 
 .energyHistory__face {
@@ -195,6 +211,51 @@
   text-align: center;
   font-size: 0.9rem;
   color: rgba(248, 250, 252, 0.55);
+}
+
+.energyHistory__error {
+  margin: 8px 0 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.energyHistory__error p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(248, 250, 252, 0.72);
+}
+
+.energyHistory button.energyHistory__retry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 14px;
+  font-weight: 700;
+  border: none;
+  background-color: #1e212dcd;
+  color: #fff;
+}
+
+.energyHistory__retry:hover {
+  background-color: rgba(48, 48, 52, 0.94);
+}
+
+.energyHistory__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.energyHistory__skeletonBar {
+  height: 56px;
+  background-color: rgba(18, 20, 28, 0.55);
+}
+
+.energyHistory__skeletonBar--tall {
+  height: 140px;
 }
 
 .energyHistory__srOnly {

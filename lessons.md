@@ -58,7 +58,7 @@
 
 ### Energy page
 
-- **UI first when that is what was asked.** Log your energy is layout + CSS in the existing Stats card style. Do not add tables, save/load, or toasts until asked.
+- **UI first when that is what was asked.** Log your energy started as layout + CSS. Persistence is `energy_logs` (one row per user per day, RLS) with optimistic save and revert.
 
 ### Focus hub vs other tabs
 

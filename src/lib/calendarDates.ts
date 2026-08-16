@@ -21,6 +21,10 @@ function parseLocalDateStringYYYYMMD(dateString: string): Date | null {
   return parsed;
 }
 
+export function parseLocalISODate(dateString: string): Date | null {
+  return parseLocalDateStringYYYYMMD(dateString);
+}
+
 /**
  * “Now” for calendar features (sessions, charts). In development, set `REACT_APP_DEV_FAKE_TODAY`
  * to a local `YYYY-MM-DD` to test another day without changing the system clock. Does not affect
