@@ -2,7 +2,7 @@
 
 ## TypeScript shape vs alias
 
-- **Object contracts use `interface`, not `type`.** Props, row records, and option objects (`TimerSessionSummaryProps`, `SessionStatRow`) should be `interface`. Reserve `type` for unions (`"work" | "break"`), intersections, and aliases of primitives.
+- **Object contracts use `interface`, not `type`.** Props, row records, and option objects (`TimerSessionSummaryProps`, `SessionStatRow`, `RecentDayRow`, `RecentDaySummaryCard`) should be `interface`. Reserve `type` for unions (`WorkType`, `WorkTypeLabel`, `"work" | "break"`), intersections, and aliases of primitives.
 
 ## Authentication (Supabase, 2026)
 

@@ -5,13 +5,13 @@ import type { SessionWithRatings } from "../../types/pomoprogress";
 export type WorkType = "Deep Work" | "Routine";
 export type WorkTypeLabel = WorkType | "Deep Work/Routine";
 
-export type RecentDaySummaryCard = {
+export interface RecentDaySummaryCard {
   id: "hours" | "load" | "productivity";
   label: string;
   value: string;
-};
+}
 
-export type RecentDayRow = {
+export interface RecentDayRow {
   id: string;
   dateLabel: string;
   dateDetail: string | null;
@@ -23,7 +23,7 @@ export type RecentDayRow = {
   productivity: number | null;
   hours: string;
   notes: string | null;
-};
+}
 
 /** Cap so the Focus table stays a short recap, not a full history. */
 export const MAX_RECENT_DAY_ROWS = 4;
@@ -98,7 +98,7 @@ export function formatFocusLoadNumber(load: number): string {
   return Number(load.toFixed(2)).toString();
 }
 
-/** Format mean load as `3.25 / 5`; no loads or a zero average stays `"0"`. */
+/** Format daily load as `3.25 / 5`; no loads or a zero average stays `"0"`. */
 export function formatFocusLoadAvg(loadAvg: number, loadCount: number): string {
   if (loadCount === 0 || loadAvg === 0) {
     return "0";

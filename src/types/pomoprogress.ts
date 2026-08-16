@@ -38,7 +38,7 @@ export type BlockRatingRow = {
   block_number: number;
   /** Productivity 1–10 in 0.25 steps. */
   rating: number;
-  /** Load / difficulty 1–5 in 0.25 steps; null on rows saved before load was recorded. */
+  /** Rated load 1–5 in 0.25 steps; stored as entered. Day averages use work-type weights. */
   load: number | null;
   /** Null on rows saved before work type was recorded. */
   work_type: BlockWorkType | null;

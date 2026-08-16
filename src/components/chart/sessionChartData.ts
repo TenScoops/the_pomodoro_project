@@ -1,3 +1,4 @@
+import { weightedDailyLoad, type LoadBlockInput } from "../../lib/effectiveLoad";
 import type { SessionWithRatings } from "../../types/pomoprogress";
 import type { ChartPoint, DummyBarDataset } from "./dummyData";
 import { getProductivityBarColor } from "./dummyData";
@@ -15,17 +16,18 @@ function collectRatingsFromSessions(sessions: SessionWithRatings[]): number[] {
   return ratings;
 }
 
-function collectLoadsFromSessions(sessions: SessionWithRatings[]): number[] {
-  const loads: number[] = [];
+function collectLoadBlocksFromSessions(sessions: SessionWithRatings[]): LoadBlockInput[] {
+  const blocks: LoadBlockInput[] = [];
   for (const session of sessions) {
     for (const row of session.block_ratings ?? []) {
-      if (row.load == null) {
-        continue;
-      }
-      loads.push(row.load);
+      blocks.push({
+        load: row.load,
+        workType: row.work_type,
+        durationSeconds: row.duration_seconds,
+      });
     }
   }
-  return loads;
+  return blocks;
 }
 
 function averageRatings(values: number[]): number {
@@ -36,7 +38,7 @@ function averageRatings(values: number[]): number {
   return Number((sum / values.length).toFixed(2));
 }
 
-/** Day totals for Focus cards: work seconds, mean rating (1–10), mean load (1–5). */
+/** Day totals for Focus cards: work seconds, mean rating (1–10), effective load (1–5). */
 export function summarizeDayFromSessions(sessions: SessionWithRatings[]): {
   totalSeconds: number;
   productivityAvg: number;
@@ -45,14 +47,14 @@ export function summarizeDayFromSessions(sessions: SessionWithRatings[]): {
   loadCount: number;
 } {
   const ratings = collectRatingsFromSessions(sessions);
-  const loads = collectLoadsFromSessions(sessions);
+  const loadSummary = weightedDailyLoad(collectLoadBlocksFromSessions(sessions));
   const totalSeconds = sessions.reduce((sum, session) => sum + session.total_time_worked, 0);
   return {
     totalSeconds,
     productivityAvg: averageRatings(ratings),
     ratingCount: ratings.length,
-    loadAvg: averageRatings(loads),
-    loadCount: loads.length,
+    loadAvg: loadSummary.loadAvg,
+    loadCount: loadSummary.loadCount,
   };
 }
 
