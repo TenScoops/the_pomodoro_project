@@ -19,6 +19,7 @@ import {
   periodProductivityAvgFromSessions,
   periodWorkSecondsFromSessions,
 } from "./statsPeriodSummary";
+import { buildEnergyLoadSeries } from "./statsEnergyLoadSeries";
 import "./StatsPage.css";
 
 function SummaryIcon({ cardId }: { cardId: StatsSummaryCardId }) {
@@ -34,6 +35,16 @@ export default function StatsPage() {
 
   const loadBars = useMemo(() => buildLoadBarsFromSessions(sessions), [sessions]);
   const workType = useMemo(() => buildWorkTypeSlicesFromSessions(sessions), [sessions]);
+  const energyLoadPoints = useMemo(
+    () =>
+      buildEnergyLoadSeries({
+        sessions,
+        energyLogs,
+        rangeStart,
+        rangeEnd,
+      }),
+    [sessions, energyLogs, rangeStart, rangeEnd]
+  );
   const summaryCards = useMemo(() => {
     const load = periodLoadAvgFromSessions(sessions);
     const productivity = periodProductivityAvgFromSessions(sessions);
@@ -85,7 +96,7 @@ export default function StatsPage() {
 
       <div className="statsPage__chartsRow">
         <StatsHoursOverTimeChart />
-        <StatsEnergyLoadChart />
+        <StatsEnergyLoadChart status={status} points={energyLoadPoints} />
       </div>
 
       <StatsDailyOverview />

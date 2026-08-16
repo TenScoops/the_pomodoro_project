@@ -12,25 +12,33 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { HiOutlineChevronDown } from "react-icons/hi2";
-import { STATS_DAILY_POINTS } from "./statsData";
+import type { StatsPageStatus } from "../../hooks/useStatsMonthData";
 import {
   STATS_CHART_FONT,
   STATS_CHART_GREEN,
   STATS_CHART_ORANGE,
   buildStatsLineScaleOptions,
 } from "./statsChartTheme";
+import type { EnergyLoadChartPoint } from "./statsEnergyLoadSeries";
+import { energyLoadSeriesHasData } from "./statsEnergyLoadSeries";
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, LineController, Tooltip, Legend);
 
-export default function StatsEnergyLoadChart() {
-  const labels = STATS_DAILY_POINTS.map((point) => point.label);
-  const energySeries = STATS_DAILY_POINTS.map((point) => point.energy);
-  const loadSeries = STATS_DAILY_POINTS.map((point) => point.load);
-  const isEmpty = STATS_DAILY_POINTS.length === 0;
+interface StatsEnergyLoadChartProps {
+  status: StatsPageStatus;
+  points: EnergyLoadChartPoint[];
+}
+
+export default function StatsEnergyLoadChart({ status, points }: StatsEnergyLoadChartProps) {
+  const labels = points.map((point) => point.label);
+  const energySeries = points.map((point) => point.energy);
+  const loadSeries = points.map((point) => point.load);
+  const hasData = energyLoadSeriesHasData(points);
 
   const options = useMemo((): ChartOptions<"line"> => {
     return {
       maintainAspectRatio: false,
+      spanGaps: true,
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -63,7 +71,8 @@ export default function StatsEnergyLoadChart() {
           borderColor: STATS_CHART_GREEN,
           backgroundColor: STATS_CHART_GREEN,
           fill: false,
-          tension: 0.35,
+          tension: 0,
+          spanGaps: true,
           pointRadius: 3,
           pointHoverRadius: 5,
           pointBackgroundColor: "#1e212d",
@@ -76,7 +85,8 @@ export default function StatsEnergyLoadChart() {
           borderColor: STATS_CHART_ORANGE,
           backgroundColor: STATS_CHART_ORANGE,
           fill: false,
-          tension: 0.35,
+          tension: 0,
+          spanGaps: true,
           pointRadius: 3,
           pointHoverRadius: 5,
           pointBackgroundColor: "#1e212d",
@@ -87,6 +97,21 @@ export default function StatsEnergyLoadChart() {
     }),
     [labels, energySeries, loadSeries]
   );
+
+  let body: React.ReactNode;
+  if (status === "loading") {
+    body = <p className="statsPage__chartEmpty">Loading energy and load…</p>;
+  } else if (status === "error") {
+    body = <p className="statsPage__chartEmpty">Could not load energy and load.</p>;
+  } else if (!hasData) {
+    body = <p className="statsPage__chartEmpty">No energy or load to show yet.</p>;
+  } else {
+    body = (
+      <div className="statsPage__chartCanvas">
+        <Line data={lineData} options={options} />
+      </div>
+    );
+  }
 
   return (
     <article className="statsPage__chartCard">
@@ -109,13 +134,7 @@ export default function StatsEnergyLoadChart() {
           <HiOutlineChevronDown className="statsPage__periodChevron" aria-hidden />
         </button>
       </div>
-      {isEmpty ? (
-        <p className="statsPage__chartEmpty">No energy or load to show yet.</p>
-      ) : (
-        <div className="statsPage__chartCanvas">
-          <Line data={lineData} options={options} />
-        </div>
-      )}
+      {body}
     </article>
   );
 }
