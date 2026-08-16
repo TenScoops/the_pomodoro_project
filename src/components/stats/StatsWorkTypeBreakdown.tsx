@@ -7,28 +7,40 @@ import {
   type ChartOptions,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import type { StatsPageStatus } from "../../hooks/useStatsMonthData";
 import { STATS_CHART_FONT } from "./statsChartTheme";
-import { STATS_WORK_TYPE_SLICES, STATS_WORK_TYPE_TOTAL_HOURS } from "./statsBreakdownData";
+import type { StatsWorkTypeSlice } from "./statsBreakdownData";
+import { monthHasWorkTypeHours } from "./statsBreakdownData";
 import "./StatsBreakdowns.css";
 
 ChartJS.register(ArcElement, DoughnutController, Tooltip);
 
-export default function StatsWorkTypeBreakdown() {
-  const isEmpty = STATS_WORK_TYPE_SLICES.length === 0;
+interface StatsWorkTypeBreakdownProps {
+  status: StatsPageStatus;
+  slices: StatsWorkTypeSlice[];
+  totalHours: number;
+}
+
+export default function StatsWorkTypeBreakdown({
+  status,
+  slices,
+  totalHours,
+}: StatsWorkTypeBreakdownProps) {
+  const hasHours = monthHasWorkTypeHours(slices);
 
   const doughnutData = useMemo(
     () => ({
-      labels: STATS_WORK_TYPE_SLICES.map((slice) => slice.label),
+      labels: slices.map((slice) => slice.label),
       datasets: [
         {
-          data: STATS_WORK_TYPE_SLICES.map((slice) => slice.hours),
-          backgroundColor: STATS_WORK_TYPE_SLICES.map((slice) => slice.color),
+          data: slices.map((slice) => slice.hours),
+          backgroundColor: slices.map((slice) => slice.color),
           borderWidth: 0,
           hoverOffset: 2,
         },
       ],
     }),
-    []
+    [slices]
   );
 
   const options = useMemo(
@@ -55,19 +67,23 @@ export default function StatsWorkTypeBreakdown() {
   return (
     <article className="statsBreakdown">
       <h2 className="statsBreakdown__heading">Breakdown by Work Type</h2>
-      {isEmpty ? (
+      {status === "loading" ? (
+        <p className="statsBreakdown__empty">Loading work-type hours…</p>
+      ) : status === "error" ? (
+        <p className="statsBreakdown__empty">Could not load work-type hours.</p>
+      ) : !hasHours ? (
         <p className="statsBreakdown__empty">No work-type hours to show yet.</p>
       ) : (
         <div className="statsBreakdown__workTypeBody">
           <div className="statsBreakdown__donutWrap">
             <Doughnut data={doughnutData} options={options} />
             <div className="statsBreakdown__donutCenter">
-              <span className="statsBreakdown__donutTotal">{STATS_WORK_TYPE_TOTAL_HOURS}</span>
+              <span className="statsBreakdown__donutTotal">{totalHours}</span>
               <span className="statsBreakdown__donutCaption">Total Hours</span>
             </div>
           </div>
           <ul className="statsBreakdown__legend">
-            {STATS_WORK_TYPE_SLICES.map((slice) => (
+            {slices.map((slice) => (
               <li key={slice.id} className="statsBreakdown__legendRow">
                 <span className="statsBreakdown__legendLabel">
                   <span

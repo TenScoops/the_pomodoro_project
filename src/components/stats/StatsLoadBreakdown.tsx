@@ -1,19 +1,30 @@
 import React from "react";
-import { STATS_LOAD_BARS } from "./statsBreakdownData";
+import type { StatsLoadBar } from "./statsBreakdownData";
+import { monthHasLoadHours } from "./statsBreakdownData";
+import type { StatsPageStatus } from "../../hooks/useStatsMonthData";
 import "./StatsBreakdowns.css";
 
-export default function StatsLoadBreakdown() {
-  const isEmpty = STATS_LOAD_BARS.length === 0;
-  const maxPercent = STATS_LOAD_BARS.reduce((highest, bar) => Math.max(highest, bar.percent), 0);
+interface StatsLoadBreakdownProps {
+  status: StatsPageStatus;
+  bars: StatsLoadBar[];
+}
+
+export default function StatsLoadBreakdown({ status, bars }: StatsLoadBreakdownProps) {
+  const hasHours = monthHasLoadHours(bars);
+  const maxPercent = bars.reduce((highest, bar) => Math.max(highest, bar.percent), 0);
 
   return (
     <article className="statsBreakdown">
       <h2 className="statsBreakdown__heading">By Load</h2>
-      {isEmpty ? (
+      {status === "loading" ? (
+        <p className="statsBreakdown__empty">Loading load hours…</p>
+      ) : status === "error" ? (
+        <p className="statsBreakdown__empty">Could not load load hours.</p>
+      ) : !hasHours ? (
         <p className="statsBreakdown__empty">No load hours to show yet.</p>
       ) : (
         <ul className="statsBreakdown__loadList">
-          {STATS_LOAD_BARS.map((bar) => {
+          {bars.map((bar) => {
             const widthPercent = maxPercent > 0 ? (bar.percent / maxPercent) * 100 : 0;
             return (
               <li key={bar.id} className="statsBreakdown__loadRow">

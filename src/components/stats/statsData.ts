@@ -5,16 +5,9 @@ export type StatsSummaryCard = {
   label: string;
   value: string;
   suffix: string | null;
-  trendPercent: number;
+  /** Null until we compare against the previous period. */
+  trendPercent: number | null;
 };
-
-/** Placeholder month totals so the Stats page has a filled header before live data is wired up. */
-export const STATS_SUMMARY_CARDS: StatsSummaryCard[] = [
-  { id: "hours", label: "Total Work Hours", value: "68.1", suffix: null, trendPercent: 12 },
-  { id: "energy", label: "Average Energy", value: "3.8", suffix: "/ 5", trendPercent: 8 },
-  { id: "load", label: "Average Load", value: "3.2", suffix: "/ 5", trendPercent: 6 },
-  { id: "productivity", label: "Productivity Avg.", value: "8.7", suffix: "/ 10", trendPercent: 10 },
-];
 
 export type StatsDailyPoint = {
   label: string;
