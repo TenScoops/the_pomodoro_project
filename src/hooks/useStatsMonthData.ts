@@ -1,10 +1,12 @@
 import { useLayoutEffect, useState } from "react";
 import { getAppNow } from "../lib/calendarDates";
 import {
+  getDailyNotesInRange,
   getEnergyLogs,
   getSessionsWithRatingsForMonth,
   type EnergyLogRecord,
 } from "../services/pomoprogressService";
+import type { DailyNoteDateRow } from "../services/pomoprogressService/dailyNotes";
 import { useSessionStore } from "../store/sessionStore";
 import type { SessionWithRatings } from "../types/pomoprogress";
 import { useAuth } from "./useAuth";
@@ -15,6 +17,7 @@ export interface StatsMonthData {
   status: StatsPageStatus;
   sessions: SessionWithRatings[];
   energyLogs: EnergyLogRecord[];
+  dailyNotes: DailyNoteDateRow[];
   rangeStart: string;
   rangeEnd: string;
 }
@@ -34,12 +37,13 @@ const emptyData = (rangeStart: string, rangeEnd: string): StatsMonthData => ({
   status: "ready",
   sessions: [],
   energyLogs: [],
+  dailyNotes: [],
   rangeStart,
   rangeEnd,
 });
 
 /**
- * This calendar month’s sessions and energy logs. Refetches after a block is logged.
+ * This calendar month’s sessions, energy logs, and Focus notes. Refetches after a block is logged.
  */
 export function useStatsMonthData(): StatsMonthData {
   const { user, loading: authLoading } = useAuth();
@@ -67,9 +71,10 @@ export function useStatsMonthData(): StatsMonthData {
     setData((previous) => ({ ...previous, status: "loading", rangeStart: startDate, rangeEnd: endDate }));
 
     void (async () => {
-      const [sessionsResult, energyResult] = await Promise.all([
+      const [sessionsResult, energyResult, notesResult] = await Promise.all([
         getSessionsWithRatingsForMonth(year, monthOneThroughTwelve),
         getEnergyLogs(),
+        getDailyNotesInRange(startDate, endDate),
       ]);
       if (cancelled) {
         return;
@@ -79,6 +84,7 @@ export function useStatsMonthData(): StatsMonthData {
           status: "error",
           sessions: [],
           energyLogs: [],
+          dailyNotes: [],
           rangeStart: startDate,
           rangeEnd: endDate,
         });
@@ -88,6 +94,7 @@ export function useStatsMonthData(): StatsMonthData {
         status: "ready",
         sessions: sessionsResult.data ?? [],
         energyLogs: energyResult.error ? [] : energyResult.data,
+        dailyNotes: notesResult.error ? [] : notesResult.data,
         rangeStart: startDate,
         rangeEnd: endDate,
       });

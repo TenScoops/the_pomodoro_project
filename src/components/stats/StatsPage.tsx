@@ -19,6 +19,7 @@ import {
   periodProductivityAvgFromSessions,
   periodWorkSecondsFromSessions,
 } from "./statsPeriodSummary";
+import { buildDailyOverviewRows } from "./statsDailyOverviewData";
 import { buildEnergyLoadSeries } from "./statsEnergyLoadSeries";
 import "./StatsPage.css";
 
@@ -29,9 +30,9 @@ function SummaryIcon({ cardId }: { cardId: StatsSummaryCardId }) {
   return <HiOutlineClock aria-hidden />;
 }
 
-/** Live month totals for summary cards, work-type donut, and By Load bars. */
+/** Live month totals for summary cards, charts, Daily Overview, and breakdowns. */
 export default function StatsPage() {
-  const { status, sessions, energyLogs, rangeStart, rangeEnd } = useStatsMonthData();
+  const { status, sessions, energyLogs, dailyNotes, rangeStart, rangeEnd } = useStatsMonthData();
 
   const loadBars = useMemo(() => buildLoadBarsFromSessions(sessions), [sessions]);
   const workType = useMemo(() => buildWorkTypeSlicesFromSessions(sessions), [sessions]);
@@ -44,6 +45,17 @@ export default function StatsPage() {
         rangeEnd,
       }),
     [sessions, energyLogs, rangeStart, rangeEnd]
+  );
+  const dailyOverviewRows = useMemo(
+    () =>
+      buildDailyOverviewRows({
+        sessions,
+        energyLogs,
+        focusNotes: dailyNotes,
+        rangeStart,
+        rangeEnd,
+      }),
+    [sessions, energyLogs, dailyNotes, rangeStart, rangeEnd]
   );
   const summaryCards = useMemo(() => {
     const load = periodLoadAvgFromSessions(sessions);
@@ -99,7 +111,7 @@ export default function StatsPage() {
         <StatsEnergyLoadChart status={status} points={energyLoadPoints} />
       </div>
 
-      <StatsDailyOverview />
+      <StatsDailyOverview status={status} rows={dailyOverviewRows} />
 
       <div className="statsPage__chartsRow">
         <StatsWorkTypeBreakdown status={status} slices={workType.slices} totalHours={workType.totalHours} />

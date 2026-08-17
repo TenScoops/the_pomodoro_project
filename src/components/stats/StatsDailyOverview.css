@@ -28,7 +28,7 @@
 }
 
 .statsDailyOverview__table th {
-  padding: 8px 10px 10px 0;
+  padding: 8px 20px 10px 0;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -39,7 +39,7 @@
 }
 
 .statsDailyOverview__table td {
-  padding: 12px 10px 12px 0;
+  padding: 12px 20px 12px 0;
   font-size: 0.86rem;
   color: rgba(248, 250, 252, 0.92);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -54,9 +54,14 @@
   text-align: center;
 }
 
+/* Fit to content so Work type does not eat the gap before Load. */
+.statsDailyOverview__colFit {
+  width: 1%;
+  white-space: nowrap;
+}
+
 .statsDailyOverview__date {
   font-weight: 700;
-  white-space: nowrap;
 }
 
 .statsDailyOverview__workType {
@@ -64,6 +69,14 @@
   align-items: center;
   gap: 8px;
   white-space: nowrap;
+  line-height: 1.3;
+}
+
+.statsDailyOverview__workDots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 .statsDailyOverview__workDot {
@@ -87,6 +100,7 @@
   justify-content: center;
   width: 28px;
   height: 28px;
+  box-sizing: border-box;
   font-family: "Roboto", "Kalam", sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
@@ -107,8 +121,22 @@
   color: #fdba74;
 }
 
+.statsDailyOverview__badge--energyHigh {
+  background-color: rgba(22, 163, 74, 0.32);
+  color: #4ade80;
+}
+
+.statsDailyOverview__muted {
+  color: rgba(248, 250, 252, 0.4);
+}
+
 .statsDailyOverview__notes {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: rgba(248, 250, 252, 0.62);
+  padding-right: 0;
 }
 
 .statsDailyOverview__empty {
@@ -125,11 +153,22 @@
 }
 
 .statsDailyOverview__viewMore {
+  all: unset;
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  font-family: "Kalam", "Roboto", sans-serif;
   font-size: 0.78rem;
   font-weight: 500;
   color: rgba(248, 250, 252, 0.55);
+  cursor: pointer;
+}
+
+span.statsDailyOverview__viewMore {
   cursor: default;
+}
+
+button.statsDailyOverview__viewMore:focus-visible {
+  outline: 1px solid rgba(248, 250, 252, 0.45);
+  outline-offset: 3px;
 }
