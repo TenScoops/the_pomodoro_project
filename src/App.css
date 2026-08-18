@@ -155,9 +155,17 @@ body{
   display: none;
 }
 
+.theApp--aiOpen {
+  margin-right: 380px;
+}
+
 @media only screen and (max-width: 768px) {
   .theApp {
     margin-left: 72px;
+  }
+
+  .theApp--aiOpen {
+    margin-right: 0;
   }
 }
 

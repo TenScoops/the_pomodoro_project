@@ -16,6 +16,7 @@ export type SidebarItemId = "focus" | "stats" | "energy" | "ai" | "settings";
 type SidebarProps = {
   user: User | null;
   activeItem?: SidebarItemId;
+  aiAssistantOpen?: boolean;
   onNavigate?: (item: SidebarItemId) => void;
   onOpenSignIn?: () => void;
 };
@@ -71,12 +72,13 @@ const NAV_ITEMS: NavItem[] = [
   { id: "focus", label: "Focus", icon: focusIcon },
   { id: "stats", label: "Stats", icon: <HiOutlineChartBar aria-hidden /> },
   { id: "energy", label: "Energy", icon: <HiOutlineBolt aria-hidden /> },
-  { id: "ai", label: "AI (TBA)", icon: <HiOutlineCpuChip aria-hidden />, disabled: true },
+  { id: "ai", label: "AI", icon: <HiOutlineCpuChip aria-hidden /> },
 ];
 
 export default function Sidebar({
   user,
   activeItem = "focus",
+  aiAssistantOpen = false,
   onNavigate,
   onOpenSignIn,
 }: SidebarProps) {
@@ -100,7 +102,7 @@ export default function Sidebar({
 
       <nav className="appSidebar__nav" aria-label="Primary">
         {NAV_ITEMS.map((item) => {
-          const isActive = activeItem === item.id;
+          const isActive = item.id === "ai" ? aiAssistantOpen : activeItem === item.id;
           return (
             <button
               key={item.id}
@@ -108,7 +110,9 @@ export default function Sidebar({
               className={`appSidebar__navItem${isActive ? " appSidebar__navItem--active" : ""}${
                 item.disabled ? " appSidebar__navItem--disabled" : ""
               }`}
-              aria-current={isActive ? "page" : undefined}
+              aria-current={item.id === "ai" ? undefined : isActive ? "page" : undefined}
+              aria-expanded={item.id === "ai" ? aiAssistantOpen : undefined}
+              aria-pressed={item.id === "ai" ? aiAssistantOpen : undefined}
               disabled={item.disabled}
               onClick={() => handleNavClick(item)}
             >

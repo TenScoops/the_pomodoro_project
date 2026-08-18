@@ -64,3 +64,9 @@
 
 - **Offstage must win over the hub grid.** `.theTimerContents--timerHub { display: grid }` and `--offstage { display: none }` had the same specificity; the grid rule came last, so Stats/Energy still showed Timer + Recent days. Put the offstage `display: none` after the hub grid rule.
 
+### AI Assistant panel
+
+- **Title, sparkle, and privacy copy stay white**, not the purple accent used on Stats. Selection cards have no drop shadows; keep the dark fill only.
+- **The app calculates; the model interprets.** Send a compact metrics object (hours, weighted averages, Deep vs Routine, energy, load bands, period deltas). Show those figures in the UI. Never ask the model to average raw database rows, and never treat model-invented statistics as the source of truth. Raw blocks are context for Analyze Today (or a specific question), not the numbers to display.
+
+

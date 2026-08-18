@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import AuthModal from "./components/auth/AuthModal";
+import AiAssistantPanel from "./components/ai/AiAssistantPanel";
 import Sidebar, { type SidebarItemId } from "./components/sidebar/Sidebar";
 import Finished from "./components/Finished";
 import Logout from "./components/Logout";
@@ -79,6 +80,7 @@ function App() {
   const { session, loading: authLoading, authError } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [sidebarActiveItem, setSidebarActiveItem] = useState<SidebarItemId>("focus");
+  const [aiAssistantOpen, setAiAssistantOpen] = useState(false);
 
   const theme = useSessionStore((state) => state.theme);
   const showTimerPage = useSessionStore((state) => state.showTimerPage);
@@ -95,6 +97,14 @@ function App() {
   const { displayedBackgroundUrl, themeSwitchLoading } = useThemeBackground(theme);
 
   const handleSidebarNavigate = (itemId: SidebarItemId) => {
+    if (itemId === "ai") {
+      setAiAssistantOpen((open) => !open);
+      setOpenThemePage(false);
+      return;
+    }
+    if (itemId === "settings") {
+      setAiAssistantOpen(false);
+    }
     setSidebarActiveItem(itemId);
     navigateFromSidebar(itemId, {
       setShowSessionSetupModal,
@@ -144,10 +154,12 @@ function App() {
       <Sidebar
         user={session?.user ?? null}
         activeItem={sidebarActiveItem}
+        aiAssistantOpen={aiAssistantOpen}
         onNavigate={handleSidebarNavigate}
         onOpenSignIn={() => setAuthModalOpen(true)}
       />
-      <div className="theApp">
+      <AiAssistantPanel isOpen={aiAssistantOpen} onClose={() => setAiAssistantOpen(false)} />
+      <div className={`theApp${aiAssistantOpen ? " theApp--aiOpen" : ""}`}>
         <div className="mainStage mainStage--hubWireframe">
           {sidebarActiveItem === "stats" && <StatsPage />}
           {sidebarActiveItem === "energy" && <EnergyPage />}
