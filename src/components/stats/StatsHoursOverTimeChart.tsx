@@ -13,20 +13,28 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { HiOutlineChevronDown } from "react-icons/hi2";
-import { STATS_DAILY_POINTS } from "./statsData";
+import type { StatsPageStatus } from "../../hooks/useStatsMonthData";
 import {
   STATS_CHART_BLUE,
   STATS_CHART_BLUE_FILL,
   STATS_CHART_FONT,
   buildStatsLineScaleOptions,
 } from "./statsChartTheme";
+import type { HoursOverTimePoint } from "./statsHoursOverTimeSeries";
+import { hoursAxisMax, hoursOverTimeSeriesHasData } from "./statsHoursOverTimeSeries";
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, LineController, Tooltip, Legend, Filler);
 
-export default function StatsHoursOverTimeChart() {
-  const labels = STATS_DAILY_POINTS.map((point) => point.label);
-  const hoursSeries = STATS_DAILY_POINTS.map((point) => point.hours);
-  const isEmpty = STATS_DAILY_POINTS.length === 0;
+interface StatsHoursOverTimeChartProps {
+  status: StatsPageStatus;
+  points: HoursOverTimePoint[];
+}
+
+export default function StatsHoursOverTimeChart({ status, points }: StatsHoursOverTimeChartProps) {
+  const labels = points.map((point) => point.label);
+  const hoursSeries = points.map((point) => point.hours);
+  const hasData = hoursOverTimeSeriesHasData(points);
+  const yMax = hoursAxisMax(hoursSeries);
 
   const options = useMemo((): ChartOptions<"line"> => {
     return {
@@ -47,7 +55,7 @@ export default function StatsHoursOverTimeChart() {
       scales: buildStatsLineScaleOptions(labels, {
         title: "Hours",
         min: 0,
-        max: 8,
+        max: yMax,
         stepSize: 2,
         formatTick: (tickValue) => {
           if (tickValue === 0) return "0";
@@ -55,7 +63,7 @@ export default function StatsHoursOverTimeChart() {
         },
       }),
     };
-  }, [labels]);
+  }, [labels, yMax]);
 
   const lineData = useMemo(
     () => ({
@@ -70,14 +78,30 @@ export default function StatsHoursOverTimeChart() {
           tension: 0.35,
           pointRadius: 3,
           pointHoverRadius: 5,
-          pointBackgroundColor: "#1e212d",
+          // Solid dots match the Hours Over Time mockup (energy/load uses hollow rings).
+          pointBackgroundColor: STATS_CHART_BLUE,
           pointBorderColor: STATS_CHART_BLUE,
-          pointBorderWidth: 2,
+          pointBorderWidth: 0,
         },
       ],
     }),
     [labels, hoursSeries]
   );
+
+  let body: React.ReactNode;
+  if (status === "loading") {
+    body = <p className="statsPage__chartEmpty">Loading hours…</p>;
+  } else if (status === "error") {
+    body = <p className="statsPage__chartEmpty">Could not load hours.</p>;
+  } else if (!hasData) {
+    body = <p className="statsPage__chartEmpty">No hours to show yet.</p>;
+  } else {
+    body = (
+      <div className="statsPage__chartCanvas">
+        <Line data={lineData} options={options} />
+      </div>
+    );
+  }
 
   return (
     <article className="statsPage__chartCard">
@@ -88,13 +112,7 @@ export default function StatsHoursOverTimeChart() {
           <HiOutlineChevronDown className="statsPage__periodChevron" aria-hidden />
         </button>
       </div>
-      {isEmpty ? (
-        <p className="statsPage__chartEmpty">No hours to show yet.</p>
-      ) : (
-        <div className="statsPage__chartCanvas">
-          <Line data={lineData} options={options} />
-        </div>
-      )}
+      {body}
     </article>
   );
 }

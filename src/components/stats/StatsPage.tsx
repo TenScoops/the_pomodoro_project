@@ -21,6 +21,7 @@ import {
 } from "./statsPeriodSummary";
 import { buildDailyOverviewRows } from "./statsDailyOverviewData";
 import { buildEnergyLoadSeries } from "./statsEnergyLoadSeries";
+import { buildHoursOverTimeSeries } from "./statsHoursOverTimeSeries";
 import "./StatsPage.css";
 
 function SummaryIcon({ cardId }: { cardId: StatsSummaryCardId }) {
@@ -36,6 +37,16 @@ export default function StatsPage() {
 
   const loadBars = useMemo(() => buildLoadBarsFromSessions(sessions), [sessions]);
   const workType = useMemo(() => buildWorkTypeSlicesFromSessions(sessions), [sessions]);
+  // Same month range as Energy & Load — hours come from logged session time, not placeholder data.
+  const hoursPoints = useMemo(
+    () =>
+      buildHoursOverTimeSeries({
+        sessions,
+        rangeStart,
+        rangeEnd,
+      }),
+    [sessions, rangeStart, rangeEnd]
+  );
   const energyLoadPoints = useMemo(
     () =>
       buildEnergyLoadSeries({
@@ -107,7 +118,7 @@ export default function StatsPage() {
       </div>
 
       <div className="statsPage__chartsRow">
-        <StatsHoursOverTimeChart />
+        <StatsHoursOverTimeChart status={status} points={hoursPoints} />
         <StatsEnergyLoadChart status={status} points={energyLoadPoints} />
       </div>
 
