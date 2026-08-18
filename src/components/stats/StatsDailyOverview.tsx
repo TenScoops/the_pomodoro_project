@@ -31,9 +31,9 @@ function loadBadgeClass(load: number): string {
 
 /** High energy is green; low energy is orange. */
 function energyBadgeClass(energy: EnergyLevelScore): string {
-  if (energy >= 5) return "statsDailyOverview__badge statsDailyOverview__badge--energyHigh";
-  if (energy >= 4) return "statsDailyOverview__badge statsDailyOverview__badge--green";
-  if (energy === 3) return "statsDailyOverview__badge statsDailyOverview__badge--yellow";
+  if (energy >= 4.5) return "statsDailyOverview__badge statsDailyOverview__badge--energyHigh";
+  if (energy >= 3.5) return "statsDailyOverview__badge statsDailyOverview__badge--green";
+  if (energy >= 2.5) return "statsDailyOverview__badge statsDailyOverview__badge--yellow";
   return "statsDailyOverview__badge statsDailyOverview__badge--orange";
 }
 

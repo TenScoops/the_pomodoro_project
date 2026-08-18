@@ -1,14 +1,22 @@
 import type { IconType } from "react-icons";
 import { FaFrown, FaGrin, FaMeh, FaSmile } from "react-icons/fa";
 
-export type EnergyLevel = 1 | 2 | 3 | 4 | 5;
+/** Daily energy score: whole faces plus midpoints between them. */
+export type EnergyLevel = 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;
+
+export type EnergyFaceLevel = 1 | 2 | 3 | 4 | 5;
 
 export interface EnergyLevelOption {
-  value: EnergyLevel;
+  value: EnergyFaceLevel;
   caption: string;
   Icon: IconType;
   color: string;
 }
+
+/** Midpoints between faces — clickable ticks on the energy scale. */
+export const ENERGY_HALF_STEPS: readonly EnergyLevel[] = [1.5, 2.5, 3.5, 4.5];
+
+export const ENERGY_LEVEL_VALUES: readonly EnergyLevel[] = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
 
 /** Five energy faces, 1 = Low through 5 = Great. */
 export const ENERGY_LEVELS: readonly EnergyLevelOption[] = [
@@ -19,8 +27,21 @@ export const ENERGY_LEVELS: readonly EnergyLevelOption[] = [
   { value: 5, caption: "Great", Icon: FaGrin, color: "#4ade80" },
 ];
 
+export function isEnergyLevel(value: number): value is EnergyLevel {
+  return (ENERGY_LEVEL_VALUES as readonly number[]).includes(value);
+}
+
+/** Half steps borrow the nearest face for icon and color. */
+export function energyFaceForLevel(value: EnergyLevel): EnergyFaceLevel {
+  const rounded = Math.round(value);
+  if (rounded <= 1) return 1;
+  if (rounded >= 5) return 5;
+  return rounded as EnergyFaceLevel;
+}
+
 export function energyLevelOption(value: EnergyLevel): EnergyLevelOption {
-  const option = ENERGY_LEVELS.find((level) => level.value === value);
+  const face = energyFaceForLevel(value);
+  const option = ENERGY_LEVELS.find((level) => level.value === face);
   const fallback = ENERGY_LEVELS[0];
   if (!fallback) {
     throw new Error("ENERGY_LEVELS must not be empty.");

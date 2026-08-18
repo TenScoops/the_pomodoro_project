@@ -50,6 +50,56 @@
   pointer-events: none;
 }
 
+.energyLogCard__ticks {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.energyLogCard__tick {
+  position: absolute;
+  top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 36px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.energyLogCard__tickValue {
+  font-family: "Roboto", "Kalam", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(248, 250, 252, 0.4);
+  line-height: 1;
+}
+
+.energyLogCard__tickMark {
+  display: block;
+  width: 0;
+  height: 28px;
+  border-left: 2px dashed rgba(248, 250, 252, 0.22);
+}
+
+.energyLogCard__tick--selected .energyLogCard__tickValue {
+  font-weight: 700;
+  color: var(--energy-color);
+}
+
+.energyLogCard__tick--selected .energyLogCard__tickMark {
+  border-left-color: var(--energy-color);
+  border-left-style: solid;
+}
+
 .energyLogCard__step {
   position: relative;
   z-index: 1;

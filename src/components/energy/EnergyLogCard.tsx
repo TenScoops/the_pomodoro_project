@@ -1,5 +1,10 @@
 import React, { useEffect, useId, useState } from "react";
-import { ENERGY_LEVELS, type EnergyLevel } from "../../constants/energyLevels";
+import {
+  ENERGY_HALF_STEPS,
+  ENERGY_LEVELS,
+  energyLevelOption,
+  type EnergyLevel,
+} from "../../constants/energyLevels";
 import type { EnergyLogRecord } from "../../services/pomoprogressService";
 import type { EnergyLogsStatus, EnergySaveStatus } from "../../hooks/useEnergyLogs";
 import "./EnergyLogCard.css";
@@ -32,6 +37,11 @@ export default function EnergyLogCard({ status, saveStatus, todayLog, onSave, on
     }
   }, [saveStatus]);
 
+  function selectEnergy(nextEnergy: EnergyLevel) {
+    setEnergy(nextEnergy);
+    setDirty(true);
+  }
+
   return (
     <article className="energyLogCard" aria-label="Log your energy">
       <h2 className="energyLogCard__title">Log your energy</h2>
@@ -55,8 +65,34 @@ export default function EnergyLogCard({ status, saveStatus, todayLog, onSave, on
 
       {status === "ready" ? (
         <>
-          <div className="energyLogCard__scale" role="radiogroup" aria-label="Energy from 1 low to 5 great">
+          <div className="energyLogCard__scale" role="radiogroup" aria-label="Energy from 1 to 5 in half steps">
             <span className="energyLogCard__rail" aria-hidden />
+            <div className="energyLogCard__ticks">
+              {ENERGY_HALF_STEPS.map((halfStep, index) => {
+                const selected = energy === halfStep;
+                const face = energyLevelOption(halfStep);
+                return (
+                  <button
+                    key={halfStep}
+                    type="button"
+                    role="radio"
+                    aria-checked={selected}
+                    aria-label={`Energy ${halfStep}`}
+                    className={`energyLogCard__tick${selected ? " energyLogCard__tick--selected" : ""}`}
+                    style={
+                      {
+                        left: `${20 + index * 20}%`,
+                        "--energy-color": face.color,
+                      } as React.CSSProperties
+                    }
+                    onClick={() => selectEnergy(halfStep)}
+                  >
+                    <span className="energyLogCard__tickValue">{halfStep}</span>
+                    <span className="energyLogCard__tickMark" aria-hidden />
+                  </button>
+                );
+              })}
+            </div>
             {ENERGY_LEVELS.map((level) => {
               const selected = energy === level.value;
               const FaceIcon = level.Icon;
@@ -69,10 +105,7 @@ export default function EnergyLogCard({ status, saveStatus, todayLog, onSave, on
                   aria-label={`Energy ${level.value}, ${level.caption}`}
                   className={`energyLogCard__step${selected ? " energyLogCard__step--selected" : ""}`}
                   style={{ "--energy-color": level.color } as React.CSSProperties}
-                  onClick={() => {
-                    setEnergy(level.value);
-                    setDirty(true);
-                  }}
+                  onClick={() => selectEnergy(level.value)}
                 >
                   <span className="energyLogCard__number">{level.value}</span>
                   <span className="energyLogCard__face">

@@ -1,5 +1,5 @@
 import type { PostgrestError } from "@supabase/supabase-js";
-import type { EnergyLevel } from "../../constants/energyLevels";
+import { isEnergyLevel, type EnergyLevel } from "../../constants/energyLevels";
 import type { EnergyLogUpsert } from "../../types/pomoprogress";
 import { supabase } from "../../lib/supabaseClient";
 import { todayLocalISODate } from "../../lib/calendarDates";
@@ -14,15 +14,21 @@ export interface EnergyLogRecord {
   note: string;
 }
 
-function isEnergyLevel(value: number): value is EnergyLevel {
-  return value === 1 || value === 2 || value === 3 || value === 4 || value === 5;
+function parseEnergy(value: number | string): number {
+  return typeof value === "string" ? Number(value) : value;
 }
 
-function toRecord(row: { id: string; date: string; energy: number; note: string }): EnergyLogRecord | null {
-  if (!isEnergyLevel(row.energy)) {
+function toRecord(row: {
+  id: string;
+  date: string;
+  energy: number | string;
+  note: string;
+}): EnergyLogRecord | null {
+  const energy = parseEnergy(row.energy);
+  if (!isEnergyLevel(energy)) {
     return null;
   }
-  return { id: row.id, date: row.date, energy: row.energy, note: row.note ?? "" };
+  return { id: row.id, date: row.date, energy, note: row.note ?? "" };
 }
 
 /**
@@ -78,7 +84,12 @@ export async function getEnergyLogs(): Promise<{
     return { data: [], error: response.error };
   }
 
-  const rows = (response.data ?? []) as { id: string; date: string; energy: number; note: string }[];
+  const rows = (response.data ?? []) as {
+    id: string;
+    date: string;
+    energy: number | string;
+    note: string;
+  }[];
   const data: EnergyLogRecord[] = [];
   for (const row of rows) {
     const record = toRecord(row);

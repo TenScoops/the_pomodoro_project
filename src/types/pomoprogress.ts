@@ -3,6 +3,8 @@
  * total_time_worked is in seconds (see migration comment).
  */
 
+import type { EnergyLevel } from "../constants/energyLevels";
+
 export type SessionRow = {
   id: string;
   user_id: string;
@@ -86,7 +88,8 @@ export type DailyNoteUpsert = {
   updated_at: string;
 };
 
-export type EnergyLevelScore = 1 | 2 | 3 | 4 | 5;
+/** Same scale as EnergyLevel — 1–5 in half steps. */
+export type EnergyLevelScore = EnergyLevel;
 
 /** Matches public.energy_logs — one energy check-in per user per calendar day. */
 export interface EnergyLogRow {
