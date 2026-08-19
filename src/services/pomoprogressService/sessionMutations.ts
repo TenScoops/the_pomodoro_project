@@ -1,5 +1,12 @@
 import type { PostgrestError } from "@supabase/supabase-js";
-import type { BlockRatingInsert, BlockRatingRow, SessionInsert, SessionRow, SessionUpdate } from "../../types/pomoprogress";
+import type {
+  BlockRatingInsert,
+  BlockRatingRow,
+  BlockWorkType,
+  SessionInsert,
+  SessionRow,
+  SessionUpdate,
+} from "../../types/pomoprogress";
 import { supabase } from "../../lib/supabaseClient";
 
 export async function insertSession(
@@ -30,6 +37,37 @@ export async function upsertBlockRating(
     data: response.data as BlockRatingRow | null,
     error: response.error,
   };
+}
+
+/** Updates scores only so duration_seconds from the original rating stays in place. */
+export async function updateBlockRatingScores(
+  sessionId: string,
+  blockNumber: number,
+  patch: { rating: number; load: number; work_type: BlockWorkType }
+): Promise<{ error: PostgrestError | null }> {
+  const response = await supabase
+    .from("block_ratings")
+    .update(patch)
+    .eq("session_id", sessionId)
+    .eq("block_number", blockNumber)
+    .select("id")
+    .maybeSingle();
+
+  if (response.error) {
+    return { error: response.error };
+  }
+  if (!response.data) {
+    return {
+      error: {
+        name: "PostgrestError",
+        message: "Block rating update matched no row (wrong session, block number, or RLS).",
+        details: "",
+        hint: "",
+        code: "PGRST116",
+      } as PostgrestError,
+    };
+  }
+  return { error: null };
 }
 
 export async function updateSession(

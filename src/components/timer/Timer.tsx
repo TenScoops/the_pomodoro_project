@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import Areyousure from "./Areyousure";
 import "./Timer.css";
@@ -9,11 +9,12 @@ import TimerControls from "./components/TimerControls";
 import TimerSessionSummary from "./components/TimerSessionSummary";
 import usePomodoroTimer from "./hooks/usePomodoroTimer";
 import { useHydrateTodayFocusNote } from "../../hooks/useHydrateTodayFocusNote";
+import { usePreviousBlockRating } from "../../hooks/usePreviousBlockRating";
 import { useSessionStore } from "../../store/sessionStore";
 
 const Timer = () => {
   useHydrateTodayFocusNote();
-  const { showButtons, showClock, cancelTheSession, setCancelTheSession, setShowSessionSetupModal } =
+  const { showButtons, showClock, cancelTheSession, setCancelTheSession, setShowSessionSetupModal, hasUserRated } =
     useSessionStore(
       useShallow((s) => ({
         showButtons: s.showButtons,
@@ -21,8 +22,11 @@ const Timer = () => {
         cancelTheSession: s.cancelTheSession,
         setCancelTheSession: s.setCancelTheSession,
         setShowSessionSetupModal: s.setShowSessionSetupModal,
+        hasUserRated: s.hasUserRated,
       }))
     );
+  const { previousBlock } = usePreviousBlockRating();
+  const [isEditingPreviousBlock, setIsEditingPreviousBlock] = useState(false);
 
   const addZero = (value: number) => {
     const safe = Math.max(0, value);
@@ -52,6 +56,21 @@ const Timer = () => {
     toggleSpeedBoost,
     resetCurrentPhase,
   } = usePomodoroTimer();
+
+  const showChangePrevBlockRatings =
+    previousBlock != null && !(mode === "break" && !hasUserRated);
+
+  useEffect(() => {
+    if (mode === "break" && !hasUserRated) {
+      setIsEditingPreviousBlock(false);
+    }
+  }, [mode, hasUserRated]);
+
+  useEffect(() => {
+    if (previousBlock == null) {
+      setIsEditingPreviousBlock(false);
+    }
+  }, [previousBlock]);
 
   return (
     <div className="timer">
@@ -88,6 +107,8 @@ const Timer = () => {
         currentWorkBlockIndex={currentWorkBlockIndex}
         breakLengthMinutes={breakLengthMinutes}
         onEdit={() => setShowSessionSetupModal(true)}
+        showChangePrevBlockRatings={showChangePrevBlockRatings}
+        onChangePrevBlockRatings={() => setIsEditingPreviousBlock(true)}
       />
 
       {totalWorkTimeMinutes < totalBreakTimeMinutes && (
@@ -97,6 +118,9 @@ const Timer = () => {
       )}
 
       {mode === "break" ? <Rating /> : null}
+      {isEditingPreviousBlock && previousBlock ? (
+        <Rating editBlock={previousBlock} onCloseEdit={() => setIsEditingPreviousBlock(false)} />
+      ) : null}
       {cancelTheSession ? <Areyousure /> : null}
 
       <BlockCompleteToast

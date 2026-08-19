@@ -16,6 +16,8 @@ interface TimerSessionSummaryProps {
   currentWorkBlockIndex: number;
   breakLengthMinutes: number;
   onEdit: () => void;
+  showChangePrevBlockRatings: boolean;
+  onChangePrevBlockRatings: () => void;
 }
 
 function SessionRows({ rows }: { rows: SessionStatRow[] }) {
@@ -40,6 +42,8 @@ export default function TimerSessionSummary({
   currentWorkBlockIndex,
   breakLengthMinutes,
   onEdit,
+  showChangePrevBlockRatings,
+  onChangePrevBlockRatings,
 }: TimerSessionSummaryProps) {
   const focusRows: SessionStatRow[] = [
     { label: "Planned focus time", value: formatFocusDuration(plannedFocusMinutes) },
@@ -65,6 +69,15 @@ export default function TimerSessionSummary({
       <SessionRows rows={focusRows} />
       <hr className="timerSessionCard__divider" />
       <SessionRows rows={extraRows} />
+      {showChangePrevBlockRatings ? (
+        <button
+          type="button"
+          className="timerSessionCard__prevRatings"
+          onClick={onChangePrevBlockRatings}
+        >
+          change prev block ratings
+        </button>
+      ) : null}
     </aside>
   );
 }

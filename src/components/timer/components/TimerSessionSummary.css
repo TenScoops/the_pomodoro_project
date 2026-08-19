@@ -93,3 +93,32 @@
   border: none;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+.timer button.timerSessionCard__prevRatings {
+  -webkit-appearance: none;
+  appearance: none;
+  all: unset;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.99rem;
+  font-weight: 500;
+  color: rgba(248, 250, 252, 0.58);
+  text-align: left;
+}
+
+.timer button.timerSessionCard__prevRatings:hover {
+  color: rgba(248, 250, 252, 0.96);
+}
+
+.timer button.timerSessionCard__prevRatings:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.timer button.timerSessionCard__prevRatings:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.28);
+  outline-offset: 3px;
+}

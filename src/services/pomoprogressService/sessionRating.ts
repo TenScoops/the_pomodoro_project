@@ -1,5 +1,5 @@
 import type { PostgrestError } from "@supabase/supabase-js";
-import type { SessionInsert } from "../../types/pomoprogress";
+import type { BlockWorkType, SessionInsert } from "../../types/pomoprogress";
 import { supabase } from "../../lib/supabaseClient";
 import { todayLocalISODate } from "../../lib/calendarDates";
 import { useSessionStore } from "../../store/sessionStore";
@@ -8,7 +8,12 @@ import {
   alertSessionUpdateFailure,
 } from "./alerts";
 import { workSecondsForRatedBlock } from "./sessionClientHelpers";
-import { insertSession, syncSessionTotalsFromBlockRatings, upsertBlockRating } from "./sessionMutations";
+import {
+  insertSession,
+  syncSessionTotalsFromBlockRatings,
+  updateBlockRatingScores,
+  upsertBlockRating,
+} from "./sessionMutations";
 
 /**
  * Signed-in: on each save, insert `block_ratings` (productivity, load, work type, duration) and update the draft `sessions` row (create draft on
@@ -75,5 +80,37 @@ export async function logBlockRatingForCurrentSession(
   }
 
   store.bumpChartDataRevision();
+  return { error: null };
+}
+
+/**
+ * Signed-in: change productivity, load, and work type on an existing rated block.
+ * Duration is left as originally stored. Guests only update `localStorage` in `Rating`.
+ */
+export async function updateExistingBlockRating(params: {
+  sessionId: string;
+  blockNumber: number;
+  rating: number;
+  load: number;
+  workType: BlockWorkType;
+}): Promise<{ error: PostgrestError | null }> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { error: null };
+  }
+
+  const { error } = await updateBlockRatingScores(params.sessionId, params.blockNumber, {
+    rating: params.rating,
+    load: params.load,
+    work_type: params.workType,
+  });
+  if (error) {
+    alertBlockFailure(error.message);
+    return { error };
+  }
+
   return { error: null };
 }

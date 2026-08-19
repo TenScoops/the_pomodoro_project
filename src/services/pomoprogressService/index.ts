@@ -9,7 +9,13 @@ export {
   workSecondsForRatedBlock,
 } from "./sessionClientHelpers";
 
-export { insertSession, updateSession, upsertBlockRating, syncSessionTotalsFromBlockRatings } from "./sessionMutations";
+export {
+  insertSession,
+  updateSession,
+  updateBlockRatingScores,
+  upsertBlockRating,
+  syncSessionTotalsFromBlockRatings,
+} from "./sessionMutations";
 export { persistFocusNoteForToday, getDailyNoteForDate, getDailyNotesInRange } from "./dailyNotes";
 export { persistEnergyLogForToday, getEnergyLogs } from "./energyLogs";
 export type { EnergyLogRecord } from "./energyLogs";
@@ -24,7 +30,7 @@ export {
 } from "./sessionQueries";
 
 export { clearTodaysRatingData } from "./sessionClear";
-export { logBlockRatingForCurrentSession } from "./sessionRating";
+export { logBlockRatingForCurrentSession, updateExistingBlockRating } from "./sessionRating";
 export { cancelActivePomodoroSession } from "./sessionCancel";
 export { finalizeActivePomodoroSession } from "./sessionFinalize";
 export { persistCompletedPomodoroSessionBulkInsert } from "./sessionFinalizeBulk";
