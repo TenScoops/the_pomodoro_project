@@ -75,6 +75,7 @@ export default function TimerSessionSummary({
           className="timerSessionCard__prevRatings"
           onClick={onChangePrevBlockRatings}
         >
+          <HiPencil aria-hidden />
           change prev block ratings
         </button>
       ) : null}

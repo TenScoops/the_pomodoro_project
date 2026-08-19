@@ -99,7 +99,9 @@
   appearance: none;
   all: unset;
   box-sizing: border-box;
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   width: 100%;
   margin-top: 12px;
   cursor: pointer;
@@ -108,6 +110,12 @@
   font-weight: 500;
   color: rgba(248, 250, 252, 0.58);
   text-align: left;
+}
+
+.timer button.timerSessionCard__prevRatings svg {
+  width: 16px;
+  height: 16px;
+  color: #c4b5fd;
 }
 
 .timer button.timerSessionCard__prevRatings:hover {
