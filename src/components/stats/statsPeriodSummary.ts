@@ -4,6 +4,7 @@ import {
   type LoadBlockInput,
   type ProductivityBlockInput,
 } from "../../lib/effectiveLoad";
+import { isoDatePrefix } from "../../lib/calendarDates";
 import type { SessionWithRatings } from "../../types/pomoprogress";
 import type { EnergyLogRecord } from "../../services/pomoprogressService";
 import { formatFocusLoadNumber } from "../focus/recentDaysData";
@@ -56,17 +57,24 @@ export function periodEnergyAvgFromLogs(
   startDate: string,
   endDate: string
 ): { energyAvg: number; logCount: number } {
-  const inRange = logs.filter((log) => log.date >= startDate && log.date <= endDate);
-  if (inRange.length === 0) {
+  const energyByDate = new Map<string, number>();
+  for (const log of logs) {
+    const date = isoDatePrefix(log.date);
+    if (date >= startDate && date <= endDate) {
+      energyByDate.set(date, log.energy);
+    }
+  }
+  const scores = Array.from(energyByDate.values());
+  if (scores.length === 0) {
     return { energyAvg: 0, logCount: 0 };
   }
   let energySum = 0;
-  for (const log of inRange) {
-    energySum += log.energy;
+  for (const energy of scores) {
+    energySum += energy;
   }
   return {
-    energyAvg: Number((energySum / inRange.length).toFixed(1)),
-    logCount: inRange.length,
+    energyAvg: Number((energySum / scores.length).toFixed(1)),
+    logCount: scores.length,
   };
 }
 
@@ -81,7 +89,7 @@ export function buildStatsSummaryCards(input: {
 }): StatsSummaryCard[] {
   const hoursValue =
     input.workSeconds <= 0 ? "0" : Number((input.workSeconds / 3600).toFixed(1)).toString();
-  const energyValue = input.energyCount === 0 || input.energyAvg === 0 ? "0" : input.energyAvg.toFixed(1);
+  const energyValue = input.energyCount === 0 ? "0" : input.energyAvg.toFixed(1);
   const loadValue =
     input.loadCount === 0 || input.loadAvg === 0 ? "0" : formatFocusLoadNumber(input.loadAvg);
   const productivityValue =

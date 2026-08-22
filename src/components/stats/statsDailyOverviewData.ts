@@ -1,6 +1,6 @@
 import { summarizeDayFromSessions } from "../chart/sessionChartData";
 import { formatFocusWorkHours } from "../focus/recentDaysData";
-import { parseLocalISODate } from "../../lib/calendarDates";
+import { isoDatePrefix, parseLocalISODate } from "../../lib/calendarDates";
 import type { EnergyLogRecord } from "../../services/pomoprogressService";
 import type { EnergyLevelScore, SessionWithRatings } from "../../types/pomoprogress";
 
@@ -52,7 +52,7 @@ function groupSessionsByDate(sessions: SessionWithRatings[]): Map<string, Sessio
 function energyByDate(logs: EnergyLogRecord[]): Map<string, EnergyLevelScore> {
   const energyMap = new Map<string, EnergyLevelScore>();
   for (const log of logs) {
-    energyMap.set(log.date, log.energy);
+    energyMap.set(isoDatePrefix(log.date), log.energy);
   }
   return energyMap;
 }

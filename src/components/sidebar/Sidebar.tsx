@@ -17,6 +17,7 @@ type SidebarProps = {
   user: User | null;
   activeItem?: SidebarItemId;
   aiAssistantOpen?: boolean;
+  settingsOpen?: boolean;
   onNavigate?: (item: SidebarItemId) => void;
   onOpenSignIn?: () => void;
 };
@@ -79,6 +80,7 @@ export default function Sidebar({
   user,
   activeItem = "focus",
   aiAssistantOpen = false,
+  settingsOpen = false,
   onNavigate,
   onOpenSignIn,
 }: SidebarProps) {
@@ -126,8 +128,8 @@ export default function Sidebar({
       <div className="appSidebar__footer">
         <button
           type="button"
-          className={`appSidebar__navItem${activeItem === "settings" ? " appSidebar__navItem--active" : ""}`}
-          aria-current={activeItem === "settings" ? "page" : undefined}
+          className={`appSidebar__navItem${settingsOpen ? " appSidebar__navItem--active" : ""}`}
+          aria-pressed={settingsOpen}
           onClick={() => onNavigate?.("settings")}
         >
           <span className="appSidebar__navIcon">

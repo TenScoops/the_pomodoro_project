@@ -51,10 +51,6 @@ function navigateFromSidebar(itemId: SidebarItemId, actions: SidebarNavigateActi
       actions.setOpenThemePage(false);
       actions.setShowChartDisplay(false);
       break;
-    case "settings":
-      actions.setShowSessionSetupModal(false);
-      actions.setOpenThemePage(true);
-      break;
     default:
       break;
   }
@@ -104,6 +100,9 @@ function App() {
     }
     if (itemId === "settings") {
       setAiAssistantOpen(false);
+      setShowSessionSetupModal(false);
+      setOpenThemePage(true);
+      return;
     }
     setSidebarActiveItem(itemId);
     navigateFromSidebar(itemId, {
@@ -155,6 +154,7 @@ function App() {
         user={session?.user ?? null}
         activeItem={sidebarActiveItem}
         aiAssistantOpen={aiAssistantOpen}
+        settingsOpen={openThemePage}
         onNavigate={handleSidebarNavigate}
         onOpenSignIn={() => setAuthModalOpen(true)}
       />

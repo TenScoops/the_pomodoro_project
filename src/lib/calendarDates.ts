@@ -25,6 +25,12 @@ export function parseLocalISODate(dateString: string): Date | null {
   return parseLocalDateStringYYYYMMD(dateString);
 }
 
+/** YYYY-MM-DD from a date or datetime string so range filters stay inclusive. */
+export function isoDatePrefix(value: string): string {
+  const match = /^(\d{4}-\d{2}-\d{2})/.exec(value.trim());
+  return match?.[1] ?? value.trim();
+}
+
 /**
  * “Now” for calendar features (sessions, charts). In development, set `REACT_APP_DEV_FAKE_TODAY`
  * to a local `YYYY-MM-DD` to test another day without changing the system clock. Does not affect

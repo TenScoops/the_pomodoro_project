@@ -31,6 +31,25 @@ export function isEnergyLevel(value: number): value is EnergyLevel {
   return (ENERGY_LEVEL_VALUES as readonly number[]).includes(value);
 }
 
+/**
+ * Postgres `numeric` often arrives as `"4.0"` or a nearby float.
+ * Snap to the nearest half step when the value is already on that scale.
+ */
+export function parseEnergyLevel(value: number | string): EnergyLevel | null {
+  const numeric = typeof value === "string" ? Number(value.trim()) : value;
+  if (!Number.isFinite(numeric)) {
+    return null;
+  }
+  const nearestHalfStep = Math.round(numeric * 2) / 2;
+  if (Math.abs(numeric - nearestHalfStep) > 0.001) {
+    return null;
+  }
+  if (!isEnergyLevel(nearestHalfStep)) {
+    return null;
+  }
+  return nearestHalfStep;
+}
+
 /** Half steps borrow the nearest face for icon and color. */
 export function energyFaceForLevel(value: EnergyLevel): EnergyFaceLevel {
   const rounded = Math.round(value);

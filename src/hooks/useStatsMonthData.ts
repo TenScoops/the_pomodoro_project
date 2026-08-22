@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from "react";
 import { getAppNow } from "../lib/calendarDates";
 import {
   getDailyNotesInRange,
-  getEnergyLogs,
+  getEnergyLogsInRange,
   getSessionsWithRatingsForMonth,
   type EnergyLogRecord,
 } from "../services/pomoprogressService";
@@ -43,7 +43,8 @@ const emptyData = (rangeStart: string, rangeEnd: string): StatsMonthData => ({
 });
 
 /**
- * This calendar month’s sessions, energy logs, and Focus notes. Refetches after a block is logged.
+ * This calendar month’s sessions, energy logs, and Focus notes.
+ * Refetches after a block is logged or today’s energy is saved.
  */
 export function useStatsMonthData(): StatsMonthData {
   const { user, loading: authLoading } = useAuth();
@@ -73,7 +74,7 @@ export function useStatsMonthData(): StatsMonthData {
     void (async () => {
       const [sessionsResult, energyResult, notesResult] = await Promise.all([
         getSessionsWithRatingsForMonth(year, monthOneThroughTwelve),
-        getEnergyLogs(),
+        getEnergyLogsInRange(startDate, endDate),
         getDailyNotesInRange(startDate, endDate),
       ]);
       if (cancelled) {

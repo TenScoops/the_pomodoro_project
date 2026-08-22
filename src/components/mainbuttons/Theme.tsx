@@ -12,9 +12,9 @@ import "./Theme.css";
 
 const Theme = () => {
   const [modalOpen, setModalOpen] = useState(true);
-  const theme = useSessionStore((s) => s.theme);
-  const setTheme = useSessionStore((s) => s.setTheme);
-  const setOpenThemePage = useSessionStore((s) => s.setOpenThemePage);
+  const theme = useSessionStore((state) => state.theme);
+  const setTheme = useSessionStore((state) => state.setTheme);
+  const setOpenThemePage = useSessionStore((state) => state.setOpenThemePage);
 
   const customStyles = {
     overlay: {

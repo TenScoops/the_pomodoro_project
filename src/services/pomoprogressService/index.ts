@@ -17,7 +17,7 @@ export {
   syncSessionTotalsFromBlockRatings,
 } from "./sessionMutations";
 export { persistFocusNoteForToday, getDailyNoteForDate, getDailyNotesInRange } from "./dailyNotes";
-export { persistEnergyLogForToday, getEnergyLogs } from "./energyLogs";
+export { persistEnergyLogForToday, getEnergyLogs, getEnergyLogsInRange } from "./energyLogs";
 export type { EnergyLogRecord } from "./energyLogs";
 
 export {
