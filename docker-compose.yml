@@ -1,0 +1,22 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    env_file: .env
+    environment:
+      API_PORT: "4000"
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        REACT_APP_SUPABASE_URL: ${REACT_APP_SUPABASE_URL}
+        REACT_APP_SUPABASE_PUBLISHABLE_DEFAULT_KEY: ${REACT_APP_SUPABASE_PUBLISHABLE_DEFAULT_KEY}
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
